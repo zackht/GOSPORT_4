@@ -1,0 +1,350 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.search {
+    /* box-shadow: 0px 2px 8px 1px rgba(170, 170, 170, 0.75); */
+    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+}
+
+p {
+    margin-bottom: 0px;
+    /* font-family: 'Poppins'; */
+}
+.p2{
+    color: #AAAAAA;
+}
+.fontsize1{
+    font-size: 20px;
+    color: #383838;
+    font-family: 'Noto Sans TC';
+    color: rgb(30, 30, 30);
+}
+.fontsize2{
+    font-size: 24px;
+    color: #383838;
+    font-family: 'Noto Sans TC';
+    color: rgb(30, 30, 30);
+}
+.fontsize3{
+    font-size: 16px;
+    color: #AAAAAA;
+    font-family: 'Noto Sans TC';
+}
+.fontsize4{
+    font-size: 15px;
+    color: #383838;
+    font-family: 'Noto Sans TC';
+    color: rgb(30, 30, 30);
+}
+
+#inputsearch {
+    appearance: none;
+    border: 0;
+    border-radius: 50px;
+    background-color: #E64637;
+    color: #ffffff;
+}
+
+select {
+    appearance: none;
+    /* 讓鍵頭消失 */
+    position: relative;
+    width: 100%;
+    text-align: center;
+    border: 0;
+    outline: none
+        /* 取消點擊邊框效果 */
+}
+
+.aa {
+    position: relative;
+    min-width: 107px;
+    min-height: 59px;
+}
+.aa::before {
+    content: '';
+    position: absolute;
+    right: 8%;
+    bottom: 15px;
+    background-color: black;
+    z-index: 1;
+    width: 80%;
+    height: 2px;
+}
+
+.aa1 {
+    position: relative;
+    width: 200px;
+    min-width: 50px;
+    min-height: 65px;
+    /* padding-top: 24px;
+    padding-left: 0px;
+    padding-right: 0px; */
+    /* padding: 24px 0px 12px 0px; */
+    padding: 0px 20px 0px;
+}
+.aa1 select{
+    font-size: 20px;
+    color: #383838;
+    font-family: 'Noto Sans TC';
+    color: rgb(30, 30, 30);
+}
+
+.aa1::before {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    background-color: black;
+    z-index: 1;
+    width: 85%;
+    height: 2px;
+}
+
+.aa2 {
+    position: relative;
+    padding: 20px 0px 0px 0px ;
+}
+
+.aa2::before {
+    content: '日期';
+    position: absolute;
+    top: -10px;
+    left: 0px;
+    color: #AAAAAA;
+    z-index: 1;
+    font-size: 16px;
+}
+.aa2::after{
+    content: '';
+    position: absolute;
+    bottom: 9px;
+    background-color: black;
+    z-index: 1;
+    width: 100%;
+    height: 2px;
+}
+#date1 {
+    border-width: 0px;
+}
+#date2{
+    border-width: 0px;
+}
+
+.aa3 {
+    position: relative;
+}
+
+.aa3::after {
+    content: '開始時間';
+    position: absolute;
+    top: -10px;
+    left: 0px;
+    color: #aaaaaa;
+    font-size: 16px;
+    /* z-index: 1; */
+    /* 要有position: relative;之類的屬性才能使用z-index*/
+}
+.aa3>img{
+    max-width: 25px; 
+    max-height: 25px;
+}
+
+.aa4 {
+    position: relative;
+    padding: 0;
+}
+
+.aa4::after {
+    content: '結束時間';
+    position: absolute;
+    top: -10px;
+    left: 0px;
+    color: #aaaaaa;
+    /* z-index: 1; */
+}
+
+::placeholder {
+    color: #AAAAAA;
+    text-align: center;
+}
+
+#search {
+    border-radius: 30px;
+    border-style: none;
+    background-color: #f5f5f5;
+    height: 40px;
+    padding: 20px;
+
+}
+
+.buttom1{
+    width: 80px;
+    height: 35px;
+    background-color: transparent;
+    color: #AAAAAA;
+    border: 1px solid #aaaaaa;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.typecol{
+    color: #AAAAAA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.lable1{
+    min-height: 30px;
+    min-width: 93px;
+    max-height: 30px;
+    max-width: 93px;
+}
+.lable2
+{
+    min-height: 30px;
+    min-width: 133px;
+    max-height: 30px;
+    max-width: 133px;
+}
+.Adddiv{
+    /* box-shadow: 0px 2px 8px 1px rgba(170, 170, 170, 0.75); */
+    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+    width: 1060;
+    height: 145;
+}
+.buttom2{
+    background-color: transparent;
+    border: none;
+    margin: 0px 10px;
+}
+.sidediv{
+    width: 100px;
+    height: 35px;
+    background-color: #f5f5f5;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sidespan{
+    width: 100px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* nav---------------------------------------------------------------------- */
+.navbar {
+    background-color: white;
+    width: 100vw;
+    height: 15vh;
+    position: fixed;
+    top: 0px;
+    z-index: 500;
+    transition-duration: .8s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+}
+
+.navbar+div {
+    height: 3000;
+    position: relative;
+    /* background-color: aqua;  */
+}
+
+.nContent {
+    /* background-color: aqua; */
+    width: 95vw;
+    height: 50%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.nLeft {
+    display: flex;
+    align-items: center;
+}
+
+.nLeft {
+    font-family: 'Poppins';
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.nRight {
+    display: flex;
+    align-items: center;
+    margin: auto 20px auto 0px;
+}
+
+.nRight a {
+    text-decoration: none;
+    color: rgb(30, 30, 30);
+}
+
+.nRight>div {
+    margin-left: 30px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    display: flex;
+    align-items: stretch;
+    font-size: 1rem;
+    font-family: 'Noto Sans TC';
+    color: rgb(30, 30, 30);
+}
+
+.nRight>div:nth-child(1) {
+    /* 底線 */
+    border-bottom: 2px rgb(230, 70, 55) solid;
+}
+
+.nRight>img {
+    height: 40px;
+/* 改40 */
+    margin-left: 30px;
+    cursor: pointer;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.test {
+    height: 1000px;
+    width: 100px;
+}
+
+/* Footer--------------------------------------------------------------------------- */
+.footer {
+    background-color: rgb(230, 70, 55);
+    width: 100vw;
+    height: 8vh;
+    position: fixed;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+body{
+    padding-bottom: 8vh;
+    overflow-x: hidden;
+}
+
+.fContent {
+    width: 95vw;
+    display: flex;
+    flex-direction: row-reverse;
+
+}
+
+.fContent>div {
+    font-size: 0.7rem;
+    font-weight: 300;
+    font-family: 'Noto Sans TC';
+    color: white;
+}

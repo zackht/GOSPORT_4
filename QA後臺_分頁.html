@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+    }
+
+    .cover {
+        width: 1060px;
+        height: 777px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #FFFFFF;
+        box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+    }
+
+    .contain {
+        width: 80%;
+        height: 90%;
+    }
+
+
+
+    /* 主要輸入內容 */
+    label {
+        color: #AAAAAA;
+        font-size: 16px;
+        line-height: 23px;
+    }
+
+    input,
+    textarea {
+        border: none;
+        background-color: #F5F5F5;
+        border-radius: 50px;
+        height: 35px;
+        margin-bottom: 27px;
+        padding: 10px 23px;
+        font-size: 24px;
+    }
+
+    select {
+        border: none;
+        border-bottom: 1px black solid;
+        height: 40px;
+        font-size: 20px;
+        background-color: transparent;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    /* 類型 */
+    .qa_citycover select {
+        width: 185px;
+        text-align: center;
+    }
+
+
+    /* 描述 */
+    #qa_discribe {
+        width: 820px;
+        height: 326px;
+    }
+
+    /* 取消 確認 */
+    .qa_yesOrNot {
+        display: flex;
+        margin-top: 20px;
+    }
+
+    input[type="submit"] {
+        background-color: rgb(230, 70, 55);
+        color: white;
+        padding: 0px 0px;
+        width: 414px;
+        height: 63px;
+    }
+
+    .qa_backself {
+        color: rgb(230, 70, 55);
+        border: 1px solid rgb(230, 70, 55);
+        padding: 0px;
+        display: inline-block;
+        border-radius: 50px;
+        width: 414px;
+        height: 63px;
+        line-height: 63px;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div class="cover">
+        <div class="contain">
+            <div class="qa_citycover">
+                <label for="qa_city">類型</label><br>
+                <select name="ct" id="qa_city">
+                    <option value="">新手</option>
+                    <option value="">普通</option>
+                    <option value="">高手</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="qa_addr">問題</label><br>
+                <input type="text" id="qa_addr" value="">
+            </div>
+           
+            <div>
+                <label for="qa_discribe">回答</label><br>
+                <textarea name="" id="qa_discribe" cols="30" rows="10"></textarea>
+            </div>
+            <div class="qa_yesOrNot">
+                <a href="#">
+                    <span class="qa_backself">取消</span>
+                </a>
+                <input type="submit" value="儲存">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

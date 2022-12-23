@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        font-family: 'Noto Sans';
+        font-style: normal;
+        font-weight: 500;
+        /* border: #AAAAAA 1px solid; */
+    }
+
+    .self_cover {
+        box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+    }
+
+    .self_discribe div:nth-child(1),
+    .self_discribe div:nth-child(3),
+    .self_discribe div:nth-child(5),
+    .self_discribe div:nth-child(7),
+    .self_discribe div:nth-child(9) {
+        font-size: 1em;
+        line-height: 22px;
+        color: #AAAAAA;
+    }
+
+    .self_discribe div:nth-child(2),
+    .self_discribe div:nth-child(4),
+    .self_discribe div:nth-child(6),
+    .self_discribe div:nth-child(8),
+    .self_discribe div:nth-child(10) {
+        font-size: 1.5em;
+        line-height: 55px;
+        color: #383838;
+    }
+
+    .self_discribe div:nth-child(10) {
+        line-height: 33px;
+    }
+
+    .self_edit {
+        background-color: rgb(230, 70, 55);
+        height: 65px;
+        width: 118px;
+        border-radius: 40px;
+        font-size: 1.5em;
+        color: #FFFFFF;
+        box-sizing: border-box;
+        border: none;
+    }
+
+    img {
+        position: absolute;
+        right: 0px;
+        height: 180px;
+        width: 180px;
+        clip-path: circle(50%);
+        /* height: 100%; */
+        /* width: 100%; */
+        object-fit: cover;
+    }
+
+    i {
+        color: rgb(255, 208, 0);
+    }
+    .show_star{
+        display: flex;
+        justify-content: space-around;
+        position:absolute;
+        bottom: 22px;
+        right: 40px;
+        width: 100px;
+    }
+</style>
+
+<body>
+    <div class="self_cover"
+        style="display: flex;width: 988px;height: 551px;justify-content: center;align-items: center;">
+        <div style="display: flex;width: 90%;height:481px;">
+            <div class="self_discribe" style="flex: 1.1;">
+                <div>姓名
+                </div>
+                <div>吳天良</div>
+                <div>程度</div>
+                <div>羽球初階、桌球新手、網球初階</div>
+                <div>球隊</div>
+                <div>南屯球隊、嶺東球隊</div>
+                <div>活動時數</div>
+                <div>298hr</div>
+                <div>描述</div>
+                <div>一週練球2-3次，歡迎各路神人約打球交流～ <br>
+                    IG iamgod <br>
+                    還有第三行 <br>
+                    和第四行～～～～～</div>
+            </div>
+            <div style="flex: 1;position: relative;">
+                <div id="tt" style="height: 50%;width: 100%;position: relative;display: flex;flex-direction: column;align-items: center;">
+                    <img src="./20130917_171106.jpg" alt="">
+                    <div class="show_star">
+                        <i class="fa fa-star" style="font-size:25px;"></i> 
+                        <i class="fa fa-star" style="font-size:25px;"></i> 
+                        <i class="fa fa-star" style="font-size:25px;"></i> 
+                    </div>
+                </div>
+                <div style="height: 50%;width: 100%;position: relative;">
+                    <a href="./帳號設定.html"><button class="self_edit"
+                            style="position: absolute;bottom: 0px;right: 0px;">編輯</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

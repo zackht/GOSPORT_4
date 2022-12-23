@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./icon/GOsport.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+    <title>Navbar</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+
+    <style>
+        /* Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap');
+
+        body {
+            font-family: 'Poppins', 'Noto Sans TC';
+            padding: 0px;
+            margin: 0px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: white;
+            width: 100vw;
+            height: 15vh;
+            position: fixed;
+            top: 0px;
+            z-index: 500;
+            transition-duration: .8s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+        }
+
+        /* 有更動 */
+        .navbar+div {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            top: 17vh;
+        }
+
+        .nContent {
+            /* background-color: aqua; */
+            width: 95vw;
+            height: 50%;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+        }
+
+        .nLeft {
+            display: flex;
+            align-items: center;
+        }
+
+        .nLeft {
+            font-family: 'Poppins';
+            font-weight: 700;
+            font-size: 2rem;
+        }
+
+        .nRight {
+            display: flex;
+            align-items: center;
+            margin: auto 20px auto 0px;
+        }
+
+        .nRight a {
+            text-decoration: none;
+            color: rgb(30, 30, 30);
+        }
+
+        .nRight>div {
+            margin-left: 30px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            display: flex;
+            align-items: stretch;
+            font-size: 1rem;
+            font-family: 'Noto Sans TC';
+            color: rgb(30, 30, 30);
+        }
+
+        .nRight>div:nth-child(1) {
+            /* 底線 */
+            border-bottom: 2px rgb(230, 70, 55) solid;
+        }
+
+        .nRight>img {
+            height: 20px;
+            margin-left: 30px;
+            cursor: pointer;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+
+        .test {
+            height: 1000px;
+            width: 100px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: rgb(230, 70, 55);
+            width: 100vw;
+            height: 8vh;
+            position: fixed;
+            bottom: 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fContent {
+            width: 95vw;
+            display: flex;
+            flex-direction: row-reverse;
+
+        }
+
+        .fContent>div {
+            font-size: 0.7rem;
+            font-weight: 300;
+            font-family: 'Noto Sans TC';
+            color: white;
+        }
+
+        /* 主體 */
+        .selfalter {
+            height: 1477px;
+            width: 1060px;
+            background: #FFFFFF;
+            box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            width: 90%;
+            height: 94%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form>div:first-child {
+            display: flex;
+        }
+
+        /* 照片區 */
+        .alter_PicPla {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type='file'] {
+            display: none;
+        }
+
+        #picFile {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        #picFile,
+        #picFile img {
+            background-color: rgb(245, 245, 245);
+            width: 175px;
+            height: 175px;
+            object-fit: cover;
+            clip-path: circle(50%);
+            font-size: 20px;
+        }
+
+        .alter_PicPla embed {
+            width: 20px;
+            height: 20px;
+            margin-top: 10px;
+        }
+
+        /* 主要輸入內容 */
+        input,
+        textarea {
+            border: none;
+            background-color: #F5F5F5;
+            border-radius: 50px;
+            height: 45px;
+            margin-bottom: 27px;
+            padding: 10px 23px;
+            font-size: 24px;
+        }
+
+        label {
+            color: #AAAAAA;
+            font-size: 20px;
+            line-height: 43px;
+        }
+
+        .sex {
+            display: inline-block;
+            text-align: center;
+            border-radius: 50px;
+            width: 140px;
+            height: 55px;
+            border: 2px solid #E6E6E6;
+            font-size: 24px;
+            color: #E6E6E6;
+            line-height: 55px;
+            margin-bottom: 27px;
+        }
+
+        .sex:hover {
+            color: black;
+            background-color: #F5F5F5;
+        }
+
+        .degree {
+            background-color: rgb(245, 245, 245);
+            border-radius: 50px;
+            width: 450px;
+            height: 55px;
+            margin: 7px 0px 8px 0px;
+        }
+
+        .degree div {
+            display: inline-block;
+            text-align: center;
+            position: relative;
+            font-size: 24px;
+            bottom: 15px;
+            width: 108px;
+        }
+
+        .degree label {
+            display: inline-block;
+            color: black;
+            font-size: 20px;
+            position: relative;
+            bottom: 15px;
+            padding: 0px 25px 0px 12px;
+        }
+
+        /* 徽章 */
+        .mark {
+            background-color: #F5F5F5;
+            height: 64px;
+            width: 640px;
+            border-radius: 50px;
+            /* line-height: 64px; */
+            display: flex;
+            align-items: center;
+            padding: 0px 30px;
+        }
+
+        .mark embed {
+            width: 20px;
+            height: 20px;
+            padding-right: 7px;
+        }
+
+        /* 描述 */
+        #account_describe {
+            width: 640px;
+            height: 170px;
+            border-radius: 30px;
+        }
+
+        /* 取消 確認 */
+        .alter_yesOrNot {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(230, 70, 55);
+            color: white;
+            padding: 0px 0px;
+            width: 414px;
+            height: 63px;
+        }
+
+        .alter_backself {
+            color: rgb(230, 70, 55);
+            border: 1px solid rgb(230, 70, 55);
+            padding: 0px;
+            display: inline-block;
+            border-radius: 50px;
+            width: 414px;
+            height: 63px;
+            line-height: 63px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- navbar -->
+    <div class="navbar">
+        <div class="nContent">
+            <div class="nLeft">
+                <div>GOspoort</div>
+            </div>
+            <div class="nRight">
+                <div><a href="">租場地</a></div>
+                <div><a href="">交流區</a></div>
+                <div><a href="">成為場地方</a></div>
+                <div><a href="">Q&A</a></div>
+                <img src="./icon/notice.svg"></img>
+                <img src="./icon/user.svg"></img>
+            </div>
+        </div>
+    </div>
+    <!-- 主體 -->
+    <div class="selfalter">
+        <form action="">
+            <div>
+                <div class="alter_PicPla">
+                    <div id="picFile">
+                        <div id="picFile_backT" style="text-align: center;color:#AAAAAA;">
+                            <i class="fa fa-cloud-upload" style="font-size: 40px;"></i> <br>上傳相片
+                        </div>
+                        <input id="oploadPic" type="file" onchange="readURL(this)" targetID="preview_img"
+                            accept="image/gif, image/jpeg, image/png">
+                        <img id="preview_img" src="#" style="display: none;" />
+                    </div>
+                    <div id="star">
+                        <embed src="./icon/star1.svg" type="">
+                        <embed src="./icon/star1.svg" type="">
+                        <embed src="./icon/star1.svg" type="">
+                    </div>
+                </div>
+                <div style="padding-left:40px;">
+                    <label for="alter_name">姓名</label><br>
+                    <input type="text" id="alter_name"><br>
+                    <label for="alter_email">註冊信箱</label><br>
+                    <input type="email" id="alter_email"><br>
+                    <label for="alter_psw">密碼</label><br>
+                    <input type="password" id="alter_psw"><br>
+                    <label for="alter_tel">電話</label><br>
+                    <input type="tel" id="alter_tel"><br>
+                    <label>我的程度</label><br>
+                    <div class="degree">
+                        <div>羽球</div>
+                        <input type="radio" name="Badmin" id="newB"><label for="newB">新手</label>
+                        <input type="radio" name="Badmin" id="nomalB"><label for="nomalB">初階</label>
+                        <input type="radio" name="Badmin" id="highB"><label for="highB">高手</label>
+                    </div>
+                    <div class="degree">
+                        <div>桌球</div>
+                        <input type="radio" name="Ttennis" id="newT"><label for="newT">新手</label>
+                        <input type="radio" name="Ttennis" id="nomalT"><label for="nomalT">初階</label>
+                        <input type="radio" name="Ttennis" id="highT"><label for="highT">高手</label>
+                    </div>
+                    <div class="degree">
+                        <div>排球</div>
+                        <input type="radio" name="Vodi" id="newV"><label for="newV">新手</label>
+                        <input type="radio" name="Vodi" id="nomalV"><label for="nomalV">初階</label>
+                        <input type="radio" name="Vodi" id="highV"><label for="highV">高手</label>
+                    </div>
+                    <label>我的徽章</label>
+                    <div class="mark">
+                        <embed src="./icon/star1.svg" type="">
+                        <embed src="./icon/star1.svg" type="">
+                        <embed src="./icon/star1.svg" type="">
+                        <embed src="./icon/star2.svg" type="">
+                        <embed src="./icon/star2.svg" type="">
+                        <embed src="./icon/star2.svg" type="">
+                        <embed src="./icon/star2.svg" type="">
+                        <embed src="./icon/star2.svg" type="">
+                        <embed src="./icon/star2.svg" type="">
+                    </div>
+                    <label for="account_describe">描述</label><br>
+                    <textarea id="account_describe"></textarea><br>
+                </div>
+            </div>
+            <div class="alter_yesOrNot">
+                <a href="./navbarAndFooter個人.html">
+                    <span class="alter_backself">取消</span>
+                </a>
+                <input type="submit" value="儲存">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Navbar收縮高度
+        addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+
+                $('.navbar').css({
+                    'height': ' 12vh'
+                });
+            } else {
+
+                $('.navbar').css({
+                    'height': ' 15vh'
+                });
+            }
+        });
+    </script>
+
+    <!-- footer -->
+    <div class="footer">
+        <div class="fContent">
+            <div>Copyright © 2022 GOsport. 保留一切權利。</div>
+        </div>
+    </div>
+
+    <script>
+        picFile.addEventListener("click", function () {
+            oploadPic.click()
+        })
+        // 相片上傳 同時顯示
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                picFile_backT.style.display = 'none'
+                preview_img.style.display = 'block'
+                var imageTagID = input.getAttribute("targetID");
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var img = document.getElementById(imageTagID);
+                    img.setAttribute("src", e.target.result)
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        // function countStar() {
+        //     let star = document.querySelectorAll('#star embed')
+        //     return star.length
+        // }
+        // countStar()
+    </script>
+</body>
+
+</html>
