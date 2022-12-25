@@ -1,0 +1,31 @@
+body{
+    display: flex;
+    justify-content: center;
+}
+font{
+    font-size: 24px;
+    color: #383838;
+}
+.div0{
+    height: 1180px;
+    width: 1060px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    padding: 50px;
+}
+.div1{
+    position: relative;
+    margin-top: 10px;
+}
+.div2{
+    border: 1px solid blue;
+    box-sizing: border-box;
+}
+.input{
+    position: relative;
+}
+.selectedDate {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
