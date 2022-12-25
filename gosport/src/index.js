@@ -1,19 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import Side2 from './side/rentsid_more';
 import Backqa from './back/backqa';
-import Testt from './side/testt';
 import reportWebVitals from './reportWebVitals';
+import Backteam from './back/backarticleteam';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <App /> */}
     {/* <Side2/> */}
-    {/* <Testt /> */}
-    <Backqa/>
+    {/* <Backqa/> */}
+    <Backteam/>
+
   </React.StrictMode>
 );
 
