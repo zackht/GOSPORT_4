@@ -6,6 +6,7 @@ import Backqa from './back/backqa';
 import reportWebVitals from './reportWebVitals';
 import Backteam from './back/backarticleteam';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

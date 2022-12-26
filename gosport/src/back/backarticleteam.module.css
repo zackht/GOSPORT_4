@@ -1,31 +1,148 @@
-body{
-    display: flex;
-    justify-content: center;
-}
-font{
-    font-size: 24px;
-    color: #383838;
+
+
+* {
+    margin: 0;
+    padding: 0;
 }
 .div0{
+    padding: 50px;
     height: 1180px;
     width: 1060px;
     border: 1px solid black;
     box-sizing: border-box;
-    padding: 50px;
+}
+.font{
+    font-size: 24px;
+    color: #383838;
+}
+.font1{
+    font-size: 20px;
+    color: #aaaaaa;
+}
+.date{
+    position: relative;
+    border: none;
+    border-bottom: 1px black solid;
+    line-height: 30px;
+    background-color: transparent;
+    z-index: 2;
+    height: 40px;
+    text-align: center;
 }
 .div1{
     position: relative;
-    margin-top: 10px;
+    margin-right: 80px;
 }
 .div2{
-    border: 1px solid blue;
-    box-sizing: border-box;
-}
-.input{
     position: relative;
+    margin-right: 20px;
 }
-.selectedDate {
+.div5{
+    position: relative;
+    margin-left: 20px;
+}
+.div3{
+    appearance:none;
+    width: 138px;
+    height: 40px;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid black;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2;
+    background-color: transparent;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    width: 27px;
+    opacity: 0;
+}
+.selectedDate{
     position: absolute;
-    top: 0px;
+    top: 40px;
     right: 0px;
+}
+.selectimg{
+    position: absolute;
+    top: 10px;
+    right: 0px;
+}
+.div4{
+
+    margin-right: 126px;
+}
+.div6{
+    width: 175px;
+    height: 175px;
+    max-width: 227.5px;
+    max-height: 227.5px;
+    background-color: rgb(245, 245, 245);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.div7{
+    align-items: center;
+}
+.div8{
+    margin-top: 15px;
+}
+.input1{
+    background-color: #f5f5f5;
+    border-radius: 30px;
+    width: 100%;
+    border: none;
+    height: 50px;
+    margin-top: 10px;
+    padding-left: 30px;
+}
+.input2{
+    background-color: #f5f5f5;
+    border-radius: 30px;
+    width: 100%;
+    border: none;
+    height: 200px;
+    margin-top: 10px;
+    padding-left: 30px;
+    padding-top: 10px;
+}
+.input3{
+    background-color: #f5f5f5;
+    border-radius: 30px;
+    width: 290px;
+    border: none;
+    height: 50px;
+    margin-top: 10px;
+    padding-left: 30px;
+    padding-top: 10px;
+}
+.div9{
+    width: 410px;
+    height: 91px;
+    border: 1px solid red;
+    box-sizing: border-box;
+    margin-top: 30px;
+}
+.div10{
+    width: 100%;
+    margin-top: 50px;
+}
+.button1{
+    width: 414px;
+    height: 77px;
+    border: 1px solid #e64637;
+    background-color: white;
+    border-radius: 50px;
+    font-size: 32px;
+    color: #e64637;
+}
+.button2{
+    width: 414px;
+    height: 77px;
+    background-color: #e64637;
+    border-radius: 50px;
+    border: none;
+    font-size: 32px;
+    color: white;
+
 }

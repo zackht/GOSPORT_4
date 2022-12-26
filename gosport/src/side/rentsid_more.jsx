@@ -151,7 +151,7 @@ class Side2 extends Component {
                     <span>數量</span>
                     <div className={`d-flex`}>
                       <div onClick={this.minus} className={side2.buttom3} id="add">-</div>
-                      <input type="number" id="my-input" value={this.state.count} min="0" max="10" step="1" />
+                      <input type="number" className={side2.input} id="my-input" value={this.state.count} min="0" max="10" step="1" />
                       <div onClick={this.add} className={side2.buttom3} id="minus">+</div>
                     </div>
                   </div>
