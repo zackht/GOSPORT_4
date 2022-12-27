@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+}
+.font{
+    font-size: 20px;
+    color: #383838;
+}
+span{
+    font-size: 16px;
+    color: #aaaaaa;
+}
+.font1{
+    font-size: 16px;
+    color: #aaaaaa;
+}
+.font2{
+    font-size: 24px;
+    color: #383838;
+}
+.boxshadow{
+    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+}
+input[type='date'] {
+    position: relative;
+    border: none;
+    border-bottom: 1px black solid;
+    line-height: 30px;
+    background-color: transparent;
+    z-index: 2;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    width: 27px;
+    opacity: 0;
+}
+.dateimg{
+    position: relative;
+}
+.selectedDate {
+    position: absolute;
+    top: 20px;
+    right: 0px;
+}
+select{
+    position: relative;
+    border: none;
+    border-bottom: 1px black solid;
+    line-height: 30px;
+    background-color: transparent;
+    appearance: none;
+    z-index: 2;
+}
+.selectimg{
+    position: relative;
+}
+select+img{
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    background-color: transparent;
+}
+.ccc{
+    border-radius: 30px;
+    background-color: #f5f5f5;
+    border: 0;
+    height: 45px;
+    text-align: center;
+}
+.ccc::placeholder{
+    color: #aaaaaa;
+}
+.submit{
+    width: 100%;
+    height: 65px;
+    background-color: #e64637;
+    color: white;
+    border-radius: 30px;
+    font-size: 24px;
+    border: 0;
+
+
+}
+.button1{
+    border-radius: 30px;
+    border: 1px solid #e6e6e6;
+    color: #aaaaaa;
+    width: 70px;
+    height: 38px;
+    text-align: center;
+}
+.button2{
+    color: #e64637;
+    border: 1px solid #e64637;
+    width: 150px;
+    height: 65px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+.button3{
+    height: 100px;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #aaaaaa;
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.focus123{
+    background-color: white;
+    border-bottom: 2px solid #e64637;
+    box-sizing: border-box;
+    color: #000000;
+}
+.div1{
+    margin-top: 200px; 
+    padding: 0px;
+}
+.div2{
+    margin: 0px 50px;
+}
+.div3{
+    height: 600px; 
+    margin-right: 12.5px;
+    padding: 40px;
+}
+.div4{
+    height: 100%; display: block;
+}
+.div5{
+    height: 100%;
+}
+.div6{
+    margin: 0px 90px 0px 0px;
+}
+.div7{
+    width: 100%; height: 55px;text-align: center;
+}
+.div8{
+    margin-bottom: 30px;
+}
+.div9{
+    width: 100%; height: 55px;text-align: center;
+}
+.div10{
+    margin-top: 10px;
+}
+.div11{
+    width: 100%;height: 65px; text-align: center;
+}
+.div12{
+    margin-top: 20px;
+}
+.div13{
+    width: 100% ;margin-top: 10px;
+}
+.div14{
+    height: 100%; display: none;
+}
+.div15{
+    height: 100%;
+}
+.div16{
+    margin: 0px 90px 0px 0px;
+}
+.div17{
+    margin-top: 20px;
+}
+.div18{
+    width: 100%;height: 55px; text-align: center;
+}
+.div19{
+    margin-top: 20px;
+}
+.div20{
+    width: 100%;height: 55px; text-align: center;
+}
+.div21{
+    width: 100% ;margin-top: 10px;
+}
+.div22{
+    width: 100% ;margin-top: 10px;
+}
+.div23{
+    margin-top: 20px;
+}
+.div24{
+    height: 100%; display: none;
+}
+.div25{
+    height: 100%;
+}
+.div26{
+    margin: 0px 90px 0px 0px;
+}
+.div27{
+    width: 100%; height: 55px;text-align: center;
+}
+.div28{
+    margin-top: 20px;
+}
+.div29{
+    width: 100%;height: 45px; text-align: center;
+}
+.div30{
+    margin-top: 20px;
+}
+.div31{
+    width: 100%;height: 45px; text-align: center;
+}
+.div32{
+    margin-top: 20px;
+}
+.div33{
+    width: 100% ;margin-top: 10px;
+}
+.div34{
+    height: 600px; margin-left: 12.5px;padding: 40px 40px 40px 40px;
+}
+.div35{
+    margin-bottom: 40px;
+}
+.div36{
+    display: block;
+}
+.div37{
+    margin-bottom: 20px;
+}
+.div38{
+    padding: 0;
+}
+.div39{
+    height: 100%;
+}
+.div40{
+    padding: 0px;
+}
+.div41{
+    border-bottom: 1px solid #aaaaaa; padding: 20px 0px;
+}
+.div42{
+    margin-right: 15px;
+}
+.div43{
+    display: none;
+}
+.div44{
+    margin-bottom: 20px;
+}
+.div45{
+    height: 100%;
+}
+.div46{
+    padding: 0px;
+}
+.div47{
+    border-bottom: 1px solid #aaaaaa; padding: 20px 0px;
+}
+.div48{
+    margin-right: 15px;
+}
+.div49{
+    display: none;
+}
+.div50{
+    margin-bottom: 20px;
+}
+.div51{
+    height: 100%;
+}
+.div52{
+    border-bottom: 1px solid #aaaaaa; padding: 20px 0px;
+}
+.div53{
+    margin-right: 15px;
+}
