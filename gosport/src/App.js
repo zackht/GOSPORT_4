@@ -5,29 +5,36 @@ import backqa from './back/backqa';
 import Backarticle from './back/backarticle';
 import Basic from './teams/basic.jsx';
 import rentside_more from './side/rentsid_more';
+import Selfactive from './selfactive/selfactive';
+import Selfalter from './selfalter/selfalter';
+import Selfpage from './selfpage/selfpage';
 
 
 // import Navigation from './components/Navigation';
- 
+
 class App extends Component {
   render() {
-    return (      
-       <BrowserRouter>
+    return (
+      <BrowserRouter>
         <div>
           {/* <Navigation /> */}
-            <Switch>
-             <Route path="/Backarticle" component={Backarticle}/>
-             
-            <Route path="/teams/basic" component={Basic}/>
+          <Switch>
+            <Route path="/Backarticle" component={Backarticle} />
+
+            <Route path="/teams/basic" component={Basic} />
+
+            <Route path="/testt" component={Testt} />
+            <Route path="/backqa" component={backqa} />
+            <Route path="/rentside_more" component={rentside_more} />
             
-             <Route path="/testt" component={Testt}/>
-             <Route path="/backqa" component={backqa}/>
-             <Route path="/rentside_more" component={rentside_more}/>
-           </Switch>
-        </div> 
+            <Route path="/selfactive" component={Selfactive} />
+            <Route path="/selfalter" component={Selfalter} />
+            <Route path="/selfpage" component={Selfpage} />
+          </Switch>
+        </div>
       </BrowserRouter>
     );
   }
 }
- 
+
 export default App;
