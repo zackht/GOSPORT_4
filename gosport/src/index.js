@@ -14,6 +14,7 @@ root.render(
   <React.StrictMode>
     {/* <Side2/> */}
     {/* <Backqa/> */}
+    
     {/* <Backteam/> */}
     {/* <Backarticle/> */}
     <App/>

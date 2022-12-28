@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Testt from './side/testt';
 import backqa from './back/backqa';
 import Backarticle from './back/backarticle';
+import Basic from './teams/basic.jsx';
 import rentside_more from './side/rentsid_more';
 
 
@@ -16,6 +17,9 @@ class App extends Component {
           {/* <Navigation /> */}
             <Switch>
              <Route path="/Backarticle" component={Backarticle}/>
+             
+            <Route path="/teams/basic" component={Basic}/>
+            
              <Route path="/testt" component={Testt}/>
              <Route path="/backqa" component={backqa}/>
              <Route path="/rentside_more" component={rentside_more}/>
