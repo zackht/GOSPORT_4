@@ -29,7 +29,7 @@
     min-width: 10%;
     min-height: 270;
 }
-span{
+.span{
     font-size: 16px;
     color: #aaaaaa;
 }
@@ -88,7 +88,7 @@ input[type=number]::-webkit-inner-spin-button{
     width: 29px;
     height: 33px;
 }
-input[type='date'] {
+.date{
     position: relative;
     border: none;
     border-bottom: 1px black solid;

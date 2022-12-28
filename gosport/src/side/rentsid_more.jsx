@@ -40,19 +40,19 @@ class Side2 extends Component {
                 <img src={Rectangle} alt="" />
               </div>
               <div>
-                <span>設施</span>
+                <span className={side2.span}>設施</span>
                 <div className={`d-flex`}>
                   <div><img src={a1} alt="" /></div>
                   <div><img src={a2} alt="" /></div>
                   <div><img src={a3} alt="" /></div>
                 </div>
               </div>
-              <div><span>營業時間</span></div>
+              <div><span className={side2.span}>營業時間</span></div>
               <div className={side2.font}>平日9:00~19:00</div>
               <div className={side2.font}>假日9:00~20:00</div>
-              <div><span>電話</span></div>
+              <div><span className={side2.span}>電話</span></div>
               <div className={side2.font}>04-22256322</div>
-              <div><span>描述</span></div>
+              <div><span className={side2.span}>描述</span></div>
               <div className={side2.font}>共五面、9.8M挑高場地
                 提供羽球教學課程
                 共245坪 </div>
@@ -68,7 +68,7 @@ class Side2 extends Component {
                   </div>
                 </div>
                 <div>
-                  <span>租期</span>
+                  <span className={side2.span}>租期</span>
                   <div className={`d-flex`}>
                     <div>
                       <input type="radio" id="radio1" name="a" defaultValue="date" />
@@ -86,13 +86,13 @@ class Side2 extends Component {
                   </div>
                 </div>
                 <div className={side2.div7}>
-                  <span>租期</span>
+                  <span className={side2.span}>租期</span>
                   <div className={side2.div8}>
-                    <input type="date" name="inputdate" /><img className={side2.selectedDate} src={group41} alt="" />
+                    <input type="date" name="inputdate" className={side2.date} /><img className={`${side2.selectedDate}`} src={group41} alt="" />
                   </div>
                 </div>
                 <div>
-                  <span>時段</span>
+                  <span className={side2.span}>時段</span>
                   <div className={`d-flex ${side2.div9}`} >
                     <div className={`d-flex flex-wrap ${side2.div10}`}>
                       <div>
@@ -148,7 +148,7 @@ class Side2 extends Component {
                 </div>
                 <div className={`d-flex`}>
                   <div>
-                    <span>數量</span>
+                    <span className={side2.span}>數量</span>
                     <div className={`d-flex`}>
                       <div onClick={this.minus} className={side2.buttom3} id="add">-</div>
                       <input type="number" className={side2.input} id="my-input" value={this.state.count} min="0" max="10" step="1" />
@@ -156,17 +156,17 @@ class Side2 extends Component {
                     </div>
                   </div>
                   <div className={side2.div11}>
-                    <span>費用</span>
+                    <span className={side2.span}>費用</span>
                     <div>
                       <span className={side2.div12}>700</span>
-                      <span>元</span>
+                      <span className={side2.span}>元</span>
                     </div>
                   </div>
                 </div>
               </form>
             </div>
             <div className={side2.div4}>
-              <span>地址</span>
+              <span className={side2.span}>地址</span>
               <div className={side2.div5}>
 
               </div>

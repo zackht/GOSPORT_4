@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
- 
-
+import Testt from './side/testt';
 import backqa from './back/backqa';
 import Backarticle from './back/backarticle';
+import rentside_more from './side/rentsid_more';
+
+
 // import Navigation from './components/Navigation';
  
 class App extends Component {
@@ -14,6 +16,9 @@ class App extends Component {
           {/* <Navigation /> */}
             <Switch>
              <Route path="/Backarticle" component={Backarticle}/>
+             <Route path="/testt" component={Testt}/>
+             <Route path="/backqa" component={backqa}/>
+             <Route path="/rentside_more" component={rentside_more}/>
            </Switch>
         </div> 
       </BrowserRouter>
