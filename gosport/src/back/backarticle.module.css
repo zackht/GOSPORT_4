@@ -24,7 +24,7 @@
 .boxshadow{
     box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
 }
-input[type='date'] {
+.date {
     position: relative;
     border: none;
     border-bottom: 1px black solid;
@@ -32,7 +32,7 @@ input[type='date'] {
     background-color: transparent;
     z-index: 2;
 }
-input[type="date"]::-webkit-calendar-picker-indicator {
+.date::-webkit-calendar-picker-indicator {
     width: 27px;
     opacity: 0;
 }

@@ -100,11 +100,11 @@ class Backarticle extends Component {
                                     <span className={ba.span}>日期區間</span>
                                     <div class={`d-flex flex-column ${ba.div6}`} >
                                         <div class={`${ba.dateimg} ${ba.font}`}>
-                                            <input type="date" className={ba.div7} />
+                                            <input type="date" className={`${ba.div7} ${ba.date}`} />
                                             <img class={ba.selectedDate} src={Group41} alt="" />
                                         </div>
                                         <div class={`${ba.dateimg} ${ba.div8}`}>
-                                            <input type="date" class={`${ba.font} ${ba.div9}`} />
+                                            <input type="date" class={`${ba.font} ${ba.div9} ${ba.date}`} />
                                             <img class={ba.selectedDate} src={Group41} alt="" />
                                         </div>
                                         <span className={ba.span}>球類</span>
@@ -177,7 +177,7 @@ class Backarticle extends Component {
                                         <span className={ba.span}>日期</span>
                                         <div class={`d-flex flex-column`}>
                                             <div class={`${ba.dateimg} ${ba.font}`}>
-                                                <input className={ba.div27} type="date" />
+                                                <input className={`${ba.div27} ${ba.date}`} type="date" />
                                                 <img class={ba.selectedDate} src={Group41}alt="" />
                                             </div>
                                             <span className={`${ba.div28} ${ba.span}`}>縣市</span>

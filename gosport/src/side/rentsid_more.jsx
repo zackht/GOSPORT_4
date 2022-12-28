@@ -71,16 +71,16 @@ class Side2 extends Component {
                   <span className={side2.span}>租期</span>
                   <div className={`d-flex`}>
                     <div>
-                      <input type="radio" id="radio1" name="a" defaultValue="date" />
-                      <label htmlFor="radio1" className={side2.buttom1}>日租</label>
+                      <input type="radio" id="radio1" className={side2.radio} name="a" defaultValue="date" />
+                      <label htmlFor="radio1" className={`${side2.buttom1}`}>日租</label>
                     </div>
                     <div className='div6'>
-                      <input type="radio" id="radio2" name="a" defaultValue="month" />
-                      <label htmlFor="radio2" className={side2.buttom1}>月租</label>
+                      <input type="radio" id="radio2" className={side2.radio} name="a" defaultValue="month" />
+                      <label htmlFor="radio2" className={`${side2.buttom1}`}>月租</label>
                     </div>
                     <div>
-                      <input type="radio" id="radio3" name="a" defaultValue="season" />
-                      <label htmlFor="radio3" className={side2.buttom1}>季租</label>
+                      <input type="radio" id="radio3" className={side2.radio} name="a" defaultValue="season" />
+                      <label htmlFor="radio3" className={`${side2.buttom1}`}>季租</label>
                     </div>
 
                   </div>
@@ -96,52 +96,52 @@ class Side2 extends Component {
                   <div className={`d-flex ${side2.div9}`} >
                     <div className={`d-flex flex-wrap ${side2.div10}`}>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="9,10" id="checkbox1" />
-                        <label htmlFor="checkbox1" className={side2.buttom1} >9:00~10:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="9,10" id="checkbox1" />
+                        <label htmlFor="checkbox1" className={`${side2.buttom1}`} >9:00~10:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="10,11" id="checkbox2" />
-                        <label htmlFor="checkbox2" className={side2.buttom1}>10:00~11:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="10,11" id="checkbox2" />
+                        <label htmlFor="checkbox2" className={`${side2.buttom1}`}>10:00~11:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="11,12" id="checkbox3" />
-                        <label htmlFor="checkbox3" className={side2.buttom1}>11:00~12:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="11,12" id="checkbox3" />
+                        <label htmlFor="checkbox3" className={`${side2.buttom1}`}>11:00~12:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="12,13" id="checkbox4" />
-                        <label htmlFor="checkbox4" className={side2.buttom1}>12:00~13:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="12,13" id="checkbox4" />
+                        <label htmlFor="checkbox4" className={`${side2.buttom1}`}>12:00~13:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="13,14" id="checkbox5" />
-                        <label htmlFor="checkbox5" className={side2.buttom1}>13:00~14:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="13,14" id="checkbox5" />
+                        <label htmlFor="checkbox5" className={`${side2.buttom1}`}>13:00~14:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="14,15" id="checkbox6" />
-                        <label htmlFor="checkbox6" className={side2.buttom1}>14:00~15:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="14,15" id="checkbox6" />
+                        <label htmlFor="checkbox6" className={`${side2.buttom1}`}>14:00~15:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="16,17" id="checkbox7" />
-                        <label htmlFor="checkbox7" className={side2.buttom1}>15:00~16:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="16,17" id="checkbox7" />
+                        <label htmlFor="checkbox7" className={`${side2.buttom1}`}>15:00~16:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="16,17" id="checkbox8" />
-                        <label htmlFor="checkbox8" className={side2.buttom1}>16:00~17:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="16,17" id="checkbox8" />
+                        <label htmlFor="checkbox8" className={`${side2.buttom1}`}>16:00~17:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="17,18" id="checkbox9" />
-                        <label htmlFor="checkbox9" className={side2.buttom1}>17:00~18:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="17,18" id="checkbox9" />
+                        <label htmlFor="checkbox9" className={`${side2.buttom1}`}>17:00~18:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="18,19" id="checkbox10" />
-                        <label htmlFor="checkbox10" className={side2.buttom1}>18:00~19:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="18,19" id="checkbox10" />
+                        <label htmlFor="checkbox10" className={`${side2.buttom1}`}>18:00~19:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="19,20" id="checkbox11" />
-                        <label htmlFor="checkbox11" className={side2.buttom1}>19:00~20:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="19,20" id="checkbox11" />
+                        <label htmlFor="checkbox11" className={`${side2.buttom1}`}>19:00~20:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="20,21" id="checkbox12" />
-                        <label htmlFor="checkbox12" className={side2.buttom1}>20:00~21:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="20,21" id="checkbox12" />
+                        <label htmlFor="checkbox12" className={`${side2.buttom1}`}>20:00~21:00</label>
                       </div>
                     </div>
                   </div>

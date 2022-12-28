@@ -53,7 +53,7 @@
     z-index: 2;
     background-color: transparent;
 }
-input[type="date"]::-webkit-calendar-picker-indicator {
+.date::-webkit-calendar-picker-indicator {
     width: 27px;
     opacity: 0;
 }

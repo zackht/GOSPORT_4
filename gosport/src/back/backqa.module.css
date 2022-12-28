@@ -32,7 +32,7 @@
     background-color: transparent;
     z-index: 2;
 }
-input[type="date"]::-webkit-calendar-picker-indicator {
+.date::-webkit-calendar-picker-indicator {
     width: 27px;
     opacity: 0;
 }
@@ -44,7 +44,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     top: 20px;
     right: 0px;
 }
-select{
+.select{
     position: relative;
     border: none;
     border-bottom: 1px black solid;
@@ -56,7 +56,7 @@ select{
 .selectimg{
     position: relative;
 }
-select+img{
+.simg{
     position: absolute;
     top: 20px;
     right: 0px;
