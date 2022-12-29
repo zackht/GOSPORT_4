@@ -176,8 +176,8 @@ class Selfactive extends Component {
                         <div id="teout" style={{display:isDelShow}}>
                                 <div>
                                     日期區間<br />
-                                    <input type="date" /><img className="selectedDate" src="./icon/arrowup2.svg" alt="" />至&emsp;&thinsp;
-                                    <input type="date" /><img className="selectedDate" src="./icon/arrowup2.svg" alt="" />
+                                    <input type="date" /><img className="selectedDate" src={arrowup} alt="" />至&emsp;&thinsp;
+                                    <input type="date" /><img className="selectedDate" src={arrowup} alt="" />
                                 </div>
                                 <table>
                                     <tbody>
