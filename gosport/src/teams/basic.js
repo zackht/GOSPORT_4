@@ -1,30 +1,14 @@
 import React, { Component } from 'react';
 import basic from './basic.module.css';
-import notice from "./icon/notice.svg";
-import user from "./icon/user.svg";
 import team1 from './img/team1.jpg';
+import Navfoot from '../navfoot/navfoot';
 
-class Basic extends Component {
-    state = {  } 
-    render() { 
-        return (
-            <React.Fragment>
-                {/* <!-- 導覽列 --> */}
-                <div className="navbar">
-                    <div className="nContent">
-                        <div className="nLeft">
-                            <div>GOsport</div>
-                        </div>
-                        <div className="nRight">
-                            <div><a href="">租場地</a></div>
-                            <div><a href="">交流區</a></div>
-                            <div><a href="">成為場地方</a></div>
-                            <div><a href="">Q&A</a></div>
-                            <img src={notice} alt=""/>
-                            <img src={user}></img>
-                        </div>
-                    </div>
-                </div>
+
+export default function Teams (){
+    
+    return(
+        <React.Fragment>
+                <Navfoot/>
                 {/* <!-- 主要內容 --> */}
                 <div className={`${basic.main}`}>
                 <div className={`${basic.mContent}`}>
@@ -66,8 +50,6 @@ class Basic extends Component {
                     </div>
                 </div>
             </React.Fragment>
-        );
-    }
+    )
 }
  
-export default Basic;

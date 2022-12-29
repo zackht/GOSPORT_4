@@ -1,3 +1,9 @@
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+/* Navbar */
 .navbar {
     background-color: white;
     width: 100vw;
@@ -11,15 +17,7 @@
     justify-content: center;
     box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
 }
-
-.navbar+div {
-    /* 取消height 3000 */
-    position: relative;
-    /* background-color: aqua;  */
-}
-
 .nContent {
-    /* background-color: aqua; */
     width: 95vw;
     height: 50%;
     display: flex;
@@ -47,6 +45,12 @@
 .nRight a {
     text-decoration: none;
     color: rgb(30, 30, 30);
+    
+}
+.nRight>div:nth-child(1) {
+    /* 底線 */
+    border-bottom: 2px rgb(230, 70, 55) solid;
+    padding-bottom: 8px;
 }
 
 .nRight>div {
@@ -58,28 +62,20 @@
     font-size: 1rem;
     font-family: 'Noto Sans TC';
     color: rgb(30, 30, 30);
+    box-sizing: border-box;
 }
 
-.nRight>div:nth-child(1) {
-    /* 底線 */
-    border-bottom: 2px rgb(230, 70, 55) solid;
-}
 
 .nRight>img {
-    height: 40px;
-/* 改40 */
+    height: 18px;
+    width: 20px;
     margin-left: 30px;
     cursor: pointer;
-    padding-bottom: 10px;
-    padding-top: 10px;
 }
 
-.test {
-    height: 1000px;
-    width: 100px;
-}
 
-/* Footer--------------------------------------------------------------------------- */
+
+/* Footer  */
 .footer {
     background-color: rgb(230, 70, 55);
     width: 100vw;
@@ -89,10 +85,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-body{
-    padding-bottom: 8vh;
-    overflow-x: hidden;
 }
 
 .fContent {

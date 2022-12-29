@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-<<<<<<< HEAD
  
 
 import backqa from './back/backqa';
 import Backarticle from './back/backarticle';
-=======
-import Basic from './teams/basic.jsx';
->>>>>>> 5805181 (2022.12.27 16:39 Basic完成)
+import Teams from './teams/basic.js';
+import NavFoot from './navfoot/navfoot.js';
 // import Navigation from './components/Navigation';
  
 class App extends Component {
@@ -17,13 +15,11 @@ class App extends Component {
         <div>
           {/* <Navigation /> */}
             <Switch>
-<<<<<<< HEAD
-             <Route path="/Backarticle" component={Backarticle}/>
-=======
+            <Route path="/Backarticle" component={Backarticle}/>
              
-            <Route path="/teams/basic" component={Basic}/>
+            <Route path="/teams/basic" component={Teams}/>
+            <Route path="/navfoot" component={NavFoot}/>
             
->>>>>>> 5805181 (2022.12.27 16:39 Basic完成)
            </Switch>
         </div> 
       </BrowserRouter>
