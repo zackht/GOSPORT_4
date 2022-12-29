@@ -11,7 +11,7 @@ class Selfalter extends Component {
         return (
             <React.Fragment>
                 {/* header */}
-                <div className="navbar">
+                {/* <div className="navbar">
                     <div className="nContent">
                         <div className="nLeft">
                             <div>GOspoort</div>
@@ -25,7 +25,7 @@ class Selfalter extends Component {
                             <img src={user}></img>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 {/* 主體 */}
                 <div>
                     <div className="selfalter">
@@ -95,11 +95,11 @@ class Selfalter extends Component {
                     </div>
                 </div>
                 {/* footer */}
-                <div class="footer">
+                {/* <div class="footer">
                     <div class="fContent">
                         <div>Copyright © 2022 GOsport. 保留一切權利。</div>
                     </div>
-                </div>
+                </div> */}
 
             </React.Fragment>
         );
