@@ -40,19 +40,19 @@ class Side2 extends Component {
                 <img src={Rectangle} alt="" />
               </div>
               <div>
-                <span>設施</span>
+                <span className={side2.span}>設施</span>
                 <div className={`d-flex`}>
                   <div><img src={a1} alt="" /></div>
                   <div><img src={a2} alt="" /></div>
                   <div><img src={a3} alt="" /></div>
                 </div>
               </div>
-              <div><span>營業時間</span></div>
+              <div><span className={side2.span}>營業時間</span></div>
               <div className={side2.font}>平日9:00~19:00</div>
               <div className={side2.font}>假日9:00~20:00</div>
-              <div><span>電話</span></div>
+              <div><span className={side2.span}>電話</span></div>
               <div className={side2.font}>04-22256322</div>
-              <div><span>描述</span></div>
+              <div><span className={side2.span}>描述</span></div>
               <div className={side2.font}>共五面、9.8M挑高場地
                 提供羽球教學課程
                 共245坪 </div>
@@ -68,87 +68,87 @@ class Side2 extends Component {
                   </div>
                 </div>
                 <div>
-                  <span>租期</span>
+                  <span className={side2.span}>租期</span>
                   <div className={`d-flex`}>
                     <div>
-                      <input type="radio" id="radio1" name="a" defaultValue="date" />
-                      <label htmlFor="radio1" className={side2.buttom1}>日租</label>
+                      <input type="radio" id="radio1" className={side2.radio} name="a" defaultValue="date" />
+                      <label htmlFor="radio1" className={`${side2.buttom1}`}>日租</label>
                     </div>
                     <div className='div6'>
-                      <input type="radio" id="radio2" name="a" defaultValue="month" />
-                      <label htmlFor="radio2" className={side2.buttom1}>月租</label>
+                      <input type="radio" id="radio2" className={side2.radio} name="a" defaultValue="month" />
+                      <label htmlFor="radio2" className={`${side2.buttom1}`}>月租</label>
                     </div>
                     <div>
-                      <input type="radio" id="radio3" name="a" defaultValue="season" />
-                      <label htmlFor="radio3" className={side2.buttom1}>季租</label>
+                      <input type="radio" id="radio3" className={side2.radio} name="a" defaultValue="season" />
+                      <label htmlFor="radio3" className={`${side2.buttom1}`}>季租</label>
                     </div>
 
                   </div>
                 </div>
                 <div className={side2.div7}>
-                  <span>租期</span>
+                  <span className={side2.span}>租期</span>
                   <div className={side2.div8}>
-                    <input type="date" name="inputdate" /><img className={side2.selectedDate} src={group41} alt="" />
+                    <input type="date" name="inputdate" className={side2.date} /><img className={`${side2.selectedDate}`} src={group41} alt="" />
                   </div>
                 </div>
                 <div>
-                  <span>時段</span>
+                  <span className={side2.span}>時段</span>
                   <div className={`d-flex ${side2.div9}`} >
                     <div className={`d-flex flex-wrap ${side2.div10}`}>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="9,10" id="checkbox1" />
-                        <label htmlFor="checkbox1" className={side2.buttom1} >9:00~10:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="9,10" id="checkbox1" />
+                        <label htmlFor="checkbox1" className={`${side2.buttom1}`} >9:00~10:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="10,11" id="checkbox2" />
-                        <label htmlFor="checkbox2" className={side2.buttom1}>10:00~11:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="10,11" id="checkbox2" />
+                        <label htmlFor="checkbox2" className={`${side2.buttom1}`}>10:00~11:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="11,12" id="checkbox3" />
-                        <label htmlFor="checkbox3" className={side2.buttom1}>11:00~12:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="11,12" id="checkbox3" />
+                        <label htmlFor="checkbox3" className={`${side2.buttom1}`}>11:00~12:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="12,13" id="checkbox4" />
-                        <label htmlFor="checkbox4" className={side2.buttom1}>12:00~13:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="12,13" id="checkbox4" />
+                        <label htmlFor="checkbox4" className={`${side2.buttom1}`}>12:00~13:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="13,14" id="checkbox5" />
-                        <label htmlFor="checkbox5" className={side2.buttom1}>13:00~14:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="13,14" id="checkbox5" />
+                        <label htmlFor="checkbox5" className={`${side2.buttom1}`}>13:00~14:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="14,15" id="checkbox6" />
-                        <label htmlFor="checkbox6" className={side2.buttom1}>14:00~15:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="14,15" id="checkbox6" />
+                        <label htmlFor="checkbox6" className={`${side2.buttom1}`}>14:00~15:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="16,17" id="checkbox7" />
-                        <label htmlFor="checkbox7" className={side2.buttom1}>15:00~16:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="16,17" id="checkbox7" />
+                        <label htmlFor="checkbox7" className={`${side2.buttom1}`}>15:00~16:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="16,17" id="checkbox8" />
-                        <label htmlFor="checkbox8" className={side2.buttom1}>16:00~17:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="16,17" id="checkbox8" />
+                        <label htmlFor="checkbox8" className={`${side2.buttom1}`}>16:00~17:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="17,18" id="checkbox9" />
-                        <label htmlFor="checkbox9" className={side2.buttom1}>17:00~18:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="17,18" id="checkbox9" />
+                        <label htmlFor="checkbox9" className={`${side2.buttom1}`}>17:00~18:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="18,19" id="checkbox10" />
-                        <label htmlFor="checkbox10" className={side2.buttom1}>18:00~19:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="18,19" id="checkbox10" />
+                        <label htmlFor="checkbox10" className={`${side2.buttom1}`}>18:00~19:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="19,20" id="checkbox11" />
-                        <label htmlFor="checkbox11" className={side2.buttom1}>19:00~20:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="19,20" id="checkbox11" />
+                        <label htmlFor="checkbox11" className={`${side2.buttom1}`}>19:00~20:00</label>
                       </div>
                       <div>
-                        <input type="checkbox" name="checkbox[]" value="20,21" id="checkbox12" />
-                        <label htmlFor="checkbox12" className={side2.buttom1}>20:00~21:00</label>
+                        <input type="checkbox" name="checkbox[]" className={side2.checkbox} value="20,21" id="checkbox12" />
+                        <label htmlFor="checkbox12" className={`${side2.buttom1}`}>20:00~21:00</label>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className={`d-flex`}>
                   <div>
-                    <span>數量</span>
+                    <span className={side2.span}>數量</span>
                     <div className={`d-flex`}>
                       <div onClick={this.minus} className={side2.buttom3} id="add">-</div>
                       <input type="number" className={side2.input} id="my-input" value={this.state.count} min="0" max="10" step="1" />
@@ -156,17 +156,17 @@ class Side2 extends Component {
                     </div>
                   </div>
                   <div className={side2.div11}>
-                    <span>費用</span>
+                    <span className={side2.span}>費用</span>
                     <div>
                       <span className={side2.div12}>700</span>
-                      <span>元</span>
+                      <span className={side2.span}>元</span>
                     </div>
                   </div>
                 </div>
               </form>
             </div>
             <div className={side2.div4}>
-              <span>地址</span>
+              <span className={side2.span}>地址</span>
               <div className={side2.div5}>
 
               </div>

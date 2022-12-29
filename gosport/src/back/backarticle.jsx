@@ -97,28 +97,28 @@ class Backarticle extends Component {
                             {/* <!-- 零打搜尋 --> */}
                             <div className={ba.div4} style={{display: (this.state.zeroda ===true) ? "block" : "none"}} id="zerosearch">
                                 <form action="" class={`d-flex flex-column ${ba.div5}`}>
-                                    <span>日期區間</span>
+                                    <span className={ba.span}>日期區間</span>
                                     <div class={`d-flex flex-column ${ba.div6}`} >
                                         <div class={`${ba.dateimg} ${ba.font}`}>
-                                            <input type="date" className={ba.div7} />
+                                            <input type="date" className={`${ba.div7} ${ba.date}`} />
                                             <img class={ba.selectedDate} src={Group41} alt="" />
                                         </div>
                                         <div class={`${ba.dateimg} ${ba.div8}`}>
-                                            <input type="date" class={`${ba.font} ${ba.div9}`} />
+                                            <input type="date" class={`${ba.font} ${ba.div9} ${ba.date}`} />
                                             <img class={ba.selectedDate} src={Group41} alt="" />
                                         </div>
-                                        <span>球類</span>
+                                        <span className={ba.span}>球類</span>
                                         <div class={`${ba.selectimg} ${ba.font} ${ba.div10}`}>
-                                            <select name="" id="" className={ba.div11}>
+                                            <select name="" id="" className={`${ba.div11} ${ba.select}`}>
                                                 <option value="">羽球</option>
                                                 <option value="">排球</option>
                                                 <option value="">桌球</option>
                                             </select>
-                                            <img class="" src={Group41} alt="" />
+                                            <img class="" src={Group41} alt="" className={ba.img}/>
                                         </div>
                                     </div>
                                     <div className={ba.div12}>
-                                        <span>關鍵字</span>
+                                        <span className={ba.span}>關鍵字</span>
                                         <div>
                                             <input type="text" class={`${ba.ccc} ${ba.div13}`}
                                                 placeholder="請輸入關鍵字" />
@@ -134,31 +134,31 @@ class Backarticle extends Component {
                                 <form action="" class={`d-flex flex-column ${ba.div15}`}>
                                     <div class={`d-flex flex-column`} >
                                         <div class={`d-flex flex-column ${ba.div16}`}>
-                                            <span className={ba.div17}>縣市</span>
+                                            <span className={`${ba.div17} ${ba.span}`}>縣市</span>
                                             <div class={`${ba.selectimg} ${ba.font}`}>
-                                                <select name="" id="" className={ba.div18}>
+                                                <select name="" id="" className={`${ba.div18} ${ba.select}`}>
                                                     <option value="">台中市</option>
                                                     <option value="">台北市</option>
                                                     <option value="">高雄市</option>
                                                 </select>
-                                                <img class="" src={Group41} alt="" />
+                                                <img class="" src={Group41} alt="" className={ba.img} />
                                             </div>
-                                            <span className={ba.div19}>地區</span>
+                                            <span className={`${ba.div19} ${ba.span}`}>地區</span>
                                             <div class={`${ba.selectimg} ${ba.font}`}>
-                                                <select name="" id="" className={ba.div20}>
+                                                <select name="" id="" className={`${ba.div20} ${ba.select}`}>
                                                     <option value="">西屯區</option>
                                                     <option value="">北屯區</option>
                                                     <option value="">南屯區</option>
                                                 </select>
-                                                <img class="" src={Group41} alt="" />
+                                                <img class="" src={Group41} alt="" className={ba.img} />
                                             </div>
                                         </div>
-                                        <span>球隊名稱</span>
+                                        <span className={ba.span}>球隊名稱</span>
                                         <div>
                                             <input type="text" class={`${ba.ccc} ${ba.div21}`}
                                                 placeholder="請輸入關鍵字" />
                                         </div>
-                                        <span className={ba.div23}>場館名稱</span>
+                                        <span className={`${ba.div23} ${ba.span}`}>場館名稱</span>
                                         <div>
                                             <input type="text" class={`${ba.ccc} ${ba.div22}`}
                                                 placeholder="請輸入關鍵字" />
@@ -174,34 +174,34 @@ class Backarticle extends Component {
                             <div className={ba.div24} style={{display: (this.state.rent ===true) ? "block" : "none"}} id="rentsearch">
                                 <form action="" class={`d-flex flex-column ${ba.div25}`}>
                                     <div className={ba.div26}>
-                                        <span>日期</span>
+                                        <span className={ba.span}>日期</span>
                                         <div class={`d-flex flex-column`}>
                                             <div class={`${ba.dateimg} ${ba.font}`}>
-                                                <input className={ba.div27} type="date" />
+                                                <input className={`${ba.div27} ${ba.date}`} type="date" />
                                                 <img class={ba.selectedDate} src={Group41}alt="" />
                                             </div>
-                                            <span className={ba.div28}>縣市</span>
+                                            <span className={`${ba.div28} ${ba.span}`}>縣市</span>
                                             <div class={`${ba.selectimg} ${ba.font}`}>
-                                                <select name="" id="" className={ba.div29}>
+                                                <select name="" id="" className={`${ba.div29} ${ba.select}`}>
                                                     <option value="">台中市</option>
                                                     <option value="">台北市</option>
                                                     <option value="">高雄市</option>
                                                 </select>
-                                                <img src={Group41} alt="" />
+                                                <img src={Group41} alt="" className={ba.img} />
                                             </div>
-                                            <span className={ba.div30}>地區</span>
+                                            <span className={`${ba.div30} ${ba.span}`}>地區</span>
                                             <div class={`${ba.selectimg} ${ba.font}`}>
-                                                <select name="" id="" className={ba.div31}>
+                                                <select name="" id="" className={`${ba.div31} ${ba.select}`}>
                                                     <option value="">西屯區</option>
                                                     <option value="">北屯區</option>
                                                     <option value="">南屯區</option>
                                                 </select>
-                                                <img src={Group41} alt="" />
+                                                <img src={Group41} alt="" className={ba.img} />
                                             </div>
                                         </div>
                                     </div>
                                     <div className={ba.div32}>
-                                        <span>場館名稱</span>
+                                        <span className={ba.span}>場館名稱</span>
                                         <div>
                                             <input type="text" class={`${ba.ccc} ${ba.div33}`}
                                                 placeholder="請輸入關鍵字" />

@@ -1,0 +1,172 @@
+.selfalter {
+    height: 1477px;
+    width: 1060px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+}
+
+.alter_form {
+    width: 90%;
+    height: 94%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.alter_form>div:first-child {
+    display: flex;
+}
+
+/* 照片區 */
+.alter_PicPla {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#oploadPic {
+    display: none;
+}
+
+#picFile {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#picFile,
+#picFile img {
+    background-color: rgb(245, 245, 245);
+    width: 175px;
+    height: 175px;
+    object-fit: cover;
+    clip-path: circle(50%);
+    font-size: 20px;
+}
+
+.alter_PicPla embed {
+    width: 20px;
+    height: 20px;
+    margin-top: 10px;
+}
+
+/* 主要輸入內容 */
+.alter_input,
+.alter_textarea {
+    border: none;
+    background-color: #F5F5F5;
+    border-radius: 50px;
+    height: 45px;
+    margin-bottom: 27px;
+    padding: 10px 23px;
+    font-size: 24px;
+}
+
+.alter_label {
+    color: #AAAAAA;
+    font-size: 20px;
+    line-height: 43px;
+}
+
+.alter_sex {
+    display: inline-block;
+    text-align: center;
+    border-radius: 50px;
+    width: 140px;
+    height: 55px;
+    border: 2px solid #E6E6E6;
+    font-size: 24px;
+    color: #E6E6E6;
+    line-height: 55px;
+    margin-bottom: 27px;
+}
+
+.alter_sex:hover {
+    color: black;
+    background-color: #F5F5F5;
+}
+
+.alter_degree {
+    background-color: rgb(245, 245, 245);
+    border-radius: 50px;
+    width: 450px;
+    height: 55px;
+    margin: 7px 0px 8px 0px;
+    padding-top: 10px;
+}
+
+.alter_degree div {
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    font-size: 24px;
+    width: 108px;
+}
+
+.alter_degree label {
+    display: inline-block;
+    color: black;
+    font-size: 20px;
+    position: relative;
+    padding: 0px 25px 0px 12px;
+}
+
+
+/* 徽章 */
+.alter_mark {
+    background-color: #F5F5F5;
+    height: 64px;
+    width: 640px;
+    border-radius: 50px;
+    /* line-height: 64px; */
+    display: flex;
+    align-items: center;
+    padding: 0px 30px;
+}
+
+.alter_mark embed {
+    width: 20px;
+    height: 20px;
+    padding-right: 7px;
+}
+
+/* 描述 */
+#account_describe {
+    width: 640px;
+    height: 170px;
+    border-radius: 30px;
+}
+
+/* 取消 確認 */
+.alter_yesOrNot {
+    display: flex;
+    margin-top: 20px;
+}
+
+.alter_yesOrNot input[type="submit"] {
+    border: none;
+    border-radius: 50px;
+    background-color: rgb(230, 70, 55);
+    color: white;
+    padding: 0px 0px;
+    width: 414px;
+    height: 63px;
+}
+
+.alter_backself {
+    color: rgb(230, 70, 55);
+    border: 1px solid rgb(230, 70, 55);
+    padding: 0px;
+    display: inline-block;
+    border-radius: 50px;
+    width: 414px;
+    height: 63px;
+    line-height: 63px;
+    text-align: center;
+}

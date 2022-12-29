@@ -1,0 +1,344 @@
+.selfactive {
+    /* width: 550px; */
+    /* height: 400px; */
+    width: 1060px;
+    height: 709px;
+    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+
+}
+
+.active_type,
+.active_title {
+    height: 16%;
+    display: flex;
+}
+/* toggle */
+.active_subCtrl {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: gray;
+    height: 100%;
+    width: 100%;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+}
+.active_act {
+
+    background-color: white;
+    border-bottom: 3px solid rgb(230, 70, 55);
+    color: #000;
+}
+
+/* 場地 文章 */
+/* .active_type button,
+.active_title button {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: gray;
+    height: 100%;
+    width: 100%;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.active_type button:hover,
+.active_title button:hover,
+.active_type button:focus,
+.active_title button:focus {
+    background-color: white;
+    border-bottom: 3px solid rgb(230, 70, 55);
+} */
+
+.active_title div,
+.active_type div {
+    color: gray;
+    background-color: rgb(233, 233, 233);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 內文 */
+.active_inner {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 15px;
+    height: 75%;
+    overflow: auto;
+}
+
+.active_inner>div>div>:nth-child(1),
+.active_inner>div>div>:nth-child(3),
+.active_inner>div>div>:nth-child(5),
+.active_inner>div>div>:nth-child(7),
+.active_inner>div>div>:nth-child(9),
+.active_inner>div>div>:nth-child(11) {
+    font-weight: 300;
+    padding-top: 7px;
+    color: gray;
+    font-size: 1rem;
+    line-height: 5vh;
+}
+
+/* 場地 */
+#orderin{
+    display: flex;
+    height: 90%;width: 100%;
+}
+
+#orderin>div:nth-child(1)>div:nth-child(1),
+#orderin>div:nth-child(1)>div:nth-child(3) {
+    margin-top: 10px;
+}
+
+#orderin>div {
+    padding-left: 5%;
+}
+
+/* 日期區間選擇 */
+.selfactive input[type='date'] {
+    position: relative;
+    border: none;
+    border-bottom: 1px black solid;
+    line-height: 30px;
+    background-color: transparent;
+    z-index: 2;
+}
+
+.selfactive input[type="date"]::-webkit-calendar-picker-indicator {
+    width: 27px;
+    opacity: 0;
+}
+
+.selectedDate {
+    position: relative;
+    /* top: 10px; */
+    right: 25px;
+}
+
+/* 日期區間顯示 */
+.showDate button {
+    display: block;
+    border: none;
+    background-color: transparent;
+    font-size: 24px;
+    margin: 15px 0px;
+}
+
+.showDate button:hover,
+.showDate button:focus {
+    color: rgb(230, 70, 55);
+}
+
+/* 租場清單 */
+.ordermenu {
+    flex: 3;
+    padding-bottom: 1px;
+}
+
+/* 再次預約 取消預約 */
+.chuse_order {
+    background-color: rgb(230, 70, 55);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    position: absolute;
+    right: 5vh;
+    bottom: 0px;
+
+    /* width: 90px; */
+    /* height: 30px; */
+    width: 197px;
+    height: 72px;
+}
+
+.chuse_order:hover {
+    background-color: rgb(255, 87, 87);
+}
+
+/* 文章內文 */
+#artclein {
+    justify-content: center;
+    height: 90%;width: 100%;
+}
+
+#artclein table {
+    height: 0px;
+    width: 900px;
+}
+
+#artclein table tr:first-child {
+    color: gray;
+    font-size: 1rem;
+}
+
+#artclein td {
+    border-bottom: 1px rgb(233, 233, 233) solid;
+    height: 30px;
+    height: 10vh;
+}
+
+
+
+/* 編輯 刪除 */
+#artclein td button {
+    position: relative;
+    left: 30px;
+    border-radius: 50px;
+    background-color: white;
+    border: 1px gray solid;
+    color: gray;
+    font-size: 0.5em;
+
+
+    line-height: 2rem;
+    width: 4rem;
+    font-size: 1rem;
+    margin-right: 5px;
+}
+
+#artclein td button:hover {
+    background-color: rgb(230, 70, 55);
+    color: white;
+    border: 1px rgb(230, 70, 55) solid;
+}
+
+/* 文章modal */
+.active_modal {
+    background-color: rgba(0, 0, 0, 0.303);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 12vh;
+    height: 80vh;
+    /* display: flex; */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    padding: 20px;
+    width: 580px;
+    height: 470px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 10px 5px rgb(185, 183, 183);
+}
+
+.modal-content>div {
+    width: 500px;
+    height: 95%;
+    margin: auto;
+    overflow: auto;
+}
+
+/* modal用戶資料 */
+.modal-content>div>div {
+    width: 480px;
+    height: 110px;
+    margin: 9px auto 15px auto;
+    box-shadow: 0px 0px 10px 1px rgba(185, 183, 183, 0.467);
+    display: flex;
+}
+
+/* 用戶相片區 */
+.clientPic {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.clientImg {
+    clip-path: circle(50%);
+    object-fit: cover;
+    width: 60px;
+    height: 60px;
+}
+
+/* 用戶資料區 */
+.clientIntro {
+    flex: 2;
+}
+
+.clientIntro>div:first-child {
+    margin: 20px 0px 11px 0px;
+    font-size: 20px;
+}
+
+.clientIntro span:first-child {
+    display: inline-block;
+    text-align: center;
+    background-color: rgb(233, 233, 233);
+    border-radius: 20px;
+    width: 49px;
+    margin-right: 8px;
+    margin-bottom: 24px;
+}
+
+/* 接受拒絕 */
+.clientYesNo {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.clientYesNo>div {
+    flex: 1;
+}
+
+.clientYesNo>div:first-child {
+    text-align: end;
+    font-size: 12px;
+    color: #aaaaaa;
+    padding: 16px 30px 0px 0px;
+}
+
+.clientYesNo button {
+    position: relative;
+    cursor: pointer;
+    bottom: 12px;
+    border-radius: 50px;
+    width: 85px;
+    height: 44px;
+    border: 1px solid #E64637;
+    font-size: 15px;
+}
+
+.clientYesNo button:first-child {
+    background-color: transparent;
+    color: rgb(230, 70, 55);
+}
+
+.clientYesNo button:nth-child(2) {
+    background-color: rgb(230, 70, 55);
+    color: white;
+}
+
+/* modal關閉按鈕 */
+.active_close {
+    color: #aaaaaa;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.active_close:hover,
+.active_close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}

@@ -29,7 +29,7 @@
     min-width: 10%;
     min-height: 270;
 }
-span{
+.span{
     font-size: 16px;
     color: #aaaaaa;
 }
@@ -69,6 +69,9 @@ span{
     justify-content: center;
     align-items: center;
     font-size: xx-large;
+    cursor: pointer;
+    user-select: none;
+    /* 禁止反白 */
 }
 .cc{
     position: relative;
@@ -88,7 +91,7 @@ input[type=number]::-webkit-inner-spin-button{
     width: 29px;
     height: 33px;
 }
-input[type='date'] {
+.date{
     position: relative;
     border: none;
     border-bottom: 1px black solid;
@@ -99,7 +102,7 @@ input[type='date'] {
     color: #383838;
     font-family: 'Noto Sans TC';
 }
-input[type="date"]::-webkit-calendar-picker-indicator {
+.date::-webkit-calendar-picker-indicator {
     width: 27px;
     opacity: 0;
 }
@@ -111,20 +114,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .col{
     padding: 0;
 }
-input[type="radio"]{
+.radio{
     /* appearance: none; */
     display: none;
 }
-input[type="radio"]:checked+label{
+.radio:checked+label{
     background-color: #ffffff;
     color: #e64637;
     border: 1px solid #e64637;
     border-color: #e64637;
 }
-input[type="checkbox"]{
+.checkbox{
     display: none;
 }
-input[type="checkbox"]:checked+label{
+.checkbox:checked+label{
     background-color: #ffffff;
     color: #e64637;
     border: 1px solid #e64637;

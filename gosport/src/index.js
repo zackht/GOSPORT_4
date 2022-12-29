@@ -1,22 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Side2 from './side/rentsid_more';
-import Backqa from './back/backqa';
 import reportWebVitals from './reportWebVitals';
-import Backteam from './back/backarticleteam';
-import Backarticle from './back/backarticle';
 import App from './App';
 import Handya from './handya/handya';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+<<<<<<< HEAD
     {/* <Side2/> */}
     {/* <Backqa/> */}
     {/* <Backteam/> */}
     {/* <Backarticle/> */}
     <Handya/>
     {/* <App/> */}
+=======
+    <App/>
+>>>>>>> f41880f069a6adec3b0c1d755c6b1598ea52e921
   </React.StrictMode>
 );
 

@@ -17,7 +17,7 @@ class Backteam extends Component {
                             <div className={backteam.div1}>
                                 <span className={backteam.font1}>日期</span>
                                 <div className={backteam.dateimg}>
-                                    <input type="date" name="inputdate" className={`date ${backteam.font}`} />
+                                    <input type="date" name="inputdate" className={`${backteam.date} ${backteam.font}`} />
                                     <img className={backteam.selectedDate} src={group41} alt="" />
                                 </div>
                             </div>
