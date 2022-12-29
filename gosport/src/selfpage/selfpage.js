@@ -35,7 +35,7 @@ class Selfpage extends Component {
                                         </div>
                                 </div>
                                 <div style={{height: "50%",width: "100%",position: "relative"}}>
-                                    <a href="./帳號設定.html"><button className="self_edit"
+                                    <a href="/selfalter"><button className="self_edit"
                                         style={{position: "absolute",bottom: "0px",right: "0px"}}>編輯</button></a>
                                 </div>
                             </div>

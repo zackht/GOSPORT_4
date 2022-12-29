@@ -3,11 +3,12 @@ import star from "./icon/star1.svg";
 import alterImgbackIcon from './icon/Vector.svg';
 import "./selfalter.css"
 class Selfalter extends Component {
-    state = {}
+    state = 
+    {}
     render() {
         return (
             <div className="selfalter">
-                <form className='alter_form' action="">
+                <form className='alter_form' action="/selfpage">
                     <div>
                         <div className="alter_PicPla">
                             <div id="picFile" onClick={this.upLoadpic}>
@@ -64,7 +65,7 @@ class Selfalter extends Component {
                         </div>
                     </div>
                     <div className="alter_yesOrNot">
-                        <a href="./navbarAndFooter個人.html">
+                        <a href="/selfpage">
                             <span className="alter_backself">取消</span>
                         </a>
                         <input type="submit" value="儲存" />
