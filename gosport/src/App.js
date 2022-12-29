@@ -7,6 +7,11 @@ import backqa from './back/backqa';
 import Backarticle from './back/backarticle';
 import rentside_more from './side/rentsid_more';
 import Backteam from './back/backarticleteam';
+import Backuser from './back/backuser';
+import backside from './back/backside';
+import createside from './back/createside';
+import ASD from './req/req';
+
 import Selfactive from './selfactive/selfactive';
 import Selfalter from './selfalter/selfalter';
 import Selfpage from './selfpage/selfpage';
@@ -26,8 +31,12 @@ class App extends Component {
             <Route path="/backqa" component={backqa} />
             <Route path="/rentside_more" component={rentside_more} />
             <Route path="/Backteam" component={Backteam} />
+            <Route path="/Backuser" component={Backuser} />
+            <Route path="/backside" component={backside} />
+            <Route path="/createside" component={createside} />
+            <Route path="/ASD" component={ASD} />
 
-            <Route path="handya" component={Handya} />
+            <Route path="/handya" component={Handya} />
 
             <Route path="/teams/basic" component={Basic} />
             

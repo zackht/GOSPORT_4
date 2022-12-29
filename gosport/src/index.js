@@ -7,16 +7,7 @@ import Handya from './handya/handya';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-<<<<<<< HEAD
-    {/* <Side2/> */}
-    {/* <Backqa/> */}
-    {/* <Backteam/> */}
-    {/* <Backarticle/> */}
-    <Handya/>
-    {/* <App/> */}
-=======
     <App/>
->>>>>>> f41880f069a6adec3b0c1d755c6b1598ea52e921
   </React.StrictMode>
 );
 
