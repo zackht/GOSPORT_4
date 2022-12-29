@@ -7,8 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import Backteam from './back/backarticleteam';
 import Backarticle from './back/backarticle';
 import App from './App';
-
-
+import Handya from './handya/handya';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -16,7 +15,8 @@ root.render(
     {/* <Backqa/> */}
     {/* <Backteam/> */}
     {/* <Backarticle/> */}
-    <App/>
+    <Handya/>
+    {/* <App/> */}
   </React.StrictMode>
 );
 
