@@ -10,7 +10,7 @@ import Backteam from './back/backarticleteam';
 import Backuser from './back/backuser';
 import backside from './back/backside';
 import createside from './back/createside';
-import ASD from './req/req';
+import Client from './client/req';
 
 import Selfactive from './selfactive/selfactive';
 import Selfalter from './selfalter/selfalter';
@@ -34,7 +34,7 @@ class App extends Component {
             <Route path="/Backuser" component={Backuser} />
             <Route path="/backside" component={backside} />
             <Route path="/createside" component={createside} />
-            <Route path="/ASD" component={ASD} />
+            <Route path="/Client" component={Client} />
 
             <Route path="/handya" component={Handya} />
 
