@@ -9,7 +9,7 @@
     font-size: 20px;
     color: #383838;
 }
-span{
+.span{
     font-size: 16px;
     color: #aaaaaa;
 }
@@ -24,7 +24,7 @@ span{
 .boxshadow{
     box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
 }
-input[type='date'] {
+.date {
     position: relative;
     border: none;
     border-bottom: 1px black solid;
@@ -32,7 +32,7 @@ input[type='date'] {
     background-color: transparent;
     z-index: 2;
 }
-input[type="date"]::-webkit-calendar-picker-indicator {
+.date::-webkit-calendar-picker-indicator {
     width: 27px;
     opacity: 0;
 }
@@ -44,7 +44,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     top: 20px;
     right: 0px;
 }
-select{
+.select{
     position: relative;
     border: none;
     border-bottom: 1px black solid;
@@ -56,12 +56,13 @@ select{
 .selectimg{
     position: relative;
 }
-select+img{
+.img{
     position: absolute;
     top: 20px;
     right: 0px;
     background-color: transparent;
 }
+
 .ccc{
     border-radius: 30px;
     background-color: #f5f5f5;

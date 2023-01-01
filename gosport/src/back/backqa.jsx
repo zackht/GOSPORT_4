@@ -30,28 +30,28 @@ class Backqa extends Component {
         <div className={`row ${backqa.div2}`}>
             <div className={`col-md-3 d-flex flex-column ${backqa.boxshadow} ${backqa.div3}`}>
                 <form action=""className={`d-flex flex-column ${backqa.div4}`}>
-                    <span>日期區間</span>
+                    <span className={backqa.span}>日期區間</span>
                     <div className={`d-flex flex-column ${backqa.div5}`}>
                         <div className={`${backqa.dateimg} ${backqa.font}`}>
-                            <input type="date" className={backqa.div6}/><img
+                            <input type="date" className={`${backqa.div6} ${backqa.date}`}/><img
                                 className={backqa.selectedDate} src={group41} alt=""/>
                         </div>
                         <div className={`${backqa.dateimg} ${backqa.div7}`}>
-                            <input type="date" className={`${backqa.font} ${backqa.div8}`}/>
+                            <input type="date" className={`${backqa.font} ${backqa.div8} ${backqa.date}`}/>
                             <img className={`${backqa.selectedDate}`} src={group41} alt=""/>
                         </div>
-                        <span>類型</span>
+                        <span className={backqa.span}>類型</span>
                         <div className={`${backqa.selectimg} ${backqa.font} ${backqa.div9}`}>
-                            <select name="" id="" className={backqa.div10}>
+                            <select name="" id="" className={`${backqa.div10} ${backqa.select}`}>
                                 <option value="">零打</option>
                                 <option value="">轉租</option>
                                 <option value="">球隊</option>
                             </select>
-                            <img className="" src={group41} alt=""/>
+                            <img className={backqa.simg} src={group41} alt=""/>
                         </div>
                     </div>
                     <div className={backqa.div11}>
-                        <span>關鍵字</span>
+                        <span className={backqa.span}>關鍵字</span>
                         <div>
                             <input type="text" className={`${backqa.div12} ${backqa.ccc}`} placeholder="請輸入關鍵字"/>
                         </div>
