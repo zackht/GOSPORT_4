@@ -4,13 +4,13 @@ import Handya from './handya/handya';
 
 import Testt from './side/testt';
 import backqa from './back/backqa';
-import Backarticle from './back/backarticle';
 import rentside_more from './side/rentsid_more';
 import Backteam from './back/backarticleteam';
 import Backuser from './back/backuser';
 import backside from './back/backside';
 import createside from './back/createside';
 import Client from './client/req';
+import backarticle2 from './back/backarticle2';
 
 import Selfactive from './selfactive/selfactive';
 import Selfalter from './selfalter/selfalter';
@@ -26,7 +26,6 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Switch>
-            <Route path="/Backarticle" component={Backarticle} />
             <Route path="/testt" component={Testt} />
             <Route path="/backqa" component={backqa} />
             <Route path="/rentside_more" component={rentside_more} />
@@ -35,6 +34,7 @@ class App extends Component {
             <Route path="/backside" component={backside} />
             <Route path="/createside" component={createside} />
             <Route path="/Client" component={Client} />
+            <Route path="/backarticle2" component={backarticle2} />
 
             <Route path="/handya" component={Handya} />
 
