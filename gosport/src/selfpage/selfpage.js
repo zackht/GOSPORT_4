@@ -1,12 +1,14 @@
 
 import React, { Component } from 'react';
-import star from './star1.svg'
-import selfImg from './20130917_171106.jpg'
+import star from './icon/star1.svg'
+import selfImg from './icon/20130917_171106.jpg'
 import './selfpage.css'
 class Selfpage extends Component {
     state = {}
     render() {
         return (
+            <React.Fragment>
+                {/* 主體 */}
             <div className="self_cover">
                 <div style={{display: 'flex',width: '90%',height:'481px'}}>
                     <div className="self_discribe" style={{flex: "1.1"}}>
@@ -41,6 +43,7 @@ class Selfpage extends Component {
                             </div>
                         </div>
                     </div>
+                    </React.Fragment>
                     );
     }
 }
