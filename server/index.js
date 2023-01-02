@@ -62,11 +62,40 @@ app.use(express.json());
         }
       });
     });
+    // 搜尋零打文章編輯畫面
+    app.post("/zerodada", (req, res) => {
+      const articleid_zeroda = req.body.articleid_zeroda;
+      db.query("SELECT * FROM userarticle_zeroda where articleid_zeroda = ?"
+      ,[articleid_zeroda], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    // backarticle搜尋球隊
     app.post("/team", (req, res) => {
       const teamselect = req.body.teamselect;
       const teamselect2 = req.body.teamselect2;
       db.query("SELECT * FROM team where county= ? AND area = ?"
       ,[teamselect,teamselect2], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    //搜尋轉租 
+    app.post("/rent", (req, res) => {
+      const renttime = req.body.renttime;
+      const renttime1 = req.body.renttime1;
+      const rentselectcounty = req.body.rentselectcounty;
+      const rentselectarea = req.body.rentselectarea;
+
+      db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =?"
+      ,[renttime,renttime1,rentselectarea,rentselectcounty], (err, result) => {
         if (err) {
           console.log(err);
         } else {
