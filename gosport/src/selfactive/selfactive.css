@@ -1,3 +1,12 @@
+.active_{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    position: relative;
+    top: 17vh;
+}
+
 .selfactive {
     /* width: 550px; */
     /* height: 400px; */
@@ -70,12 +79,12 @@
     overflow: auto;
 }
 
-.active_inner>div>div>:nth-child(1),
-.active_inner>div>div>:nth-child(3),
-.active_inner>div>div>:nth-child(5),
-.active_inner>div>div>:nth-child(7),
-.active_inner>div>div>:nth-child(9),
-.active_inner>div>div>:nth-child(11) {
+.active_inner>div>div>div>:nth-child(1),
+.active_inner>div>div>div>:nth-child(3),
+.active_inner>div>div>div>:nth-child(5),
+.active_inner>div>div>div>:nth-child(7),
+.active_inner>div>div>div>:nth-child(9),
+.active_inner>div>div>div>:nth-child(11) {
     font-weight: 300;
     padding-top: 7px;
     color: gray;
@@ -89,12 +98,16 @@
     height: 90%;width: 100%;
 }
 
-#orderin>div:nth-child(1)>div:nth-child(1),
-#orderin>div:nth-child(1)>div:nth-child(3) {
+.eachOrder{
+    width: 100%;
+    display: flex;
+}
+.eachOrder>div:nth-child(1)>div:nth-child(1),
+.eachOrder>div:nth-child(1)>div:nth-child(3) {
     margin-top: 10px;
 }
 
-#orderin>div {
+.eachOrder>div {
     padding-left: 5%;
 }
 
@@ -164,6 +177,13 @@
 #artclein {
     justify-content: center;
     height: 90%;width: 100%;
+}
+#artclein>div>div{
+    font-weight: 300;
+    padding-top: 7px;
+    color: gray;
+    font-size: 1rem;
+    line-height: 5vh;
 }
 
 #artclein table {
