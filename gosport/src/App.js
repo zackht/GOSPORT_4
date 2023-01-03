@@ -5,7 +5,7 @@ import Footer from "./headerfooter/footer.js";
 import Handya from "./handya/handya";
 import Testt from "./side/testt";
 import backqa from "./back/backqa";
-import Backarticle from "./back/backarticle";
+// import Backarticle from "./back/backarticle";
 import rentside_more from "./side/rentsid_more";
 import Backteam from "./back/backarticleteam";
 import Selfactive from "./selfactive/selfactive";
@@ -16,6 +16,7 @@ import Backuser from './back/backuser';
 import backside from './back/backside';
 import createside from './back/createside';
 import Client from './client/req';
+import Backarticle from './back/backarticle2';
 
 class App extends Component {
   render() {

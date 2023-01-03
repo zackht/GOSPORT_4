@@ -59,6 +59,13 @@ const Client = () => {
             settelhint("格式錯誤");
         }
     }
+    const [employeeList, setEmployeeList] = useState([]);
+    const getEmployee = () => {
+        Axios.get("http://localhost:3001/employee").then((response) => {
+            console.log(response);
+            setEmployeeList(response.data);
+        });
+    };
     return (
         <div>
             帳號<input type="text" onChange={emailcheck} /><span>{emailhint}</span><br />
@@ -68,6 +75,11 @@ const Client = () => {
             頭貼<input type="file" onChange={(e) => setuserimg(e.target.value)} /><br />
             手機<input type="text" onChange={telcheck} /><span>{telhint}</span><br />
             <button onClick={adduser}>123</button>
+            <h1>獲取所有會員</h1>
+            <button onClick={getEmployee}>搜索</button>
+            {employeeList.map((val, key) => {
+                return <div key={key}>{val.email}</div>;
+            })}
         </div>
     );
 }
