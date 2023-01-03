@@ -289,14 +289,14 @@ class createside extends Component {
                                     <div>
                                         <span class="font">尖峰時段費用</span>
                                         <div>
-                                            <input type="number" class="number"
+                                            <input type="number" class="number einputnumber"
                                                 onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" />
                                         </div>
                                     </div>
                                     <div>
                                         <span class="font">離峰時段費用</span>
                                         <div>
-                                            <input type="number" class="number"
+                                            <input type="number" class="number einputnumber"
                                                 onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" />
                                         </div>
                                     </div>
@@ -306,7 +306,7 @@ class createside extends Component {
                                             <div class="numbutton1">
                                                 <div class="add" onClick={this.minus}>-</div>
                                             </div>
-                                            <input type="number" class="number2" value={this.state.count}
+                                            <input type="number" class="number2 einputnumber" value={this.state.count}
                                                 onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" />
                                             <div class="numbutton2">
                                                 <div class="minus" onClick={this.add}>+</div>

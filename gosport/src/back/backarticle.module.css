@@ -119,9 +119,12 @@
     color: #000000;
 }
 .div1{
-    margin-top: 200px; 
+    /* margin-top: 200px;  */
     padding: 0px;
     position: relative;
+    top: 5vh;
+    margin-left: auto;
+    margin-right: auto;
 }
 .div2{
     margin: 0px 50px;
@@ -294,31 +297,213 @@
     top: 0px;
     left: 0px;
     width: 100vw;
-    height: 100vw;
+    height: 100vh;
 }
 .div56{
-    background-color: white;
-    width: 500px;
-    margin-top: 200px;
+    /* background-color: white; */
+    width: 1060px;
+    margin-top: 160px;
     margin-left: auto;
     margin-right: auto;
     position: relative;
     z-index: 4;
-    padding: 10px;
+    top: 5vh;
 }
-.div57{
+/* 零打編輯頁面 */
+.cover {
+    width: 1060px;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+    /* margin-bottom: 200px; */
+    overflow-y: scroll;
+}
+
+.contain {
+    width: 80%;
+    height: 90%;
+}
+
+
+
+/* 主要輸入內容 */
+.dlabel {
+    color: #AAAAAA;
+    font-size: 16px;
+    line-height: 23px;
+}
+
+.dinput{
+    border: none;
+    background-color: #F5F5F5;
+    border-radius: 50px;
+    height: 35px;
+    margin-bottom: 27px;
+    /* padding: 10px 23px; */
+    font-size: 24px;
+    padding-left: 10px;
+}
+.dinputaddr{
+    width: 500px;
+    border: none;
+    background-color: #F5F5F5;
+    border-radius: 50px;
+    height: 35px;
+    margin-bottom: 27px;
+    /* padding: 10px 23px; */
+    font-size: 24px;
+    padding-left: 10px;
+}
+.dinputnum{
+    border: none;
+    background-color: #F5F5F5;
+    border-radius: 50px;
+    height: 35px;
+    margin-bottom: 27px;
+    /* padding: 10px 23px; */
+    font-size: 24px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.dtextarea {
+    border: none;
+    background-color: #F5F5F5;
+    border-radius: 50px;
+    height: 35px;
+    margin-bottom: 27px;
+    padding: 10px 23px;
+    font-size: 24px;
+    height: 70px;
+    max-height: 230px;
+}
+
+.dselect {
+    border: none;
+    border-bottom: 1px black solid;
+    height: 40px;
+    font-size: 20px;
+    background-color: transparent;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 市 區 */
+.ct_citycover {
+    display: flex;
+}
+
+.ct_citycover>div {
+    margin-right: 40px;
+}
+.ct_citycover select{
+    width: 185px;
+    text-align: center;
+}
+
+/* 日期 */
+.dinputdate {
+    position: relative;
+    border: none;
+    border-bottom: 1px black solid;
+    line-height: 30px;
+    background-color: transparent;
+    z-index: 2;
+    border-radius: 0px;
+    width: 185px;
+    font-size: 20px;
+}
+
+.dinputdate::-webkit-calendar-picker-indicator {
+    width: 27px;
+    height: 30px;
+    opacity: 0;
+}
+
+.ct_seleD {
+    position: relative;
+    top: 0px;
+    right: 30px;
+}
+
+/* 時段 */
+.ct_time {
+    display: flex;
+}
+.ct_time select{
+    width: 145px;
+    line-height: 30px;
+}
+
+/* 程度 */
+#ct_range {
+    width: 144px;
+    text-align: center;
+}
+
+/* 人數 */
+.minus {
     width: 30px;
     height: 30px;
+    text-align: center;
+    color: #9e9e9e;
+    margin-bottom: 0px;
+    padding: 0px;
+    font-size: 24px;
+}
+
+.numbox {
+    border: none;
+    border-bottom: 1px black solid;
+    width: 30px;
+    height: 40px;
+    font-size: 20px;
+    background-color: transparent;
+    margin-bottom: 20px;
+    border-radius: 0px;
+    color: rgb(230, 70, 55);
+    text-align: center;
+}
+
+.numbox::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/* 描述 */
+#ct_discribe {
+    width: 691px;
+    height: 105px;
+}
+
+/* 取消 確認 */
+.ct_yesOrNot {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    user-select: none;
-    position: absolute;
+    margin-top: 20px;
+}
+
+.dinputsubmit {
+    background-color: rgb(230, 70, 55);
+    color: white;
+    padding: 0px 0px;
+    width: 414px;
+    height: 63px;
+}
+
+.ct_backself {
+    color: rgb(230, 70, 55);
+    border: 1px solid rgb(230, 70, 55);
+    padding: 0px;
+    display: inline-block;
     border-radius: 50px;
-    border: 1px solid #e64637;
-    background-color: white;
-    color: #e64637;
-    top: 10px;
-    right: 10px;
+    width: 414px;
+    height: 63px;
+    line-height: 63px;
+    text-align: center;
+    font-size: 24px;
+    
+}
+.ggg{
+    margin:10px 20px 20px 20px;font-size: 20px;
 }
