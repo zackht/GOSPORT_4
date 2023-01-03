@@ -103,3 +103,13 @@ app.use(express.json());
         }
       });
     });
+    // 個人頁面
+    app.get("/userinfo", (req, res) => {
+      db.query("SELECT * FROM `user` WHERE userid = 1;", (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });

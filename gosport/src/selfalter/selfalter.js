@@ -6,7 +6,7 @@ import alterImgbackIcon from './icon/Vector.svg';
 import "./selfalter.css"
 const Selfalter = () => {
     // input的value同時設定以及渲染
-    const [username, setUsername] = useState('a')
+    const [username, setUsername] = useState('')
     function nameChange(e) {
         setUsername(e.target.value)
     }
