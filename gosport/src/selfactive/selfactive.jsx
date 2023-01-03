@@ -81,6 +81,7 @@ class Selfactive extends Component {
 
         return (
             <React.Fragment>
+                <div className='active_'>
                 <div className="selfactive">
                     {/* <!-- 訂單or文章--> */}
                     <div className="active_type" >
@@ -143,6 +144,7 @@ class Selfactive extends Component {
                             <div></div>
                         </div>
                     </div>
+                </div>
                 </div>
             </React.Fragment>
         );

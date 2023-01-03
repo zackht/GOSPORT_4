@@ -1,11 +1,22 @@
 
-
+.self_{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    position: relative;
+    top: 17vh;
+}
     .self_cover {
         font-family: 'Noto Sans';
         font-style: normal;
         font-weight: 500;
         box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
-        display: flex;width: 988px;height: 551px;justify-content: center;align-items: center;
+        display: flex;
+        width: 988px;
+        height: 551px;
+        justify-content: center;
+        align-items: center;
     }
 
     .self_discribe div:nth-child(1),
