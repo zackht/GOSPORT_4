@@ -12,9 +12,6 @@ import Selfactive from "./selfactive/selfactive";
 import Selfalter from "./selfalter/selfalter";
 import Selfpage from "./selfpage/selfpage";
 import Myteam from "./userteam/userteam.js";
-import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Handya from './handya/handya';
 import Backuser from './back/backuser';
 import backside from './back/backside';
 import createside from './back/createside';
@@ -29,10 +26,10 @@ class App extends Component {
           <Switch>
 
             {/* 首頁 */}
-            <Route path="/gosport" 			 component={Handya} exact />
+            <Route path="/gosport" 			     component={Handya} exact />
 
             {/* 租場地 */}
-            {/* <Route path="/gosport/rent" 	 component={} exact/> */}
+            {/* <Route path="/gosport/rent" 	   component={} exact/> */}
             <Route path="/gosport/rent/side" component={rentside_more} />
 
             {/* 交流區 */}
@@ -41,12 +38,12 @@ class App extends Component {
             {/* <Route path="/gosport/communicate/create" 	  component={} /> */}
 
             {/* 會員  */}
-            <Route path="/gosport/user" 		 component={Selfpage} exact />
+            <Route path="/gosport/user" 		     component={Selfpage} exact />
             <Route path="/gosport/user/settings" component={Selfalter} />
             <Route path="/gosport/user/activity" component={Selfactive} />
 
             {/* 球隊 */}
-            <Route path="/gosport/user/myteam" 	 	  component={Myteam} exact />
+            <Route path="/gosport/user/myteam" 	      component={Myteam} exact />
             {/* <Route path="/gosport/user/myteam/detail" component={} /> */}
 
             {/* QA */}
@@ -61,7 +58,7 @@ class App extends Component {
             <Route path="/Back/side" component={backside} />
 
             {/* 文章 */}
-            <Route path="/Back/article" 	component={Backarticle} />
+            <Route path="/Back/article" 	  component={Backarticle} />
             <Route path="/Back/article/:id" component={Backteam} />
 
             {/* QA */}
@@ -69,8 +66,8 @@ class App extends Component {
 
 			      {/* 測試區---------------------------------------------------------- */}
             <Route path="/createside" component={createside} />
-            <Route path="/Client" component={Client} />
-            <Route path="/testt" component={Testt} />
+            <Route path="/Client"     component={Client} />
+            <Route path="/testt"      component={Testt} />
 
 			      {/* 以下舊版 供對照--------------------------------------------------- */}
             {/* <Route path="/handya" component={Handya} /> */}

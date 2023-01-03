@@ -1,34 +1,16 @@
-.main {
-    /* background-color: aqua; */
-    width: 100vw;
-    height: 77vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    top: 15vh;
-}
-
-.mContent {
-    background-color: white;
-    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
-    width: 70%;
-    height: 85%;
+.memberContent {
+    box-sizing: border-box;
     overflow: scroll;
+    height: 85%;
 }
-.mContent>div:nth-child(1) {
-    width: 70vw;
-    height: 15%;
-    /* background-color: aqua; */
-    display: flex;
-    align-items: center;
-    flex-direction: row nowrap;
-    
+.memberContent>div:nth-child(1){
+    margin: 40px 40px 0px 40px;
+    position: relative;
 }
-.memberContent>div>button:nth-of-type(1) {
+.mbtn {
     border: 1px solid #AAAAAA;
     border-radius: 40px;
-    width:80px;
+    width: 80px;
     height: 50px;
     font-family: 'Noto Sans TC';
     font-size: 1.1rem;
@@ -39,51 +21,13 @@
     position: sticky;
     top: 40px;
 }
-
-
-.memberContent{
-    height: 85%;
-    overflow: scroll;
-}
-.mFilter {
-    width: 100%;
-    height: 100%;
-    padding: auto;
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: 400;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Noto Sans TC';
-    background-color: rgb(245, 245, 245);
-    color: rgb(170, 170, 170);
-}
-
-.mFilter:nth-child(2) {
-    color: rgb(30, 30, 30);
-    background-color: rgb(255, 255, 255);
-    border-bottom: 5px rgba(230, 70, 55, 1) solid;
-    box-sizing: border-box;
-    /* margin-left: 10px; */
-}
-.memberContent>div:nth-child(1){
-    margin: 40px 40px 0px 40px;
-    position: relative;
-    /* background-color: antiquewhite; */
-}
-.mContent>div:nth-child(2) {
-    
-    box-sizing: border-box;
-}
-.mContent img {
+.mImg {
     clip-path: circle(50% at 50% 50%);
     width: 80px;
     height: 80px;
     margin-bottom: 20px;
     margin-right: 5px;
 }
-
 .mTitle {
     font-family: 'Noto Sans TC';
     font-size: 0.9rem;
