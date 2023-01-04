@@ -8,7 +8,11 @@ import ten from './icon/Group 10.png';
 import arr from './icon/arrowup2.svg';
 import notice from './icon/notice.svg';
 import user from './icon/user.svg';
+import google from './icon/google快速註冊.svg'
 import ball from './icon/球類別.png';
+import cancel from './icon/快速搜尋＿取消.svg'
+import sigh from './icon/快速搜尋＿註冊.svg'
+import login from './icon/快速搜尋.svg'
 class Handya extends Component {
     state = {
         a: <option value="">西屯區</option>,
@@ -25,35 +29,58 @@ teamdiv:false,
 teambtn:false,
 turn:false,
 turndiv:false,
-turnbtn:false
-
+turnbtn:false,
+loginbtn:false,
+logindiv:false,
+sighbtn:true,
+sighdiv:true
     }
 
     render() {
         return (
         <React.Fragment>
-               
+    <div className={`${cc.dd1} container-fluid`}>
+    <div className={`${cc.back} container-fluid`}>
+        <div className={`${cc.aa1} container-fluid`}>
 
-    {/* <div class="navbar">
-        <div class="nContent">
-            <div class="nLeft">
-                <div>GOspoort</div>
+        </div>
+        <div class={cc.apple}> 
+            
+            <button className={` ${this.state.sighbtn === true ? cc.focus1:cc.tablink1 }`} onClick={this.changesigh}>註冊</button>
+            <button className={` ${this.state.loginbtn === true ? cc.focus1:cc.tablink1 }`} onClick={this.changelogin}>登入</button>
+            <div id="Londo" style={{display: (this.state.sighdiv === true) ?  "block":"none"}} className={cc.tabcontent}>
+                <img className={cc.d131} src={google} alt="" />
+              <p className={cc.d132}>註冊信箱</p>
+              <form action="">
+              <input className={cc.d133} type="text" />
+              <p className={cc.d134}>密碼</p>
+              <input className={cc.d135} type="text" />
+              <p className={cc.d136}>至少8個字,含至少1個數字及1個英文字母</p>
+              <p className={cc.d137}>確認密碼</p>
+              <input className={cc.d138} type="text" />
+              <div className={cc.d139}>
+                <img src={cancel} alt="" />
+                <img src={sigh} alt="" />
+              </div>
+              
+              </form>
             </div>
-            <div class="nRight">
-                <div><a href="">租場地</a></div>
-                <div><a href="">交流區</a></div>
-                <div><a href="">成為場地方</a></div>
-                <div><a href="">Q&A</a></div>
-                <img src={notice}></img>
-                <img src={user}></img>
+            <div id="Pari" style={{display: (this.state.logindiv === true) ?  "block":"none"}} className={cc.tabcontent}>
+            <p className={cc.d140}>註冊信箱</p>
+              <form className={cc.d145} action="">
+              <input className={cc.d133} type="text" />
+              <p className={cc.d141}>密碼</p>
+              <input className={cc.d142} type="text" />
+               <p className={cc.d143}>忘記密碼</p></form>
+               <div className={cc.d144}>
+                <img src={cancel} alt="" />
+                <img src={login} alt="" />
+              </div>
+              
+             
             </div>
         </div>
-    </div> */}
-    <div className={`${cc.dd1} container-fluid`}>
-        
-        {/* <div className={cc.nav}>
-            nav
-        </div> */}
+    </div>
         <div className={cc.marquee}>
             <div className={cc.marquee1}>
                 <img src={op} alt=""/>
@@ -419,6 +446,23 @@ turnbtn:false
 
         );
     }
+changelogin=()=>{
+    let newstate = {...this.state};
+    newstate.loginbtn=true;
+    newstate.logindiv=true;
+    newstate.sighbtn=false;
+    newstate.sighdiv=false;
+    this.setState (newstate);
+}
+changesigh=()=>{
+    let newstate = {...this.state};
+    newstate.sighbtn=true;
+    newstate.sighdiv=true;
+    newstate.loginbtn=false;
+    newstate.logindiv=false;
+    this.setState (newstate);
+}
+    
     changerent =() =>{
 let newstate = {...this.state};
 newstate.rent=true;
