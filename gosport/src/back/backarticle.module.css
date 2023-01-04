@@ -502,7 +502,9 @@
     line-height: 63px;
     text-align: center;
     font-size: 24px;
-    
+    user-select: none;
+    cursor: pointer; 
+
 }
 .ggg{
     margin:10px 20px 20px 20px;font-size: 20px;
