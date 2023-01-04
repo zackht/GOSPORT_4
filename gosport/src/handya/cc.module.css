@@ -120,11 +120,27 @@
 
 }
 
-
+.focus{
+    background-color: white;
+    border-top:none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 3px solid #e64637;
+    box-sizing: border-box;
+    color: #000000;
+    float: left;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 28px;
+    width: 25%;
+    height: 100px;
+    font-weight: 600;
+}
 .tablink {
-
-    background-color: rgba(219, 219, 219, 0.301);
-    color: rgb(0, 0, 0);
+    background-color: #f5f5f5;
+    color: #aaaaaa;
+    /* background-color: rgba(219, 219, 219, 0.301); */
     float: left;
     border: none;
     outline: none;
@@ -136,9 +152,9 @@
     font-weight: 600;
 }
 
-.tablink:hover {
+/* .tablink:hover {
     background-color: #777;
-}
+} */
 
 /* Style the tab content */
 .tabcontent {
@@ -191,7 +207,7 @@
 .event1 {
     box-shadow: 0 1px 5px 1px rgba(228, 228, 228, 0.75);
     height: 145px;
-    margin: 0 190px 0 190px;
+    margin: 0 204px 0 204px;
     /* border: 1px solid rgb(233, 19, 3); */
     display: flex;
     justify-content: left;
@@ -218,7 +234,7 @@
 }
 
 .qa {
-    margin: 40px 190px 0 190px;
+    margin: 40px 204px 0 204px;
 }
 
 .qa1 {
@@ -246,6 +262,7 @@
 }
 
 .county {
+    text-align-last:center;
     float: left;
     display: flex;
     align-items: center;
@@ -412,11 +429,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0;
 }
 
-/* .selectedDate {
+.selectedDate {
     position: relative;
     top: 10px;
     right: 25px;
-} */
+}
 
 /* input[type='time'] {
 position: relative;
@@ -484,6 +501,7 @@ right: 25px;
 } */
 
 
+
 .d1{padding:9px 0  0 15px;}
 .d2{float: left;}
 .d3{padding:30px 0 0 0px;}
@@ -493,14 +511,14 @@ right: 25px;
 .d7{float:right; margin: 44px 0px 0 -30px;}
 .d8{float: left;}
 .d9{padding:30px 0 0 20px; float: left;}
-.d10{padding:30px 0 0 360px; float: left;}
+.d10{padding:30px 0 0 340px; float: left;}
 .d11{padding:30px 0 0 157px; float: left;}
 .d12{float:left;margin:0px 0 0 20px; font-size: 20px;}
 .d13{float:left;margin:-5px 0 0 0px;}
 .d14{float:left;padding: 6px 0px 0 0px; margin-left:-16px ;}
 .d15{float:left;margin:0px 0 0 0;font-size: 20px;}
 .d16{float:left;margin:-5px 0 0 0px;}
-.d17{float:left; margin:0px 0 0 63px;font-size: 20px;}
+.d17{float:left; margin:0px 0 0 46px;font-size: 20px;}
 .d18{float:left;margin:-5px 0 0 0px;}
 .d19{float:left; margin:0px 0px 0 52px;font-size: 20px;}
 .d20{float:left;margin:-5px 0 0 0px;}
@@ -527,7 +545,7 @@ right: 25px;
 .d41{float:right; margin: 44px 0px 0 -30px;}
 .d42{float: left;}
 .d43{padding:30px 0 0 20px; float: left;}
-.d44{padding:30px 0 0 200px; float: left; margin: 0 500px 0 0  ;}
+.d44{padding:30px 0 0 160px; float: left; margin: 0 500px 0 0  ;}
 .d45{text-align: center; width:185px ; float:left;margin:0px 0 0 20px; font-size: 20px;}
 .d46{float:left;margin:-5px 0 0 0px;}
 .d47{float:left; margin:0px 0 0 40px;font-size: 20px;}

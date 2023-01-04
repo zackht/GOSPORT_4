@@ -27,7 +27,7 @@ class App extends Component {
             <Route path="/rentside_more" component={rentside_more} />
             <Route path="/Backteam" component={Backteam} />
 
-            <Route path="handya" component={Handya} />
+            <Route path="/handya" component={Handya} />
 
             <Route path="/teams/basic" component={Basic} />
             
