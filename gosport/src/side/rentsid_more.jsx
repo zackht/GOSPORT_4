@@ -8,8 +8,6 @@ import notice from "./icon/notice.svg";
 import user from "./icon/user.svg";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import side2 from './rentside_more.module.css';
-import './nav.css';
-
 class Side2 extends Component {
   state = {
     count:0

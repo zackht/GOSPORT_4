@@ -31,14 +31,14 @@
 
 
     /* 主要輸入內容 */
-    label {
+    .dlabel {
         color: #AAAAAA;
         font-size: 16px;
         line-height: 23px;
     }
 
-    input,
-    textarea {
+    .dinput,
+    .dtextarea {
         border: none;
         background-color: #F5F5F5;
         border-radius: 50px;
@@ -48,7 +48,7 @@
         font-size: 24px;
     }
 
-    select {
+    .dselect {
         border: none;
         border-bottom: 1px black solid;
         height: 40px;
@@ -72,7 +72,7 @@
     }
 
     /* 日期 */
-    input[type='date'] {
+    .dinputdate {
         position: relative;
         border: none;
         border-bottom: 1px black solid;
@@ -84,7 +84,7 @@
         font-size: 20px;
     }
 
-    input[type="date"]::-webkit-calendar-picker-indicator {
+    .dinputdate::-webkit-calendar-picker-indicator {
         width: 27px;
         height: 30px;
         opacity: 0;
@@ -151,7 +151,7 @@
         margin-top: 20px;
     }
 
-    input[type="submit"] {
+    .dinputsubmit {
         background-color: rgb(230, 70, 55);
         color: white;
         padding: 0px 0px;
@@ -176,38 +176,38 @@
     <div class="cover">
         <div class="contain">
             <div>
-                <label for="ct_pname">場館</label><br>
-                <input id="ct_pname" type="text">
+                <label class="dlabel" for="ct_pname">場館</label><br>
+                <input class="dinput" id="ct_pname" type="text">
             </div>
             <div class="ct_citycover">
                 <div>
-                    <label for="ct_city">縣市</label><br>
-                    <select name="ct" id="ct_city">
+                    <label class="dlabel" for="ct_city">縣市</label><br>
+                    <select class="dselect" name="ct" id="ct_city">
                         <option value="">台中市</option>
                     </select>
                 </div>
                 <div>
-                    <label for="">地區</label><br>
-                    <select name="ct_" id="">
+                    <label class="dlabel" for="">地區</label><br>
+                    <select class="dselect" name="ct_" id="">
                         <option value="">后里區</option>
                     </select>
                 </div>
             </div>
             <div>
-                <label for="ct_addr">地址</label><br>
-                <input type="text" id="ct_addr" value="">
+                <label class="dlabel" for="ct_addr">地址</label><br>
+                <input class="dinput" type="text" id="ct_addr" value="">
             </div>
             <div>
-                <label for="ct_d_input">日期</label><br>
-                <input id="ct_d_input" type="date">
+                <label class="dlabel" for="ct_d_input">日期</label><br>
+                <input class="dinputdate" id="ct_d_input" type="date">
                 <img class="ct_seleD" src="./icon/arrowup2.svg">
             </div>
             <div>
-                <label for="">時段</label>
+                <label class="dlabel" for="">時段</label>
             </div>
             <div class="ct_time">
                 <div>
-                    <select name="ct_" id="">
+                    <select class="dselect" name="ct_" id="">
                         <option value="">15:00</option>
                     </select>
                 </div>
@@ -216,38 +216,38 @@
                 </div>
                 <div>
                     
-                    <select name="ct_" id="">
+                    <select class="dselect" name="ct_" id="">
                         <option value="">17:00</option>
                     </select>
                 </div>
             </div>
             <div>
-                <label for="ct_range">程度</label><br>
-                <select name="ct_" id="ct_range">
+                <label class="dlabel" for="ct_range">程度</label><br>
+                <select class="dselect" name="ct_" id="ct_range">
                     <option value="">新手</option>
                     <option value="">普通</option>
                     <option value="">高手</option>
                 </select>
             </div>
             <div>
-                <label for="">人數</label><br>
-                <input class="minus" type="button" onclick="opera('val', false);" value="-">
-                <input class="numbox" type="number" id="val" value="1" />
-                <input class="minus" type="button" onclick="opera('val', true);" value="+">
+                <label class="dlabel" for="">人數</label><br>
+                <input class="minus dinput" type="button" onclick="opera('val', false);" value="-">
+                <input class="numbox dinput" type="number" id="val" value="1" />
+                <input class="minus dinput" type="button" onclick="opera('val', true);" value="+">
             </div>
             <div>
-                <label for="ct_pay">費用</label><br>
-                <input id="ct_pay" type="text">
+                <label class="dlabel" for="ct_pay">費用</label><br>
+                <input class="dinput" id="ct_pay" type="text">
             </div>
             <div>
-                <label for="ct_discribe">描述</label><br>
-                <textarea name="" id="ct_discribe" cols="30" rows="10"></textarea>
+                <label class="dlabel" for="ct_discribe">描述</label><br>
+                <textarea name="" class="dtextarea" id="ct_discribe" cols="30" rows="10"></textarea>
             </div>
             <div class="ct_yesOrNot">
                 <a href="#">
                     <span class="ct_backself">取消</span>
                 </a>
-                <input type="submit" value="儲存">
+                <input class="dinput dinputsubmit" type="submit" value="儲存">
             </div>
         </div>
     </div>

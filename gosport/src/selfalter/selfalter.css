@@ -1,3 +1,13 @@
+       
+.alter_{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    position: relative;
+    top: 17vh;
+}
+/* 主體 */
 .selfalter {
     height: 1477px;
     width: 1060px;

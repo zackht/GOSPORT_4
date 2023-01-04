@@ -34,7 +34,7 @@ turnbtn:false
         <React.Fragment>
                
 
-    <div class="navbar">
+    {/* <div class="navbar">
         <div class="nContent">
             <div class="nLeft">
                 <div>GOspoort</div>
@@ -48,12 +48,12 @@ turnbtn:false
                 <img src={user}></img>
             </div>
         </div>
-    </div>
+    </div> */}
     <div className={`${cc.dd1} container-fluid`}>
         
-        <div className={cc.nav}>
+        {/* <div className={cc.nav}>
             nav
-        </div>
+        </div> */}
         <div className={cc.marquee}>
             <div className={cc.marquee1}>
                 <img src={op} alt=""/>
@@ -92,8 +92,6 @@ turnbtn:false
                             <img className={`${cc.d7} ${cc.selectedDate}`} src={arr}/>
                             <select name="city" className={cc.county} onChange={(e)=>this.change(e)}>
                                 <option value="1">台中</option>
-                                <option value="2">台北</option>
-                                <option value="3">高雄</option>
                             </select>
                             <select name="town" className={cc.district}>
                             <option value="">{this.state.a}</option>
@@ -410,11 +408,11 @@ turnbtn:false
 
 
     
-    <div class="footer">
+    {/* <div class="footer">
         <div class="fContent">
             <div>Copyright © 2022 GOsport. 保留一切權利。</div>
         </div>
-    </div>
+    </div> */}
 
 
         </React.Fragment >
