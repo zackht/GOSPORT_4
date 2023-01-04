@@ -292,12 +292,13 @@
 }
 .div55{
     position: absolute;
-    z-index: 2;
+    z-index: 999;
     background-color: rgba(0, 0, 0,0.5);
     top: 0px;
     left: 0px;
     width: 100vw;
     height: 100vh;
+    align-items: center;
 }
 .div56{
     /* background-color: white; */
@@ -305,6 +306,8 @@
     margin-top: 160px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
     position: relative;
     z-index: 4;
     top: 5vh;
@@ -312,7 +315,7 @@
 /* 零打編輯頁面 */
 .cover {
     width: 1060px;
-    height: 70vh;
+    height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -502,7 +505,9 @@
     line-height: 63px;
     text-align: center;
     font-size: 24px;
-    
+    user-select: none;
+    cursor: pointer; 
+
 }
 .ggg{
     margin:10px 20px 20px 20px;font-size: 20px;
