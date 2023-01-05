@@ -7,7 +7,7 @@ import Testt from "./side/testt";
 import backqa from "./back/backqa";
 // import Backarticle from "./back/backarticle";
 import rentside_more from "./side/rentsid_more";
-import Backteam from "./back/backarticleteam";
+// import Backteam from "./back/backarticleteam";
 import Selfactive from "./selfactive/selfactive";
 import Selfalter from "./selfalter/selfalter";
 import Selfpage from "./selfpage/selfpage";
@@ -60,8 +60,7 @@ class App extends Component {
             <Route path="/Back/side" component={backside} />
 
             {/* 文章 */}
-            <Route path="/Back/article" 	  component={Backarticle} />
-            <Route path="/Back/article/:id" component={Backteam} />
+            <Route path="/Back/article" component={Backarticle} />
 
             {/* QA */}
             <Route path="/Back/qa" component={backqa} />

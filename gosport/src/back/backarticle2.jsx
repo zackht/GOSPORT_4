@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ba from './backarticle.module.css';
 import Group41 from './icon/Group 41.png';
 import Axios from "axios";
+import Backteam from "./backarticleteam";
 const Backarticle2 = () => {
     const [zerodaseach, setzerodaseach] = useState('block');
     const [teamseach, setteamseach] = useState('none');
@@ -38,26 +39,60 @@ const Backarticle2 = () => {
     const [endtime1, setendtime1] = useState('');
     const [ball1, setball1] = useState('');
     const [zerodalist, setzerodalist] = useState([]);
+    const [zerodainput,setzerodainput]=useState('');
     const aaa = () => {
+        console.log(zerodainput);
         Axios.post("http://localhost:3001/zeroda", {
             starttime1: starttime1,
             endtime1: endtime1,
             ball1: ball1,
+            zerodainput:zerodainput,
         }).then((response) => {
-            console.log(response);
+            // console.log(response);
             setzerodalist(response.data);
         });
     }
-    // 零打更新
-    const aaaa = () => {
-        Axios.post("http://localhost:3001/zeroda", {
-            starttime1: starttime1,
-            endtime1: endtime1,
-            ball1: ball1,
+    // 零打編輯儲存
+    const [zerodafieldname,setzerodafieldname]=useState('');
+    const [zerodacounty,setzerodacounty]=useState('');
+    const [zerodaarea,setzerodaarea]=useState('');
+    const [zerodaaddress,setzerodaaddress]=useState('');
+    const [zerodadate,setzerodadate]=useState('');
+    const [zerodastarttime,setzerodastarttime]=useState('');
+    const [zerodaendtime,setzerodaendtime]=useState('');
+    const [zerodalevel,setzerodalevel]=useState('');
+    const [zerodacost,setzerodacost]=useState('');
+    const [zerodacontent,setzerodacontent]=useState('');
+    const [articleid_zeroda,setarticleid_zeroda]=useState('');
+    const zerodaupdate = () => {
+        Axios.post("http://localhost:3001/zerodaupdate", {
+            zerodafieldname: zerodafieldname,
+            zerodacounty: zerodacounty,
+            zerodaarea: zerodaarea,
+            zerodaaddress:zerodaaddress,
+            zerodadate:zerodadate,
+            zerodastarttime:zerodastarttime,
+            zerodaendtime:zerodaendtime,
+            zerodalevel:zerodalevel,
+            zerodacost:zerodacost,
+            zerodacontent:zerodacontent,
+            articleid_zeroda:articleid_zeroda,
+            number1:number1,
         }).then((response) => {
-            console.log(response);
-            setzerodalist(response.data);
+            setdiv1(!div1);
+            alert("更新成功");
         });
+    }
+    // 零打刪除
+    const zerodadelete =(key,e)=>{
+        zerodalist.splice(key,1);
+        setzerodalist([]);
+        Axios.post("http://localhost:3001/zerodadelete", {
+            articleid_zeroda:e,
+            }).then((response) => {
+                alert("刪除成功");
+                setzerodalist(zerodalist);
+            });
     }
     // 球隊搜尋
     const [teamselect, setteamselect] = useState('台中市');
@@ -95,7 +130,11 @@ const Backarticle2 = () => {
     const ddd1 = () => {
         setdiv1(!div1);
         setzerodaedit([]); 
-        console.log(div1);
+        // console.log(div1);
+    }
+    const [div2,setdiv2]= useState(false);
+    const ddd2 =()=>{
+        setdiv2(!div2);
     }
     // 零打編輯畫面
     let title = null;
@@ -108,9 +147,24 @@ const Backarticle2 = () => {
         Axios.post("http://localhost:3001/zerodada", {
             articleid_zeroda: e,
         }).then((response) => {
-            console.log(response);
+            // console.log(response);
+            let c = new Date(response.data[0].date);
+                    let y = c.getFullYear();
+                    let m = c.getMonth();
+                    let d = c.getDate();
             setzerodaedit(response.data);
-            setnumber1(response.data[0].number); 
+            setnumber1(response.data[0].number);
+            setzerodafieldname(response.data[0].fieldname);
+            setzerodacounty(response.data[0].county);
+            setzerodaarea(response.data[0].area);
+            setzerodaaddress(response.data[0].address);
+            setzerodadate(`${y}-${m+1}-${d}`);
+            setzerodastarttime(response.data[0].starttime);
+            setzerodaendtime(response.data[0].endtime);
+            setzerodalevel(response.data[0].level);
+            setzerodacost(response.data[0].cost);
+            setzerodacontent(response.data[0].content);
+            setarticleid_zeroda(response.data[0].articleid_zeroda);
         });
     }
     if (zeroda1) {
@@ -139,7 +193,7 @@ const Backarticle2 = () => {
                                         <div class={`col-5 ${ba.div38}`}>{val.content}</div>
                                         <div class={`col-3 d-flex justify-content-center ${ba.div38}`}>
                                             <div class={`${ba.button1} ${ba.div42}`} onClick={() => { ddd(val.articleid_zeroda) }}>編輯</div>
-                                            <div class={ba.button1}>刪除</div>
+                                            <div class={ba.button1} onClick={()=>zerodadelete(key,val.articleid_zeroda)}>刪除</div>
                                         </div>
                                     </div>
                                 </div>
@@ -172,7 +226,7 @@ const Backarticle2 = () => {
                                         <div class={`col-2 ${ba.div38}`}>{val.area}</div>
                                         <div class={`col-3 ${ba.div38}`}>{val.sidename}</div>
                                         <div class={`col-3 d-flex justify-content-center ${ba.div38}`}>
-                                            <div class={`${ba.button1} ${ba.div48}`}>編輯</div>
+                                            <div class={`${ba.button1} ${ba.div48}`} onClick={ddd2}>編輯</div>
                                             <div class={ba.button1}>刪除</div>
                                         </div>
                                     </div>
@@ -222,9 +276,6 @@ const Backarticle2 = () => {
             </div>
     }
     // 判斷select縣市地區
-    const [TaiwanCity,setTaiwanCity] =useState([
-        "基隆市","台北市","新北市","桃園縣","新竹市","新竹縣","苗栗縣","台中市","彰化縣","南投縣","雲林縣","嘉義市","嘉義縣","台南市","高雄市","屏東縣","台東縣","花蓮縣","宜蘭縣","澎湖縣","金門縣","連江縣"
-    ]);
     const [Taichung, setTaichung] = useState([
         "中區","東區","西區","南區","北區","西屯區","南屯區","北屯區","豐原區","大里區","太平區","清水區","沙鹿區","大甲區","東勢區","梧棲區","烏日區","神岡區","大肚區","大雅區","后里區","霧峰區","潭子區","龍井區","外埔區","和平區","石岡區","大安區","新社區"
     ]);
@@ -258,10 +309,10 @@ const Backarticle2 = () => {
                                     </div>
                                 </div>
                                 <div className={ba.div12}>
-                                    <span className={ba.span}>關鍵字</span>
+                                    <span className={ba.span}>文章內容</span>
                                     <div>
                                         <input type="text" class={`${ba.ccc} ${ba.div13}`}
-                                            placeholder="請輸入關鍵字" />
+                                            placeholder="請輸入關鍵字" onChange={(e)=>setzerodainput(`%${e.target.value}%`)}/>
                                     </div>
                                 </div>
                                 <div class={`mt-auto`}>
@@ -370,7 +421,7 @@ const Backarticle2 = () => {
                     </div>
                 </div>
             </div>
-            {/* 彈出畫面 */}
+            {/* 零打彈出畫面 */}
             <div className={`${ba.div55}`} style={{ display: (div1) ? 'block' : 'none' }}>
             {zerodaedit.map((val,key) => {
             let c = new Date(val.date);
@@ -387,96 +438,109 @@ const Backarticle2 = () => {
                 setnumber1(number1-1);
             }
             return (
-                <div className={ba.div56} key={val+key}>
+                <div className={ba.div56} key={key}>
                     <div class={ba.cover}>
                         <div class={ba.contain}>
+                            <div >
+                            <label class={ba.dlabel} for="ct_pname">會員編號 : </label> {val.userid}
+                            </div>
                             <div>
                                 <label class={ba.dlabel} for="ct_pname">場館</label><br />
-                                <input class={ba.dinput} id="ct_pname" type="text" defaultValue={val.fieldname} />
+                                <input class={ba.dinput} id="ct_pname" type="text" defaultValue={val.fieldname} onChange={(e)=>{setzerodafieldname(e.target.value)}} />
                             </div>
                             <div class={ba.ct_citycover}>
-                                <div>
+                                <div className={ba.iimgdiv} >
                                     <label class={ba.dlabel} for="ct_city">縣市</label><br />
-                                    <select class={ba.dselect} name="ct" id="ct_city" defaultValue={val.county}>
+                                    <select class={ba.dselect} name="ct" id="ct_city" defaultValue={val.county} onChange={(e)=>{setzerodacounty(e.target.value)}}>
                                         <option value="台中市">台中市</option>
                                     </select>
+                                    <img src={Group41} alt="" className={ba.iimg} />
                                 </div>
-                                <div>
+                                <div className={ba.iimgdiv}>
                                     <label class={ba.dlabel} for="">地區</label><br />
-                                    <select class={ba.dselect} name="ct_" id="" defaultValue={val.area} >
-                                        <option value="后里區">后里區</option>
-                                        <option value="西屯區">西屯區</option>
-                                        <option value="南屯區">南屯區</option>
+                                    <select class={ba.dselect} name="ct_" id="" defaultValue={val.area} onChange={(e)=>{setzerodaarea(e.target.value)}}>
+                                        {Taichung.map((val,key)=>{
+                                            return (<option key={key} value={val}>{val}</option>);
+                                        })}
                                     </select>
+                                    <img src={Group41} alt="" className={ba.iimg} />
                                 </div>
                             </div>
                             <div>
                                 <label class={ba.dlabel} for="ct_addr">地址</label><br />
-                                <input class={ba.dinputaddr} type="text" id="ct_addr" defaultValue={val.address}/>
+                                <input class={ba.dinputaddr} type="text" id="ct_addr" defaultValue={val.address} onChange={(e)=>{setzerodaaddress(e.target.value)}}/>
                             </div>
                             <div>
                                 <label class={ba.dlabel} for="ct_d_input">日期</label><br/>
-                                <input class={ba.dinputdate} id="ct_d_input" type="date" defaultValue={`${y}-${m+1}-${d}`}/>
+                                <input class={ba.dinputdate} id="ct_d_input" type="date" defaultValue={`${y}-${m+1}-${d}`} onChange={(e)=>{setzerodadate(e.target.value)}}/>
                                 <img class={ba.ct_seleD} src={Group41} />
                             </div>
                             <div>
                                 <label class={ba.dlabel} for="">時段</label>
                             </div>
                             <div class={ba.ct_time}>
-                                <div>
-                                    <select class={ba.dselect} name="ct_" id="" defaultValue={val.starttime}>
+                                <div className={ba.iimgdiv}>
+                                    <select class={ba.dselect} name="ct_" id="" defaultValue={val.starttime} onChange={(e)=>{setzerodastarttime(e.target.value)}}>
                                         <option value="8">8:00</option>
                                         <option value="9">9:00</option>
                                         <option value="15">15:00</option>
                                         <option value="16">16:00</option>
                                         <option value="17">17:00</option>
                                     </select>
+                                    <img src={Group41} alt="" className={ba.iimg2} />
                                 </div>
                                 <div className={ba.ggg}>
                                     至
                                 </div>
-                                <div>
-
-                                    <select class={ba.dselect} name="ct_" id="" defaultValue={val.endtime}>
+                                <div className={ba.iimgdiv}>
+                                    <select class={ba.dselect} name="ct_" id="" defaultValue={val.endtime} onChange={(e)=>{setzerodaendtime(e.target.value)}}>
                                         <option value="10">10:00</option>
                                         <option value="17">17:00</option>
                                     </select>
+                                    <img src={Group41} alt="" className={ba.iimg2} />
                                 </div>
                             </div>
-                            <div>
+                            <div className={ba.iimgdiv1}>
                                 <label class={ba.dlabel} for="ct_range">程度</label><br />
-                                <select class={ba.dselect} name="ct_" id="ct_range" defaultValue={val.level}>
+                                <select class={ba.dselect1} name="ct_" id="ct_range" defaultValue={val.level} onChange={(e)=>{setzerodalevel(e.target.value)}}>
                                     <option value="新手">新手</option>
                                     <option value="普通">普通</option>
                                     <option value="高手">高手</option>
                                 </select>
+                                <img src={Group41} alt="" className={ba.iimg3} />
                             </div>
                             <div>
                                 <label class={ba.dlabel} for="">人數</label><br />
                                 <input class={`${ba.minus} ${ba.dinput}`} type="button" onClick={dda} value="-" />
-                                <input class={`${ba.numbox} ${ba.dinputnum}`} type="number" key={number1} id="vall" defaultValue={number1} />
+                                <input class={`${ba.numbox} ${ba.dinputnum}`} type="number" key={number1} id="vall" defaultValue={number1}  onChange={(e)=>{setnumber1(e.target.value)}}/>
                                 <input class={`${ba.minus} ${ba.dinput}`} type="button" onClick={add} value="+" />
                             </div>
                             <div>
                                 <label class={ba.dlabel} for="ct_pay">費用</label><br />
-                                <input class={ba.dinput} id="ct_pay" type="text" defaultValue={val.	cost}/>
+                                <input class={ba.dinput} id="ct_pay" type="text" defaultValue={val.	cost} onChange={(e)=>{setzerodacost(e.target.value)}}/>
                             </div>
                             <div>
                                 <label class={ba.dlabel} for="ct_discribe">描述</label><br />
-                                <textarea name="" class={ba.dtextarea} id="ct_discribe" cols="30" rows="10" defaultValue={val.content}></textarea>
+                                <textarea name="" class={ba.dtextarea} id="ct_discribe" cols="30" rows="10" defaultValue={val.content} onChange={(e)=>{setzerodacontent(e.target.value)}}></textarea>
                             </div>
                             <div class={ba.ct_yesOrNot}>
                                 <div>
                                     <span class={ba.ct_backself} onClick={ddd1}>取消</span>
                                 </div>
-                                <input class={`${ba.dinput} ${ba.dinputsubmit}`} onClick={aaaa} type="submit" value="儲存" />
+                                <input class={`${ba.dinput} ${ba.dinputsubmit}`} onClick={zerodaupdate} type="submit" value="儲存" />
                             </div>
                         </div>
                     </div>
                 </div>
             );
         })}
-        </div>
+            </div>
+            <div className={`${ba.div55}`} style={{ display: (div2) ? 'block' : 'none' }}>
+            <Backteam div2 = {setdiv2}/>
+
+            </div>
+            
+            
         </React.Fragment>
     );
     

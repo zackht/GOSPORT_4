@@ -5,10 +5,10 @@ import group41 from "./icon/Group 41.png";
 import a from "./icon/上傳照片.svg";
 
 
-class Backteam extends Component {
-    state = {}
-
-    render() {
+const Backteam =({div2})=>{
+    const ddd2=()=>{
+        div2(false);
+    }
         return (
             <React.Fragment>
                 <div className={`container ${backteam.div0}`}>
@@ -101,13 +101,12 @@ class Backteam extends Component {
                         </div>
                     </div>
                     <div className={`${backteam.div10} d-flex justify-content-around`}>
-                        <button className={backteam.button1}>取消</button>
+                        <button className={backteam.button1} onClick={ddd2}>取消</button>
                         <button className={backteam.button2}>儲存</button>
                     </div>
                 </div>
             </React.Fragment>
         );
     }
-}
 
 export default Backteam;

@@ -391,6 +391,45 @@
     background-color: transparent;
     margin-bottom: 20px;
     text-align: center;
+    appearance: none;
+    position: relative;
+    z-index: 2;
+}
+.dselect1 {
+    border: none;
+    border-bottom: 1px black solid;
+    width: 140px;
+    height: 40px;
+    font-size: 20px;
+    background-color: transparent;
+    margin-bottom: 20px;
+    text-align: center;
+    appearance: none;
+    position: relative;
+    z-index: 2;
+    background-color: transparent;
+}
+.iimg{
+    position: absolute;
+    top: 40px;
+    right: 0px;
+}
+.iimg2{
+    position: absolute;
+    top: 10px;
+    right: 0px;
+}
+.iimg3{
+    position: absolute;
+    top: 40px;
+    right: 0;
+}
+.iimgdiv{
+    position: relative;
+}
+.iimgdiv1{
+    position: relative;
+    display: inline-block;
 }
 
 /* 市 區 */
@@ -405,7 +444,6 @@
     width: 185px;
     text-align: center;
 }
-
 /* 日期 */
 .dinputdate {
     position: relative;

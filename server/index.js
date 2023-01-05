@@ -53,8 +53,32 @@ app.use(express.json());
       const starttime1 = req.body.starttime1;
       const endtime1 = req.body.endtime1;
       const ball1 = req.body.ball1;
-      db.query("SELECT * FROM userarticle_zeroda where date BETWEEN ? AND ? AND ballgames = ?"
-      ,[starttime1,endtime1,ball1], (err, result) => {
+      const zerodainput =req.body.zerodainput;
+      if(zerodainput===''){
+        db.query("SELECT * FROM userarticle_zeroda where date BETWEEN ? AND ? AND ballgames = ?"
+        ,[starttime1,endtime1,ball1], (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        });
+      }else{
+        db.query("SELECT * FROM userarticle_zeroda where date BETWEEN ? AND ? AND ballgames = ? AND content LIKE ?"
+        ,[starttime1,endtime1,ball1,zerodainput], (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        });
+      }
+    });
+    // 搜尋零打文章編輯畫面
+    app.post("/zerodada", (req, res) => {
+      const articleid_zeroda = req.body.articleid_zeroda;
+      db.query("SELECT * FROM userarticle_zeroda where articleid_zeroda = ?"
+      ,[articleid_zeroda], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -62,11 +86,46 @@ app.use(express.json());
         }
       });
     });
-    // 搜尋零打文章編輯畫面
-    app.post("/zerodada", (req, res) => {
+    // 後台零打編輯儲存
+    app.post("/zerodaupdate", (req, res) => {
+      const zerodafieldname = req.body.zerodafieldname;
+      const zerodacounty = req.body.zerodacounty;
+      const zerodaarea = req.body.zerodaarea;
+      const zerodaaddress = req.body.zerodaaddress;
+      const zerodadate = req.body.zerodadate;
+      const zerodastarttime = req.body.zerodastarttime;
+      const zerodaendtime = req.body.zerodaendtime;
+      const zerodalevel = req.body.zerodalevel;
+      const zerodacost = req.body.zerodacost;
+      const zerodacontent = req.body.zerodacontent;
+      const articleid_zeroda =req.body.articleid_zeroda;
+      const number1 =req.body.number1;
+      db.query("UPDATE userarticle_zeroda SET content=?,starttime=?,endtime=?,date=?,county=?,area=?,fieldname=?,address=?,cost=?,level=?,number = ? where articleid_zeroda = ?"
+      ,[zerodacontent,zerodastarttime,zerodaendtime,zerodadate,zerodacounty,zerodaarea,zerodafieldname,zerodaaddress,zerodacost,zerodalevel,number1,articleid_zeroda], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    // 後台零打刪除
+    app.post("/zerodadelete", (req, res) => {
       const articleid_zeroda = req.body.articleid_zeroda;
-      db.query("SELECT * FROM userarticle_zeroda where articleid_zeroda = ?"
+      db.query("DELETE from userarticle_zeroda where articleid_zeroda = ?"
       ,[articleid_zeroda], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    // 後台零打關鍵字搜尋
+    app.post("/zerodasearch", (req, res) => {
+      const zerodasearchvalue = req.body.zerodasearchvalue;
+      db.query("SELECT * FROM `userarticle_zeroda` WHERE content LIKE '%?%'"
+      ,[zerodasearchvalue], (err, result) => {
         if (err) {
           console.log(err);
         } else {

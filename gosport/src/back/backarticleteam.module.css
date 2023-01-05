@@ -1,10 +1,12 @@
 
 .div0{
     padding: 50px;
-    height: 1180px;
+    height: 80vh;
     width: 1060px;
-    border: 1px solid black;
     box-sizing: border-box;
+    overflow-y: scroll;
+    background-color: white;
+    align-items: center;
 }
 .font{
     font-size: 24px;
