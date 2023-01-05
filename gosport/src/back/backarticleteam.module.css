@@ -7,6 +7,7 @@
     overflow-y: scroll;
     background-color: white;
     align-items: center;
+    margin-top: 50px;
 }
 .font{
     font-size: 24px;
