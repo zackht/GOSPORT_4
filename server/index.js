@@ -162,9 +162,10 @@ app.use(express.json());
         }
       });
     });
-    // 個人頁面
+    // 登入資料
     app.get("/userinfo", (req, res) => {
-      db.query("SELECT * FROM `user` WHERE userid = 1;", (err, result) => {
+      const account = req.body.account;
+      db.query("SELECT * FROM user WHERE email = ?",[account], (err, result) => {
         if (err) {
           console.log(err);
         } else {
