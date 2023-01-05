@@ -102,7 +102,7 @@ const Selfactive = () => {
                         <div id="artclein"  style={{ display: isArticleShow }}>
                             {/* <!-- 以新增 --> */}
                             <div id="tein" style={{ display: isAddShow }}>
-                                <Artadd controlModal={controlModal} />
+                                <Artadd control={controlModal} />
                             </div>
                             {/* <!-- 已刪除 --> */}
                             <div id="teout" style={{ display: isDelShow }}>
