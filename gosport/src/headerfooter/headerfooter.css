@@ -57,6 +57,10 @@
     border-bottom: 2px rgb(230, 70, 55) solid;
     padding-bottom: 8px;
 }
+a:hover{
+    text-decoration: none !important;
+    color: rgb(30, 30, 30) !important;
+}
 .nRight>img {
     height: 18px;
     margin-left: 30px;

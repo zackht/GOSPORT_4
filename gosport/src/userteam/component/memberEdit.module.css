@@ -1,0 +1,153 @@
+.mForm{
+    font-family: 'Noto Sans TC';
+    color: rgb(170, 170, 170);
+    font-size: 1rem;
+    font-weight: 400;
+    width: 100%;
+    position: relative;
+    padding: 40px 40px 0px 40px;
+    overflow: scroll;
+}
+.mTitle {
+    font-family: 'Noto Sans TC';
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: rgb(170, 170, 170);
+    margin-bottom: 10px;
+}
+.mForm input[type=radio] {
+    display: none;
+}
+label img {
+    width: 80px;
+    height: 80px;
+    clip-path: circle(50% at 50% 50%);
+    margin-bottom: 20px;
+    margin-right: 5px;
+    opacity: 30%;
+}
+input[name='teamL']:checked+label img {
+    opacity: 100%;
+}
+/* 成員 */
+.checkMember {
+    width: 100%;
+    height: 100px;
+    border-bottom: 1px solid rgb(255, 255, 255);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.checkMember:last-child {
+    border-bottom: none;
+}
+.checkMember>img {
+    width: 60px;
+    height: 60px;
+    display: inline;
+    margin-bottom: 0px;
+}
+.checkMember>div:nth-child(2) {
+    font-family: 'Noto Sans TC';
+    color: rgb(56, 56, 56);
+    font-size: 1.3rem;
+    font-weight: 600;
+    display: inline;
+    margin-left: 15px;
+}
+.checkMember>div:nth-child(3) {
+    width: 60px;
+    height: 30px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    font-family: 'Noto Sans TC';
+    color: rgb(56, 56, 56);
+    font-size: 1.1rem;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+}
+.checkMember>div:nth-child(4) {
+    font-family: 'Noto Sans TC';
+    color: rgb(56, 56, 56);
+    font-size: 1.1rem;
+    font-weight: 400;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    display: block;
+}
+.checkbtn {
+    width: 60%;
+    display: flex;
+    justify-content: flex-end;
+}
+.checkbtn>button:nth-child(1) {
+    width: 80px;
+    height: 40px;
+    border: 1px solid #AAAAAA;
+    color: #AAAAAA;
+    background-color: white;
+    background-color: rgb(255, 255, 255, 0);
+    border-radius: 20px;
+    float: right;
+}
+.checkbtn>button:nth-of-type(2) {
+    width: 80px;
+    height: 40px;
+    border: none;
+    color: white;
+    background-color: rgb(230, 70, 55);
+    border-radius: 20px;
+    float: right;
+    position: relative;
+    right: 0px;
+    margin-left: 10px;
+}
+.badge {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    position: relative;
+    left: -238px;
+    top: 25px;
+}
+.badge>img {
+    width: 15px;
+    height: 15px;
+    margin: 0px;
+}
+.formbtn {
+    margin-top: 30px;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+}
+.formbtn a,
+.mForm input {
+    width: 48%;
+    border-radius: 40px;
+}
+.formbtn a {
+    border: 1px solid rgb(230, 70, 55);
+    font-family: 'Noto Sans TC';
+    color: rgb(230, 70, 55);
+    font-size: 1.2rem;
+    font-weight: 400;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.formbtn input{
+    background-color: rgb(230, 70, 55);
+    color: white;font-size: 1.2rem;
+    font-weight: 400;
+    font-family: 'Noto Sans TC';
+    border: none;
+}

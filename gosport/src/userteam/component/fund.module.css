@@ -1,17 +1,13 @@
-
-.activity{
+.fund{
     width: 100%;
-    /* background-color: aqua; */
     height: 85%;
     display: flex;
     flex-direction: row;
 }
-
 /* 搜索欄位 */
 .search{
     width: 15%;
     height: 85%;
-    /* background-color: aqua; */
     margin-top: 40px;
     margin-right: 40px;
     margin-left: 40px;
@@ -33,7 +29,7 @@ form{
 .sDate{
     height: 40%;
     overflow: scroll;
-    /* border: 1px solid red; */
+    
 }
 .sDate div,.oText{
     font-family: 'Noto Sans TC';
@@ -52,7 +48,7 @@ form{
     font-weight: 400;
     font-size: 1rem;
     box-sizing: border-box;
-    background-image: url('./img/icon_select.svg');
+    background-image: url('../img/icon_select.svg');
     background-size: auto 50%;
     background-repeat: no-repeat;
     background-position: 100% 50%;
@@ -78,14 +74,10 @@ form{
     position: absolute;
     bottom: 0;
 }
-
-
-
 /* 訂單資訊 */
 .order{
     width: 80%;
     height: 85%;
-    /* background-color: rgb(37, 124, 83); */
     border-left: 1px solid rgb(230, 230, 230);
     margin-top: 40px;
     margin-right: 40px;
@@ -95,11 +87,11 @@ form{
     overflow: scroll;
     position: relative;
 }
-.order>button{
+.order>a,.order>button{
     border: 1px solid #AAAAAA;
     border-radius: 40px;
-    width:80px;
-    height: 50px;
+    width:100px;
+    height: 60px;
     font-family: 'Noto Sans TC';
     font-size: 1.1rem;
     font-weight: 400;
@@ -108,29 +100,20 @@ form{
     float: right;
     margin-left: 10px;
     position:sticky;
-    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+/* 刪除 */
 .order>button:nth-of-type(1){
-    color: rgba(230, 70, 55, 1);
-    border: 1px solid rgba(230, 70, 55, 1);
-    background-color: white;
-}
-.order>button:nth-of-type(3){
     color: white;
     border: 0px;
     background-color: rgb(170, 170, 170);
-}
-.order>a{
-    text-decoration:none;
-    display: block;
-    /* position: absolute;
-    top: 50px;
-    right: 0px; */
 }
 .order>img{
     clip-path: circle(50% at 50% 50%);
     width: 80px;
     height: 80px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     margin-right: 5px;
 }

@@ -14,7 +14,7 @@ import rentside_more from "./side/rentsid_more";
 import Selfactive from "./selfactive/selfactive";
 import Selfalter from "./selfalter/selfalter";
 import Selfpage from "./selfpage/selfpage";
-import Myteam from "./userteam/userteam.js";
+import Myteam from "./userteam/index.js";
 import Backuser from './back/backuser';
 import backside from './back/backside';
 import createside from './back/createside';
@@ -49,8 +49,7 @@ class App extends Component {
             <Route path="/gosport/user/activity" component={Selfactive} />
 
             {/* 球隊 */}
-            <Route path="/gosport/user/myteam" 	      component={Myteam} exact />
-            {/* <Route path="/gosport/user/myteam/detail" component={} /> */}
+            <Route path="/gosport/user/myteam/"  component={Myteam} />
 
             {/* QA */}
             {/* <Route path="/gosport/qa" component={} /> */}
