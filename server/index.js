@@ -48,7 +48,7 @@ app.use(express.json());
         }
       });
     });
-    // backarticle搜尋零打
+    // 後台零打搜尋
     app.post("/zeroda", (req, res) => {
       const starttime1 = req.body.starttime1;
       const endtime1 = req.body.endtime1;
@@ -74,7 +74,7 @@ app.use(express.json());
         });
       }
     });
-    // 搜尋零打文章編輯畫面
+    // 後台零打編輯
     app.post("/zerodada", (req, res) => {
       const articleid_zeroda = req.body.articleid_zeroda;
       db.query("SELECT * FROM userarticle_zeroda where articleid_zeroda = ?"
@@ -121,24 +121,38 @@ app.use(express.json());
         }
       });
     });
-    // 後台零打關鍵字搜尋
-    app.post("/zerodasearch", (req, res) => {
-      const zerodasearchvalue = req.body.zerodasearchvalue;
-      db.query("SELECT * FROM `userarticle_zeroda` WHERE content LIKE '%?%'"
-      ,[zerodasearchvalue], (err, result) => {
+    // 後台球隊搜尋
+    app.post("/team", (req, res) => {
+      const teamstartday = req.body.teamstartday;
+      const teamendday = req.body.teamendday;
+      const teamtype = req.body.teamtype;
+      const location = req.body.location;
+      if(location==''){
+        db.query("SELECT * FROM teamevent where startdate >= ? AND enddate <= ? AND type = ?"
+      ,[teamstartday,teamendday,teamtype], (err, result) => {
         if (err) {
           console.log(err);
         } else {
           res.send(result);
         }
       });
+      }else{
+        db.query("SELECT * FROM teamevent where startdate >= ? AND enddate <= ? AND type = ? AND location LIKE ?"
+      ,[teamstartday,teamendday,teamtype,location], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+      }
+      
     });
-    // backarticle搜尋球隊
-    app.post("/team", (req, res) => {
-      const teamselect = req.body.teamselect;
-      const teamselect2 = req.body.teamselect2;
-      db.query("SELECT * FROM team where county= ? AND area = ?"
-      ,[teamselect,teamselect2], (err, result) => {
+    // 後台球隊編輯
+    app.post("/teamedit", (req, res) => {
+      const teamid = req.body.teamid;
+      db.query("SELECT * FROM team where teamid = ?"
+      ,[teamid], (err, result) => {
         if (err) {
           console.log(err);
         } else {

@@ -95,15 +95,17 @@ const Backarticle2 = () => {
             });
     }
     // 球隊搜尋
-    const [teamselect, setteamselect] = useState('台中市');
-    const [teamselect2, setteamselect2] = useState('西屯區');
+    const [teamstartday, setteamstartday] = useState('');
+    const [teamendday, setteamendday] = useState('');
+    const [teamtype, setteamtype] = useState('聚餐');
+    const [location, setlocation] = useState('');
     const [teamlist, setteamlist] = useState([]);
     const bbb = () => {
-        console.log(teamselect);
-        console.log(teamselect2);
         Axios.post("http://localhost:3001/team", {
-            teamselect: teamselect,
-            teamselect2: teamselect2,
+            teamstartday:teamstartday,
+            teamendday:teamendday,
+            teamtype:teamtype,
+            location:location,
         }).then((response) => {
             console.log(response);
             setteamlist(response.data);
@@ -137,8 +139,6 @@ const Backarticle2 = () => {
         setdiv2(!div2);
     }
     // 零打編輯畫面
-    let title = null;
-    let content = null;
     var [div1, setdiv1] = useState(false);
     var [zerodaedit, setzerodaedit] = useState([]);
     var ddd = (e) => {
@@ -167,6 +167,19 @@ const Backarticle2 = () => {
             setarticleid_zeroda(response.data[0].articleid_zeroda);
         });
     }
+    // 球隊編輯畫面
+    const ttt= (e)=>{
+        setdiv2(!div2);
+        Axios.post("http://localhost:3001/zerodada", {
+            teamid: e,
+        }).then((response) => {
+            // console.log(response);
+            setzerodaedit(response.data);
+        });
+    }
+    // 零打搜尋結果
+    let title = null;
+    let content = null;
     if (zeroda1) {
         title =
             <div class={`d-flex ${ba.div37}`}>
@@ -202,31 +215,39 @@ const Backarticle2 = () => {
                     );
                 })}
             </div>
-
+    // 球隊搜尋結果
     } else if (team1) {
         title =
             <div class={`d-flex ${ba.div44}`}>
-                <div class={`col-2 ${ba.font1} ${ba.div38}`}>球隊名稱</div>
-                <div class={`col-2 ${ba.font1} ${ba.div38}`}>縣市</div>
-                <div class={`col-2 ${ba.font1} ${ba.div38}`}>區</div>
-                <div class={`col-3 ${ba.font1} ${ba.div38}`}>場館名稱</div>
+                <div class={`col-2 ${ba.font1} ${ba.div38}`}>開始日期</div>
+                <div class={`col-2 ${ba.font1} ${ba.div38}`}>結束日期</div>
+                <div class={`col-2 ${ba.font1} ${ba.div38}`}>類型</div>
+                <div class={`col-3 ${ba.font1} ${ba.div38}`}>地點</div>
                 <div class={`col-3 ${ba.font1} ${ba.div38}`}></div>
             </div>
         content =
             <div className={`${ba.div54}`}>
                 {teamlist.map((val, key) => {
+                    let c = new Date(val.startdate);
+                    let y = c.getFullYear();
+                    let m = c.getMonth();
+                    let d = c.getDate();
+                    let cc = new Date(val.enddate);
+                    let yy = cc.getFullYear();
+                    let mm = cc.getMonth();
+                    let dd = cc.getDate();
                     return (
                         <React.Fragment>
                             <div class={` ${ba.div39}`} key={key}>
                                 <div class={`col d-flex flex-column ${ba.div46}`}>
                                     {/* <!-- 搜尋結果 --> */}
                                     <div class={`d-flex ${ba.font2} ${ba.div47}`}>
-                                        <div class={`col-2 ${ba.div38}`}>{val.tname}</div>
-                                        <div class={`col-2 ${ba.div38}`}>{val.county}</div>
-                                        <div class={`col-2 ${ba.div38}`}>{val.area}</div>
-                                        <div class={`col-3 ${ba.div38}`}>{val.sidename}</div>
+                                        <div class={`col-2 ${ba.div38}`}>{`${y}-${m+1}-${d}`}</div>
+                                        <div class={`col-2 ${ba.div38}`}>{`${yy}-${mm+1}-${dd}`}</div>
+                                        <div class={`col-2 ${ba.div38}`}>{val.type}</div>
+                                        <div class={`col-3 ${ba.div38}`}>{val.location}</div>
                                         <div class={`col-3 d-flex justify-content-center ${ba.div38}`}>
-                                            <div class={`${ba.button1} ${ba.div48}`} onClick={ddd2}>編輯</div>
+                                            <div class={`${ba.button1} ${ba.div48}`} onClick={() => { ttt(val.teamid) }}>編輯</div>
                                             <div class={ba.button1}>刪除</div>
                                         </div>
                                     </div>
@@ -236,7 +257,7 @@ const Backarticle2 = () => {
                     );
                 })}
             </div>
-
+    // 轉租搜尋結果
     } else if (rent1) {
         title =
             <div class={`d-flex ${ba.div50}`}>
@@ -325,32 +346,28 @@ const Backarticle2 = () => {
                             <div action="" class={`d-flex flex-column ${ba.div15}`}>
                                 <div class={`d-flex flex-column`} >
                                     <div class={`d-flex flex-column ${ba.div16}`}>
-                                        <span className={`${ba.div17} ${ba.span}`}>縣市</span>
+                                    <span className={ba.span}>日期區間</span>
+                                    <div class={`${ba.dateimg} ${ba.font}`}>
+                                        <input type="date" className={`${ba.div7} ${ba.date}`} onChange={(e) => setteamstartday(e.target.value)} />
+                                        <img class={ba.selectedDate} src={Group41} alt="" />
+                                    </div>
+                                    <div class={`${ba.dateimg} ${ba.div8}`}>
+                                        <input type="date" class={`${ba.font} ${ba.div9} ${ba.date}`} onChange={(e) => setteamendday(e.target.value)} />
+                                        <img class={ba.selectedDate} src={Group41} alt="" />
+                                    </div>
+                                        <span className={`${ba.div19} ${ba.span}`}>類型</span>
                                         <div class={`${ba.selectimg} ${ba.font}`}>
-                                            <select name="" id="" className={`${ba.div18} ${ba.select}`} onChange={(e) => { setteamselect(e.target.value) }}>
-                                                    <option value="台中市">台中市</option>
-                                            </select>
-                                            <img class="" src={Group41} alt="" className={ba.img} />
-                                        </div>
-                                        <span className={`${ba.div19} ${ba.span}`}>地區</span>
-                                        <div class={`${ba.selectimg} ${ba.font}`}>
-                                            <select name="" id="" className={`${ba.div20} ${ba.select}`} onChange={(e) => { setteamselect2(e.target.value) }}>
-                                                {Taichung.map((val,key)=>{
-                                                    return (<option key={key} value={val}>{val}</option>);
-                                                })}
+                                            <select name="" id="" className={`${ba.div20} ${ba.select}`} onChange={(e) => { setteamtype(e.target.value) }}>
+                                                <option value="聚餐">聚餐</option>
+                                                <option value="比賽">比賽</option>
                                             </select>
                                             <img class="" src={Group41} alt="" className={ba.img} />
                                         </div>
                                     </div>
-                                    <span className={ba.span}>球隊名稱</span>
-                                    <div>
-                                        <input type="text" class={`${ba.ccc} ${ba.div21}`}
-                                            placeholder="請輸入關鍵字" />
-                                    </div>
-                                    <span className={`${ba.div23} ${ba.span}`}>場館名稱</span>
+                                    <span className={`${ba.div23} ${ba.span}`}>地點</span>
                                     <div>
                                         <input type="text" class={`${ba.ccc} ${ba.div22}`}
-                                            placeholder="請輸入關鍵字" />
+                                            placeholder="請輸入關鍵字" onChange={(e) => { setlocation(`%${e.target.value}%`) }}/>
                                     </div>
                                 </div>
 
@@ -537,7 +554,6 @@ const Backarticle2 = () => {
             </div>
             <div className={`${ba.div55}`} style={{ display: (div2) ? 'block' : 'none' }}>
             <Backteam div2 = {setdiv2}/>
-
             </div>
             
             
