@@ -28,7 +28,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Header1 />
+          <Header />
           <Switch>
 
             {/* 首頁 */}
