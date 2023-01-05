@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0roda1,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap');
 
@@ -696,18 +696,18 @@ right: 25px;
 .d130{height: 8vh;}
 .d131{margin:50px 0 25px 0 ;}
 .d132{margin: 0px; font-size:24px; font-weight: 500;}
-.d133{width: 426px; height: 60px; border-radius: 99px; font-size: 30px; margin-bottom: 25px;}
+.d133{width: 426px; height: 60px; border-radius: 99px; font-size: 30px; margin-bottom: 25px;border: none; background-color: rgb(245, 245, 245);text-align: center}
 .d134{margin: 0px; font-size:24px; font-weight: 500;}
-.d135{width: 426px; height: 60px; border-radius: 99px; font-size: 30px;}
+.d135{width: 426px; height: 60px; border-radius: 99px; font-size: 30px;border: none; background-color: rgb(245, 245, 245);text-align: center}
 .d136{margin: 0px; font-size:14px; font-weight: 500; color:rgb(170, 170, 170);}
 .d137{margin: 25px 0 0 0 ;font-size:24px; font-weight: 500;}
-.d138{width: 426px; height: 60px; border-radius: 99px; font-size: 30px;}
+.d138{width: 426px; height: 60px; border-radius: 99px; font-size: 30px;border: none; background-color: rgb(245, 245, 245);text-align: center}
 .d139{margin-top:35px; display: flex; justify-content: space-between;}
 #Pari{height: 400px;}
 #Lodo{height: 792px;}
 .d140{margin-top: 90px; margin-bottom:0px ; font-size:24px; font-weight: 500;}
 .d141{margin: 0px; font-size:24px; font-weight: 500;}
-.d142{width: 426px; height: 60px; border-radius: 99px; font-size: 30px;}
+.d142{width: 426px; height: 60px; border-radius: 99px; font-size: 30px;border: none; background-color: rgb(245, 245, 245);text-align: center}
 .d143{float: right; margin-right: 10px;color:rgb(170, 170, 170);}
 .d144{margin-top:0px; display: flex; justify-content: space-between;}
 .d145{height: 25vh;}

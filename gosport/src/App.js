@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import Header1 from "./handya/headerfooter/header";
+
 import Header from "./headerfooter/header.js";
 import Footer from "./headerfooter/footer.js";
 import Handya from "./handya/handya";
@@ -25,7 +28,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Header />
+          <Header1 />
           <Switch>
 
             {/* 首頁 */}

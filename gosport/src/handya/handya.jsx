@@ -40,7 +40,7 @@ sighdiv:true
         return (
         <React.Fragment>
     <div className={`${cc.dd1} container-fluid`}>
-    <div className={`${cc.back} container-fluid`}>
+    {/* <div className={`${cc.back} container-fluid`}>
         <div className={`${cc.aa1} container-fluid`}>
 
         </div>
@@ -80,7 +80,7 @@ sighdiv:true
              
             </div>
         </div>
-    </div>
+    </div> */}
         <div className={cc.marquee}>
             <div className={cc.marquee1}>
                 <img src={op} alt=""/>
