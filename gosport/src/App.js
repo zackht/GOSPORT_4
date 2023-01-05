@@ -18,6 +18,7 @@ import createside from './back/createside';
 import Client from './client/req';
 import Backarticle from './back/backarticle2';
 import Serchdi from "./handya/serchdi.jsx";
+import Applayout from './logintry/Applayout'
 
 class App extends Component {
   render() {
@@ -71,6 +72,7 @@ class App extends Component {
             <Route path="/Client"     component={Client} />
             <Route path="/testt"      component={Testt} />
             <Route path="/testt1"      component={Serchdi} />
+            <Route path="/applayout"      component={Applayout} />
 
 			      {/* 以下舊版 供對照--------------------------------------------------- */}
             {/* <Route path="/handya" component={Handya} /> */}

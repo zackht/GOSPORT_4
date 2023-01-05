@@ -3,7 +3,7 @@ import React from 'react';
 import arrowup from '../icon/arrowup2.svg'
 // import star from '../icon/star1.svg'
 // import pic from '../icon/20130917_171106.jpg'
-const Artadd = ({controlModal})=>{
+const Artadd = ({control})=>{
     return (
         <React.Fragment>
             <div>
@@ -25,7 +25,7 @@ const Artadd = ({controlModal})=>{
                         <td>2022/12/21</td>
                         <td>羽球</td>
                         <td>一個內斂又大膽的標題</td>
-                        <td style={{ textAlign: "center", cursor: "pointer" }} onClick={controlModal}>66</td>
+                        <td style={{ textAlign: "center", cursor: "pointer" }} onClick={control}>66</td>
                         <td style={{ textAlign: "center" }}>88</td>
                         <td style={{ position: "relative" }}>
                             <button>編輯</button>
