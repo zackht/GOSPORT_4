@@ -1,11 +1,13 @@
-import React, { Suspense, lazy, useState, useEffect } from 'react';
+// import React, { Suspense, lazy, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HashRouter, Switch, Route, Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import PageLogin from './login';
 import Home from './pages/home';
+import About from './pages/about';
 
-const PageHome = lazy(() => import('./pages/home'))
-const PageAbout = lazy(() => import('./pages/about'))
+// const PageHome = lazy(() => import('./pages/home'))
+// const PageAbout = lazy(() => import('./pages/about'))
 
 const AppLayout =() => {
     const [token, setToken] = useState();
@@ -40,11 +42,11 @@ const AppLayout =() => {
     return (
         <HashRouter>
             <nav>
-                <Link to="/a">Home</Link> | <Link to="/about">Abount</Link>
+                <Link to="/home">Home</Link> | <Link to="/about">Abount</Link>
             </nav>
             { token ? <p>Welcome, { token }。<a href="##" onClick={ handleLogout }>Logout</a></p> : '' }
             <Switch>
-                <Route path="/" element={
+                {/* <Route path="/" element={
                         <Suspense fallback={<div>Loading...</div>}>
                             <PageHome />
                         </Suspense>
@@ -53,8 +55,10 @@ const AppLayout =() => {
                         <Suspense fallback={<div>Loading...</div>}>
                             <PageAbout />
                         </Suspense>
-                    } />
-                <Route path="/a" component={Home}/>
+                    } /> */}
+                <Route path="/" component={Home} exact/>
+                <Route path="/home" component={Home}/>
+                <Route path="/about" component={About}/>
             </Switch>
         </HashRouter>
     );

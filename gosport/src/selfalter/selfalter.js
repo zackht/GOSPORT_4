@@ -34,25 +34,25 @@ const Selfalter = () => {
     }
 
     // 相片上傳 同時顯示 目前失敗
-    const picFile_backT = useRef();
-    const preview_img = useRef();
-    const img = useRef();
-    function readURL(input) {
-        console.log(input)
-        if (input.files && input.files[0]) {
-            picFile_backT.style.display = 'none'
-            preview_img.style.display = 'block'
-            // var imageTagID = input.getAttribute("targetID");
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                // var img = document.getElementById(imageTagID);
-                img.setAttribute("src", e.target.result)
-            }
-            reader.readAsDataURL(input.files[0]);
-        }else{
-            console.log('fales')
-        }
-    }
+    const [imageSrc, setImageSrc] = useState('');
+    const [photoBack,setBack] = useState('block')
+    const [showPhoto,setPhoto] = useState('none')
+
+    const handleOnPreview = (event) => {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.addEventListener("load", function () {
+        // convert image file to base64 string
+        setImageSrc(reader.result)
+      }, false);
+  
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+      setBack('none')
+      setPhoto('block')
+    };
+      
 
     return (
         <React.Fragment>
@@ -63,12 +63,13 @@ const Selfalter = () => {
                         <div>
                             <div className="alter_PicPla">
                                 <div id="picFile" onClick={upLoadpic}>
-                                    <div id="picFile_backT" ref={picFile_backT} style={{ textAlign: "center", color: "#AAAAAA" }}>
+                                    <div id="picFile_backT"  style={{ textAlign: "center", color: "#AAAAAA",display:photoBack}}>
                                         <embed src={alterImgbackIcon} /> <br />上傳相片
                                     </div>
-                                    <input id="oploadPic" type="file" targetid="preview_img" ref={inputFile} onChange={readURL}
+                                    <input id="oploadPic" type="file" targetid="preview_img" onChange={handleOnPreview} ref={inputFile}
                                         accept="image/gif, image/jpeg, image/png" />
-                                    <img id="preview_img" ref={img} style={{ display: "none" }} alt="" />
+                                    <img id="preview_img" src={imageSrc}  alt=""  style={{ display: showPhoto }}/>
+                                    
                                 </div>
                                 <div id="alter_showStar">
                                     <embed src={star} type="" />
