@@ -5,12 +5,13 @@ import group41 from "./icon/Group 41.png";
 import a from "./icon/上傳照片.svg";
 
 
-const Backteam =({div2})=>{
+const Backteam =({div2,teamedit,setteamedit})=>{
     const ddd2=()=>{
         div2(false);
     }
         return (
             <React.Fragment>
+                {teamedit.map((val,key)=>{
                 <div className={`container ${backteam.div0}`}>
                     <div className={`row ${backteam.div7}`}>
                         <div>
@@ -105,6 +106,7 @@ const Backteam =({div2})=>{
                         <button className={backteam.button2}>儲存</button>
                     </div>
                 </div>
+                })}
             </React.Fragment>
         );
     }

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import ba from './backarticle.module.css';
 import Group41 from './icon/Group 41.png';
 import Axios from "axios";
-import Backteam from "./backarticleteam";
+import backteam from './backarticleteam.module.css';
+import a from "./icon/上傳照片.svg";
+import group41 from "./icon/Group 41.png";
 const Backarticle2 = () => {
     const [zerodaseach, setzerodaseach] = useState('block');
     const [teamseach, setteamseach] = useState('none');
@@ -97,10 +99,11 @@ const Backarticle2 = () => {
     // 球隊搜尋
     const [teamstartday, setteamstartday] = useState('');
     const [teamendday, setteamendday] = useState('');
-    const [teamtype, setteamtype] = useState('聚餐');
+    const [teamtype, setteamtype] = useState('運動');
     const [location, setlocation] = useState('');
     const [teamlist, setteamlist] = useState([]);
     const bbb = () => {
+        setteamlist([]);
         Axios.post("http://localhost:3001/team", {
             teamstartday:teamstartday,
             teamendday:teamendday,
@@ -117,8 +120,8 @@ const Backarticle2 = () => {
     const [rentselectcounty, setrentselectcounty] = useState('台中市');
     const [rentselectarea, setrentselectarea] = useState('西屯區');
     const [rentlist, setrentlist] = useState([]);
-
     const ccc = () => {
+        setrentlist([]);
         Axios.post("http://localhost:3001/rent", {
             renttime: renttime,
             renttime1: renttime1,
@@ -134,9 +137,11 @@ const Backarticle2 = () => {
         setzerodaedit([]); 
         // console.log(div1);
     }
+    // 球隊取消
     const [div2,setdiv2]= useState(false);
     const ddd2 =()=>{
         setdiv2(!div2);
+        setteamedit([]);
     }
     // 零打編輯畫面
     var [div1, setdiv1] = useState(false);
@@ -168,13 +173,43 @@ const Backarticle2 = () => {
         });
     }
     // 球隊編輯畫面
+    var [teamedit, setteamedit] = useState([]);
     const ttt= (e)=>{
         setdiv2(!div2);
-        Axios.post("http://localhost:3001/zerodada", {
-            teamid: e,
+        Axios.post("http://localhost:3001/teamedit", {
+            teameventid: e,
         }).then((response) => {
             // console.log(response);
-            setzerodaedit(response.data);
+            setteamedit(response.data);
+        });
+    }
+    // 球隊儲存
+    const [teamstartdate,setteamstartdate]=useState('');
+    const [teamenddate,setteamenddate]=useState('');
+    const [teamstarttime,setteamstarttime]=useState('');
+    const [teamendtime,setteamendtime]=useState('');
+    const [teamtype2,setteamtype2]=useState('');
+    const [teamtitle,setteamtitle]=useState('');
+    const [teamlocation,setteamlocation]=useState('');
+    const [teampay,setteampay]=useState('');
+    const [teamtext,setteamtext]=useState('');
+    const [teamimg,setteamimg]=useState({});
+    
+    const ttt2=()=>{
+        Axios.post("http://localhost:3001/teamupdate", {
+            teamstartdate: teamstartdate,
+            teamenddate: teamenddate,
+            teamstarttime: teamstarttime,
+            teamendtime:teamendtime,
+            teamtype2:teamtype2,
+            teamtitle:teamtitle,
+            teamlocation:teamlocation,
+            zerodalevel:zerodalevel,
+            teampay:teampay,
+            teamtext:teamtext,
+        }).then((response) => {
+            setdiv2(!div2);
+            alert("更新成功");
         });
     }
     // 零打搜尋結果
@@ -247,7 +282,7 @@ const Backarticle2 = () => {
                                         <div class={`col-2 ${ba.div38}`}>{val.type}</div>
                                         <div class={`col-3 ${ba.div38}`}>{val.location}</div>
                                         <div class={`col-3 d-flex justify-content-center ${ba.div38}`}>
-                                            <div class={`${ba.button1} ${ba.div48}`} onClick={() => { ttt(val.teamid) }}>編輯</div>
+                                            <div class={`${ba.button1} ${ba.div48}`} onClick={() => { ttt(val.teameventid) }}>編輯</div>
                                             <div class={ba.button1}>刪除</div>
                                         </div>
                                     </div>
@@ -358,8 +393,8 @@ const Backarticle2 = () => {
                                         <span className={`${ba.div19} ${ba.span}`}>類型</span>
                                         <div class={`${ba.selectimg} ${ba.font}`}>
                                             <select name="" id="" className={`${ba.div20} ${ba.select}`} onChange={(e) => { setteamtype(e.target.value) }}>
+                                                <option value="運動">運動</option>
                                                 <option value="聚餐">聚餐</option>
-                                                <option value="比賽">比賽</option>
                                             </select>
                                             <img class="" src={Group41} alt="" className={ba.img} />
                                         </div>
@@ -443,9 +478,9 @@ const Backarticle2 = () => {
             {zerodaedit.map((val,key) => {
             let c = new Date(val.date);
             let y = c.getFullYear();
-            let m = c.getMonth();
-            let d = c.getDate();
+            let m = c.getMonth()+1;
             
+            let d = c.getDate();
             const add=()=>{
                 // number1+=1;
                 setnumber1(number1+1);
@@ -489,7 +524,7 @@ const Backarticle2 = () => {
                             </div>
                             <div>
                                 <label class={ba.dlabel} for="ct_d_input">日期</label><br/>
-                                <input class={ba.dinputdate} id="ct_d_input" type="date" defaultValue={`${y}-${m+1}-${d}`} onChange={(e)=>{setzerodadate(e.target.value)}}/>
+                                <input class={ba.dinputdate} id="ct_d_input" type="date" defaultValue={`${y}-${m = (m < 10 ? '0' : '') + m}-${d = (d < 10 ? '0' : '') + d}`} onChange={(e)=>{setzerodadate(e.target.value)}}/>
                                 <img class={ba.ct_seleD} src={Group41} />
                             </div>
                             <div>
@@ -550,10 +585,136 @@ const Backarticle2 = () => {
                     </div>
                 </div>
             );
-        })}
+            })}
             </div>
+
+            {/* 球隊彈出畫面 */}
             <div className={`${ba.div55}`} style={{ display: (div2) ? 'block' : 'none' }}>
-            <Backteam div2 = {setdiv2}/>
+            {teamedit.map((val,key)=>{
+                let c = new Date(val.startdate);
+                let y = c.getFullYear();
+                let m = c.getMonth()+1;
+                let d = c.getDate();
+                let cc = new Date(val.enddate);
+                let yy = cc.getFullYear();
+                let mm = cc.getMonth()+1;
+                let dd = cc.getDate();
+                // console.log(`${y}-${m}-${d}`);
+                return (
+                    <div className={`container ${backteam.div0}`} key={key}>
+                    <div className={`row ${backteam.div7}`}>
+                        <div>
+                            <div className={backteam.div1}>
+                                <span className={backteam.font1}>開始日期</span>
+                                <div className={backteam.dateimg}>
+                                    <input type="date" name="inputdate" className={`${backteam.date} ${backteam.font}`} 
+                                    defaultValue={`${y}-${m = (m < 10 ? '0' : '') + m}-${d = (d < 10 ? '0' : '') + d}`} 
+                                    onChange={(e)=>{setteamstartdate(e.target.value)}}/>
+                                    <img className={backteam.selectedDate} src={group41} alt="" />
+                                </div>
+                                <span className={backteam.font1}>結束日期</span>
+                                <div className={backteam.dateimg}>
+                                    <input type="date" name="inputdate" className={`${backteam.date} ${backteam.font}`} 
+                                    defaultValue={`${yy}-${mm = (mm < 10 ? '0' : '') + mm}-${dd = (dd < 10 ? '0' : '') + dd}`} 
+                                    onChange={(e)=>{setteamenddate(e.target.value)}}/>
+                                    <img className={backteam.selectedDate2} src={group41} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className={backteam.div4}>
+                            <span className={backteam.font1}>時間</span>
+                            <div className={`d-flex`}>
+                                <div className={backteam.div2}>
+                                    <select name="" id="" className={`${backteam.div3} ${backteam.font}`} defaultValue={val.starttime} onChange={(e)=>setteamstarttime(e.target.value)}>
+                                        <option value="1">1:00</option>
+                                        <option value="2">2:00</option>
+                                        <option value="3">3:00</option>
+                                        <option value="4">4:00</option>
+                                        <option value="5">5:00</option>
+                                        <option value="10">10:00</option>
+                                        <option value="11">11:00</option>
+                                        <option value="12">12:00</option>
+                                    </select>
+                                    <img className={backteam.selectimg} src={group41} alt="" />
+                                </div>
+                                <div className={backteam.font}>
+                                    至
+                                </div>
+                                <div className={backteam.div5}>
+                                    <select name="" id="" className={`${backteam.div3} ${backteam.font}`} defaultValue={val.endtime} onChange={(e)=>setteamendtime(e.target.value)}>
+                                        <option value="1">1:00</option>
+                                        <option value="2">2:00</option>
+                                        <option value="3">3:00</option>
+                                        <option value="4">4:00</option>
+                                        <option value="5">5:00</option>
+                                        <option value="10">10:00</option>
+                                        <option value="11">11:00</option>
+                                        <option value="12">12:00</option>
+                                    </select>
+                                    <img className={backteam.selectimg} src={group41} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className={backteam.div6}>
+                            <label htmlFor="inputfile" className={backteam.filelabel}><img src={a} alt="" className={backteam.fileimg} /></label>
+                            <input type="file" id='inputfile' className={backteam.file}  onChange={(e)=>{setteamimg(e.target.files)}}/>
+                        </div>
+                        {/* {teamimg} */}
+                    </div>
+                    <div>
+                        <span className={backteam.font1}>類型</span>
+                        <div className={`d-flex`}>
+                            <div className={backteam.div2}>
+                                <select name="" id="" className={`${backteam.div3} ${backteam.font}`} defaultValue={val.type} onChange={(e)=>setteamtype2(e.target.value)}>
+                                    <option value="運動">運動</option>
+                                    <option value="聚餐">聚餐</option>
+                                </select>
+                                <img className={backteam.selectimg} src={group41} alt="" />
+                            </div>
+                            <div className={backteam.font}>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={backteam.div8}>
+                        <span className={backteam.font1}>標題</span>
+                        <div>
+                            <input type="text" className={`${backteam.input1} ${backteam.font}`} defaultValue={val.title} onChange={(e)=>setteamtitle(e.target.value)}/>
+                        </div>
+                    </div>
+                    <div className={backteam.div8}>
+                        <span className={backteam.font1}>地點</span>
+                        <div>
+                            <input type="text" className={`${backteam.input1} ${backteam.font}`} defaultValue={val.location} onChange={(e)=>setteamlocation(e.target.value)}/>
+                        </div>
+                    </div>
+                    <div className={backteam.div8}>
+                        <span className={backteam.font1}>支出</span>
+                        <div>
+                            <input type="number" className={`${backteam.input3} ${backteam.font}`} defaultValue={val.pay} onChange={(e)=>setteampay(e.target.value)}/>
+                        </div>
+                    </div>
+                    <div className={backteam.div9}>
+                        <span className={backteam.font}>成員</span>
+                        <div>
+
+                        </div>
+                    </div>
+                    <div className={backteam.div8}>
+                        <span className={backteam.font1}>描述</span>
+                        <div>
+                            <textarea name="" id="" cols="30" rows="10" maxLength="100" className={`${backteam.input2} ${backteam.font}`}
+                            defaultValue={val.text} onChange={(e)=>setteamtext(e.target.value)}>
+
+                            </textarea>
+                        </div>
+                    </div>
+                    <div className={`${backteam.div10} d-flex justify-content-around`}>
+                        <button className={backteam.button1} onClick={ddd2}>取消</button>
+                        <button className={backteam.button2} onClick={ttt2}>儲存</button>
+                    </div>
+                    </div>
+                );
+                })}
             </div>
             
             
