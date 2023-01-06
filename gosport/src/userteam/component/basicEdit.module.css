@@ -1,0 +1,142 @@
+/* 大標題 */
+/* .mBigTitle{
+    font-family: 'Noto Sans TC';
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: rgb(56, 56, 56);
+    margin-bottom: 30px;
+} */
+/* 標題 */
+.bForm{
+    font-family: 'Noto Sans TC';
+    color: rgb(170, 170, 170);
+    font-size: 1rem;
+    font-weight: 400;
+    width: 100%;
+    position: relative;
+    padding: 40px 40px 0px 40px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+/* 上傳照片 */
+.bForm>div:nth-of-type(1){
+    width: 170px;
+    height: 170px;
+    position: absolute;
+    right: 40px;
+    left: auto;
+    background-image: url("../img/upload_c.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    clip-path: circle(50% at 50% 50%);
+    border: none;
+    cursor: pointer;
+}
+.bForm input[type='file']{
+    opacity: 0;
+}
+/* 輸入框 */
+.bForm input {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    background-color: rgb(245, 245, 245);
+    border-radius: 50px;
+    border: none;
+    width: 400px;
+    height: 55px;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-sizing: border-box;
+    font-family: 'Noto Sans TC';
+    font-size: 1.2rem;
+}
+.bForm input:focus {
+    outline: none;
+}
+
+/* 下拉選單 */
+.bForm select {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid rgb(56, 56, 56);
+    width: 150px;
+    height: 55px;
+    font-family: 'Noto Sans TC';
+    color: rgb(56, 56, 56);
+    font-weight: 400;
+    font-size: 1.2rem;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("../img/icon_select.svg");
+    background-size: auto 50%;
+    background-repeat: no-repeat;
+    background-position: 100% 50%;
+}
+option{
+    font-size: 1rem;
+}
+
+/* 至 */
+.fTimeTo {
+    display: inline;
+    margin: auto 20px;
+}
+/* 羽球程度 */
+.formDegree {
+    position: relative;
+    left: 60px;
+}
+/* 描述 */
+textarea {
+    resize: none;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    margin-right: 40px;
+    background-color: rgb(245, 245, 245);
+    border-radius: 30px;
+    border: none;
+    width:100%;
+    height: 130px;
+    font-size: 1.2rem;
+    padding: 30px;
+    box-sizing: border-box;
+}
+textarea:focus {
+    outline: none;
+}
+/* 取消 */
+.bForm>a{
+    border: 1px solid rgb(230, 70, 55);
+    width: 48%;
+    height: 80px;
+    border-radius: 50px;
+    background-color: white;
+    font-family: 'Noto Sans TC';
+    color: rgb(230, 70, 55);
+    font-size: 1.2rem;
+    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+/* 提交 */
+.bForm>input[type='submit']{
+    border: none;
+    width: 48%;
+    height: 80px;
+    border-radius: 50px;
+    background-color: rgb(230, 70, 55);
+    font-family: 'Noto Sans TC';
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    float: right;
+}

@@ -1,0 +1,66 @@
+
+/* 會員功能 內容 */
+.basic {
+    /* background-color: rgb(35, 90, 31); */
+    height: 85%;
+    width: 100%;
+    padding: 40px;
+    box-sizing: border-box;
+    overflow: scroll;
+    position: relative;
+}
+/* 編輯 按鈕 */
+.basic>a {
+    position: sticky;
+    top: 0;
+    border: 1px solid #AAAAAA;
+    color: #AAAAAA;
+    background-color: white;
+    border-radius: 40px;
+    width:100px;
+    height: 60px;
+    font-family: 'Noto Sans TC';
+    font-size: 1.1rem;
+    font-weight: 400;
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* 照片 容器 */
+.basic>div:nth-of-type(1){
+    overflow: hidden;
+    height: 200px;
+    width: 500px;
+    margin-bottom: 20px;
+}
+/* 照片 */
+.mBimg {
+    width: 500px;
+    position: relative;
+    
+}
+/* 大標題 */
+.mBigTitle {
+    font-family: 'Noto Sans TC';
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: rgb(56, 56, 56);
+    margin-bottom: 30px;
+}
+/* 標題 */
+.mTitle {
+    font-family: 'Noto Sans TC';
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: rgb(170, 170, 170);
+    margin-bottom: 5px;
+}
+/* 內容 */
+.mText {
+    font-family: 'Noto Sans TC';
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: rgb(56, 56, 56);
+    margin-bottom: 10px;
+}

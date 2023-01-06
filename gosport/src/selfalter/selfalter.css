@@ -1,3 +1,13 @@
+       
+.alter_{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    position: relative;
+    top: 17vh;
+}
+/* 主體 */
 .selfalter {
     height: 1477px;
     width: 1060px;
@@ -98,6 +108,7 @@
     width: 450px;
     height: 55px;
     margin: 7px 0px 8px 0px;
+    padding-top: 10px;
 }
 
 .alter_degree div {
@@ -115,6 +126,7 @@
     position: relative;
     padding: 0px 25px 0px 12px;
 }
+
 
 /* 徽章 */
 .alter_mark {

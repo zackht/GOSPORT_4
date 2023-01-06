@@ -42,12 +42,12 @@ class Backqa extends Component {
                         </div>
                         <span className={backqa.span}>類型</span>
                         <div className={`${backqa.selectimg} ${backqa.font} ${backqa.div9}`}>
-                            <select name="" id="" className={backqa.div10}>
+                            <select name="" id="" className={`${backqa.div10} ${backqa.select}`}>
                                 <option value="">零打</option>
                                 <option value="">轉租</option>
                                 <option value="">球隊</option>
                             </select>
-                            <img className="" src={group41} alt=""/>
+                            <img className={backqa.simg} src={group41} alt=""/>
                         </div>
                     </div>
                     <div className={backqa.div11}>

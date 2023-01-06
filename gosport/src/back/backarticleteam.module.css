@@ -1,15 +1,13 @@
 
-
-* {
-    margin: 0;
-    padding: 0;
-}
 .div0{
     padding: 50px;
-    height: 1180px;
+    height: 80vh;
     width: 1060px;
-    border: 1px solid black;
     box-sizing: border-box;
+    overflow-y: scroll;
+    background-color: white;
+    align-items: center;
+    margin-top: 50px;
 }
 .font{
     font-size: 24px;
@@ -53,7 +51,7 @@
     z-index: 2;
     background-color: transparent;
 }
-input[type="date"]::-webkit-calendar-picker-indicator {
+.date::-webkit-calendar-picker-indicator {
     width: 27px;
     opacity: 0;
 }
