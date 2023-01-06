@@ -9,6 +9,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.2",
+    "babel-eslint": "^10.1.0",
     "bootstrap": "^4.6.2",
     "express": "^4.18.2",
     "js-cookie": "^3.0.1",
@@ -17,9 +18,6 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^5.3.4",
     "react-scripts": "^5.0.1",
-    "react-twzipcode": "^3.0.1",
-    "socket.io": "^4.5.4",
-    "socket.io-client": "^4.5.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

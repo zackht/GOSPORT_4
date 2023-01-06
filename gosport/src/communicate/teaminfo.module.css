@@ -1,0 +1,139 @@
+body {
+    width: 1440px;
+    height: 1500px;
+    overflow: scroll;
+}
+
+.Team {
+    display: block;
+}
+
+.teamInfo {
+    width: 1060px;
+    height: 627px;
+    margin: 200px auto 1% auto;
+}
+
+.teamimg {
+    display: block;
+}
+
+.leader {
+    margin-top: 10px;
+}
+
+.teamname {
+    margin-left: 20px;
+}
+
+.title {
+    font-size: 16px;
+    color: #aaaaaa;
+}
+
+.content {
+    font-size: 20px;
+}
+
+.join {
+    position: absolute;
+    right: 100px;
+    top: 30px;
+}
+
+.joinbutton {
+    background-color: #e64637;
+    color: white;
+    font-size: 30px;
+    border: 1px red solid;
+    border-radius: 50px;
+    width: 169px;
+    height: 65px;
+}
+
+.relation {
+    width: 85px;
+    height: 35px;
+    border: #aaaaaa 1px solid;
+    color: #aaaaaa;
+    border-radius: 50px;
+    margin-left: 10px;
+}
+
+.button {
+    margin-left: 190px;
+    margin-top: 100px;
+}
+
+.activity {
+    display: block;
+    margin-top: 50px;
+    margin-left: 190px;
+}
+
+.activity_info {
+    margin-top: 30px;
+}
+
+.activity_in {
+    margin-left: 50px;
+}
+
+.activity_fo {
+    width: 60px;
+    height: 35px;
+    border: #aaaaaa 1px solid;
+    border-radius: 50px;
+    background-color: #f5f5f5;
+}
+
+.message {
+    margin-left: 190px;
+    margin-top: 50px;
+}
+
+.msg,
+.mess {
+    width: 1060px;
+    height: 110px;
+    display: flex;
+    flex-direction: row;
+}
+
+.level {
+    width: 50px;
+    height: 25px;
+    background-color: #f5f5f5;
+    color: #383838;
+    border: 1px #aaaaaa solid;
+    border-radius: 50px;
+}
+
+.msgtext {
+    margin-left: 30px;
+}
+
+.msgtime {
+    margin-left: 420px;
+}
+
+.msgmsgmsg {
+    margin-left: 40px;
+    width: 800px;
+    height: 70px;
+    background-color: #f5f5f5;
+}
+
+.submit {
+    margin-left: 40px;
+    margin-top: 30px;
+}
+
+.submitbutton {
+    width: 60px;
+    height: 35px;
+    background-color: #f5f5f5;
+    color: #aaaaaa;
+    border-radius: 50px;
+    border: #aaaaaa;
+}
