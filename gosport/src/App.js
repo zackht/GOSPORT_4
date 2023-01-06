@@ -46,6 +46,8 @@ class App extends Component {
             <Route path="/gosport/communicate/search" 	  component={Search} exact/>
             {/* <Route path="/gosport/communicate/search/:id" component={} /> */}
             <Route path="/gosport/communicate/create" 	  component={Create} />
+            <Route path="/gosport/communicate/createrent" 	  component={CreateRent} />
+            <Route path="/gosport/communicate/teaminfo" 	  component={TeamInfo} />
 
             {/* 會員  */}
             <Route path="/gosport/user" 		     component={Selfpage} exact />
