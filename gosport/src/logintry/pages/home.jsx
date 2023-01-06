@@ -3,7 +3,7 @@ class Home extends Component {
     state = {  } 
     render() { 
         return (
-            <div>home</div>
+            <div style={{ position: "relative", top: '150px' }}>home</div>
         );
     }
 }

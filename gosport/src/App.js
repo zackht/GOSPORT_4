@@ -32,7 +32,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Header />
+          <Header1 />
           <Switch>
 
             {/* 首頁 */}
