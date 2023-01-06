@@ -185,17 +185,20 @@ app.use(express.json());
           console.log(err);
         } else {
           res.send(result);
+          
         }
       });
     });
     //個人資料
     app.post("/selfinfo", (req, res) => {
       const account = req.body.account;
-      db.query("SELECT * FROM user WHERE email = ?",[account], (err, result) => {
+      db.query("SELECT * FROM user,userteam WHERE email = ? AND user.userid = userteam.userid",[account], (err, result) => {
         if (err) {
           console.log(err);
         } else {
           res.send(result);
         }
+        
       });
     });
+   
