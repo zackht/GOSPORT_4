@@ -1,86 +1,79 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import cc from './cc.module.css';
+import Axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import q from './icon/Q.png'
 import team from './icon/下載.jpg'
 import op from './icon/op_01.jpg';
 import ten from './icon/Group 10.png';
 import arr from './icon/arrowup2.svg';
-import notice from './icon/notice.svg';
-import user from './icon/user.svg';
-import google from './icon/google快速註冊.svg'
 import ball from './icon/球類別.png';
-import cancel from './icon/快速搜尋＿取消.svg'
-import sigh from './icon/快速搜尋＿註冊.svg'
-import login from './icon/快速搜尋.svg'
-class Handya extends Component {
-    state = {
-        a: <option value="">西屯區</option>,
-        b: <option value="">南屯區</option>,
-        c: <option value="">北屯區</option>,
-        rent:true,
-        rentdiv:true,
-        rentbtn:true,
-zeroda:false,
-zerodadiv:false,
-zerodabtn:false,
-team:false,
-teamdiv:false,
-teambtn:false,
-turn:false,
-turndiv:false,
-turnbtn:false,
-loginbtn:false,
-logindiv:false,
-sighbtn:true,
-sighdiv:true
+const Handya = () =>{
+    const [rentdiv, setrent] = useState('block');
+    const [zerodadiv, setzeroda] = useState('none');
+    const [teamdiv, setteam] = useState('none');
+    const [turndiv, setturn] = useState('none');
+    const [rentbtn, setrentbtn] = useState(true);
+    const [zerodabtn, setzerobtn] = useState(false);
+    const [teambtn, setteambtn] = useState(false);
+    const [turnbtn, setturnbtn] = useState(false);
+    const changerent = () => {
+        setrent('block');
+        setzeroda('none');
+        setteam('none');
+        setturn('none');
+        setrentbtn(true);
+        setzerobtn(false);
+        setteambtn(false);
+        setturnbtn(false);
     }
-
-    render() {
+    const changezeroda = () => {
+        setrent('none');
+        setzeroda('block');
+        setteam('none');
+        setturn('none');
+        setrentbtn(false);
+        setzerobtn(true);
+        setteambtn(false);
+        setturnbtn(false);
+    }
+    const changeteam = () => {
+        setrent('none');
+        setzeroda('none');
+        setteam('block');
+        setturn('none');
+        setrentbtn(false);
+        setzerobtn(false);
+        setteambtn(true);
+        setturnbtn(false);
+    }
+    const changeturn = () => {
+        setrent('none');
+        setzeroda('none');
+        setteam('none');
+        setturn('block');
+        setrentbtn(false);
+        setzerobtn(false);
+        setteambtn(false);
+        setturnbtn(true);
+    }
+    const [temp,settemp] = useState('');
+    const [rain,setrain] = useState('');
+    const [name,setname] = useState('');
+    const changeweather = () => {
+        Axios.get('https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-073?Authorization=CWB-CD60C32C-4797-4EA9-A3B6-E5837A37F9C1')
+        .then(function (response) {
+            console.log(response.data);
+            
+            settemp(response.data.records.locations[0].location[0].weatherElement[2].time[0].elementValue[0].value)
+            setrain(response.data.records.locations[0].location[0].weatherElement[0].time[1].elementValue[0].value)
+            setname(response.data.records.locations[0].location[0].locationName)
+        })
+      };
         return (
         <React.Fragment>
     <div className={`${cc.dd1} container-fluid`}>
-    {/* <div className={`${cc.back} container-fluid`}>
-        <div className={`${cc.aa1} container-fluid`}>
 
-        </div>
-        <div class={cc.apple}> 
-            
-            <button className={` ${this.state.sighbtn === true ? cc.focus1:cc.tablink1 }`} onClick={this.changesigh}>註冊</button>
-            <button className={` ${this.state.loginbtn === true ? cc.focus1:cc.tablink1 }`} onClick={this.changelogin}>登入</button>
-            <div id="Londo" style={{display: (this.state.sighdiv === true) ?  "block":"none"}} className={cc.tabcontent}>
-                <img className={cc.d131} src={google} alt="" />
-              <p className={cc.d132}>註冊信箱</p>
-              <form action="">
-              <input className={cc.d133} type="text" />
-              <p className={cc.d134}>密碼</p>
-              <input className={cc.d135} type="text" />
-              <p className={cc.d136}>至少8個字,含至少1個數字及1個英文字母</p>
-              <p className={cc.d137}>確認密碼</p>
-              <input className={cc.d138} type="text" />
-              <div className={cc.d139}>
-                <img src={cancel} alt="" />
-                <img src={sigh} alt="" />
-              </div>
-              
-              </form>
-            </div>
-            <div id="Pari" style={{display: (this.state.logindiv === true) ?  "block":"none"}} className={cc.tabcontent}>
-            <p className={cc.d140}>註冊信箱</p>
-              <form className={cc.d145} action="">
-              <input className={cc.d133} type="text" />
-              <p className={cc.d141}>密碼</p>
-              <input className={cc.d142} type="text" />
-               <p className={cc.d143}>忘記密碼</p></form>
-               <div className={cc.d144}>
-                <img src={cancel} alt="" />
-                <img src={login} alt="" />
-              </div>
-              
-             
-            </div>
-        </div>
-    </div> */}
         <div className={cc.marquee}>
             <div className={cc.marquee1}>
                 <img src={op} alt=""/>
@@ -93,23 +86,29 @@ sighdiv:true
             </div>
 
         </div>
+       
+            {/* <div>
+                {weather.records.locations[0].location[0].locationName}
+            </div> */}
+    
         <div className={cc.season}>
             <div className={cc.season1}>
                 <div className={cc.seasoninfo}>
-                    <h1>21-33°</h1>
-                    <p>&nbsp;&nbsp;后里區&nbsp;&nbsp;</p>&nbsp;&nbsp;<span className={cc.spancolo}>降雨機率30%</span>
+                    <h1>{temp}°</h1>
+                    <p>&nbsp;&nbsp;{name}&nbsp;&nbsp;</p>&nbsp;&nbsp;<span className={cc.spancolo}>降雨機率{rain}%</span>
                 </div>
                 <img src={ten} alt=""/>
             </div>
         </div>
+
         <div className={cc.ezsurch}>
             <div className={cc.ezsurch1}>
-                <button className={` ${this.state.rentbtn === true ? cc.focus:cc.tablink }`} onClick={this.changerent}>租場地</button>
-                <button className={` ${this.state.zerodabtn === true ? cc.focus:cc.tablink }`} onClick={this.changezeroda}>找零打</button>
-                <button className={` ${this.state.teambtn === true ? cc.focus:cc.tablink }`} onClick={this.changeteam}>找球隊</button>
-                <button className={` ${this.state.turnbtn === true ? cc.focus:cc.tablink }`} onClick={this.changeturn}>轉租</button>
+                <button className={` ${rentbtn === true ? cc.focus:cc.tablink }`} onClick={changerent}>租場地</button>
+                <button className={` ${zerodabtn === true ? cc.focus:cc.tablink }`} onClick={changezeroda}>找零打</button>
+                <button className={` ${teambtn === true ? cc.focus:cc.tablink }`} onClick={changeteam}>找球隊</button>
+                <button className={` ${turnbtn === true ? cc.focus:cc.tablink }`} onClick={changeturn}>轉租</button>
 
-                <div id="London" style={{display: (this.state.rentdiv === true) ?  "block":"none"}} className={cc.tabcontent}>
+                <div id="London" style={{display: rentdiv}} className={cc.tabcontent}>
                     <form action="">
                         <div id="local" className={cc.d2}>
                             <p className={cc.d3}>類別</p>
@@ -117,14 +116,13 @@ sighdiv:true
                             <p className={cc.d5}>地區</p>
                             <img className={`${cc.d6} ${cc.selectedDate}`} src={arr}/>
                             <img className={`${cc.d7} ${cc.selectedDate}`} src={arr}/>
-                            <select name="city" className={cc.county} onChange={(e)=>this.change(e)}>
+                            <select name="city" className={cc.county}>
                                 <option value="1">台中</option>
                             </select>
-                            <select name="town" className={cc.district}>
-                            <option value="">{this.state.a}</option>
-                            <option value="">{this.state.b}</option>
-                            <option value="">{this.state.c}</option>
-
+                            <select name="town" onChange={changeweather} className={cc.district}>
+                            <option value="1">南屯區</option>
+                            <option value="2">北屯區</option>
+                            <option value="3">中屯區</option>
                             </select>
 
                         </div>
@@ -181,22 +179,21 @@ sighdiv:true
                         <button type="submit" className={cc.serch}>快速搜尋</button>
                     </form>
                 </div>
-                <div id="Paris" style={{display: (this.state.zerodadiv === true) ?  "block":"none"}} className={cc.tabcontent}>
+                <div id="Paris" style={{display: zerodadiv}} className={cc.tabcontent}>
                     <div id="local1" className={cc.d36}>
                         <p className={cc.d37}>類別</p>
                         <img className={cc.d38} src={ball} alt=""/>
                         <p className={cc.d39}>地區</p>
                         <img className={`${cc.d40} ${cc.selectedDate}`} src={arr}/>
                         <img className={`${cc.d41} ${cc.selectedDate}`} src={arr}/>
-                        <select name="city" className={cc.county} onChange={(e)=>this.change(e)}>
+                        <select name="city" className={cc.county}>
                                 <option value="1">台中</option>
-                                <option value="2">台北</option>
-                                <option value="3">高雄</option>
                             </select>
                             <select name="town" className={cc.district}>
-                            <option value="">{this.state.a}</option>
-                            <option value="">{this.state.b}</option>
-                            <option value="">{this.state.c}</option>
+                            <option value="">南屯區</option>
+                            <option value="">北屯區</option>
+                            <option value="">中屯區</option>
+
                             </select>
                     </div>
 
@@ -248,22 +245,21 @@ sighdiv:true
                     <img className={`${cc.d61} ${cc.selectedDate}`} src={arr}/>
                     <button className={cc.serch1}>快速搜尋</button>
                 </div>
-                <div id="Tokyo" style={{display: (this.state.teamdiv === true) ?  "block":"none"}} className={cc.tabcontent}>
+                <div id="Tokyo" style={{display: teamdiv}} className={cc.tabcontent}>
                     <div id="local2" className={cc.d64}>
                         <p className={cc.d65}>類別</p>
                         <img className={cc.d66} src={ball} alt=""/>
                         <p className={cc.d67}>地區</p>
                         <img className={`${cc.d68} ${cc.selectedDate}`} src={arr}/>
                         <img className={`${cc.d69} ${cc.selectedDate}`} src={arr}/>
-                        <select name="city" className={cc.county} onChange={(e)=>this.change(e)}>
+                        <select name="city" className={cc.county}>
                                 <option value="1">台中</option>
-                                <option value="2">台北</option>
-                                <option value="3">高雄</option>
                             </select>
                             <select name="town" className={cc.district}>
-                            <option value="">{this.state.a}</option>
-                            <option value="">{this.state.b}</option>
-                            <option value="">{this.state.c}</option>
+                            <option value="">南屯區</option>
+                            <option value="">北屯區</option>
+                            <option value="">中屯區</option>
+
                             </select>
                     </div>
 
@@ -322,22 +318,21 @@ sighdiv:true
                     </select><img className={`${cc.d90} ${cc.selectedDate}`} src={arr}/>
                     <button className={`${cc.d91} ${cc.serch1}`}>快速搜尋</button>
                 </div>
-                <div id="Oslo" style={{display: (this.state.turndiv === true) ?  "block":"none"}} className={cc.tabcontent}>
+                <div id="Oslo" style={{display: turndiv}} className={cc.tabcontent}>
                     <div id="local3" className={cc.d93}>
                         <p className={cc.d94}>類別</p>
                         <img className={cc.d95} src={ball} alt=""/>
                         <p className={cc.d96}>地區</p>
                         <img className={`${cc.d97} ${cc.selectedDate}`} src={arr}/>
                         <img className={`${cc.d98} ${cc.selectedDate}`} src={arr}/>
-                        <select name="city" className={cc.county} onChange={(e)=>this.change(e)}>
+                        <select name="city" className={cc.county}>
                                 <option value="1">台中</option>
-                                <option value="2">台北</option>
-                                <option value="3">高雄</option>
                             </select>
                             <select name="town" className={cc.district}>
-                            <option value="">{this.state.a}</option>
-                            <option value="">{this.state.b}</option>
-                            <option value="">{this.state.c}</option>
+                            <option value="">南屯區</option>
+                            <option value="">北屯區</option>
+                            <option value="">中屯區</option>
+
                             </select>
                     </div>
 
@@ -443,122 +438,79 @@ sighdiv:true
 
 
         </React.Fragment >
-
+    
         );
     }
-changelogin=()=>{
-    let newstate = {...this.state};
-    newstate.loginbtn=true;
-    newstate.logindiv=true;
-    newstate.sighbtn=false;
-    newstate.sighdiv=false;
-    this.setState (newstate);
-}
-changesigh=()=>{
-    let newstate = {...this.state};
-    newstate.sighbtn=true;
-    newstate.sighdiv=true;
-    newstate.loginbtn=false;
-    newstate.logindiv=false;
-    this.setState (newstate);
-}
+
     
-    changerent =() =>{
-let newstate = {...this.state};
-newstate.rent=true;
-newstate.rentdiv=true;
-newstate.rentbtn=true;
-newstate.zeroda=false;
-newstate.zerodadiv=false;
-newstate.zerodabtn=false;
-newstate.team=false;
-newstate.teamdiv=false;
-newstate.teambtn=false;
-newstate.turn=false;
-newstate.turndiv=false;
-newstate.turnbtn=false;
-this.setState (newstate);
-    }
-    changezeroda =() =>{
-        console.log("OK");
-let newstate = {...this.state};
-newstate.rent=false;
-newstate.rentdiv=false;
-newstate.rentbtn=false;
-newstate.zeroda=true;
-newstate.zerodadiv=true;
-newstate.zerodabtn=true;
-newstate.team=false;
-newstate.teamdiv=false;
-newstate.teambtn=false;
-newstate.turn=false;
-newstate.turndiv=false;
-newstate.turnbtn=false;
-this.setState (newstate);
-    }
-    changeteam =() =>{
-        console.log("OK");
-let newstate = {...this.state};
-newstate.rent=false;
-newstate.rentdiv=false;
-newstate.rentbtn=false;
-newstate.zeroda=false;
-newstate.zerodadiv=false;
-newstate.zerodabtn=false;
-newstate.team=true;
-newstate.teamdiv=true;
-newstate.teambtn=true;
-newstate.turn=false;
-newstate.turndiv=false;
-newstate.turnbtn=false;
-this.setState (newstate);
-    }
-    changeturn =() =>{
-        console.log("OK");
-let newstate = {...this.state};
-newstate.rent=false;
-newstate.rentdiv=false;
-newstate.rentbtn=false;
-newstate.zeroda=false;
-newstate.zerodadiv=false;
-newstate.zerodabtn=false;
-newstate.team=false;
-newstate.teamdiv=false;
-newstate.teambtn=false;
-newstate.turn=true;
-newstate.turndiv=true;
-newstate.turnbtn=true;
-this.setState (newstate);
-    }
+//     changerent =() =>{
+// let newstate = {...this.state};
+// newstate.rent=true;
+// newstate.rentdiv=true;
+// newstate.rentbtn=true;
+// newstate.zeroda=false;
+// newstate.zerodadiv=false;
+// newstate.zerodabtn=false;
+// newstate.team=false;
+// newstate.teamdiv=false;
+// newstate.teambtn=false;
+// newstate.turn=false;
+// newstate.turndiv=false;
+// newstate.turnbtn=false;
+// this.setState (newstate);
+//     }
+//     changezeroda =() =>{
+//         console.log("OK");
+// let newstate = {...this.state};
+// newstate.rent=false;
+// newstate.rentdiv=false;
+// newstate.rentbtn=false;
+// newstate.zeroda=true;
+// newstate.zerodadiv=true;
+// newstate.zerodabtn=true;
+// newstate.team=false;
+// newstate.teamdiv=false;
+// newstate.teambtn=false;
+// newstate.turn=false;
+// newstate.turndiv=false;
+// newstate.turnbtn=false;
+// this.setState (newstate);
+//     }
+//     changeteam =() =>{
+//         console.log("OK");
+// let newstate = {...this.state};
+// newstate.rent=false;
+// newstate.rentdiv=false;
+// newstate.rentbtn=false;
+// newstate.zeroda=false;
+// newstate.zerodadiv=false;
+// newstate.zerodabtn=false;
+// newstate.team=true;
+// newstate.teamdiv=true;
+// newstate.teambtn=true;
+// newstate.turn=false;
+// newstate.turndiv=false;
+// newstate.turnbtn=false;
+// this.setState (newstate);
+//     }
+//     changeturn =() =>{
+//         console.log("OK");
+// let newstate = {...this.state};
+// newstate.rent=false;
+// newstate.rentdiv=false;
+// newstate.rentbtn=false;
+// newstate.zeroda=false;
+// newstate.zerodadiv=false;
+// newstate.zerodabtn=false;
+// newstate.team=false;
+// newstate.teamdiv=false;
+// newstate.teambtn=false;
+// newstate.turn=true;
+// newstate.turndiv=true;
+// newstate.turnbtn=true;
+// this.setState (newstate);
+//     }
 
 
-
-
-    change = (e) => {
-        if (e.target.value === "1") {
-            console.log("台中");
-            let newstate = { ...this.state };
-            newstate.a = <option value="">西屯區</option>;
-            newstate.b = <option value="">南屯區</option>;
-            newstate.c = <option value="">北屯區</option>;
-            this.setState(newstate);
-        } else if (e.target.value === "2") {
-            console.log("台北");
-            let newstate = { ...this.state };
-            newstate.a = <option value="">大安區</option>;
-            newstate.b = <option value="">士林區</option>;
-            newstate.c = '';
-            this.setState(newstate);
-        } else if (e.target.value === "3") {
-            console.log("高雄");
-            let newstate = { ...this.state };
-            newstate.a = <option value="">大社區</option>;
-            newstate.b = <option value="">三民區</option>;
-            newstate.c = '';
-            this.setState(newstate);
-        }
-
-    }
-}
 
 export default Handya;

@@ -150,9 +150,30 @@ app.use(express.json());
     });
     // 後台球隊編輯
     app.post("/teamedit", (req, res) => {
-      const teamid = req.body.teamid;
-      db.query("SELECT * FROM team where teamid = ?"
-      ,[teamid], (err, result) => {
+      const teameventid = req.body.teameventid;
+      db.query("SELECT * FROM teamevent where teameventid = ?"
+      ,[teameventid], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    // 後臺球隊編輯儲存
+    app.post("/teamupdate", (req, res) => {
+      const teamstartdate = req.body.teamstartdate;
+      const teamenddate = req.body.teamenddate;
+      const teamstarttime = req.body.teamstarttime;
+      const teamendtime = req.body.teamendtime;
+      const teamtype2 = req.body.teamtype2;
+      const teamtitle = req.body.teamtitle;
+      const teamlocation = req.body.teamlocation;
+      const zerodalevel = req.body.zerodalevel;
+      const teampay = req.body.teampay;
+      const teamtext = req.body.teamtext;
+      db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?, title =  where teameventid=1"
+      ,[teameventid], (err, result) => {
         if (err) {
           console.log(err);
         } else {
