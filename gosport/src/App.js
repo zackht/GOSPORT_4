@@ -8,6 +8,10 @@ import rentside_more from './side/rentsid_more';
 import Selfactive from './selfactive/selfactive';
 import Selfalter from './selfalter/selfalter';
 import Selfpage from './selfpage/selfpage';
+import Search from './communicate/search';
+import Create from './communicate/createzero';
+import CreateRent from './communicate/createrent';
+import TeamInfo from './communicate/teaminfo';
 
 
 // import Navigation from './components/Navigation';
@@ -30,6 +34,11 @@ class App extends Component {
             <Route path="/selfactive" component={Selfactive} />
             <Route path="/selfalter" component={Selfalter} />
             <Route path="/selfpage" component={Selfpage} />
+
+            <Route path="/search" component={Search} />
+            <Route path="/create" component={Create} />
+            <Route path="/createrent" component={CreateRent} />
+            <Route path="/teaminfo" component={TeamInfo} />
           </Switch>
         </div>
       </BrowserRouter>
