@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Search from './communicate/search';
+import Create from './communicate/createzero';
+import CreateRent from './communicate/createrent';
+import TeamInfo from './communicate/teaminfo';
 
 import Header1 from "./handya/headerfooter/header";
 
@@ -39,9 +43,11 @@ class App extends Component {
             <Route path="/gosport/rent/side" component={rentside_more} />
 
             {/* 交流區 */}
-            {/* <Route path="/gosport/communicate/search" 	  component={} exact/> */}
+            <Route path="/gosport/communicate/search" 	  component={Search} exact/>
             {/* <Route path="/gosport/communicate/search/:id" component={} /> */}
-            {/* <Route path="/gosport/communicate/create" 	  component={} /> */}
+            <Route path="/gosport/communicate/create" 	  component={Create} />
+            <Route path="/gosport/communicate/createrent" 	  component={CreateRent} />
+            <Route path="/gosport/communicate/teaminfo" 	  component={TeamInfo} />
 
             {/* 會員  */}
             <Route path="/gosport/user" 		     component={Selfpage} exact />
@@ -75,18 +81,13 @@ class App extends Component {
             <Route path="/testt1"      component={Serchdi} />
             <Route path="/applayout"      component={Applayout} />
 
-			      {/* 以下舊版 供對照--------------------------------------------------- */}
-            {/* <Route path="/handya" component={Handya} /> */}
-            {/* <Route path="/Backarticle" component={Backarticle} /> */}
-            {/* <Route path="/backqa" component={backqa} /> */}
-            {/* <Route path="/rentside_more" component={rentside_more} /> */}
-            {/* <Route path="/Backteam" component={Backteam} /> */}
-            {/* <Route path="/selfactive" component={Selfactive} /> */}
-            {/* <Route path="/selfalter" component={Selfalter} /> */}
-            {/* <Route path="/selfpage" component={Selfpage} /> */}
-            {/* <Route path="/Backuser" component={Backuser} /> */}
-            {/* <Route path="/backside" component={backside} /> */}
-
+            <Route path="/testt" component={Testt} />
+            <Route path="/backqa" component={backqa} />
+            <Route path="/rentside_more" component={rentside_more} />
+            
+            <Route path="/selfactive" component={Selfactive} />
+            <Route path="/selfalter" component={Selfalter} />
+            <Route path="/selfpage" component={Selfpage} />
           </Switch>
           <Footer />
         </div>

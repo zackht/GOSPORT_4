@@ -2,16 +2,22 @@
 import React, { useEffect, useState } from 'react';
 // import React from 'react';
 import Axios from "axios";
+import Cookies from 'js-cookie';
 import star from './icon/star1.svg'
 import selfImg from './icon/20130917_171106.jpg'
 import './selfpage.css'
 const Selfpage =()=>{
     const [username, setUsername] = useState('')
+    const [selfInfo, setSelf] = useState('')
+    const account = Cookies.get('token')
 
     useEffect(()=>{
-        Axios.get("http://localhost:3001/userinfo",{
+        Axios.post("http://localhost:3001/selfinfo",{
+            account:account
+        },{
         }).then((response) => {
-            console.log(response.data[0].username);
+            console.log(response.data[0]);
+            setSelf(response.data[0])
             setUsername(response.data[0].username);
         });
     },[])
@@ -24,7 +30,7 @@ const Selfpage =()=>{
                     <div style={{ display: 'flex', width: '90%', height: '481px' }}>
                         <div className="self_discribe" style={{ flex: "1.1" }}>
                             <div>姓名</div>
-                            <div>{username}</div>
+                            <div>{selfInfo.username}</div>
                             <div>程度</div>
                             <div>羽球初階、桌球新手、網球初階</div>
                             <div>球隊</div>
