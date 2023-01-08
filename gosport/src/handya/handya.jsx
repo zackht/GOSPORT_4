@@ -60,20 +60,31 @@ const Handya = () =>{
     const [temp,settemp] = useState('');
     const [rain,setrain] = useState('');
     const [name,setname] = useState('');
-    const changeweather = () => {
+    const changeweather = (e) => {
         Axios.get('https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-073?Authorization=CWB-CD60C32C-4797-4EA9-A3B6-E5837A37F9C1')
         .then(function (response) {
             console.log(response.data);
-            
+            if (e.target.value==1){
             settemp(response.data.records.locations[0].location[0].weatherElement[2].time[0].elementValue[0].value)
             setrain(response.data.records.locations[0].location[0].weatherElement[0].time[1].elementValue[0].value)
             setname(response.data.records.locations[0].location[0].locationName)
+            }
+            else if(e.target.value==2){
+                settemp(response.data.records.locations[0].location[1].weatherElement[2].time[0].elementValue[0].value)
+            setrain(response.data.records.locations[0].location[1].weatherElement[0].time[1].elementValue[0].value)
+            setname(response.data.records.locations[0].location[1].locationName)
+            }
+            else{
+                settemp(response.data.records.locations[0].location[3].weatherElement[2].time[0].elementValue[0].value)
+            setrain(response.data.records.locations[0].location[3].weatherElement[0].time[1].elementValue[0].value)
+            setname(response.data.records.locations[0].location[3].locationName)
+            }
+            console.log(e.target.value);
         })
       };
         return (
         <React.Fragment>
     <div className={`${cc.dd1} container-fluid`}>
-
         <div className={cc.marquee}>
             <div className={cc.marquee1}>
                 <img src={op} alt=""/>
@@ -86,7 +97,6 @@ const Handya = () =>{
             </div>
 
         </div>
-       
             {/* <div>
                 {weather.records.locations[0].location[0].locationName}
             </div> */}
@@ -123,6 +133,7 @@ const Handya = () =>{
                             <option value="1">南屯區</option>
                             <option value="2">北屯區</option>
                             <option value="3">中屯區</option>
+                            
                             </select>
 
                         </div>
