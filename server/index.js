@@ -40,7 +40,7 @@ app.use(express.json());
     })
     //  client測試
     app.get("/employee", (req, res) => {
-      db.query("SELECT * FROM user", (err, result) => {
+      db.query("SELECT * FROM user where userid = 1", (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -210,10 +210,10 @@ app.use(express.json());
         }
       });
     });
-    //個人資料
+    //觀看個人資料
     app.post("/selfinfo", (req, res) => {
       const account = req.body.account;
-      db.query("SELECT * FROM user,userteam WHERE email = ? AND user.userid = userteam.userid",[account], (err, result) => {
+      db.query(" SELECT * FROM user,userteam,userbadgeimg,userbadge  WHERE email = ? AND user.userid = userteam.userid = userbadge.userid AND userbadge.badgeid = userbadgeimg.badgeid",[account], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -222,4 +222,44 @@ app.use(express.json());
         
       });
     });
+
+    //更新個人資料
+    app.post("/selfalter", (req, res) => {
+      const email = req.body.email;
+      const password = req.body.password;
+      const username = req.body.username;
+      // const userimg = req.body.userimg;
+      const tel = req.body.tel;
+      const userdescribe = req.body.userdescribe;
+      const account = req.body.account;
+      db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? WHERE `email`= ?",
+      [email,password,username,tel,userdescribe,account], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+        
+      });
+    });
+
+    // 查詢會員、球場id
+    app.post('/teambasic', (req,res)=>{
+      const userid = req.body.userid;
+      const teamid = req.body.teamid;
+      db.query(
+          `SELECT tname,sidename, week,type,level,teamimg,fee,text,starttime,endtime,county,area,teamimgpath 
+          FROM userteam, team 
+          where userteam.teamid=team.teamid and userteam.userid=? and userteam.teamid=?`,
+          
+          [userid,teamid],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+      });
    

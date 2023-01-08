@@ -6,10 +6,14 @@ import Cookies from 'js-cookie';
 import star from './icon/star1.svg'
 import selfImg from './icon/20130917_171106.jpg'
 import './selfpage.css'
+
+
 const Selfpage = () => {
-    let [userInfo, setUserInfo] = useState([]);
-    let [username, setUserName] = useState();
-    let [userdescribe, setUserdescribe] = useState();
+    let [userInfo, setUserInfo] = useState([{
+        username:'預備中',
+        userdescribe:'',
+        tname:'',
+    }]);
     const account = Cookies.get('token');
     useEffect(() => {
         Axios.post("http://localhost:3001/selfinfo", {
@@ -17,11 +21,11 @@ const Selfpage = () => {
         }).then((response) => {
             console.log(response.data);
             setUserInfo(response.data)
-            setUserName(response.data[0].username)
-            setUserdescribe(response.data[0].userdescribe)
         });
     }, []);
-
+    //球隊
+    let restname = userInfo.map(function(item,index){ return item.tname })
+    const alltname = Array.from(new Set(restname.filter((x, i, self) => self.indexOf(x) === i)));
     return (
         <React.Fragment>
             {/* 主體 */}
@@ -30,19 +34,18 @@ const Selfpage = () => {
                     <div style={{ display: 'flex', width: '90%', height: '481px' }}>
                         <div className="self_discribe" style={{ flex: "1.1" }}>
                             <div>姓名</div>
-                            <div>{username}</div>
-                            <div>aaa</div>
+                            <div>{userInfo[0].username}</div>
+                            {/* <div>aaa</div> */}
                             <div>程度</div>
                             <div>羽球初階、桌球新手、網球初階</div>
                             <div>球隊</div>
                             <div>
-                                {userInfo.map(function(item,index){ return <span>{item.tname}&nbsp;&nbsp;</span> })}
-                                {/* {selfInfo[0].tname} */}
+                                {alltname.map(function(item,index){ return <span key={index}>{item}&nbsp;&nbsp;</span> })}
                             </div>
                             <div>活動時數</div>
-                            <div>298hr</div>
+                            <div>{userInfo[0].activeTime}</div>
                             <div>描述</div>
-                            {userdescribe}
+                            {userInfo[0].userdescribe}
                             {/* <div>aaaaaaaaaaaaaaaaaaaa</div> */}
                         </div>
                         <div style={{ flex: 1, position: "relative" }}>
