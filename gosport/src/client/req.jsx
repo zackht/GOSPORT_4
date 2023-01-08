@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
 import Axios from "axios";
+import './req.css';
 const Client = () => {
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
@@ -62,10 +63,24 @@ const Client = () => {
     const [employeeList, setEmployeeList] = useState([]);
     const getEmployee = () => {
         Axios.get("http://localhost:3001/employee").then((response) => {
-            console.log(response);
+            // console.log(response.data);
             setEmployeeList(response.data);
         });
     };
+    const [url,seturl]=useState('');
+    const aaa =(e)=>{
+        console.log(e)
+      const reader = new FileReader();
+      reader.addEventListener("load", function () {
+        // convert image file to base64 string
+        seturl(reader.result)
+      }, false);
+  
+      if (e[0]) {
+        reader.readAsDataURL(e[0]);
+      }
+    }
+    const [Url,setUrl]=useState('');
     return (
         <div>
             帳號<input type="text" onChange={emailcheck} /><span>{emailhint}</span><br />
@@ -78,8 +93,18 @@ const Client = () => {
             <h1>獲取所有會員</h1>
             <button onClick={getEmployee}>搜索</button>
             {employeeList.map((val, key) => {
-                return <div key={key}>{val.email}</div>;
+                var u8Arr = new Uint8Array(val.userimg.data);
+                var blob = new Blob([u8Arr],{type:"image/jpeg"});
+                var fr = new FileReader
+                fr.onload = function () {
+                    setUrl(fr.result);
+                  };
+                  fr.readAsDataURL(blob);
+                  console.log(Url);
+                return <div key={key}><img src={Url} alt=""/></div>;
             })}
+            <input type="file" onChange={(e)=>{aaa(e.target.files)}} />
+            <img src={url} alt="" />
         </div>
     );
 }

@@ -40,7 +40,7 @@ app.use(express.json());
     })
     //  client測試
     app.get("/employee", (req, res) => {
-      db.query("SELECT * FROM user", (err, result) => {
+      db.query("SELECT * FROM user where userid = 1", (err, result) => {
         if (err) {
           console.log(err);
         } else {
