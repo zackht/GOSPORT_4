@@ -72,7 +72,7 @@ class Side2 extends Component {
                       <input type="radio" id="radio1" className={side2.radio} name="a" defaultValue="date" />
                       <label htmlFor="radio1" className={`${side2.buttom1}`}>日租</label>
                     </div>
-                    <div className='div6'>
+                    <div >
                       <input type="radio" id="radio2" className={side2.radio} name="a" defaultValue="month" />
                       <label htmlFor="radio2" className={`${side2.buttom1}`}>月租</label>
                     </div>

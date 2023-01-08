@@ -13,7 +13,8 @@ import Handya from "./handya/handya";
 import Testt from "./side/testt";
 import backqa from "./back/backqa";
 // import Backarticle from "./back/backarticle";
-import rentside_more from "./side/rentsid_more";
+import rentside_more from "./side/rentside_more";
+import rentside from "./side/rentside";
 // import Backteam from "./back/backarticleteam";
 import Selfactive from "./selfactive/selfactive";
 import Selfalter from "./selfalter/selfalter";
@@ -40,7 +41,8 @@ class App extends Component {
 
             {/* 租場地 */}
             {/* <Route path="/gosport/rent" 	   component={} exact/> */}
-            <Route path="/gosport/rent/side" component={rentside_more} />
+            <Route path="/gosport/rent/side/b" component={rentside_more} />
+            <Route path="/gosport/rent/side" component={rentside} />
 
             {/* 交流區 */}
             <Route path="/gosport/communicate/search" 	  component={Search} exact/>
