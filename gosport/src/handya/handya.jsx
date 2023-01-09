@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import cc from './cc.module.css';
 import Axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,6 +8,11 @@ import op from './icon/op_01.jpg';
 import ten from './icon/Group 10.png';
 import arr from './icon/arrowup2.svg';
 import ball from './icon/球類別.png';
+import io from 'socket.io-client';
+
+
+const  socket = io.connect("http://localhost:3002");
+
 const Handya = () =>{
     const [rentdiv, setrent] = useState('block');
     const [zerodadiv, setzeroda] = useState('none');
@@ -82,6 +87,16 @@ const Handya = () =>{
             console.log(e.target.value);
         })
       };
+      const[message,setmessage] =useState("");
+      const[messagereceive,setmessagereceive] = useState("");
+      const sendmsg = () => {
+        socket.emit("send_mesg",{message});
+      }
+      useEffect(()=>{
+socket.on("receive_message",(data)=>{
+    setmessagereceive(data.message);
+})
+      },[socket])
         return (
         <React.Fragment>
     <div className={`${cc.dd1} container-fluid`}>
@@ -100,7 +115,7 @@ const Handya = () =>{
             {/* <div>
                 {weather.records.locations[0].location[0].locationName}
             </div> */}
-    
+
         <div className={cc.season}>
             <div className={cc.season1}>
                 <div className={cc.seasoninfo}>
@@ -110,6 +125,11 @@ const Handya = () =>{
                 <img src={ten} alt=""/>
             </div>
         </div>
+
+  <input type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
+<button onClick={sendmsg}>send</button>
+<h1>{messagereceive}</h1>
+
 
         <div className={cc.ezsurch}>
             <div className={cc.ezsurch1}>
