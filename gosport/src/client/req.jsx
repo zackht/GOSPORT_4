@@ -62,7 +62,7 @@ const Client = () => {
     }
     const [employeeList, setEmployeeList] = useState([]);
     const getEmployee = () => {
-        Axios.get("http://localhost:3001/employee").then((response) => {
+        Axios.post("http://localhost:3001/employee").then((response) => {
             // console.log(response.data);
             setEmployeeList(response.data);
         });
@@ -74,8 +74,9 @@ const Client = () => {
       const reader = new FileReader();
       reader.readAsDataURL(e[0]);
       reader.addEventListener("load", function () {
-        seturl(reader.result.replace("data:image/jpeg;base64,",""));
-        // console.log(url);
+        // seturl(reader.result.replace("data:image/jpeg;base64,",""));
+        seturl(reader.result);
+        console.log(url);
       }, false);
       Axios.post("http://localhost:3001/userupdate",{
         img:url
@@ -95,7 +96,6 @@ const Client = () => {
             <h1>獲取所有會員</h1>
             <button onClick={getEmployee}>搜索</button>
             {employeeList.map((val, key) => {
-                console.log(val.userimg.data);
                 var u8Arr = new Uint8Array(val.userimg.data);
                 var blob = new Blob([u8Arr],{type:"image/jpeg"});
                 var fr = new FileReader
@@ -114,3 +114,5 @@ const Client = () => {
 }
 
 export default Client;
+
+// /9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoHBxAQEBAQEBAQEBAQEBAQEBAQEBEQEBAQFxUZGBYVFhUaHysjGh0oHRUWJTUlKC0vMjIyGSI4PTcwPCsxMi8BCgsL

@@ -82,6 +82,7 @@ const Selfalter = () => {
             userdescribe:describe,
         }).then((response) => {
             console.log(response);
+            window.location = '/gosport/user';
         });
     }
 
@@ -91,7 +92,7 @@ const Selfalter = () => {
             {/* 主體 */}
             <div className='alter_'>
                 <div className="selfalter">
-                    <form className='alter_form' action="/selfpage" onSubmit={update}>
+                    <form className='alter_form' onSubmit={update}>
                         <div>
                             <div className="alter_PicPla">
                                 <div id="picFile" onClick={upLoadpic}>

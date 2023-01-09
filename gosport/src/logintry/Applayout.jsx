@@ -12,6 +12,7 @@ import Selfpage from '../selfpage/selfpage';
 
 const AppLayout = () => {
     const [token, setToken] = useState();
+    const [id, setId] = useState();
 
     useEffect(() => {
         setToken(Cookies.get('token'))
@@ -34,6 +35,20 @@ const AppLayout = () => {
 
     }
 
+    const saveid = (id) => {
+        // Login有
+        Cookies.set(
+            'id',//key
+            id,//value
+            {
+                path:'/',
+                expires: 7,//有效7天
+                sameSite: 'strict'//只有當前url與請求目標一致才會帶上cookie
+            }
+        )
+
+    }
+
     const handleLogout = (e) => {
         e.preventDefault();
 
@@ -42,10 +57,15 @@ const AppLayout = () => {
         })
 
         setToken(null);
+
+        Cookies.remove('id', {
+            path: ''
+        })
+
     }
 
     if (!token) {
-        return <PageLogin saveToken={saveToken}  />;
+        return <PageLogin saveToken={saveToken} saveId={saveid} />;
     }
 
     return (
