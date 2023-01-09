@@ -3,6 +3,8 @@ import ba from './backarticle.module.css';
 import Group41 from './icon/Group 41.png';
 import Axios from "axios";
 import backteam from './backarticleteam.module.css';
+import backrent from './後臺轉租.module.css';
+
 import a from "./icon/上傳照片.svg";
 import group41 from "./icon/Group 41.png";
 const Backarticle2 = () => {
@@ -41,60 +43,60 @@ const Backarticle2 = () => {
     const [endtime1, setendtime1] = useState('');
     const [ball1, setball1] = useState('');
     const [zerodalist, setzerodalist] = useState([]);
-    const [zerodainput,setzerodainput]=useState('');
+    const [zerodainput, setzerodainput] = useState('');
     const aaa = () => {
         console.log(zerodainput);
         Axios.post("http://localhost:3001/zeroda", {
             starttime1: starttime1,
             endtime1: endtime1,
             ball1: ball1,
-            zerodainput:zerodainput,
+            zerodainput: zerodainput,
         }).then((response) => {
             // console.log(response);
             setzerodalist(response.data);
         });
     }
     // 零打編輯儲存
-    const [zerodafieldname,setzerodafieldname]=useState('');
-    const [zerodacounty,setzerodacounty]=useState('');
-    const [zerodaarea,setzerodaarea]=useState('');
-    const [zerodaaddress,setzerodaaddress]=useState('');
-    const [zerodadate,setzerodadate]=useState('');
-    const [zerodastarttime,setzerodastarttime]=useState('');
-    const [zerodaendtime,setzerodaendtime]=useState('');
-    const [zerodalevel,setzerodalevel]=useState('');
-    const [zerodacost,setzerodacost]=useState('');
-    const [zerodacontent,setzerodacontent]=useState('');
-    const [articleid_zeroda,setarticleid_zeroda]=useState('');
+    const [zerodafieldname, setzerodafieldname] = useState('');
+    const [zerodacounty, setzerodacounty] = useState('');
+    const [zerodaarea, setzerodaarea] = useState('');
+    const [zerodaaddress, setzerodaaddress] = useState('');
+    const [zerodadate, setzerodadate] = useState('');
+    const [zerodastarttime, setzerodastarttime] = useState('');
+    const [zerodaendtime, setzerodaendtime] = useState('');
+    const [zerodalevel, setzerodalevel] = useState('');
+    const [zerodacost, setzerodacost] = useState('');
+    const [zerodacontent, setzerodacontent] = useState('');
+    const [articleid_zeroda, setarticleid_zeroda] = useState('');
     const zerodaupdate = () => {
         Axios.post("http://localhost:3001/zerodaupdate", {
             zerodafieldname: zerodafieldname,
             zerodacounty: zerodacounty,
             zerodaarea: zerodaarea,
-            zerodaaddress:zerodaaddress,
-            zerodadate:zerodadate,
-            zerodastarttime:zerodastarttime,
-            zerodaendtime:zerodaendtime,
-            zerodalevel:zerodalevel,
-            zerodacost:zerodacost,
-            zerodacontent:zerodacontent,
-            articleid_zeroda:articleid_zeroda,
-            number1:number1,
+            zerodaaddress: zerodaaddress,
+            zerodadate: zerodadate,
+            zerodastarttime: zerodastarttime,
+            zerodaendtime: zerodaendtime,
+            zerodalevel: zerodalevel,
+            zerodacost: zerodacost,
+            zerodacontent: zerodacontent,
+            articleid_zeroda: articleid_zeroda,
+            number1: number1,
         }).then((response) => {
             setdiv1(!div1);
             alert("更新成功");
         });
     }
     // 零打刪除
-    const zerodadelete =(key,e)=>{
-        zerodalist.splice(key,1);
+    const zerodadelete = (key, e) => {
+        zerodalist.splice(key, 1);
         setzerodalist([]);
         Axios.post("http://localhost:3001/zerodadelete", {
-            articleid_zeroda:e,
-            }).then((response) => {
-                alert("刪除成功");
-                setzerodalist(zerodalist);
-            });
+            articleid_zeroda: e,
+        }).then((response) => {
+            alert("刪除成功");
+            setzerodalist(zerodalist);
+        });
     }
     // 球隊搜尋
     const [teamstartday, setteamstartday] = useState('');
@@ -105,13 +107,13 @@ const Backarticle2 = () => {
     const bbb = () => {
         setteamlist([]);
         Axios.post("http://localhost:3001/team", {
-            teamstartday:teamstartday,
-            teamendday:teamendday,
-            teamtype:teamtype,
-            location:location,
+            teamstartday: teamstartday,
+            teamendday: teamendday,
+            teamtype: teamtype,
+            location: location,
         }).then((response) => {
-            console.log(response);
-            setteamlist(response.data);
+            // console.log(response);
+            setteamlist(response.data);         
         });
     }
     // 轉租搜尋 
@@ -134,12 +136,12 @@ const Backarticle2 = () => {
     }
     const ddd1 = () => {
         setdiv1(!div1);
-        setzerodaedit([]); 
+        setzerodaedit([]);
         // console.log(div1);
     }
     // 球隊取消
-    const [div2,setdiv2]= useState(false);
-    const ddd2 =()=>{
+    const [div2, setdiv2] = useState(false);
+    const ddd2 = () => {
         setdiv2(!div2);
         setteamedit([]);
     }
@@ -154,16 +156,16 @@ const Backarticle2 = () => {
         }).then((response) => {
             // console.log(response);
             let c = new Date(response.data[0].date);
-                    let y = c.getFullYear();
-                    let m = c.getMonth();
-                    let d = c.getDate();
+            let y = c.getFullYear();
+            let m = c.getMonth();
+            let d = c.getDate();
             setzerodaedit(response.data);
             setnumber1(response.data[0].number);
             setzerodafieldname(response.data[0].fieldname);
             setzerodacounty(response.data[0].county);
             setzerodaarea(response.data[0].area);
             setzerodaaddress(response.data[0].address);
-            setzerodadate(`${y}-${m+1}-${d}`);
+            setzerodadate(`${y}-${m + 1}-${d}`);
             setzerodastarttime(response.data[0].starttime);
             setzerodaendtime(response.data[0].endtime);
             setzerodalevel(response.data[0].level);
@@ -174,39 +176,47 @@ const Backarticle2 = () => {
     }
     // 球隊編輯畫面
     var [teamedit, setteamedit] = useState([]);
-    const ttt= (e)=>{
+    const ttt = (e) => {
         setdiv2(!div2);
         Axios.post("http://localhost:3001/teamedit", {
             teameventid: e,
         }).then((response) => {
-            // console.log(response);
+            console.log(response);
             setteamedit(response.data);
         });
     }
     // 球隊儲存
-    const [teamstartdate,setteamstartdate]=useState('');
-    const [teamenddate,setteamenddate]=useState('');
-    const [teamstarttime,setteamstarttime]=useState('');
-    const [teamendtime,setteamendtime]=useState('');
-    const [teamtype2,setteamtype2]=useState('');
-    const [teamtitle,setteamtitle]=useState('');
-    const [teamlocation,setteamlocation]=useState('');
-    const [teampay,setteampay]=useState('');
-    const [teamtext,setteamtext]=useState('');
-    const [teamimg,setteamimg]=useState({});
-    
-    const ttt2=()=>{
+    const [teamstartdate, setteamstartdate] = useState('');
+    const [teamenddate, setteamenddate] = useState('');
+    const [teamstarttime, setteamstarttime] = useState('');
+    const [teamendtime, setteamendtime] = useState('');
+    const [teamtype2, setteamtype2] = useState('');
+    const [teamtitle, setteamtitle] = useState('');
+    const [teamlocation, setteamlocation] = useState('');
+    const [teampay, setteampay] = useState('');
+    const [teamtext, setteamtext] = useState('');
+    // 儲存圖片檔案
+    const [teamimg2,setteamimg2]=useState({});
+    //儲存圖片檔案base64字串 
+    const [teamimgstring,setteamimgstring]=useState('');
+    const ttt2 = () => {
+        const file = teamimg2;
+        const reader = new FileReader();
+        reader.onload = function(e){
+            setteamimgstring(e.target.result);
+        }
+        reader.readAsDataURL(file);
         Axios.post("http://localhost:3001/teamupdate", {
             teamstartdate: teamstartdate,
             teamenddate: teamenddate,
             teamstarttime: teamstarttime,
-            teamendtime:teamendtime,
-            teamtype2:teamtype2,
-            teamtitle:teamtitle,
-            teamlocation:teamlocation,
-            zerodalevel:zerodalevel,
-            teampay:teampay,
-            teamtext:teamtext,
+            teamendtime: teamendtime,
+            teamtype2: teamtype2,
+            teamtitle: teamtitle,
+            teamlocation: teamlocation,
+            teampay: teampay,
+            teamtext: teamtext,
+            teamimgstring:teamimgstring,
         }).then((response) => {
             setdiv2(!div2);
             alert("更新成功");
@@ -241,7 +251,7 @@ const Backarticle2 = () => {
                                         <div class={`col-5 ${ba.div38}`}>{val.content}</div>
                                         <div class={`col-3 d-flex justify-content-center ${ba.div38}`}>
                                             <div class={`${ba.button1} ${ba.div42}`} onClick={() => { ddd(val.articleid_zeroda) }}>編輯</div>
-                                            <div class={ba.button1} onClick={()=>zerodadelete(key,val.articleid_zeroda)}>刪除</div>
+                                            <div class={ba.button1} onClick={() => zerodadelete(key, val.articleid_zeroda)}>刪除</div>
                                         </div>
                                     </div>
                                 </div>
@@ -250,7 +260,7 @@ const Backarticle2 = () => {
                     );
                 })}
             </div>
-    // 球隊搜尋結果
+        // 球隊搜尋結果
     } else if (team1) {
         title =
             <div class={`d-flex ${ba.div44}`}>
@@ -277,8 +287,8 @@ const Backarticle2 = () => {
                                 <div class={`col d-flex flex-column ${ba.div46}`}>
                                     {/* <!-- 搜尋結果 --> */}
                                     <div class={`d-flex ${ba.font2} ${ba.div47}`}>
-                                        <div class={`col-2 ${ba.div38}`}>{`${y}-${m+1}-${d}`}</div>
-                                        <div class={`col-2 ${ba.div38}`}>{`${yy}-${mm+1}-${dd}`}</div>
+                                        <div class={`col-2 ${ba.div38}`}>{`${y}-${m + 1}-${d}`}</div>
+                                        <div class={`col-2 ${ba.div38}`}>{`${yy}-${mm + 1}-${dd}`}</div>
                                         <div class={`col-2 ${ba.div38}`}>{val.type}</div>
                                         <div class={`col-3 ${ba.div38}`}>{val.location}</div>
                                         <div class={`col-3 d-flex justify-content-center ${ba.div38}`}>
@@ -292,7 +302,7 @@ const Backarticle2 = () => {
                     );
                 })}
             </div>
-    // 轉租搜尋結果
+        // 轉租搜尋結果
     } else if (rent1) {
         title =
             <div class={`d-flex ${ba.div50}`}>
@@ -320,26 +330,34 @@ const Backarticle2 = () => {
                                         <div class={`col-2 ${ba.div38}`}>{val.area}</div>
                                         <div class={`col-3 ${ba.div38}`}>{val.fieldname}</div>
                                         <div class={`col-3 d-flex justify-content-center ${ba.div38}`}>
-                                            <div class={`${ba.button1} ${ba.div53}`}>編輯</div>
+                                            <div class={`${ba.button1} ${ba.div53}`} onClick={rrr}>編輯</div>
                                             <div class={ba.button1}>刪除</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </React.Fragment>
+                        // 要更改select項目
                     );
                 })}
             </div>
     }
     // 判斷select縣市地區
     const [Taichung, setTaichung] = useState([
-        "中區","東區","西區","南區","北區","西屯區","南屯區","北屯區","豐原區","大里區","太平區","清水區","沙鹿區","大甲區","東勢區","梧棲區","烏日區","神岡區","大肚區","大雅區","后里區","霧峰區","潭子區","龍井區","外埔區","和平區","石岡區","大安區","新社區"
+        "中區", "東區", "西區", "南區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "清水區", "沙鹿區", "大甲區", "東勢區", "梧棲區", "烏日區", "神岡區", "大肚區", "大雅區", "后里區", "霧峰區", "潭子區", "龍井區", "外埔區", "和平區", "石岡區", "大安區", "新社區"
     ]);
-    const [number1,setnumber1]=useState(0);
+    const [number1, setnumber1] = useState(0);
     // 球隊編輯圖片
-    const [teamurl,setteamurl]=useState('');
+    const [teamurl, setteamurl] = useState('');
     // const [teamurlwork,setteamurlwork]=useState(false);
-
+    // 球隊活動編輯顯示活動成員頭向
+    const [userimg,setuserimg] =useState('');
+    // 轉租取消
+    const [div3,setdiv3] =useState(false);
+    // 轉租編輯畫面
+    const rrr=()=>{
+        setdiv3(!div3);
+    }
     return (
         <React.Fragment>
             <div class={`container-fluid ${ba.div1}`}>
@@ -372,7 +390,7 @@ const Backarticle2 = () => {
                                     <span className={ba.span}>文章內容</span>
                                     <div>
                                         <input type="text" class={`${ba.ccc} ${ba.div13}`}
-                                            placeholder="請輸入關鍵字" onChange={(e)=>setzerodainput(`%${e.target.value}%`)}/>
+                                            placeholder="請輸入關鍵字" onChange={(e) => setzerodainput(`%${e.target.value}%`)} />
                                     </div>
                                 </div>
                                 <div class={`mt-auto`}>
@@ -385,15 +403,15 @@ const Backarticle2 = () => {
                             <div action="" class={`d-flex flex-column ${ba.div15}`}>
                                 <div class={`d-flex flex-column`} >
                                     <div class={`d-flex flex-column ${ba.div16}`}>
-                                    <span className={ba.span}>日期區間</span>
-                                    <div class={`${ba.dateimg} ${ba.font}`}>
-                                        <input type="date" className={`${ba.div7} ${ba.date}`} onChange={(e) => setteamstartday(e.target.value)} />
-                                        <img class={ba.selectedDate} src={Group41} alt="" />
-                                    </div>
-                                    <div class={`${ba.dateimg} ${ba.div8}`}>
-                                        <input type="date" class={`${ba.font} ${ba.div9} ${ba.date}`} onChange={(e) => setteamendday(e.target.value)} />
-                                        <img class={ba.selectedDate} src={Group41} alt="" />
-                                    </div>
+                                        <span className={ba.span}>日期區間</span>
+                                        <div class={`${ba.dateimg} ${ba.font}`}>
+                                            <input type="date" className={`${ba.div7} ${ba.date}`} onChange={(e) => setteamstartday(e.target.value)} />
+                                            <img class={ba.selectedDate} src={Group41} alt="" />
+                                        </div>
+                                        <div class={`${ba.dateimg} ${ba.div8}`}>
+                                            <input type="date" class={`${ba.font} ${ba.div9} ${ba.date}`} onChange={(e) => setteamendday(e.target.value)} />
+                                            <img class={ba.selectedDate} src={Group41} alt="" />
+                                        </div>
                                         <span className={`${ba.div19} ${ba.span}`}>類型</span>
                                         <div class={`${ba.selectimg} ${ba.font}`}>
                                             <select name="" id="" className={`${ba.div20} ${ba.select}`} onChange={(e) => { setteamtype(e.target.value) }}>
@@ -406,7 +424,7 @@ const Backarticle2 = () => {
                                     <span className={`${ba.div23} ${ba.span}`}>地點</span>
                                     <div>
                                         <input type="text" class={`${ba.ccc} ${ba.div22}`}
-                                            placeholder="請輸入關鍵字" onChange={(e) => { setlocation(`%${e.target.value}%`) }}/>
+                                            placeholder="請輸入關鍵字" onChange={(e) => { setlocation(`%${e.target.value}%`) }} />
                                     </div>
                                 </div>
 
@@ -479,260 +497,338 @@ const Backarticle2 = () => {
             </div>
             {/* 零打彈出畫面 */}
             <div className={`${ba.div55}`} style={{ display: (div1) ? 'block' : 'none' }}>
-            {zerodaedit.map((val,key) => {
-            let c = new Date(val.date);
-            let y = c.getFullYear();
-            let m = c.getMonth()+1;
-            
-            let d = c.getDate();
-            const add=()=>{
-                // number1+=1;
-                setnumber1(number1+1);
-            }
-            const dda=()=>{
-                // number1-=1;
-                setnumber1(number1-1);
-            }
-            return (
-                <div className={ba.div56} key={key}>
-                    <div class={ba.cover}>
-                        <div class={ba.contain}>
-                            <div >
-                            <label class={ba.dlabel} for="ct_pname">會員編號 : </label> {val.userid}
-                            </div>
-                            <div>
-                                <label class={ba.dlabel} for="ct_pname">場館</label><br />
-                                <input class={ba.dinput} id="ct_pname" type="text" defaultValue={val.fieldname} onChange={(e)=>{setzerodafieldname(e.target.value)}} />
-                            </div>
-                            <div class={ba.ct_citycover}>
-                                <div className={ba.iimgdiv} >
-                                    <label class={ba.dlabel} for="ct_city">縣市</label><br />
-                                    <select class={ba.dselect} name="ct" id="ct_city" defaultValue={val.county} onChange={(e)=>{setzerodacounty(e.target.value)}}>
-                                        <option value="台中市">台中市</option>
-                                    </select>
-                                    <img src={Group41} alt="" className={ba.iimg} />
+                {zerodaedit.map((val, key) => {
+                    let c = new Date(val.date);
+                    let y = c.getFullYear();
+                    let m = c.getMonth() + 1;
+
+                    let d = c.getDate();
+                    const add = () => {
+                        // number1+=1;
+                        setnumber1(number1 + 1);
+                    }
+                    const dda = () => {
+                        // number1-=1;
+                        setnumber1(number1 - 1);
+                    }
+                    return (
+                        <div className={ba.div56} key={key}>
+                            <div class={ba.cover}>
+                                <div class={ba.contain}>
+                                    <div >
+                                        <label class={ba.dlabel} for="ct_pname">會員編號 : </label> {val.userid}
+                                    </div>
+                                    <div>
+                                        <label class={ba.dlabel} for="ct_pname">場館</label><br />
+                                        <input class={ba.dinput} id="ct_pname" type="text" defaultValue={val.fieldname} onChange={(e) => { setzerodafieldname(e.target.value) }} />
+                                    </div>
+                                    <div class={ba.ct_citycover}>
+                                        <div className={ba.iimgdiv} >
+                                            <label class={ba.dlabel} for="ct_city">縣市</label><br />
+                                            <select class={ba.dselect} name="ct" id="ct_city" defaultValue={val.county} onChange={(e) => { setzerodacounty(e.target.value) }}>
+                                                <option value="台中市">台中市</option>
+                                            </select>
+                                            <img src={Group41} alt="" className={ba.iimg} />
+                                        </div>
+                                        <div className={ba.iimgdiv}>
+                                            <label class={ba.dlabel} for="">地區</label><br />
+                                            <select class={ba.dselect} name="ct_" id="" defaultValue={val.area} onChange={(e) => { setzerodaarea(e.target.value) }}>
+                                                {Taichung.map((val, key) => {
+                                                    return (<option key={key} value={val}>{val}</option>);
+                                                })}
+                                            </select>
+                                            <img src={Group41} alt="" className={ba.iimg} />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class={ba.dlabel} for="ct_addr">地址</label><br />
+                                        <input class={ba.dinputaddr} type="text" id="ct_addr" defaultValue={val.address} onChange={(e) => { setzerodaaddress(e.target.value) }} />
+                                    </div>
+                                    <div>
+                                        <label class={ba.dlabel} for="ct_d_input">日期</label><br />
+                                        <input class={ba.dinputdate} id="ct_d_input" type="date" defaultValue={`${y}-${m = (m < 10 ? '0' : '') + m}-${d = (d < 10 ? '0' : '') + d}`} onChange={(e) => { setzerodadate(e.target.value) }} />
+                                        <img class={ba.ct_seleD} src={Group41} />
+                                    </div>
+                                    <div>
+                                        <label class={ba.dlabel} for="">時段</label>
+                                    </div>
+                                    <div class={ba.ct_time}>
+                                        <div className={ba.iimgdiv}>
+                                            <select class={ba.dselect} name="ct_" id="" defaultValue={val.starttime} onChange={(e) => { setzerodastarttime(e.target.value) }}>
+                                                <option value="8">8:00</option>
+                                                <option value="9">9:00</option>
+                                                <option value="15">15:00</option>
+                                                <option value="16">16:00</option>
+                                                <option value="17">17:00</option>
+                                            </select>
+                                            <img src={Group41} alt="" className={ba.iimg2} />
+                                        </div>
+                                        <div className={ba.ggg}>
+                                            至
+                                        </div>
+                                        <div className={ba.iimgdiv}>
+                                            <select class={ba.dselect} name="ct_" id="" defaultValue={val.endtime} onChange={(e) => { setzerodaendtime(e.target.value) }}>
+                                                <option value="10">10:00</option>
+                                                <option value="17">17:00</option>
+                                            </select>
+                                            <img src={Group41} alt="" className={ba.iimg2} />
+                                        </div>
+                                    </div>
+                                    <div className={ba.iimgdiv1}>
+                                        <label class={ba.dlabel} for="ct_range">程度</label><br />
+                                        <select class={ba.dselect1} name="ct_" id="ct_range" defaultValue={val.level} onChange={(e) => { setzerodalevel(e.target.value) }}>
+                                            <option value="新手">新手</option>
+                                            <option value="普通">普通</option>
+                                            <option value="高手">高手</option>
+                                        </select>
+                                        <img src={Group41} alt="" className={ba.iimg3} />
+                                    </div>
+                                    <div>
+                                        <label class={ba.dlabel} for="">人數</label><br />
+                                        <input class={`${ba.minus} ${ba.dinput}`} type="button" onClick={dda} value="-" />
+                                        <input class={`${ba.numbox} ${ba.dinputnum}`} type="number" key={number1} id="vall" defaultValue={number1} onChange={(e) => { setnumber1(e.target.value) }} />
+                                        <input class={`${ba.minus} ${ba.dinput}`} type="button" onClick={add} value="+" />
+                                    </div>
+                                    <div>
+                                        <label class={ba.dlabel} for="ct_pay">費用</label><br />
+                                        <input class={ba.dinput} id="ct_pay" type="text" defaultValue={val.cost} onChange={(e) => { setzerodacost(e.target.value) }} />
+                                    </div>
+                                    <div>
+                                        <label class={ba.dlabel} for="ct_discribe">描述</label><br />
+                                        <textarea name="" class={ba.dtextarea} id="ct_discribe" cols="30" rows="10" defaultValue={val.content} onChange={(e) => { setzerodacontent(e.target.value) }}></textarea>
+                                    </div>
+                                    <div class={ba.ct_yesOrNot}>
+                                        <div>
+                                            <span class={ba.ct_backself} onClick={ddd1}>取消</span>
+                                        </div>
+                                        <input class={`${ba.dinput} ${ba.dinputsubmit}`} onClick={zerodaupdate} type="submit" value="儲存" />
+                                    </div>
                                 </div>
-                                <div className={ba.iimgdiv}>
-                                    <label class={ba.dlabel} for="">地區</label><br />
-                                    <select class={ba.dselect} name="ct_" id="" defaultValue={val.area} onChange={(e)=>{setzerodaarea(e.target.value)}}>
-                                        {Taichung.map((val,key)=>{
-                                            return (<option key={key} value={val}>{val}</option>);
-                                        })}
-                                    </select>
-                                    <img src={Group41} alt="" className={ba.iimg} />
-                                </div>
-                            </div>
-                            <div>
-                                <label class={ba.dlabel} for="ct_addr">地址</label><br />
-                                <input class={ba.dinputaddr} type="text" id="ct_addr" defaultValue={val.address} onChange={(e)=>{setzerodaaddress(e.target.value)}}/>
-                            </div>
-                            <div>
-                                <label class={ba.dlabel} for="ct_d_input">日期</label><br/>
-                                <input class={ba.dinputdate} id="ct_d_input" type="date" defaultValue={`${y}-${m = (m < 10 ? '0' : '') + m}-${d = (d < 10 ? '0' : '') + d}`} onChange={(e)=>{setzerodadate(e.target.value)}}/>
-                                <img class={ba.ct_seleD} src={Group41} />
-                            </div>
-                            <div>
-                                <label class={ba.dlabel} for="">時段</label>
-                            </div>
-                            <div class={ba.ct_time}>
-                                <div className={ba.iimgdiv}>
-                                    <select class={ba.dselect} name="ct_" id="" defaultValue={val.starttime} onChange={(e)=>{setzerodastarttime(e.target.value)}}>
-                                        <option value="8">8:00</option>
-                                        <option value="9">9:00</option>
-                                        <option value="15">15:00</option>
-                                        <option value="16">16:00</option>
-                                        <option value="17">17:00</option>
-                                    </select>
-                                    <img src={Group41} alt="" className={ba.iimg2} />
-                                </div>
-                                <div className={ba.ggg}>
-                                    至
-                                </div>
-                                <div className={ba.iimgdiv}>
-                                    <select class={ba.dselect} name="ct_" id="" defaultValue={val.endtime} onChange={(e)=>{setzerodaendtime(e.target.value)}}>
-                                        <option value="10">10:00</option>
-                                        <option value="17">17:00</option>
-                                    </select>
-                                    <img src={Group41} alt="" className={ba.iimg2} />
-                                </div>
-                            </div>
-                            <div className={ba.iimgdiv1}>
-                                <label class={ba.dlabel} for="ct_range">程度</label><br />
-                                <select class={ba.dselect1} name="ct_" id="ct_range" defaultValue={val.level} onChange={(e)=>{setzerodalevel(e.target.value)}}>
-                                    <option value="新手">新手</option>
-                                    <option value="普通">普通</option>
-                                    <option value="高手">高手</option>
-                                </select>
-                                <img src={Group41} alt="" className={ba.iimg3} />
-                            </div>
-                            <div>
-                                <label class={ba.dlabel} for="">人數</label><br />
-                                <input class={`${ba.minus} ${ba.dinput}`} type="button" onClick={dda} value="-" />
-                                <input class={`${ba.numbox} ${ba.dinputnum}`} type="number" key={number1} id="vall" defaultValue={number1}  onChange={(e)=>{setnumber1(e.target.value)}}/>
-                                <input class={`${ba.minus} ${ba.dinput}`} type="button" onClick={add} value="+" />
-                            </div>
-                            <div>
-                                <label class={ba.dlabel} for="ct_pay">費用</label><br />
-                                <input class={ba.dinput} id="ct_pay" type="text" defaultValue={val.	cost} onChange={(e)=>{setzerodacost(e.target.value)}}/>
-                            </div>
-                            <div>
-                                <label class={ba.dlabel} for="ct_discribe">描述</label><br />
-                                <textarea name="" class={ba.dtextarea} id="ct_discribe" cols="30" rows="10" defaultValue={val.content} onChange={(e)=>{setzerodacontent(e.target.value)}}></textarea>
-                            </div>
-                            <div class={ba.ct_yesOrNot}>
-                                <div>
-                                    <span class={ba.ct_backself} onClick={ddd1}>取消</span>
-                                </div>
-                                <input class={`${ba.dinput} ${ba.dinputsubmit}`} onClick={zerodaupdate} type="submit" value="儲存" />
                             </div>
                         </div>
-                    </div>
-                </div>
-            );
-            })}
+                    );
+                })}
             </div>
 
             {/* 球隊彈出畫面 */}
             <div className={`${ba.div55}`} style={{ display: (div2) ? 'block' : 'none' }}>
-            {teamedit.map((val,key)=>{
-                let c = new Date(val.startdate);
-                let y = c.getFullYear();
-                let m = c.getMonth()+1;
-                let d = c.getDate();
-                let cc = new Date(val.enddate);
-                let yy = cc.getFullYear();
-                let mm = cc.getMonth()+1;
-                let dd = cc.getDate();
+                {teamedit.map((val,key) => {
+                    let c = new Date(val.startdate);
+                    let y = c.getFullYear();
+                    let m = c.getMonth() + 1;
+                    let d = c.getDate();
+                    let cc = new Date(val.enddate);
+                    let yy = cc.getFullYear();
+                    let mm = cc.getMonth() + 1;
+                    let dd = cc.getDate();
+                    var u8Arr = new Uint8Array(val.teameventimg.data);
+                    var blob = new Blob([u8Arr], { type: "image/jpeg" });
+                    var fr = new FileReader
+                    fr.onload = function () {
+                        setteamurl(fr.result);
+                    };
+                    fr.readAsDataURL(blob);
+                    return (                 
+                        <div className={`container ${backteam.div0}`}>
+                            <div className={`row ${backteam.div7}`}>
+                                <div>
+                                    <div className={backteam.div1}>
+                                        <span className={backteam.font1}>開始日期</span>
+                                        <div className={backteam.dateimg}>
+                                            <input type="date" name="inputdate" className={`${backteam.date} ${backteam.font}`}
+                                                defaultValue={`${y}-${m = (m < 10 ? '0' : '') + m}-${d = (d < 10 ? '0' : '') + d}`}
+                                                onChange={(e) => { setteamstartdate(e.target.value) }} />
+                                            <img className={backteam.selectedDate} src={group41} alt="" />
+                                        </div>
+                                        <span className={backteam.font1}>結束日期</span>
+                                        <div className={backteam.dateimg}>
+                                            <input type="date" name="inputdate" className={`${backteam.date} ${backteam.font}`}
+                                                defaultValue={`${yy}-${mm = (mm < 10 ? '0' : '') + mm}-${dd = (dd < 10 ? '0' : '') + dd}`}
+                                                onChange={(e) => { setteamenddate(e.target.value) }} />
+                                            <img className={backteam.selectedDate2} src={group41} alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={backteam.div4}>
+                                    <span className={backteam.font1}>時間</span>
+                                    <div className={`d-flex`}>
+                                        <div className={backteam.div2}>
+                                            <select name="" id="" className={`${backteam.div3} ${backteam.font}`} defaultValue={val.starttime} onChange={(e) => setteamstarttime(e.target.value)}>
+                                                <option value="1">1:00</option>
+                                                <option value="2">2:00</option>
+                                                <option value="3">3:00</option>
+                                                <option value="4">4:00</option>
+                                                <option value="5">5:00</option>
+                                                <option value="10">10:00</option>
+                                                <option value="11">11:00</option>
+                                                <option value="12">12:00</option>
+                                            </select>
+                                            <img className={backteam.selectimg} src={group41} alt="" />
+                                        </div>
+                                        <div className={backteam.font}>
+                                            至
+                                        </div>
+                                        <div className={backteam.div5}>
+                                            <select name="" id="" className={`${backteam.div3} ${backteam.font}`} defaultValue={val.endtime} onChange={(e) => setteamendtime(e.target.value)}>
+                                                <option value="1">1:00</option>
+                                                <option value="2">2:00</option>
+                                                <option value="3">3:00</option>
+                                                <option value="4">4:00</option>
+                                                <option value="5">5:00</option>
+                                                <option value="10">10:00</option>
+                                                <option value="11">11:00</option>
+                                                <option value="12">12:00</option>
+                                            </select>
+                                            <img className={backteam.selectimg} src={group41} alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={backteam.div6}>
+                                    <label htmlFor="inputfile" className={backteam.filelabel}>
+                                        <img src={teamurl} alt="" className={backteam.fileimg} /></label>
+                                    <input type="file" id='inputfile' className={backteam.file} onChange={(e)=>{setteamimg2(e.target.files[0])}}/>
+                                </div>
+                            </div>
+                            <div>
+                                <span className={backteam.font1}>類型</span>
+                                <div className={`d-flex`}>
+                                    <div className={backteam.div2}>
+                                        <select name="" id="" className={`${backteam.div3} ${backteam.font}`} defaultValue={val.type} onChange={(e) => setteamtype2(e.target.value)}>
+                                            <option value="運動">運動</option>
+                                            <option value="聚餐">聚餐</option>
+                                        </select>
+                                        <img className={backteam.selectimg} src={group41} alt="" />
+                                    </div>
+                                    <div className={backteam.font}>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={backteam.div8}>
+                                <span className={backteam.font1}>標題</span>
+                                <div>
+                                    <input type="text" className={`${backteam.input1} ${backteam.font}`} defaultValue={val.title} onChange={(e) => setteamtitle(e.target.value)} />
+                                </div>
+                            </div>
+                            <div className={backteam.div8}>
+                                <span className={backteam.font1}>地點</span>
+                                <div>
+                                    <input type="text" className={`${backteam.input1} ${backteam.font}`} defaultValue={val.location} onChange={(e) => setteamlocation(e.target.value)} />
+                                </div>
+                            </div>
+                            <div className={backteam.div8}>
+                                <span className={backteam.font1}>支出</span>
+                                <div>
+                                    <input type="number" className={`${backteam.input3} ${backteam.font}`} defaultValue={val.pay} onChange={(e) => setteampay(e.target.value)} />
+                                </div>
+                            </div>
+                            <div className={backteam.div9}>
+                                <span className={backteam.font}>成員</span>
+                                <div className='d-flex'>
+                                </div>
+                            </div>
+                            <div className={backteam.div8}>
+                                <span className={backteam.font1}>描述</span>
+                                <div>
+                                    <textarea name="" id="" cols="30" rows="10" maxLength="100" className={`${backteam.input2} ${backteam.font}`}
+                                        defaultValue={val.text} onChange={(e) => setteamtext(e.target.value)}>
 
-                var u8Arr = new Uint8Array(val.teameventimg.data);
-                var blob = new Blob([u8Arr],{type:"image/jpeg"});
-                var fr = new FileReader
-                fr.onload = function () {
-                    setteamurl(fr.result);
-                  };
-                fr.readAsDataURL(blob);
-                return (
-                    <div className={`container ${backteam.div0}`} key={key}>
-                    <div className={`row ${backteam.div7}`}>
-                        <div>
-                            <div className={backteam.div1}>
-                                <span className={backteam.font1}>開始日期</span>
-                                <div className={backteam.dateimg}>
-                                    <input type="date" name="inputdate" className={`${backteam.date} ${backteam.font}`} 
-                                    defaultValue={`${y}-${m = (m < 10 ? '0' : '') + m}-${d = (d < 10 ? '0' : '') + d}`} 
-                                    onChange={(e)=>{setteamstartdate(e.target.value)}}/>
-                                    <img className={backteam.selectedDate} src={group41} alt="" />
-                                </div>
-                                <span className={backteam.font1}>結束日期</span>
-                                <div className={backteam.dateimg}>
-                                    <input type="date" name="inputdate" className={`${backteam.date} ${backteam.font}`} 
-                                    defaultValue={`${yy}-${mm = (mm < 10 ? '0' : '') + mm}-${dd = (dd < 10 ? '0' : '') + dd}`} 
-                                    onChange={(e)=>{setteamenddate(e.target.value)}}/>
-                                    <img className={backteam.selectedDate2} src={group41} alt="" />
+                                    </textarea>
                                 </div>
                             </div>
-                        </div>
-                        <div className={backteam.div4}>
-                            <span className={backteam.font1}>時間</span>
-                            <div className={`d-flex`}>
-                                <div className={backteam.div2}>
-                                    <select name="" id="" className={`${backteam.div3} ${backteam.font}`} defaultValue={val.starttime} onChange={(e)=>setteamstarttime(e.target.value)}>
-                                        <option value="1">1:00</option>
-                                        <option value="2">2:00</option>
-                                        <option value="3">3:00</option>
-                                        <option value="4">4:00</option>
-                                        <option value="5">5:00</option>
-                                        <option value="10">10:00</option>
-                                        <option value="11">11:00</option>
-                                        <option value="12">12:00</option>
-                                    </select>
-                                    <img className={backteam.selectimg} src={group41} alt="" />
-                                </div>
-                                <div className={backteam.font}>
-                                    至
-                                </div>
-                                <div className={backteam.div5}>
-                                    <select name="" id="" className={`${backteam.div3} ${backteam.font}`} defaultValue={val.endtime} onChange={(e)=>setteamendtime(e.target.value)}>
-                                        <option value="1">1:00</option>
-                                        <option value="2">2:00</option>
-                                        <option value="3">3:00</option>
-                                        <option value="4">4:00</option>
-                                        <option value="5">5:00</option>
-                                        <option value="10">10:00</option>
-                                        <option value="11">11:00</option>
-                                        <option value="12">12:00</option>
-                                    </select>
-                                    <img className={backteam.selectimg} src={group41} alt="" />
-                                </div>
+                            <div className={`${backteam.div10} d-flex justify-content-around`}>
+                                <button className={backteam.button1} onClick={ddd2}>取消</button>
+                                <button className={backteam.button2} onClick={ttt2}>儲存</button>
                             </div>
                         </div>
-                        <div className={backteam.div6}>
-                            <label htmlFor="inputfile" className={backteam.filelabel}>
-                                <img src={teamurl} alt="" className={backteam.fileimg} /></label>
-                            <input type="file" id='inputfile' className={backteam.file} onChange={(e)=>{setteamimg(e.target.files)}}/>
-                        </div>
-                        {/* {teamimg} */}
-                    </div>
-                    <div>
-                        <span className={backteam.font1}>類型</span>
-                        <div className={`d-flex`}>
-                            <div className={backteam.div2}>
-                                <select name="" id="" className={`${backteam.div3} ${backteam.font}`} defaultValue={val.type} onChange={(e)=>setteamtype2(e.target.value)}>
-                                    <option value="運動">運動</option>
-                                    <option value="聚餐">聚餐</option>
-                                </select>
-                                <img className={backteam.selectimg} src={group41} alt="" />
-                            </div>
-                            <div className={backteam.font}>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={backteam.div8}>
-                        <span className={backteam.font1}>標題</span>
-                        <div>
-                            <input type="text" className={`${backteam.input1} ${backteam.font}`} defaultValue={val.title} onChange={(e)=>setteamtitle(e.target.value)}/>
-                        </div>
-                    </div>
-                    <div className={backteam.div8}>
-                        <span className={backteam.font1}>地點</span>
-                        <div>
-                            <input type="text" className={`${backteam.input1} ${backteam.font}`} defaultValue={val.location} onChange={(e)=>setteamlocation(e.target.value)}/>
-                        </div>
-                    </div>
-                    <div className={backteam.div8}>
-                        <span className={backteam.font1}>支出</span>
-                        <div>
-                            <input type="number" className={`${backteam.input3} ${backteam.font}`} defaultValue={val.pay} onChange={(e)=>setteampay(e.target.value)}/>
-                        </div>
-                    </div>
-                    <div className={backteam.div9}>
-                        <span className={backteam.font}>成員</span>
-                        <div>
-
-                        </div>
-                    </div>
-                    <div className={backteam.div8}>
-                        <span className={backteam.font1}>描述</span>
-                        <div>
-                            <textarea name="" id="" cols="30" rows="10" maxLength="100" className={`${backteam.input2} ${backteam.font}`}
-                            defaultValue={val.text} onChange={(e)=>setteamtext(e.target.value)}>
-
-                            </textarea>
-                        </div>
-                    </div>
-                    <div className={`${backteam.div10} d-flex justify-content-around`}>
-                        <button className={backteam.button1} onClick={ddd2}>取消</button>
-                        <button className={backteam.button2} onClick={ttt2}>儲存</button>
-                    </div>
-                    </div>
-                );
-                })}
+                    );
+                    })}
             </div>
-            
-            
+            {/* 轉租彈出畫面 */}
+            <div className={`${ba.div55}`} style={{ display: (div3) ? 'block' : 'none' }}>
+                <div class={backrent.cover}>
+                    <div class={backrent.contain}>
+                        <div>
+                            <label class={backrent.dlabel} for="ct_pname">場館</label><br/>
+                            <input class={backrent.dinput} id="ct_pname" type="text"/>
+                        </div>
+                        <div class={backrent.ct_citycover}>
+                            <div>
+                                <label class={backrent.dlabel} for="ct_city">縣市</label><br/>
+                                <select class={backrent.dselect} name="ct" id="ct_city">
+                                    <option value="">台中市</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class={backrent.dlabel} for="">地區</label><br/>
+                                <select class={backrent.dselect} name="ct_" id="">
+                                    <option value="">后里區</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class={backrent.dlabel} for="ct_addr">地址</label><br/>
+                            <input class={backrent.dinput} type="text" id="ct_addr" value=""/>
+                        </div>
+                        <div>
+                            <label class={backrent.dlabel} for="ct_d_input">日期</label><br/>
+                            <input class={backrent.dinputdate} id="ct_d_input" type="date"/>
+                            <img class={backrent.ct_seleD} src="./icon/arrowup2.svg"/>
+                        </div>
+                        <div>
+                            <label class={backrent.dlabel} for="">時段</label>
+                        </div>
+                        <div class={backrent.ct_time}>
+                            <div>
+                                <select class={backrent.dselect} name="ct_" id="">
+                                    <option value="">15:00</option>
+                                </select>
+                            </div>
+                            <div className={backrent.div1}>
+                                至
+                            </div>
+                            <div>
+                                
+                                <select class={backrent.dselect} name="ct_" id="">
+                                    <option value="">17:00</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class={backrent.dlabel} for="ct_range">程度</label><br/>
+                            <select class={backrent.dselect} name="ct_" id="ct_range">
+                                <option value="">新手</option>
+                                <option value="">普通</option>
+                                <option value="">高手</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class={backrent.dlabel} for="">人數</label><br/>
+                            <input class={`${backrent.minus} ${backrent.dinput}`} type="button" onclick="opera('val', false);" value="-"/>
+                            <input class={`${backrent.numbox} ${backrent.dinput}`} type="number" id="val" value="1" />
+                            <input class={`${backrent.minus} ${backrent.dinput}`} type="button" onclick="opera('val', true);" value="+"/>
+                        </div>
+                        <div>
+                            <label class={backrent.dlabel} for="ct_pay">費用</label><br/>
+                            <input class={backrent.dinput} id="ct_pay" type="text"/>
+                        </div>
+                        <div>
+                            <label class={backrent.dlabel} for="ct_discribe">描述</label><br/>
+                            <textarea name="" class={backrent.dtextarea} id="ct_discribe" cols="30" rows="10"></textarea>
+                        </div>
+                        <div class={backrent.ct_yesOrNot}>
+                            <a href="#">
+                                <span class={backrent.ct_backself} onclick={()=>{setdiv3(!div3)}}>取消</span>
+                            </a>
+                            <input class={`${backrent.dinput} ${backrent.dinputsubmit}`} type="submit" value="儲存"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </React.Fragment>
     );
-    
+
 }
 
 export default Backarticle2;

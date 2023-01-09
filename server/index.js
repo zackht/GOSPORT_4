@@ -17,7 +17,9 @@ const db = mysql.createConnection({
     port: 3306,
 });
 // 連接mysql
-app.use(express.json());
+// app.use(express.json());
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 // 使用json格式回傳
 //  client測試
   app.post('/create', (req,res)=>{
@@ -39,7 +41,7 @@ app.use(express.json());
       );
     })
     //  client測試
-    app.get("/employee", (req, res) => {
+    app.post("/employee", (req, res) => {
       db.query("SELECT * FROM user where userid = 1", (err, result) => {
         if (err) {
           console.log(err);
@@ -48,7 +50,18 @@ app.use(express.json());
         }
       });
     });
-    // 後台零打搜尋 
+    // user頭像更改
+    app.post("/userupdate", (req, res) => {
+      const img = req.body.img;
+      db.query("UPDATE user SET userimg=? where userid =1",[img], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    // 後台零打搜尋
     app.post("/zeroda", (req, res) => {
       const starttime1 = req.body.starttime1;
       const endtime1 = req.body.endtime1;
@@ -172,8 +185,9 @@ app.use(express.json());
       const zerodalevel = req.body.zerodalevel;
       const teampay = req.body.teampay;
       const teamtext = req.body.teamtext;
-      db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?, title =  where teameventid=1"
-      ,[teameventid], (err, result) => {
+      const teamimgstring = req.body.teamimgstring;
+      db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,text=?,pay=?,teameventimg=?  where teameventid=1"
+      ,[teamstartdate,teamenddate,teamstarttime,teamendtime,teamtype2,teamtitle,teamlocation,teamtext,teampay,teamimgstring], (err, result) => {
         if (err) {
           console.log(err);
         } else {
