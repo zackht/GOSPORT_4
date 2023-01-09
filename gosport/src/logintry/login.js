@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Axios from "axios";
 
 
-const PageLogin = ({ saveToken}) => {
+const PageLogin = ({ saveToken,saveId}) => {
     // 輸入
     const [account, setAccount] = useState();
     const [password, setPassword] = useState();
@@ -17,6 +17,7 @@ const PageLogin = ({ saveToken}) => {
         }).then((response) => {
             setTrueAcc(response.data[0].email);
             setTruePass(response.data[0].password);
+            saveId(response.data[0].userid)
             console.log(password)
         });
     },[account,password])

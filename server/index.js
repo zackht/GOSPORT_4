@@ -48,7 +48,7 @@ app.use(express.json());
         }
       });
     });
-    // 後台零打搜尋
+    // 後台零打搜尋 
     app.post("/zeroda", (req, res) => {
       const starttime1 = req.body.starttime1;
       const endtime1 = req.body.endtime1;
@@ -79,7 +79,7 @@ app.use(express.json());
       const articleid_zeroda = req.body.articleid_zeroda;
       db.query("SELECT * FROM userarticle_zeroda where articleid_zeroda = ?"
       ,[articleid_zeroda], (err, result) => {
-        if (err) {
+        if (err) { 
           console.log(err);
         } else {
           res.send(result);
@@ -242,6 +242,58 @@ app.use(express.json());
         
       });
     });
+
+  //會員零打文章搜尋
+  app.post("/findzoro", (req, res) => {
+    const userid = req.body.userid;
+    const starttime = req.body.stratDate;
+    const endtime = req.body.endDate;
+    db.query("SELECT * FROM `userarticle_zeroda` WHERE userid = ? AND date BETWEEN ? AND ?",[userid,starttime,endtime], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
+  //會員轉租文章搜尋
+  app.post("/findsub", (req, res) => {
+    const userid = req.body.userid;
+    const starttime = req.body.stratDate;
+    const endtime = req.body.endDate;
+    db.query("SELECT * FROM `userarticle_sublet` WHERE userid = ? AND date BETWEEN ? AND ?",[userid,starttime,endtime], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
+  // 取得留言數
+  app.post("/countsub", (req, res) => {
+    const articleid = req.body.articleid;
+    db.query("SELECT count(*) FROM articlemessage_sublet WHERE `articleid_sublet`= ?",[articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
+  app.post("/countzero", (req, res) => {
+    const articleid = req.body.articleid;
+    db.query("SELECT count(*) FROM articlemessage_zeroda WHERE `articleid_sublet`= ?",[articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
 
     // 查詢會員、球場id
     app.post('/teambasic', (req,res)=>{
