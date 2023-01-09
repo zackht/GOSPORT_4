@@ -67,20 +67,22 @@ const Client = () => {
             setEmployeeList(response.data);
         });
     };
+    const [Url,setUrl]=useState('');
+    
     const [url,seturl]=useState('');
     const aaa =(e)=>{
-        console.log(e)
       const reader = new FileReader();
+      reader.readAsDataURL(e[0]);
       reader.addEventListener("load", function () {
-        // convert image file to base64 string
-        seturl(reader.result)
+        seturl(reader.result.replace("data:image/jpeg;base64,",""));
+        // console.log(url);
       }, false);
-  
-      if (e[0]) {
-        reader.readAsDataURL(e[0]);
-      }
+      Axios.post("http://localhost:3001/userupdate",{
+        img:url
+      }).then((response) => {
+            alert("更新成功");
+        });
     }
-    const [Url,setUrl]=useState('');
     return (
         <div>
             帳號<input type="text" onChange={emailcheck} /><span>{emailhint}</span><br />
@@ -93,14 +95,16 @@ const Client = () => {
             <h1>獲取所有會員</h1>
             <button onClick={getEmployee}>搜索</button>
             {employeeList.map((val, key) => {
+                console.log(val.userimg.data);
                 var u8Arr = new Uint8Array(val.userimg.data);
                 var blob = new Blob([u8Arr],{type:"image/jpeg"});
                 var fr = new FileReader
+                fr.readAsDataURL(blob);
                 fr.onload = function () {
-                    setUrl(fr.result);
+                    var aa = fr.result;
+                    setUrl(aa);
+                    console.log(Url);
                   };
-                  fr.readAsDataURL(blob);
-                  console.log(Url);
                 return <div key={key}><img src={Url} alt=""/></div>;
             })}
             <input type="file" onChange={(e)=>{aaa(e.target.files)}} />

@@ -48,6 +48,17 @@ app.use(express.json());
         }
       });
     });
+    // user頭像更改
+    app.post("/userupdate", (req, res) => {
+      const img = req.body.img;
+      db.query("UPDATE user SET userimg=? where userid =1",[img], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
     // 後台零打搜尋
     app.post("/zeroda", (req, res) => {
       const starttime1 = req.body.starttime1;
@@ -172,8 +183,9 @@ app.use(express.json());
       const zerodalevel = req.body.zerodalevel;
       const teampay = req.body.teampay;
       const teamtext = req.body.teamtext;
-      db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?, title =  where teameventid=1"
-      ,[teameventid], (err, result) => {
+      const teamimgstring = req.body.teamimgstring;
+      db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,text=?,pay=?,teameventimg=?  where teameventid=1"
+      ,[teamstartdate,teamenddate,teamstarttime,teamendtime,teamtype2,teamtitle,teamlocation,teamtext,teampay,teamimgstring], (err, result) => {
         if (err) {
           console.log(err);
         } else {
