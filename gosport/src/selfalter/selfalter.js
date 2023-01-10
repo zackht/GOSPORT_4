@@ -1,4 +1,4 @@
-import React, { useRef, useState , useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import Axios from "axios";
 
@@ -39,12 +39,13 @@ const Selfalter = () => {
 
     // 讀取用戶資訊
     const account = Cookies.get('token');
-    const [userInfo,setUserInfo]=useState({userimg:{data:''}});
+    const [userInfo, setUserInfo] = useState({ userimg: { data: '' } });
     useEffect(() => {
         Axios.post("http://localhost:3001/selfinfo", {
             account: account,
         }).then((response) => {
             setUserInfo(response.data[0])
+            console.log(response.data[0])
             setEmail(response.data[0].email)
             setPassword(response.data[0].password)
             setUsername(response.data[0].username)
@@ -59,23 +60,24 @@ const Selfalter = () => {
     const [photoBack, setBack] = useState('block')
     const [showPhoto, setPhoto] = useState('none')
 
-    useEffect(()=>{ 
-        console.log(userInfo.userimg.data)
+    useEffect(() => {
+        // console.log(userInfo.userimg.data)
         var u8Arr = new Uint8Array(userInfo.userimg.data);
         var blob = new Blob([u8Arr], { type: "image/jpeg" });
         var fr = new FileReader
         fr.onload = function () {
             setImageSrc(fr.result);
-            if(imageSrc){
+            if (imageSrc) {
                 setBack('none')
                 setPhoto('block')
             }
         };
         fr.readAsDataURL(blob);
-    },[userInfo])
-   
+    }, [userInfo])
+
 
     // 相片上傳 同時顯示 
+    const[picSourse,setPicSourse]=useState(imageSrc);
     const handleOnPreview = (event) => {
         const file = event.target.files[0];
         const reader = new FileReader();
@@ -83,32 +85,44 @@ const Selfalter = () => {
             // convert image file to base64 string
             setImageSrc(reader.result)
         }, false);
-
+        
         if (file) {
             reader.readAsDataURL(file);
         }
         setBack('none')
         setPhoto('block')
+        
+        // const input = event.target.files[0];
+        // const reader2 = new FileReader();
+        // reader2.onload = function () {
+        //     setPicSourse(reader2.result)
+        //     // data 是二進位資料
+        //     console.log(reader2.result)
+        // };
+        // if (input) {
+        // reader2.readAsArrayBuffer(input);
+        // }
     };
 
+
     // 上傳更新
-    let update = (e) =>{
+    let update = (e) => {
         e.preventDefault();
         Axios.post("http://localhost:3001/selfalter", {
             account: account,
-            email:email,
-            password:password,
-            username:username,
-            userimg:imageSrc,
-            tel:tel,
-            userdescribe:describe,
+            email: email,
+            password: password,
+            username: username,
+            userimg: picSourse,
+            tel: tel,
+            userdescribe: describe,
         }).then((response) => {
             console.log(response);
-            window.location = '/gosport/user';
-        });
+            // window.location = '/gosport/user';
+        })
     }
-    
-    
+
+
 
 
     return (

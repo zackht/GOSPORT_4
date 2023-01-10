@@ -60,6 +60,8 @@ const Client = () => {
             settelhint("格式錯誤");
         }
     }
+
+
     const [employeeList, setEmployeeList] = useState([]);
     const getEmployee = () => {
         Axios.post("http://localhost:3001/employee").then((response) => {
@@ -67,23 +69,25 @@ const Client = () => {
             setEmployeeList(response.data);
         });
     };
-    const [Url,setUrl]=useState('');
     
     const [url,seturl]=useState('');
     const aaa =(e)=>{
-      const reader = new FileReader();
+          const reader = new FileReader();
       reader.readAsDataURL(e[0]);
       reader.addEventListener("load", function () {
-        // seturl(reader.result.replace("data:image/jpeg;base64,",""));
-        seturl(reader.result);
-        console.log(url);
-      }, false);
-      Axios.post("http://localhost:3001/userupdate",{
-        img:url
-      }).then((response) => {
-            alert("更新成功");
-        });
-    }
+                seturl(reader.result);
+            }, false);
+            console.log(`上傳前的dataurl: ${url}`);
+        }
+        const bbb=()=>{
+
+            Axios.post("http://localhost:3001/userupdate",{
+                img:url
+          }).then((response) => {
+              alert("更新成功");
+          });
+        }
+    const [Url,setUrl]=useState('');
     return (
         <div>
             帳號<input type="text" onChange={emailcheck} /><span>{emailhint}</span><br />
@@ -103,12 +107,12 @@ const Client = () => {
                 fr.onload = function () {
                     var aa = fr.result;
                     setUrl(aa);
-                    console.log(Url);
                   };
                 return <div key={key}><img src={Url} alt=""/></div>;
             })}
             <input type="file" onChange={(e)=>{aaa(e.target.files)}} />
             <img src={url} alt="" />
+            <button onClick={bbb}>12345</button>
         </div>
     );
 }

@@ -9,27 +9,32 @@ import a3 from "./icon/方向 (1).png";
 import a4 from "./icon/方向 (2).png";
 import a5 from "./icon/Group 41.png";
 
-
 const Rentside = () => {
+    const [Taichung, setTaichung] = useState([
+        "中區", "東區", "西區", "南區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "清水區", "沙鹿區", "大甲區", "東勢區", "梧棲區", "烏日區", "神岡區", "大肚區", "大雅區", "后里區", "霧峰區", "潭子區", "龍井區", "外埔區", "和平區", "石岡區", "大安區", "新社區"
+    ]);
+    const [time,settime] =useState([
+        '1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00','0:00'
+    ])
     return (
         <React.Fragment>
             <div className={side.div7}>
                 <div style={{ height: 325 }} className={cc.ezsurch1}>
                     <div id="London" style={{ padding: 0, paddingRight: 50, paddingLeft: 50 }} className={cc.tabcontent}>
-                        <form action="">
+                        <div>
                             <div id="local" className={cc.d2}>
                                 <p className={cc.d3}>類別</p>
                                 <img className={cc.d4} src={ball} alt="" />
                                 <p className={cc.d5}>地區</p>
                                 <img className={`${cc.d6} ${cc.selectedDate}`} src={arr} />
                                 <img className={`${cc.d7} ${cc.selectedDate}`} src={arr} />
-                                <select name="city" className={cc.county} onChange={(e) => this.change(e)}>
-                                    <option value="1">台中</option>
+                                <select name="city" className={cc.county}>
+                                    <option value="台中市">台中市</option>
                                 </select>
                                 <select name="town" className={cc.district}>
-                                    <option value="中區">中區</option>
-                                    <option value="北區">北區</option>
-                                    <option value="南區">南區</option>
+                                    {Taichung.map((val, key) => {
+                                        return (<option key={key} value={val}>{val}</option>);
+                                    })}
 
                                 </select>
 
@@ -42,13 +47,13 @@ const Rentside = () => {
                             </div>
 
                             <input className={cc.d12} type="date" id="start"
-                                name="trip-start" value="2022-12-19" min="2022-12-19" max="2033-12-31" />
+                                name="trip-start" min="2022-12-19" max="2033-12-31" />
                             <img className={`${cc.d13} ${cc.selectedDate}`} src={arr} />
 
                             <span className={cc.d14}>~</span>
 
                             <input className={cc.d15} type="date" id="start"
-                                name="trip-start" value="2018-07-22" min="2022-12-19" max="2033-12-31" />
+                                name="trip-start" min="2022-12-19" max="2033-12-31" />
                             <img className={`${cc.d16} ${cc.selectedDate}`} src={arr} />
 
                             <input className={cc.d17} type="time" value="13:14"
@@ -85,7 +90,7 @@ const Rentside = () => {
                                 <span className={cc.d35}>身障友善</span>
                             </label>
                             <button type="submit" className={cc.serch}>快速搜尋</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
                 {/* <!-- 標籤欄 --> */}

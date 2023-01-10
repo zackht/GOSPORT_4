@@ -8,7 +8,7 @@ import TeamActivity from './communicate/teamactivity';
 
 import Header1 from "./handya/headerfooter/header";
 
-import Header from "./headerfooter/header.js";
+// import Header from "./headerfooter/header.js";
 import Footer from "./headerfooter/footer.js";
 import Handya from "./handya/handya";
 import Testt from "./side/testt";
@@ -34,7 +34,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Header1 />
+          <Header />
           <Switch>
 
             {/* 首頁 */}
@@ -43,7 +43,7 @@ class App extends Component {
             {/* 租場地 */}
             {/* <Route path="/gosport/rent" 	   component={} exact/> */}
             <Route path="/gosport/rent/side/b" component={rentside_more} />
-            <Route path="/gosport/rent/side" component={rentside} />
+            <Route path="/gosport/rent" component={rentside} />
 
             {/* 交流區 */}
             <Route path="/gosport/communicate/search" 	  component={Search} exact/>

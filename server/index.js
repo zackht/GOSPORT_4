@@ -42,10 +42,9 @@ server.listen(3002,()=>{
 })
 //阿柯聊天室
 
-
 const cors = require('cors');
 app.use(cors());
-// 使用cors
+// 使用cors跨來源資源公用
 const mysql = require('mysql');
 const { Socket } = require('dgram');
 const db = mysql.createConnection({
@@ -56,10 +55,10 @@ const db = mysql.createConnection({
     port: 3306,
 });
 // 連接mysql
-// app.use(express.json());
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb'}));
-// 使用json格式回傳
+// 使用json格式回傳解決431上傳檔案過長錯誤
+
 //  client測試
   app.post('/create', (req,res)=>{
     const email = req.body.email;
@@ -92,6 +91,7 @@ app.use(express.urlencoded({limit: '50mb'}));
     // user頭像更改
     app.post("/userupdate", (req, res) => {
       const img = req.body.img;
+      console.log(`後端接收${img}`)
       db.query("UPDATE user SET userimg=? where userid =1",[img], (err, result) => {
         if (err) {
           console.log(err);
@@ -173,6 +173,30 @@ app.use(express.urlencoded({limit: '50mb'}));
         }
       });
     });
+    // 後台球隊刪除
+    app.post("/teamdelete", (req, res) => {
+      const teameventid = req.body.teameventid;
+      db.query("DELETE from teamevent where teameventid = ?"
+      ,[teameventid], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    // 後台轉租刪除
+    app.post("/rentdelete", (req, res) => {
+      const articleid_sublet = req.body.articleid_sublet;
+      db.query("DELETE from userarticle_sublet where articleid_sublet = ?"
+      ,[articleid_sublet], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
     // 後台球隊搜尋
     app.post("/team", (req, res) => {
       const teamstartday = req.body.teamstartday;
@@ -224,9 +248,8 @@ app.use(express.urlencoded({limit: '50mb'}));
       const zerodalevel = req.body.zerodalevel;
       const teampay = req.body.teampay;
       const teamtext = req.body.teamtext;
-      const teamimgstring = req.body.teamimgstring;
-      db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,text=?,pay=?,teameventimg=?  where teameventid=1"
-      ,[teamstartdate,teamenddate,teamstarttime,teamendtime,teamtype2,teamtitle,teamlocation,teamtext,teampay,teamimgstring], (err, result) => {
+      db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,text=?,pay=?  where teameventid=1"
+      ,[teamstartdate,teamenddate,teamstarttime,teamendtime,teamtype2,teamtitle,teamlocation,teamtext,teampay], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -240,9 +263,55 @@ app.use(express.urlencoded({limit: '50mb'}));
       const renttime1 = req.body.renttime1;
       const rentselectcounty = req.body.rentselectcounty;
       const rentselectarea = req.body.rentselectarea;
-
-      db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =?"
-      ,[renttime,renttime1,rentselectarea,rentselectcounty], (err, result) => {
+      const fieldname = req.body.fieldname;
+      if(fieldname==''){
+        db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =?"
+        ,[renttime,renttime1,rentselectarea,rentselectcounty], (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        });
+      }else{
+        db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =? AND fieldname LIKE ?"
+        ,[renttime,renttime1,rentselectarea,rentselectcounty,fieldname], (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        });
+      }
+    });
+    // 轉租編輯
+    app.post("/rentedit", (req, res) => {
+      const articleid_sublet = req.body.articleid_sublet;
+      db.query("SELECT * FROM userarticle_sublet where articleid_sublet = ?"
+      ,[articleid_sublet], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    // 轉租儲存
+    app.post("/rentupdate", (req, res) => {
+      const articleid_sublet =req.body.articleid_sublet;
+      const rentcontent = req.body.rentcontent;
+      const rentstarttime = req.body.rentstarttime;
+      const rentendtime = req.body.rentendtime;
+      const rentdate = req.body.rentdate;
+      const rentcounty = req.body.rentcounty;
+      const rentarea = req.body.rentarea;
+      const rentfieldname = req.body.rentfieldname;
+      const rentaddress = req.body.rentaddress;
+      const rentcost = req.body.rentcost;
+      const number2 = req.body.number2;
+      console.log(`後端${number2}`);
+      db.query("UPDATE userarticle_sublet SET content=?,starttime=?,endtime=?,date=?,county=?,area=?,fieldname=?,address=?,cost=?,amount=?  where articleid_sublet=?"
+      ,[rentcontent,rentstarttime,rentendtime,rentdate,rentcounty,rentarea,rentfieldname,rentaddress,rentcost,number2,articleid_sublet], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -252,8 +321,8 @@ app.use(express.urlencoded({limit: '50mb'}));
     });
     // 登入資料
     app.post("/userinfo", (req, res) => {
-      const account = req.body.account;
       const password = req.body.password
+      const account = req.body.account;
       db.query("SELECT * FROM user WHERE email = ? AND password =?",[account,password], (err, result) => {
         if (err) {
           console.log(err);
@@ -368,3 +437,18 @@ app.use(express.urlencoded({limit: '50mb'}));
         );
       });
    
+      //------------------
+      //
+      app.post('/searchzero', (req,res)=>{
+      const datetime = req.body.datetime;
+      const starttime = req.body.starttime;
+      const endtime = req.body.endtime;
+      const fee = req.body.fee;
+      const county = req.body.county;
+      const area = req.body.area;
+      const zerolevel = req.body.zerolevel;
+      const zeroinput = req.body.zeroinput;
+      db.query(
+        
+      );
+      });
