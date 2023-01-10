@@ -95,7 +95,6 @@ const Handya = () =>{
         //	socket.emit(“要對 server 發送的事件名稱”,data)
         socket.emit("send_mesg",{message})
         // console.log(messagereceive);
-        // socket.emit("send_mesg",{message1:{message}},{name:"apple"});
       }
       useEffect(()=>{
         //	socket.on(“監聽來自server的receive_message事件名稱”, callback)
@@ -109,6 +108,9 @@ const Handya = () =>{
         return (
         <React.Fragment>
     <div className={`${cc.dd1} container-fluid`}>
+    <div className={cc.nav}>
+            
+        </div>
         <div className={cc.marquee}>
             <div className={cc.marquee1}>
                 <img src={op} alt=""/>
