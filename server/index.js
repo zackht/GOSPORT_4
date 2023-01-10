@@ -5,10 +5,36 @@ app.listen(3001 , ()=>{
     console.log('ok, server is running on port 3001')
 })
 // port號3001 啟動server時提式ok, server is running on port 3001
+
+
+//阿柯聊天室
+const http = require('http');
+const { Server } = require('socket.io');
+const server = http.createServer(app);
+const io = new Server(server,{
+  cors :{
+    origin:"http://localhost:3000",
+    methods:["GET,POST"],
+  }
+})
+io.on("connection",(socket)=>{
+  console.log(`User Connected:${socket.id}`);
+    socket.on("send_mesg",(data)=>{
+    socket.broadcast.emit("receive_message",data);
+  })
+})
+
+server.listen(3002,()=>{
+  console.log('ok, server is running on port 3002');
+})
+//阿柯聊天室
+
+
 const cors = require('cors');
 app.use(cors());
 // 使用cors
 const mysql = require('mysql');
+const { Socket } = require('dgram');
 const db = mysql.createConnection({
     host: "127.0.0.1",
     user: "root",
