@@ -3,7 +3,7 @@ class About extends Component {
     state = {  } 
     render() { 
         return (
-            <div>About</div>
+            <div style={{ position: "relative", top: '150px' }}>About</div>
         );
     }
 }

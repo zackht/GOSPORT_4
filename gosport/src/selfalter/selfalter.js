@@ -1,4 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState , useEffect } from 'react';
+import Cookies from 'js-cookie';
+import Axios from "axios";
+
 import star from "./icon/star1.svg";
 import alterImgbackIcon from './icon/Vector.svg';
 // import notice from './icon/notice.svg'
@@ -35,41 +38,71 @@ const Selfalter = () => {
 
     // 相片上傳 同時顯示 目前失敗
     const [imageSrc, setImageSrc] = useState('');
-    const [photoBack,setBack] = useState('block')
-    const [showPhoto,setPhoto] = useState('none')
+    const [photoBack, setBack] = useState('block')
+    const [showPhoto, setPhoto] = useState('none')
 
     const handleOnPreview = (event) => {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.addEventListener("load", function () {
-        // convert image file to base64 string
-        setImageSrc(reader.result)
-      }, false);
-  
-      if (file) {
-        reader.readAsDataURL(file);
-      }
-      setBack('none')
-      setPhoto('block')
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.addEventListener("load", function () {
+            // convert image file to base64 string
+            setImageSrc(reader.result)
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+        setBack('none')
+        setPhoto('block')
     };
-      
+
+    const account = Cookies.get('token');
+    useEffect(() => {
+        Axios.post("http://localhost:3001/selfinfo", {
+            account: account,
+        }).then((response) => {
+            setEmail(response.data[0].email)
+            setPassword(response.data[0].password)
+            setUsername(response.data[0].username)
+            // setImageSrc(response.data[0].userimg)
+            setTel(response.data[0].tel)
+            setDescribe(response.data[0].userdescribe)
+        });
+    }, []);
+
+    let update = (e) =>{
+        e.preventDefault();
+        Axios.post("http://localhost:3001/selfalter", {
+            account: account,
+            email:email,
+            password:password,
+            username:username,
+            userimg:imageSrc,
+            tel:tel,
+            userdescribe:describe,
+        }).then((response) => {
+            console.log(response);
+            window.location = '/gosport/user';
+        });
+    }
+
 
     return (
         <React.Fragment>
             {/* 主體 */}
             <div className='alter_'>
                 <div className="selfalter">
-                    <form className='alter_form' action="/selfpage">
+                    <form className='alter_form' onSubmit={update}>
                         <div>
                             <div className="alter_PicPla">
                                 <div id="picFile" onClick={upLoadpic}>
-                                    <div id="picFile_backT"  style={{ textAlign: "center", color: "#AAAAAA",display:photoBack}}>
+                                    <div id="picFile_backT" style={{ textAlign: "center", color: "#AAAAAA", display: photoBack }}>
                                         <embed src={alterImgbackIcon} /> <br />上傳相片
                                     </div>
                                     <input id="oploadPic" type="file" targetid="preview_img" onChange={handleOnPreview} ref={inputFile}
                                         accept="image/gif, image/jpeg, image/png" />
-                                    <img id="preview_img" src={imageSrc}  alt=""  style={{ display: showPhoto }}/>
-                                    
+                                    <img id="preview_img" src={imageSrc} alt="" style={{ display: showPhoto }} />
+
                                 </div>
                                 <div id="alter_showStar">
                                     <embed src={star} type="" />
@@ -81,7 +114,7 @@ const Selfalter = () => {
                                 <label className='alter_label' htmlFor="alter_name">姓名</label><br />
                                 <input type="text" className='alter_input' id="alter_name" value={username} onChange={nameChange} /><br />
                                 <label className='alter_label' htmlFor="alter_email">註冊信箱</label><br />
-                                <input type="email" className='alter_input' id="alter_email" value={email} onChange={emailChange} /><br />
+                                <input type="text" className='alter_input' id="alter_email" value={email} onChange={emailChange} /><br />
                                 <label className='alter_label' htmlFor="alter_psw">密碼</label><br />
                                 <input type="password" className='alter_input' id="alter_psw" value={password} onChange={passChange} /><br />
                                 <label className='alter_label' htmlFor="alter_tel">電話</label><br />

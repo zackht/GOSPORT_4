@@ -5,10 +5,41 @@ app.listen(3001 , ()=>{
     console.log('ok, server is running on port 3001')
 })
 // port號3001 啟動server時提式ok, server is running on port 3001
+
+
+//阿柯聊天室
+const http = require('http');
+const { Server } = require('socket.io');
+const server = http.createServer(app);
+const io = new Server(server,{
+  cors :{
+    origin:"http://localhost:3000",
+    methods:["GET,POST"],
+  }
+})
+//建立連線
+io.on("connection",(socket)=>{
+  console.log(`User Connected:${socket.id}`);
+  //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
+    socket.on("send_mesg",(data)=>{
+      //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
+      socket.broadcast.emit("receive_message",data);
+      console.log(data);
+
+  })
+})
+
+server.listen(3002,()=>{
+  console.log('ok, server is running on port 3002');
+})
+//阿柯聊天室
+
+
 const cors = require('cors');
 app.use(cors());
 // 使用cors
 const mysql = require('mysql');
+const { Socket } = require('dgram');
 const db = mysql.createConnection({
     host: "127.0.0.1",
     user: "root",
@@ -17,7 +48,9 @@ const db = mysql.createConnection({
     port: 3306,
 });
 // 連接mysql
-app.use(express.json());
+// app.use(express.json());
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 // 使用json格式回傳
 //  client測試
   app.post('/create', (req,res)=>{
@@ -39,8 +72,19 @@ app.use(express.json());
       );
     })
     //  client測試
-    app.get("/employee", (req, res) => {
-      db.query("SELECT * FROM user", (err, result) => {
+    app.post("/employee", (req, res) => {
+      db.query("SELECT * FROM user where userid = 1", (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    // user頭像更改
+    app.post("/userupdate", (req, res) => {
+      const img = req.body.img;
+      db.query("UPDATE user SET userimg=? where userid =1",[img], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -79,7 +123,7 @@ app.use(express.json());
       const articleid_zeroda = req.body.articleid_zeroda;
       db.query("SELECT * FROM userarticle_zeroda where articleid_zeroda = ?"
       ,[articleid_zeroda], (err, result) => {
-        if (err) {
+        if (err) { 
           console.log(err);
         } else {
           res.send(result);
@@ -150,9 +194,31 @@ app.use(express.json());
     });
     // 後台球隊編輯
     app.post("/teamedit", (req, res) => {
-      const teamid = req.body.teamid;
-      db.query("SELECT * FROM team where teamid = ?"
-      ,[teamid], (err, result) => {
+      const teameventid = req.body.teameventid;
+      db.query("SELECT * FROM teamevent where teameventid = ?"
+      ,[teameventid], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    // 後臺球隊編輯儲存
+    app.post("/teamupdate", (req, res) => {
+      const teamstartdate = req.body.teamstartdate;
+      const teamenddate = req.body.teamenddate;
+      const teamstarttime = req.body.teamstarttime;
+      const teamendtime = req.body.teamendtime;
+      const teamtype2 = req.body.teamtype2;
+      const teamtitle = req.body.teamtitle;
+      const teamlocation = req.body.teamlocation;
+      const zerodalevel = req.body.zerodalevel;
+      const teampay = req.body.teampay;
+      const teamtext = req.body.teamtext;
+      const teamimgstring = req.body.teamimgstring;
+      db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,text=?,pay=?,teameventimg=?  where teameventid=1"
+      ,[teamstartdate,teamenddate,teamstarttime,teamendtime,teamtype2,teamtitle,teamlocation,teamtext,teampay,teamimgstring], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -177,13 +243,120 @@ app.use(express.json());
       });
     });
     // 登入資料
-    app.get("/userinfo", (req, res) => {
+    app.post("/userinfo", (req, res) => {
       const account = req.body.account;
-      db.query("SELECT * FROM user WHERE email = ?",[account], (err, result) => {
+      const password = req.body.password
+      db.query("SELECT * FROM user WHERE email = ? AND password =?",[account,password], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+          
+        }
+      });
+    });
+    //觀看個人資料
+    app.post("/selfinfo", (req, res) => {
+      const account = req.body.account;
+      db.query(" SELECT * FROM user,userteam,userbadgeimg,userbadge  WHERE email = ? AND user.userid = userteam.userid = userbadge.userid AND userbadge.badgeid = userbadgeimg.badgeid",[account], (err, result) => {
         if (err) {
           console.log(err);
         } else {
           res.send(result);
         }
+        
       });
     });
+
+    //更新個人資料
+    app.post("/selfalter", (req, res) => {
+      const email = req.body.email;
+      const password = req.body.password;
+      const username = req.body.username;
+      // const userimg = req.body.userimg;
+      const tel = req.body.tel;
+      const userdescribe = req.body.userdescribe;
+      const account = req.body.account;
+      db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? WHERE `email`= ?",
+      [email,password,username,tel,userdescribe,account], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+        
+      });
+    });
+
+  //會員零打文章搜尋
+  app.post("/findzoro", (req, res) => {
+    const userid = req.body.userid;
+    const starttime = req.body.stratDate;
+    const endtime = req.body.endDate;
+    db.query("SELECT * FROM `userarticle_zeroda` WHERE userid = ? AND date BETWEEN ? AND ?",[userid,starttime,endtime], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
+  //會員轉租文章搜尋
+  app.post("/findsub", (req, res) => {
+    const userid = req.body.userid;
+    const starttime = req.body.stratDate;
+    const endtime = req.body.endDate;
+    db.query("SELECT * FROM `userarticle_sublet` WHERE userid = ? AND date BETWEEN ? AND ?",[userid,starttime,endtime], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
+  // 取得留言數
+  app.post("/countsub", (req, res) => {
+    const articleid = req.body.articleid;
+    db.query("SELECT count(*)as a FROM articlemessage_sublet WHERE `articleid_sublet`= ?",[articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
+  app.post("/countzero", (req, res) => {
+    const articleid = req.body.articleid;
+    db.query("SELECT count(*)as a FROM articlemessage_zeroda WHERE `articleid_zeroda`= ?",[articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
+
+    // 查詢會員、球場id
+    app.post('/teambasic', (req,res)=>{
+      const userid = req.body.userid;
+      const teamid = req.body.teamid;
+      db.query(
+          `SELECT tname,sidename, week,type,level,teamimg,fee,text,starttime,endtime,county,area,teamimgpath 
+          FROM userteam, team 
+          where userteam.teamid=team.teamid and userteam.userid=? and userteam.teamid=?`,
+          
+          [userid,teamid],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+      });
+   
