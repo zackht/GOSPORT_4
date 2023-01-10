@@ -10,7 +10,7 @@ import arr from './icon/arrowup2.svg';
 import ball from './icon/球類別.png';
 import io from 'socket.io-client';
 
-
+//建立連線
 const  socket = io.connect("http://localhost:3002");
 
 const Handya = () =>{
@@ -90,13 +90,17 @@ const Handya = () =>{
       const[message,setmessage] =useState("");
       const[messagereceive,setmessagereceive] = useState("");
       const sendmsg = () => {
-        socket.emit("send_mesg",{message});
+        //	socket.emit(“要對 server 發送的事件名稱”,data)
+        socket.emit("send_mesg",{message})
+        console.log(message);
+        // socket.emit("send_mesg",{message1:{message}},{name:"apple"});
       }
       useEffect(()=>{
-socket.on("receive_message",(data)=>{
-    setmessagereceive(data.message);
-})
-      },[socket])
+        //	socket.on(“監聽來自server的receive_message事件名稱”, callback)
+         socket.on("receive_message",(data)=>{
+            //  console.log(data);
+         setmessagereceive(data.message);})},[socket]);
+
         return (
         <React.Fragment>
     <div className={`${cc.dd1} container-fluid`}>
@@ -127,6 +131,7 @@ socket.on("receive_message",(data)=>{
         </div>
 
   <input type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
+  
 <button onClick={sendmsg}>send</button>
 <h1>{messagereceive}</h1>
 
