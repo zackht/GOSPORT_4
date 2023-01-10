@@ -17,10 +17,15 @@ const io = new Server(server,{
     methods:["GET,POST"],
   }
 })
+//建立連線
 io.on("connection",(socket)=>{
   console.log(`User Connected:${socket.id}`);
+  //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
     socket.on("send_mesg",(data)=>{
-    socket.broadcast.emit("receive_message",data);
+      //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
+      socket.broadcast.emit("receive_message",data);
+      console.log(data);
+
   })
 })
 

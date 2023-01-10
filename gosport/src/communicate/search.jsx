@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import "./nav.css";
 import comm from "./search.module.css";
-import notice from './icon/notice.svg';
-import user from './icon/user.svg';
+// import notice from './icon/notice.svg';
+// import user from './icon/user.svg';
+import cc from './icon/Rect.svg';
 import badminton from './icon/badminton.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -37,7 +38,7 @@ const Search = () => {
     return (
         <React.Fragment>
             {/* navbar */}
-            <div className="navbar position_relative">
+            {/* <div className="navbar position_relative">
                 <div className="nContent">
                     <div className="nLeft">
                         <div>GOsport</div>
@@ -51,7 +52,7 @@ const Search = () => {
                         <img src={user} alt=""></img>
                     </div>
                 </div>
-            </div>
+            </div> */}
             {/* 搜尋匡 */}
             <div className={comm.searchbox}>
                 <div className={comm.active_type} >
@@ -294,10 +295,40 @@ const Search = () => {
                 {/* <!-- 文章列表 --> */}
                 <div className={comm.articlelist}>
                     <div className={comm.articlecontent}>
-                    </div>
-                    <div className={comm.articlecontent} s>
+                        <h3 className={comm.msgh}>南區金城武</h3><br />
+                        <h6 className={comm.msghh}>台中市｜南區</h6>
+                        <div className={comm.magmm}>
+                            <input type="text" value="球館" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 群月羽球館</label>
+                            <input type="text" value="日期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 2022/12/25</label>
+                            <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 15:00-17:00</label>
+                            <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 400</label>
+                            <input type="text" value="程度" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 新手</label>
+                            <input type="text" value="人數" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 3</label>
+                        </div>
                     </div>
                     <div className={comm.articlecontent}>
+                        <h3 className={comm.msgh}>南區金城武</h3><br />
+                        <h6 className={comm.msghh}>台中市｜南區</h6>
+                        <div className={comm.magmm}>
+                            <input type="text" value="球館" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 群月羽球館</label>
+                            <input type="text" value="日期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 2022/12/25</label>
+                            <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 15:00-17:00</label>
+                            <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 400</label>
+                            <input type="text" value="程度" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 新手</label>
+                            <input type="text" value="人數" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 3</label>
+                        </div>
+                    </div>
+                    <div className={comm.articlecontent}>
+                        <h3 className={comm.msgh}>南區金城武</h3><br />
+                        <h6 className={comm.msghh}>台中市｜南區</h6>
+                        <div className={comm.magmm}>
+                            <input type="text" value="球館" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 群月羽球館</label>
+                            <input type="text" value="日期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 2022/12/25</label>
+                            <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 15:00-17:00</label>
+                            <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 400</label>
+                            <input type="text" value="程度" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 新手</label>
+                            <input type="text" value="人數" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 3</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -317,11 +348,44 @@ const Search = () => {
                 </div>
                 {/* <!-- 文章列表 --> */}
                 <div className={comm.articlelist}>
-                    <div className={comm.articlecontent}>
+                    <div className={`row ${comm.articlecontent}`}>
+                        <div className={`col-3 ${comm.imgimgimg}`}> <img src={cc} alt="" /></div>
+                        <div className={`col-8 ${comm.articlecontent_mm}`}>
+                            <h5 className={comm.msgq}>鐵血軍團</h5><br />
+                            <h6 className={comm.msgqq}>台中市｜南區</h6>
+                            <div className={comm.magqqq}>
+                                <input type="text" value="週期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 星期五</label>
+                                <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 17:00-20:00</label>
+                                <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 200</label>
+                                <input type="text" value="程度" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 不限</label>
+                            </div>
+                        </div>
                     </div>
-                    <div className={comm.articlecontent} s>
+                    <div className={`row ${comm.articlecontent}`}>
+                        <div className={`col-3 ${comm.imgimgimg}`}> <img src={cc} alt="" /></div>
+                        <div className={`col-8 ${comm.articlecontent_mm}`}>
+                            <h5 className={comm.msgq}>鐵血軍團</h5><br />
+                            <h6 className={comm.msgqq}>台中市｜南區</h6>
+                            <div className={comm.magqqq}>
+                                <input type="text" value="週期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 星期五</label>
+                                <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 17:00-20:00</label>
+                                <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 200</label>
+                                <input type="text" value="程度" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 不限</label>
+                            </div>
+                        </div>
                     </div>
-                    <div className={comm.articlecontent}>
+                    <div className={`row ${comm.articlecontent}`}>
+                        <div className={`col-3 ${comm.imgimgimg}`}> <img src={cc} alt="" /></div>
+                        <div className={`col-8 ${comm.articlecontent_mm}`}>
+                            <h5 className={comm.msgq}>鐵血軍團</h5><br />
+                            <h6 className={comm.msgqq}>台中市｜南區</h6>
+                            <div className={comm.magqqq}>
+                                <input type="text" value="週期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 星期五</label>
+                                <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 17:00-20:00</label>
+                                <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 200</label>
+                                <input type="text" value="程度" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 不限</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -344,19 +408,46 @@ const Search = () => {
                 {/* <!-- 文章列表 --> */}
                 <div className={comm.articlelist}>
                     <div className={comm.articlecontent}>
-                    </div>
-                    <div className={comm.articlecontent} s>
+                        <h3 className={comm.msgh}>南區金城武</h3><br />
+                        <h6 className={comm.msghh}>台中市｜南區</h6>
+                        <div className={comm.magmm}>
+                            <input type="text" value="球館" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 群月羽球館</label>
+                            <input type="text" value="數量" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 1</label>
+                            <input type="text" value="日期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 2022/12/25</label>
+                            <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 15:00-17:00</label>
+                            <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 400</label>
+                        </div>
                     </div>
                     <div className={comm.articlecontent}>
+                        <h3 className={comm.msgh}>南區金城武</h3><br />
+                        <h6 className={comm.msghh}>台中市｜南區</h6>
+                        <div className={comm.magmm}>
+                            <input type="text" value="球館" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 群月羽球館</label>
+                            <input type="text" value="數量" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 1</label>
+                            <input type="text" value="日期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 2022/12/25</label>
+                            <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 15:00-17:00</label>
+                            <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 400</label>
+                        </div>
+                    </div>
+                    <div className={comm.articlecontent}>
+                        <h3 className={comm.msgh}>南區金城武</h3><br />
+                        <h6 className={comm.msghh}>台中市｜南區</h6>
+                        <div className={comm.magmm}>
+                            <input type="text" value="球館" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 群月羽球館</label>
+                            <input type="text" value="數量" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 1</label>
+                            <input type="text" value="日期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 2022/12/25</label>
+                            <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 15:00-17:00</label>
+                            <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 400</label>
+                        </div>
                     </div>
                 </div>
             </div>
             {/* footer */}
-            <div className="footer">
+            {/* <div className="footer">
                 <div className="fContent">
                     <div>Copyright © 2022 GOsport. 保留一切權利。</div>
                 </div>
-            </div>
+            </div> */}
         </React.Fragment>
     );
 }
