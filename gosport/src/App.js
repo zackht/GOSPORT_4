@@ -6,9 +6,9 @@ import CreateRent from './communicate/createrent';
 import TeamInfo from './communicate/teaminfo';
 import TeamActivity from './communicate/teamactivity';
 
-// import Header1 from "./handya/headerfooter/header";
+import Header1 from "./handya/headerfooter/header";
 
-import Header from "./headerfooter/header.js";
+// import Header from "./headerfooter/header.js";
 import Footer from "./headerfooter/footer.js";
 import Handya from "./handya/handya";
 import Testt from "./side/testt";

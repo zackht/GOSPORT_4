@@ -1,8 +1,8 @@
 import React from "react";
-import notice from './icon/notice.svg';
-import user from './icon/user.svg';
-import "./nav.css";
-import Search from './search';
+// import notice from './icon/notice.svg';
+// import user from './icon/user.svg';
+// import "./nav.css";
+// import Search from './search';
 import com from "./createzero.module.css";
 
 const Create = () => {
@@ -10,7 +10,7 @@ const Create = () => {
     return (
         <React.Fragment>
             {/* navbar */}
-            <div className="navbar position_relative">
+            {/* <div className="navbar position_relative">
                 <div className="nContent">
                     <div className="nLeft">
                         <div>GOsport</div>
@@ -24,7 +24,7 @@ const Create = () => {
                         <img src={user} alt=""></img>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className={com.createZero}>
                 <div className={com.addcontent}>
                     {/* <!-- 場館 --> */}
@@ -108,11 +108,11 @@ const Create = () => {
                 </div>
             </div>
             {/* footers */}
-            <div className="footer">
+            {/* <div className="footer">
                 <div className="fContent">
                     <div>Copyright © 2022 GOsport. 保留一切權利。</div>
                 </div>
-            </div>
+            </div> */}
         </React.Fragment>
     );
 }

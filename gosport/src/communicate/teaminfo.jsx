@@ -1,8 +1,8 @@
 import React from "react";
-import "./nav.css";
-import notice from './icon/notice.svg';
-import user from './icon/user.svg';
-import Search from './search';
+// import "./nav.css";
+// import notice from './icon/notice.svg';
+// import user from './icon/user.svg';
+// import Search from './search';
 import commm from './teaminfo.module.css'
 import pic from './icon/Rectangle 639.svg';
 import leader from './icon/Ellipse.svg';
@@ -14,7 +14,7 @@ const TeamInfo = () => {
     return (
         <React.Fragment>
             {/* navbar */}
-            <div className="navbar position_relative">
+            {/* <div className="navbar position_relative">
                 <div className="nContent">
                     <div className="nLeft">
                         <div>GOsport</div>
@@ -28,7 +28,7 @@ const TeamInfo = () => {
                         <img src={user} alt=""></img>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className={commm.Team}>
                 {/* 球隊 */}
                 <div className={`row ${commm.teamInfo}`}>
@@ -128,11 +128,11 @@ const TeamInfo = () => {
             </div>
 
             {/* footer */}
-            <div className="footer">
+            {/* <div className="footer">
                 <div className="fContent">
                     <div>Copyright © 2022 GOsport. 保留一切權利。</div>
                 </div>
-            </div>
+            </div> */}
         </React.Fragment>
     );
 }

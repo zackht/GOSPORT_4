@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "./nav.css";
+// import "./nav.css";
 import comm from "./search.module.css";
 // import notice from './icon/notice.svg';
 // import user from './icon/user.svg';
