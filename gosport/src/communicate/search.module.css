@@ -1,12 +1,14 @@
 body {
-    width: 1440px;
-    height: 900px;
+    /* width: 1440px;
+    height: 1500px; */
     overflow: scroll;
 }
 .searchbox {
+    background-color: white;
+    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
     display: block;
     width: 1060px;
-    border: #777 1px solid;
+    /* border: #777 1px solid; */
     position: relative;
     margin: 200px auto 1% auto; 
 }
@@ -103,7 +105,7 @@ body {
 .addarticle {
     position: absolute;
     left: 190px;
-    top: 600px;
+    top: 750px;
 }
 
 .article {
@@ -119,7 +121,7 @@ body {
 .addrelated {
     position: absolute;
     left: 190px;
-    top: 700px;
+    top: 850px;
 }
 
 .related {
@@ -141,7 +143,7 @@ body {
 
 .articlelist {
     position: absolute;
-    top: 750px;
+    top: 900px;
 }
 
 .articlecontent {
@@ -183,8 +185,47 @@ body {
     top: 600px;
 } */
 
+.msgh {
+    margin-top: 10px;
+}
 
+.msghh {
+    margin-top: -20px;
+    color: #999;
+}
 
+.msghhh {
+    width: 40px;
+    height: 35px;
+    border-radius: 30px;
+    border: none;
+    background-color: #f5f5f5;
+    margin-left: 40px;
+}
+
+.magmm {
+    margin-top: 30px;
+}
+
+.msgq {
+    margin-left: 70px;
+    margin-top: 20px;
+}
+
+.msgqq {
+    margin-left: 70px;
+    margin-top: -20px;
+    color: #999;
+}
+
+.magqqq {
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+/* .articlecontent_nn {
+    margin-left: 190px;
+} */
 
 
 

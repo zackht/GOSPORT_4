@@ -4,8 +4,9 @@ import Search from './communicate/search';
 import Create from './communicate/createzero';
 import CreateRent from './communicate/createrent';
 import TeamInfo from './communicate/teaminfo';
+import TeamActivity from './communicate/teamactivity';
 
-import Header1 from "./handya/headerfooter/header";
+// import Header1 from "./handya/headerfooter/header";
 
 import Header from "./headerfooter/header.js";
 import Footer from "./headerfooter/footer.js";
@@ -48,6 +49,7 @@ class App extends Component {
             <Route path="/gosport/communicate/create" 	  component={Create} />
             <Route path="/gosport/communicate/createrent" 	  component={CreateRent} />
             <Route path="/gosport/communicate/teaminfo" 	  component={TeamInfo} />
+            <Route path="/gosport/communicate/teamactivity" 	  component={TeamActivity} />
 
             {/* 會員  */}
             <Route path="/gosport/user" 		     component={Selfpage} exact />
