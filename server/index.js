@@ -288,7 +288,7 @@ app.use(express.urlencoded({limit: '50mb'}));
   // 取得留言數
   app.post("/countsub", (req, res) => {
     const articleid = req.body.articleid;
-    db.query("SELECT count(*) FROM articlemessage_sublet WHERE `articleid_sublet`= ?",[articleid], (err, result) => {
+    db.query("SELECT count(*)as a FROM articlemessage_sublet WHERE `articleid_sublet`= ?",[articleid], (err, result) => {
       if (err) {
         console.log(err);
       } else {
@@ -299,7 +299,7 @@ app.use(express.urlencoded({limit: '50mb'}));
   });
   app.post("/countzero", (req, res) => {
     const articleid = req.body.articleid;
-    db.query("SELECT count(*) FROM articlemessage_zeroda WHERE `articleid_sublet`= ?",[articleid], (err, result) => {
+    db.query("SELECT count(*)as a FROM articlemessage_zeroda WHERE `articleid_zeroda`= ?",[articleid], (err, result) => {
       if (err) {
         console.log(err);
       } else {

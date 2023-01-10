@@ -23,7 +23,7 @@ const Artadd = ({ control }) => {
         number: ''
     }]);
     const userid = Cookies.get('id');
-    const [countsub, setcountsublist] = useState([]);
+    const [countsub, setcountsublist] = useState(0);
     const [countzero, setcountcountzero] = useState([]);
     let findArticle = () => {
         Axios.post("http://localhost:3001/findzoro", {
@@ -35,9 +35,9 @@ const Artadd = ({ control }) => {
             setZeroList(response.data);
             for (let i = 0; i < response.data.length; i++) {
                 Axios.post("http://localhost:3001/countzero", {
-                    articleid: response.data[i].articleid_sublet
+                    articleid: response.data[i].articleid_zeroda
                 }).then((response) => {
-                    console.log(response.data);
+                    console.log(response.data[0]);
                     setcountcountzero(countzero+response.data)
                 });
             }
@@ -47,14 +47,17 @@ const Artadd = ({ control }) => {
             endDate: endDate,
             userid: userid
         }).then((response) => {
-            console.log(response.data);
+            console.log(response.data[0].date);
+            console.log( typeof(response.data[0].date) )
             setSubList(response.data);
             for (let i = 0; i < response.data.length; i++) {
                 Axios.post("http://localhost:3001/countsub", {
                     articleid: response.data[i].articleid_sublet
                 }).then((response) => {
-                    console.log(response.data);
-                    setcountsublist(countsub+response.data)
+                    console.log(response.data[0].a);
+                    let count = response.data[0].a
+                    setcountsublist(pre => pre+count)
+                    console.log(countsub)
                 });
             }
         });
@@ -79,17 +82,33 @@ const Artadd = ({ control }) => {
                         <td>留言數</td>
                         <td></td>
                     </tr>
-                    <tr>
-                        <td>2022/12/21</td>
-                        <td>羽球</td>
-                        <td>一個內斂又大膽的標題</td>
-                        <td style={{ textAlign: "center", cursor: "pointer" }} onClick={control}>66</td>
-                        <td style={{ textAlign: "center" }}>88</td>
+                    {zerolist.map((item)=>{return(
+                       <tr>
+                        <td>{item.date.substring(0,10)}</td>
+                        <td>{item.ballgames}</td>
+                        <td>{item.content}</td>
+                        <td style={{ textAlign: "center", cursor: "pointer" }} onClick={control}>{item.number}</td>
+                        <td style={{ textAlign: "center" }}>{countsub}</td>
                         <td style={{ position: "relative" }}>
                             <button>編輯</button>
                             <button>刪除</button>
                         </td>
-                    </tr>
+                    </tr> 
+                    )})}
+                    {sublist.map((item)=>{return(
+                       <tr>
+                       <td>{item.date.substring(0,10)}</td>
+                       <td>{item.ballgames}</td>
+                       <td>{item.content}</td>
+                       <td style={{ textAlign: "center", cursor: "pointer" }} onClick={control}>{item.amount}</td>
+                       <td style={{ textAlign: "center" }}>{countsub}</td>
+                       <td style={{ position: "relative" }}>
+                           <button>編輯</button>
+                           <button>刪除</button>
+                       </td>
+                    </tr> 
+                    )})}
+                    
                 </tbody>
             </table>
 
