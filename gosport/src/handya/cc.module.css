@@ -462,28 +462,28 @@
     border: none;
 }
 
-input[type='date'] {
+/* input[type='date'] {
     position: relative;
     border: none;
     border-bottom: 1px black solid;
     line-height: 30px;
     background-color: transparent;
     z-index: 2;
-}
+} */
 
-input[type='time'] {
+/* input[type='time'] {
     position: relative;
     border: none;
     border-bottom: 1px black solid;
     line-height: 30px;
     background-color: transparent;
     z-index: 2;
-}
+} */
 
-input[type="date"]::-webkit-calendar-picker-indicator {
+/* input[type="date"]::-webkit-calendar-picker-indicator {
     width: 27px;
     opacity: 0;
-}
+} */
 
 .selectedDate {
     position: relative;
@@ -500,10 +500,10 @@ background-color: transparent;
 z-index: 2;
 } */
 
-input[type="time"]::-webkit-calendar-picker-indicator {
+/* input[type="time"]::-webkit-calendar-picker-indicator {
 
     opacity: 0;
-}
+} */
 .aa1{
    right: 0;
     top: 0;

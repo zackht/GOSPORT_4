@@ -8,6 +8,7 @@ app.listen(3001 , ()=>{
 
 
 //阿柯聊天室
+
 const http = require('http');
 const { Server } = require('socket.io');
 const server = http.createServer(app);
@@ -17,10 +18,22 @@ const io = new Server(server,{
     methods:["GET,POST"],
   }
 })
+//建立連線
+var datas = [
+  {message: "Welcome!"  }
+]
 io.on("connection",(socket)=>{
   console.log(`User Connected:${socket.id}`);
+  //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
+  io.emit("receive_message",datas);
+
     socket.on("send_mesg",(data)=>{
-    socket.broadcast.emit("receive_message",data);
+      //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
+      
+      console.log(data);
+      datas.push(data)
+      io.emit("receive_message",[data]);
+io.emit("receive_message",datas);
   })
 })
 
@@ -337,12 +350,12 @@ app.use(express.urlencoded({limit: '50mb'}));
       const email = req.body.email;
       const password = req.body.password;
       const username = req.body.username;
-      // const userimg = req.body.userimg;
+      const userimg = req.body.userimg;
       const tel = req.body.tel;
       const userdescribe = req.body.userdescribe;
       const account = req.body.account;
-      db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? WHERE `email`= ?",
-      [email,password,username,tel,userdescribe,account], (err, result) => {
+      db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? WHERE `email`= ?",
+      [email,password,username,userimg,tel,userdescribe,account], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -383,7 +396,7 @@ app.use(express.urlencoded({limit: '50mb'}));
   // 取得留言數
   app.post("/countsub", (req, res) => {
     const articleid = req.body.articleid;
-    db.query("SELECT count(*) FROM articlemessage_sublet WHERE `articleid_sublet`= ?",[articleid], (err, result) => {
+    db.query("SELECT count(*)as a FROM articlemessage_sublet WHERE `articleid_sublet`= ?",[articleid], (err, result) => {
       if (err) {
         console.log(err);
       } else {
@@ -394,7 +407,7 @@ app.use(express.urlencoded({limit: '50mb'}));
   });
   app.post("/countzero", (req, res) => {
     const articleid = req.body.articleid;
-    db.query("SELECT count(*) FROM articlemessage_zeroda WHERE `articleid_sublet`= ?",[articleid], (err, result) => {
+    db.query("SELECT count(*)as a FROM articlemessage_zeroda WHERE `articleid_zeroda`= ?",[articleid], (err, result) => {
       if (err) {
         console.log(err);
       } else {

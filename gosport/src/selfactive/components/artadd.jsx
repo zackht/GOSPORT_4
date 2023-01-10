@@ -7,8 +7,10 @@ import arrowup from '../icon/arrowup2.svg'
 // import star from '../icon/star1.svg'
 // import pic from '../icon/20130917_171106.jpg'
 const Artadd = ({ control }) => {
+    // 查詢date
     const [stratDate, setStartDate] = useState('');
     const [endDate, setEndtDate] = useState('');
+    // 資料初值
     const [sublist, setSubList] = useState([{
         articleid_sublet: '',
         date: '',
@@ -23,8 +25,12 @@ const Artadd = ({ control }) => {
         number: ''
     }]);
     const userid = Cookies.get('id');
-    const [countsub, setcountsublist] = useState([]);
+    // 留言數
+    const [countsub, setcountsublist] = useState(0);
     const [countzero, setcountcountzero] = useState([]);
+    // tr操作
+    const[showsub,setsubShow] = useState('none');
+    const[showzero,setzeroShow] = useState('none');
     let findArticle = () => {
         Axios.post("http://localhost:3001/findzoro", {
             stratDate: stratDate,
@@ -35,11 +41,14 @@ const Artadd = ({ control }) => {
             setZeroList(response.data);
             for (let i = 0; i < response.data.length; i++) {
                 Axios.post("http://localhost:3001/countzero", {
-                    articleid: response.data[i].articleid_sublet
+                    articleid: response.data[i].articleid_zeroda
                 }).then((response) => {
-                    console.log(response.data);
+                    console.log(response.data[0]);
                     setcountcountzero(countzero+response.data)
                 });
+            }
+            if(response.data[0].date){
+                setzeroShow('table-row')
             }
         });
         Axios.post("http://localhost:3001/findsub", {
@@ -53,9 +62,14 @@ const Artadd = ({ control }) => {
                 Axios.post("http://localhost:3001/countsub", {
                     articleid: response.data[i].articleid_sublet
                 }).then((response) => {
-                    console.log(response.data);
-                    setcountsublist(countsub+response.data)
+                    console.log(response.data[0].a);
+                    let count = response.data[0].a
+                    setcountsublist(pre => pre+count)
+                    console.log(countsub)
                 });
+            }
+            if(response.data[0].date){
+                setsubShow('table-row')
             }
         });
     }
@@ -79,17 +93,33 @@ const Artadd = ({ control }) => {
                         <td>留言數</td>
                         <td></td>
                     </tr>
-                    <tr>
-                        <td>2022/12/21</td>
-                        <td>羽球</td>
-                        <td>一個內斂又大膽的標題</td>
-                        <td style={{ textAlign: "center", cursor: "pointer" }} onClick={control}>66</td>
-                        <td style={{ textAlign: "center" }}>88</td>
+                    {zerolist.map((item)=>{return(
+                       <tr style={{display:showzero}}>
+                        <td>{item.date.substring(0,10)}</td>
+                        <td>{item.ballgames}</td>
+                        <td>{item.content}</td>
+                        <td style={{ textAlign: "center", cursor: "pointer" }} onClick={control}>{item.number}</td>
+                        <td style={{ textAlign: "center" }}>{countsub}</td>
                         <td style={{ position: "relative" }}>
                             <button>編輯</button>
                             <button>刪除</button>
                         </td>
-                    </tr>
+                    </tr> 
+                    )})}
+                    {sublist.map((item)=>{return(
+                       <tr style={{display:showsub}}>
+                       <td>{item.date.substring(0,10)}</td>
+                       <td>{item.ballgames}</td>
+                       <td>{item.content}</td>
+                       <td style={{ textAlign: "center", cursor: "pointer" }} onClick={control}>{item.amount}</td>
+                       <td style={{ textAlign: "center" }}>{countsub}</td>
+                       <td style={{ position: "relative" }}>
+                           <button>編輯</button>
+                           <button>刪除</button>
+                       </td>
+                    </tr> 
+                    )})}
+                    
                 </tbody>
             </table>
 
