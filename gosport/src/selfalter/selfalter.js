@@ -36,11 +36,46 @@ const Selfalter = () => {
         inputFile.current.click();
     }
 
-    // 相片上傳 同時顯示 目前失敗
+
+    // 讀取用戶資訊
+    const account = Cookies.get('token');
+    const [userInfo,setUserInfo]=useState({userimg:{data:''}});
+    useEffect(() => {
+        Axios.post("http://localhost:3001/selfinfo", {
+            account: account,
+        }).then((response) => {
+            setUserInfo(response.data[0])
+            setEmail(response.data[0].email)
+            setPassword(response.data[0].password)
+            setUsername(response.data[0].username)
+            // setImageSrc(response.data[0].userimg)
+            setTel(response.data[0].tel)
+            setDescribe(response.data[0].userdescribe)
+        });
+    }, []);
+
+    // 照片自資料庫讀取
     const [imageSrc, setImageSrc] = useState('');
     const [photoBack, setBack] = useState('block')
     const [showPhoto, setPhoto] = useState('none')
 
+    useEffect(()=>{ 
+        console.log(userInfo.userimg.data)
+        var u8Arr = new Uint8Array(userInfo.userimg.data);
+        var blob = new Blob([u8Arr], { type: "image/jpeg" });
+        var fr = new FileReader
+        fr.onload = function () {
+            setImageSrc(fr.result);
+            if(imageSrc){
+                setBack('none')
+                setPhoto('block')
+            }
+        };
+        fr.readAsDataURL(blob);
+    },[userInfo])
+   
+
+    // 相片上傳 同時顯示 
     const handleOnPreview = (event) => {
         const file = event.target.files[0];
         const reader = new FileReader();
@@ -56,20 +91,7 @@ const Selfalter = () => {
         setPhoto('block')
     };
 
-    const account = Cookies.get('token');
-    useEffect(() => {
-        Axios.post("http://localhost:3001/selfinfo", {
-            account: account,
-        }).then((response) => {
-            setEmail(response.data[0].email)
-            setPassword(response.data[0].password)
-            setUsername(response.data[0].username)
-            // setImageSrc(response.data[0].userimg)
-            setTel(response.data[0].tel)
-            setDescribe(response.data[0].userdescribe)
-        });
-    }, []);
-
+    // 上傳更新
     let update = (e) =>{
         e.preventDefault();
         Axios.post("http://localhost:3001/selfalter", {
@@ -85,6 +107,8 @@ const Selfalter = () => {
             window.location = '/gosport/user';
         });
     }
+    
+    
 
 
     return (

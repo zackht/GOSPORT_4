@@ -1,11 +1,16 @@
 .cover {
+    padding: 50px;
+    height: 80vh;
     width: 1060px;
-    height: 1170px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #FFFFFF;
     box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    overflow-y: scroll;
 }
 
 .contain {
@@ -22,17 +27,38 @@
     line-height: 23px;
 }
 
-.dinput,
-.dtextarea {
+.dinput{
     border: none;
     background-color: #F5F5F5;
     border-radius: 50px;
-    height: 35px;
+    height: 55px;
+    width: 691px;
     margin-bottom: 27px;
     padding: 10px 23px;
     font-size: 24px;
 }
-
+.dtextarea {
+    border: none;
+    background-color: #F5F5F5;
+    border-radius: 50px;
+    width: 100px;
+    height: 70px;
+    max-height: 200px;
+    width: 691px;
+    margin-bottom: 27px;
+    padding: 10px 23px;
+    font-size: 24px;
+}
+.dinput3{
+    border: none;
+    background-color: #F5F5F5;
+    border-radius: 50px;
+    height: 55px;
+    width: 691px;
+    margin-bottom: 27px;
+    padding: 0;
+    font-size: 24px;
+}
 .dselect {
     border: none;
     border-bottom: 1px black solid;
@@ -41,6 +67,9 @@
     background-color: transparent;
     margin-bottom: 20px;
     text-align: center;
+    appearance: none;
+    position: relative;
+    z-index: 2;
 }
 
 /* 市 區 */
@@ -157,4 +186,43 @@
 }
 .div1{
     margin:10px 20px 20px 20px;font-size: 20px;
+}
+.div2{
+    position: absolute;
+    top: 40px;
+    right: 0;
+
+}
+.div3{
+    position: relative;
+}
+.div4{
+    position: absolute;
+    top: 10px;
+    right: 0;
+}
+.div5{
+    position: absolute;
+    left: 150px;
+    top: 5px;
+}
+.div6{
+    background-color: white;
+    border-radius: 30px;
+    border: 1px solid #e64637;
+    box-sizing: border-box;
+    color: #e64637;
+    font-size: 24px;
+    margin-right: 40px;
+}
+.dinput2{
+    border: none;
+    background-color: #F5F5F5;
+    border-radius: 50px;
+    height: 55px;
+    width: 186px;
+    margin-bottom: 27px;
+    padding: 10px 23px;
+    font-size: 24px;
+
 }

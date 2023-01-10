@@ -89,16 +89,21 @@ const Handya = () =>{
       };
       const[message,setmessage] =useState("");
       const[messagereceive,setmessagereceive] = useState("");
+      const[mes,setmes] = useState([]);
       const sendmsg = () => {
+        setmes([]);
         //	socket.emit(“要對 server 發送的事件名稱”,data)
         socket.emit("send_mesg",{message})
-        console.log(message);
+        // console.log(messagereceive);
         // socket.emit("send_mesg",{message1:{message}},{name:"apple"});
       }
       useEffect(()=>{
         //	socket.on(“監聽來自server的receive_message事件名稱”, callback)
          socket.on("receive_message",(data)=>{
-            //  console.log(data);
+            //  console.log(mes);
+             setmes(data);
+            //  console.log(data)
+            //  console.log(mes)
          setmessagereceive(data.message);})},[socket]);
 
         return (
@@ -133,7 +138,14 @@ const Handya = () =>{
   <input type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
   
 <button onClick={sendmsg}>send</button>
-<h1>{messagereceive}</h1>
+
+ {mes.map((v,k)=>{
+    return(<span>{v.message}</span>)
+    
+    console.log(v.message);
+})}
+
+
 
 
         <div className={cc.ezsurch}>

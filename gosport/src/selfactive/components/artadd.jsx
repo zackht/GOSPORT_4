@@ -7,8 +7,10 @@ import arrowup from '../icon/arrowup2.svg'
 // import star from '../icon/star1.svg'
 // import pic from '../icon/20130917_171106.jpg'
 const Artadd = ({ control }) => {
+    // 查詢date
     const [stratDate, setStartDate] = useState('');
     const [endDate, setEndtDate] = useState('');
+    // 資料初值
     const [sublist, setSubList] = useState([{
         articleid_sublet: '',
         date: '',
@@ -23,8 +25,12 @@ const Artadd = ({ control }) => {
         number: ''
     }]);
     const userid = Cookies.get('id');
+    // 留言數
     const [countsub, setcountsublist] = useState(0);
     const [countzero, setcountcountzero] = useState([]);
+    // tr操作
+    const[showsub,setsubShow] = useState('none');
+    const[showzero,setzeroShow] = useState('none');
     let findArticle = () => {
         Axios.post("http://localhost:3001/findzoro", {
             stratDate: stratDate,
@@ -41,14 +47,16 @@ const Artadd = ({ control }) => {
                     setcountcountzero(countzero+response.data)
                 });
             }
+            if(response.data[0].date){
+                setzeroShow('table-row')
+            }
         });
         Axios.post("http://localhost:3001/findsub", {
             stratDate: stratDate,
             endDate: endDate,
             userid: userid
         }).then((response) => {
-            console.log(response.data[0].date);
-            console.log( typeof(response.data[0].date) )
+            console.log(response.data);
             setSubList(response.data);
             for (let i = 0; i < response.data.length; i++) {
                 Axios.post("http://localhost:3001/countsub", {
@@ -59,6 +67,9 @@ const Artadd = ({ control }) => {
                     setcountsublist(pre => pre+count)
                     console.log(countsub)
                 });
+            }
+            if(response.data[0].date){
+                setsubShow('table-row')
             }
         });
     }
@@ -83,7 +94,7 @@ const Artadd = ({ control }) => {
                         <td></td>
                     </tr>
                     {zerolist.map((item)=>{return(
-                       <tr>
+                       <tr style={{display:showzero}}>
                         <td>{item.date.substring(0,10)}</td>
                         <td>{item.ballgames}</td>
                         <td>{item.content}</td>
@@ -96,7 +107,7 @@ const Artadd = ({ control }) => {
                     </tr> 
                     )})}
                     {sublist.map((item)=>{return(
-                       <tr>
+                       <tr style={{display:showsub}}>
                        <td>{item.date.substring(0,10)}</td>
                        <td>{item.ballgames}</td>
                        <td>{item.content}</td>
