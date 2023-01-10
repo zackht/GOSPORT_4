@@ -268,12 +268,12 @@ app.use(express.urlencoded({limit: '50mb'}));
       const email = req.body.email;
       const password = req.body.password;
       const username = req.body.username;
-      // const userimg = req.body.userimg;
+      const userimg = req.body.userimg;
       const tel = req.body.tel;
       const userdescribe = req.body.userdescribe;
       const account = req.body.account;
-      db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? WHERE `email`= ?",
-      [email,password,username,tel,userdescribe,account], (err, result) => {
+      db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? WHERE `email`= ?",
+      [email,password,username,userimg,tel,userdescribe,account], (err, result) => {
         if (err) {
           console.log(err);
         } else {
