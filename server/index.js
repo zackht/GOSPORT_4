@@ -244,8 +244,8 @@ app.use(express.urlencoded({limit: '50mb'}));
     });
     // 登入資料
     app.post("/userinfo", (req, res) => {
-      const account = req.body.account;
       const password = req.body.password
+      const account = req.body.account;
       db.query("SELECT * FROM user WHERE email = ? AND password =?",[account,password], (err, result) => {
         if (err) {
           console.log(err);

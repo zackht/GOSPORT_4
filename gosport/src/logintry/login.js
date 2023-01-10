@@ -15,6 +15,7 @@ const PageLogin = ({ saveToken,saveId}) => {
             account: account,
             password:password
         }).then((response) => {
+            console.log(response)
             setTrueAcc(response.data[0].email);
             setTruePass(response.data[0].password);
             saveId(response.data[0].userid)
