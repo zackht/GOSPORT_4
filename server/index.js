@@ -360,3 +360,18 @@ app.use(express.urlencoded({limit: '50mb'}));
         );
       });
    
+      //------------------
+      //
+      app.post('/searchzero', (req,res)=>{
+      const datetime = req.body.datetime;
+      const starttime = req.body.starttime;
+      const endtime = req.body.endtime;
+      const fee = req.body.fee;
+      const county = req.body.county;
+      const area = req.body.area;
+      const zerolevel = req.body.zerolevel;
+      const zeroinput = req.body.zeroinput;
+      db.query(
+        
+      );
+      });
