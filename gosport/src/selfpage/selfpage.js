@@ -10,10 +10,12 @@ import './selfpage.css'
 
 const Selfpage = () => {
     let [userInfo, setUserInfo] = useState([{
-        username:'預備中',
-        userdescribe:'',
-        tname:'',
+        username: '預備中',
+        userdescribe: '',
+        tname: '',
+        userimg:{data:''}
     }]);
+    // 讀取個人資料
     const account = Cookies.get('token');
     useEffect(() => {
         Axios.post("http://localhost:3001/selfinfo", {
@@ -24,8 +26,25 @@ const Selfpage = () => {
         });
     }, []);
     //球隊
-    let restname = userInfo.map(function(item,index){ return item.tname })
+    let restname = userInfo.map(function (item, index) { return item.tname })
     const alltname = Array.from(new Set(restname.filter((x, i, self) => self.indexOf(x) === i)));
+    // 照片
+    const [userurl, setUserurl] = useState();
+    useEffect(()=>{
+        var u8Arr = new Uint8Array(userInfo[0].userimg.data);
+        var blob = new Blob([u8Arr], { type: "image/jpeg" });
+        var fr = new FileReader
+        fr.onload = function () {
+            setUserurl(fr.result);
+        };
+        fr.readAsDataURL(blob);
+    },[userInfo])
+    
+    // 徽章
+    let sta = userInfo.map((item) => { return item.badgeid })
+    const allstar = Array.from(new Set(sta.filter((x, i, self) => self.indexOf(x) === i)));
+    console.log(allstar)
+    
     return (
         <React.Fragment>
             {/* 主體 */}
@@ -40,7 +59,7 @@ const Selfpage = () => {
                             <div>羽球初階、桌球新手、網球初階</div>
                             <div>球隊</div>
                             <div>
-                                {alltname.map(function(item,index){ return <span key={index}>{item}&nbsp;&nbsp;</span> })}
+                                {alltname.map(function (item, index) { return <span key={index}>{item}&nbsp;&nbsp;</span> })}
                             </div>
                             <div>活動時數</div>
                             <div>{userInfo[0].activeTime}</div>
@@ -50,12 +69,13 @@ const Selfpage = () => {
                         </div>
                         <div style={{ flex: 1, position: "relative" }}>
                             <div id="tt" style={{ height: "50%", width: "100%", position: "relative", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                <img className='self_img' src={selfImg} alt="" />
+                                <img className='self_img' src={userurl} alt="" />
                                 {/* <img className='self_img' src={selfInfo[0].teamimg} alt="" /> */}
                                 <div className="show_star">
-                                    <embed src={star}></embed>
-                                    <embed src={star}></embed>
-                                    <embed src={star}></embed>
+                                    {/* {allstar.map(item=><embed key={item} src={star}></embed>)} */}
+                                    {/* <embed src={star}></embed> */}
+                                    {/* <embed src={star}></embed> */}
+                                    {/* <embed src={star}></embed> */}
                                 </div>
                             </div>
                             <div style={{ height: "50%", width: "100%", position: "relative" }}>
