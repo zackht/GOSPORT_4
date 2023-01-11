@@ -42,12 +42,13 @@ export default function BasicEdit(props) {
         setText(res.data[0].text);
         // 轉 照片格式
         const u8Arr = new Uint8Array(res.data[0].teamimg.data);
+        console.log(res.data[0].teamimg.data);
         const blob = new Blob([u8Arr],{type:"image/jpeg"});
         const fr = new FileReader;
         fr.onload = function () {
             // 照片放入狀態
             setTeamimg(fr.result);
-            setUploadimg('none');
+            // setUploadimg('none');
             };
         fr.readAsDataURL(blob);
     };
