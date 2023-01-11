@@ -1,4 +1,19 @@
 const express = require('express');
+const multer = require('multer');
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 2 * 1024 * 1024,  // 限制 2 MB
+  },
+  fileFilter (req, file, callback) {  // 限制檔案格式為 image
+    if (!file.mimetype.match(/^image/)) {
+      callback(new Error().message = '檔案格式錯誤');
+    } else {
+      callback(null, true);
+    }
+  }
+});
 const app = express();
 // 使用express
 app.listen(3001 , ()=>{
@@ -89,10 +104,9 @@ app.use(express.urlencoded({limit: '50mb'}));
       });
     });
     // user頭像更改
-    app.post("/userupdate", (req, res) => {
-      const img = req.body.img;
-      console.log(`後端接收${img}`)
-      db.query("UPDATE user SET userimg=? where userid =1",[img], (err, result) => {
+    app.post("/userupdate",upload.single('image'), (req, res) => {
+      db.query("UPDATE user SET userimg=? where userid =1"
+      ,[req.file.buffer], (err, result) => {
         if (err) {
           console.log(err);
         } else {
