@@ -1,4 +1,19 @@
 const express = require('express');
+const multer = require('multer');
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 2 * 1024 * 1024,  // 限制 2 MB
+  },
+  fileFilter (req, file, callback) {  // 限制檔案格式為 image
+    if (!file.mimetype.match(/^image/)) {
+      callback(new Error().message = '檔案格式錯誤');
+    } else {
+      callback(null, true);
+    }
+  }
+});
 const app = express();
 const bodyParser = require('body-parser');
 // 使用express
@@ -82,6 +97,17 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
     //  client測試
     app.get("/employee", (req, res) => {
       db.query("SELECT * FROM user where userid = 1", (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    // user頭像更改
+    app.post("/userupdate",upload.single('image'), (req, res) => {
+      db.query("UPDATE user SET userimg=? where userid =1"
+      ,[req.file.buffer], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -386,4 +412,30 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
           }
       });
     });
+
+    //------------------
+      //
+      app.post('/searchzero', (req,res)=>{
+        const datetime = req.body.datetime;
+        const starttime = req.body.starttime;
+        const endtime = req.body.endtime;
+        const fee = req.body.fee;
+        const county = req.body.county;
+        const area = req.body.area;
+        const zerolevel = req.body.zerolevel;
+        const zeroinput = req.body.zeroinput;
+        db.query(
+          `SELECT username, county, area, fieldname, date, starttime, endtime, cost, level, number
+          FROM userarticle_zeroda, user 
+          WHERE userarticle_zeroda.userid = user.userid`,
+          [],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+          );
+      });
     
