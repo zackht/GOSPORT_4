@@ -6,6 +6,43 @@ app.listen(3001 , ()=>{
     console.log('ok, server is running on port 3001')
 })
 // port號3001 啟動server時提式ok, server is running on port 3001
+
+
+//阿柯聊天室
+
+const http = require('http');
+const { Server } = require('socket.io');
+const server = http.createServer(app);
+const io = new Server(server,{
+  cors :{
+    origin:"http://localhost:3000",
+    methods:["GET,POST"],
+  }
+})
+//建立連線
+var datas = [
+  {message: "Welcome!"  }
+]
+io.on("connection",(socket)=>{
+  console.log(`User Connected:${socket.id}`);
+  //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
+  io.emit("receive_message",datas);
+
+    socket.on("send_mesg",(data)=>{
+      //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
+      
+      console.log(data);
+      datas.push(data)
+      io.emit("receive_message",[data]);
+io.emit("receive_message",datas);
+  })
+})
+
+server.listen(3002,()=>{
+  console.log('ok, server is running on port 3002');
+})
+//阿柯聊天室
+
 const cors = require('cors');
 app.use(cors());
 // 使用cors
@@ -250,7 +287,7 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
       });
     });
 
-    // 芝｜Basic 搜尋結果
+    // 芝｜Basic 查資料庫
     app.post('/teambasic', (req,res)=>{
       const userid = req.body.userid;
       const teamid = req.body.teamid;
@@ -268,24 +305,41 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
           }
         );
       });
-    // 芝｜Basic 更新
-    app.post("/updateteambasic", (req, res) => {
+    // 芝｜Basic 文字資料更新
+    app.post("/updatebasictext", (req, res) => {
       const teamid = req.body.teamid;
+
       const tname = req.body.tname;
       const sidename = req.body.sidename;
+      const week = req.body.week;
       const starttime = req.body.starttime;
       const endtime = req.body.endtime;
       const type = req.body.type;
       const level = req.body.level;
       const fee = req.body.fee;
       const text = req.body.text;
-      const teamimg = req.body.teamimg;
-      // const teamimg = req.body.teamimg;
       db.query(`
         UPDATE team 
-        SET tname=?, sidename=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?, teamimg=?
+        SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?
         where teamid=?;`,
-        [tname,sidename,starttime,endtime,type,level,fee,text,teamimg,teamid], 
+        [tname,sidename,week,starttime,endtime,type,level,fee,text,teamid], 
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+      });
+    });
+    // 芝｜Basic 照片更新
+    app.post("/updatebasicimg", (req, res) => {
+      const teamid = req.body.teamid;
+      const teamimg = req.body.teamimg;
+      db.query(`
+        UPDATE team
+        SET teamimg=?
+        where teamid=?;`,
+        [teamimg,teamid], 
         (err, result) => {
           if (err) {
             console.log(err);

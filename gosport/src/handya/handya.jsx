@@ -11,7 +11,7 @@ import ball from './icon/球類別.png';
 import io from 'socket.io-client';
 
 //建立連線
-const  socket = io.connect("http://localhost:3002");
+// const  socket = io.connect("http://localhost:3002");
 
 const Handya = () =>{
     const [rentdiv, setrent] = useState('block');
@@ -90,20 +90,20 @@ const Handya = () =>{
       const[message,setmessage] =useState("");
       const[messagereceive,setmessagereceive] = useState("");
       const[mes,setmes] = useState([]);
-      const sendmsg = () => {
-        setmes([]);
-        //	socket.emit(“要對 server 發送的事件名稱”,data)
-        socket.emit("send_mesg",{message})
-        // console.log(messagereceive);
-      }
-      useEffect(()=>{
-        //	socket.on(“監聽來自server的receive_message事件名稱”, callback)
-         socket.on("receive_message",(data)=>{
-            //  console.log(mes);
-             setmes(data);
-            //  console.log(data)
-            //  console.log(mes)
-         setmessagereceive(data.message);})},[socket]);
+    //   const sendmsg = () => {
+    //     setmes([]);
+    //     //	socket.emit(“要對 server 發送的事件名稱”,data)
+    //     socket.emit("send_mesg",{message})
+    //     // console.log(messagereceive);
+    //   }
+    //   useEffect(()=>{
+    //     //	socket.on(“監聽來自server的receive_message事件名稱”, callback)
+    //      socket.on("receive_message",(data)=>{
+    //         //  console.log(mes);
+    //          setmes(data);
+    //         //  console.log(data)
+    //         //  console.log(mes)
+    //      setmessagereceive(data.message);})},[socket]);
 
         return (
         <React.Fragment>
@@ -137,7 +137,7 @@ const Handya = () =>{
             </div>
         </div>
 
-  <input type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
+  {/* <input type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
   
 <button onClick={sendmsg}>send</button>
 
@@ -145,7 +145,7 @@ const Handya = () =>{
     return(<span>{v.message}</span>)
     
     console.log(v.message);
-})}
+})} */}
 
 
 
