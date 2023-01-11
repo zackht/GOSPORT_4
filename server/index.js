@@ -6,13 +6,13 @@ const upload = multer({
   limits: {
     fileSize: 2 * 1024 * 1024,  // 限制 2 MB
   },
-  fileFilter (req, file, callback) {  // 限制檔案格式為 image
-    if (!file.mimetype.match(/^image/)) {
-      callback(new Error().message = '檔案格式錯誤');
-    } else {
-      callback(null, true);
-    }
-  }
+  // fileFilter (req, file, callback) {  // 限制檔案格式為 image
+  //   if (!file.mimetype.match(/^image/)) {
+  //     callback(new Error().message = '檔案格式錯誤');
+  //   } else {
+  //     callback(null, true);
+  //   }
+  // }
 });
 const app = express();
 const bodyParser = require('body-parser');
@@ -95,7 +95,7 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
       );
     })
     //  client測試
-    app.get("/employee", (req, res) => {
+    app.post("/employee", (req, res) => {
       db.query("SELECT * FROM user where userid = 1", (err, result) => {
         if (err) {
           console.log(err);
@@ -241,6 +241,30 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
       const teamtext = req.body.teamtext;
       db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?, title =  where teameventid=1"
       ,[teameventid], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    // 後台球隊刪除
+    app.post("/teamdelete", (req, res) => {
+      const teameventid = req.body.teameventid;
+      db.query("DELETE from teamevent where teameventid = ?"
+      ,[teameventid], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    // 後台轉租刪除
+    app.post("/rentdelete", (req, res) => {
+      const articleid_sublet = req.body.articleid_sublet;
+      db.query("DELETE from userarticle_sublet where articleid_sublet = ?"
+      ,[articleid_sublet], (err, result) => {
         if (err) {
           console.log(err);
         } else {
