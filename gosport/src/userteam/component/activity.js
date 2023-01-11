@@ -2,35 +2,16 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import activity from './activity.module.css';
 import img from '../img.module.js';
+import DateSearch from './dateSearch';
 
 export default function Activity(params) {
     return(
         <>
             {/* 活動 */}
             <div className={activity.activity}>
-                <div className={activity.search}>
-                    <form action="">
-                        <div className={activity.sTitle}>日期區間</div>
-                        <input type="date" name="" id=""/>
-                        <input type="date" name="" id=""/>
-                        <div className={activity.sTitle}>訂單日期</div>
-                        <div className={activity.sDate}>
-                            <div>2022/12/31</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                        </div>
-                        <button>搜尋</button>
-                    </form>
-                </div>
+                
+                {/* 日期搜索 */}
+                <DateSearch/>
 
                 {/* 訂單資訊 */}
                 <div className={activity.order}>

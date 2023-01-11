@@ -24,7 +24,7 @@ export default function Myteam (){
         {filterName:'活動',    id:'5', pathEnd:'activity'}
     ]);
 
-    // 當前的網址尾巴 [ basic | basic | fund | pay | activity ] 
+    // 當前pathEnd [ basic | basic | fund | pay | activity ] 
     const [activedFilterPE, setActivedFilterPE] = useState('basic');
     
     // 抓當前網址
@@ -44,9 +44,9 @@ export default function Myteam (){
     const filterListMap = filterList.map((e,id)=>{
         return (
             <Link to={`/gosport/user/myteam/${e.pathEnd}`}
-                    key = {id} 
-                    onClick = {()=>{setActivedFilterPE(e.pathEnd)}}
-                    className = {handleFilterCss(e)}>
+                  key = {id} 
+                  onClick = {()=>{setActivedFilterPE(e.pathEnd)}}
+                  className = {handleFilterCss(e)}>
                 {e.filterName}
             </Link>
         )
@@ -64,7 +64,7 @@ export default function Myteam (){
                         <Switch>
                             <Route path="/gosport/user/myteam"               component={Basic} exact/>   
                             <Route path="/gosport/user/myteam/basic"         component={Basic} exact/>
-                            <Route path="/gosport/user/myteam/basic/edit"    component={BasicEdit}/>
+                            <Route path="/gosport/user/myteam/basic/edit"    component={BasicEdit} exact/>
                             <Route path="/gosport/user/myteam/member"        component={Member} exact/>
                             <Route path="/gosport/user/myteam/member/edit"   component={MemberEdit} exact/>
                             <Route path="/gosport/user/myteam/fund"          component={Fund} exact/>
