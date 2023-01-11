@@ -1,11 +1,4 @@
-/* 大標題 */
-/* .mBigTitle{
-    font-family: 'Noto Sans TC';
-    font-size: 1.7rem;
-    font-weight: 500;
-    color: rgb(56, 56, 56);
-    margin-bottom: 30px;
-} */
+
 /* 標題 */
 .bForm{
     font-family: 'Noto Sans TC';
@@ -14,27 +7,37 @@
     font-weight: 400;
     width: 100%;
     position: relative;
-    padding: 40px 40px 0px 40px;
+    padding: 40px 40px 40px 40px;
     overflow: scroll;
     overflow-x: hidden;
+    height: 85%;
 }
-/* 上傳照片 */
+/* 照片容器 */
 .bForm>div:nth-of-type(1){
     width: 170px;
     height: 170px;
     position: absolute;
     right: 40px;
     left: auto;
-    background-image: url("../img/upload_c.png");
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: 50% 50%;
     clip-path: circle(50% at 50% 50%);
     border: none;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
 }
+/* 舊的input隱藏 */
 .bForm input[type='file']{
     opacity: 0;
+    position: absolute;
+    z-index:-1;
+}
+/* 顯示資料庫的照片 */
+.bForm img{
+    height: 170px;
+    object-fit: fill;
 }
 /* 輸入框 */
 .bForm input {
@@ -54,7 +57,13 @@
 .bForm input:focus {
     outline: none;
 }
-
+.bForm input::placeholder{
+    font-family: 'Noto Sans TC';
+    color: rgb(56, 56, 56);
+    font-weight: 400;
+    font-size: 1.2rem;
+    text-align: start;
+}
 /* 下拉選單 */
 .bForm select {
     margin-top: 10px;
@@ -126,7 +135,7 @@ textarea:focus {
     margin-right: 20px;
 }
 /* 提交 */
-.bForm>input[type='submit']{
+.bForm>button{
     border: none;
     width: 48%;
     height: 80px;
@@ -139,4 +148,5 @@ textarea:focus {
     margin-top: 0px;
     margin-bottom: 0px;
     float: right;
+    cursor: pointer;
 }
