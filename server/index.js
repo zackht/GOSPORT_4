@@ -449,6 +449,16 @@ app.use(express.urlencoded({limit: '50mb'}));
       const zerolevel = req.body.zerolevel;
       const zeroinput = req.body.zeroinput;
       db.query(
-        
+        `SELECT username, county, area, fieldname, date, starttime, endtime, cost, level, number
+        FROM userarticle_zeroda, user 
+        WHERE userarticle_zeroda.userid = user.userid`,
+        [],
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        }
       );
       });
