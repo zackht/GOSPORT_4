@@ -25,15 +25,21 @@ const Ordering = () =>{
             <div className="ordermenu">
                 <div>訂單日期</div>
                 <div>2022/12/31</div>
-                <div style={{ display: "flex" }}>
+                {/* <div style={{ display: "flex" }}>
                     <div style={{ flex: "1" }}>開始時間</div>
                     <div style={{ flex: "1" }}>結束時間</div>
                     <div style={{ flex: "1" }}>星期</div>
+                </div> */}
+                <div>
+                    <div>時段</div>
                 </div>
-                <div style={{ display: "flex" }}>
+                {/* <div style={{ display: "flex" }}>
                     <div style={{ flex: "1" }}>2022/12/31</div>
                     <div style={{ flex: "1" }}>2022/12/31</div>
                     <div style={{ flex: "1" }}>星期三</div>
+                </div> */}
+                <div>
+                    <div>9:00-11:00</div>
                 </div>
                 <div>數量</div>
                 <div>1</div>

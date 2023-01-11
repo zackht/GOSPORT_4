@@ -302,9 +302,13 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
       // const userimg = req.body.userimg;
       const tel = req.body.tel;
       const userdescribe = req.body.userdescribe;
+      const badminton = req.body.badminton
+      const tabletennis = req.body.tabletennis;
+      const volleyball = req.body.volleyball;
       const account = req.body.account;
-      db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? WHERE `email`= ?",
-      [email,password,username,tel,userdescribe,account], (err, result) => {
+
+      db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? WHERE `email`= ?",
+      [email,password,username,tel,userdescribe,badminton,tabletennis,volleyball,account], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -313,6 +317,57 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
         
       });
     });
+    //會員零打文章搜尋
+  app.post("/findzoro", (req, res) => {
+    const userid = req.body.userid;
+    const starttime = req.body.stratDate;
+    const endtime = req.body.endDate;
+    db.query("SELECT * FROM `userarticle_zeroda` WHERE userid = ? AND date BETWEEN ? AND ?",[userid,starttime,endtime], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
+  //會員轉租文章搜尋
+  app.post("/findsub", (req, res) => {
+    const userid = req.body.userid;
+    const starttime = req.body.stratDate;
+    const endtime = req.body.endDate;
+    db.query("SELECT * FROM `userarticle_sublet` WHERE userid = ? AND date BETWEEN ? AND ?",[userid,starttime,endtime], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
+  // 取得留言數
+  app.post("/countsub", (req, res) => {
+    const articleid = req.body.articleid;
+    db.query("SELECT count(*)as a FROM articlemessage_sublet WHERE `articleid_sublet`= ?",[articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
+  app.post("/countzero", (req, res) => {
+    const articleid = req.body.articleid;
+    db.query("SELECT count(*)as a FROM articlemessage_zeroda WHERE `articleid_zeroda`= ?",[articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
 
     // 芝｜Basic 搜尋結果
     app.post('/teambasic', (req,res)=>{
