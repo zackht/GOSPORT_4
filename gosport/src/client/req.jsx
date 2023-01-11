@@ -71,20 +71,27 @@ const Client = () => {
     };
     
     const [url,seturl]=useState('');
+    // 取得檔案並轉換
+    const [data,setdata]=useState();
     const aaa =(e)=>{
-          const reader = new FileReader();
-      reader.readAsDataURL(e[0]);
-      reader.addEventListener("load", function () {
-                seturl(reader.result);
-            }, false);
-            console.log(`上傳前的dataurl: ${url}`);
-        }
-        const bbb=()=>{
-
-            Axios.post("http://localhost:3001/userupdate",{
-                img:url
+          const formData = new FormData();
+          formData.append('image',e[0]);
+          setdata(formData);
+          Axios.post("http://localhost:3001/userupdate",formData,{
+            headers: {'Content-Type': 'multipart/form-data'},
           }).then((response) => {
               alert("更新成功");
+              console.log(response.data);
+          });
+        }
+        // 上傳圖片
+        const bbb=()=>{
+          Axios.post("http://localhost:3001/userupdate",
+            data,
+            {headers: {'Content-Type': 'multipart/form-data'},
+          }).then((response) => {
+              alert("更新成功");
+              console.log(response.data);
           });
         }
     const [Url,setUrl]=useState('');
@@ -118,5 +125,3 @@ const Client = () => {
 }
 
 export default Client;
-
-// /9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoHBxAQEBAQEBAQEBAQEBAQEBAQEBEQEBAQFxUZGBYVFhUaHysjGh0oHRUWJTUlKC0vMjIyGSI4PTcwPCsxMi8BCgsL

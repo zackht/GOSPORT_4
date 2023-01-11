@@ -6,6 +6,7 @@ import comm from "./search.module.css";
 import cc from './icon/Rect.svg';
 import badminton from './icon/badminton.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Axios from "axios";
 
 
 
@@ -31,6 +32,30 @@ const Search = () => {
     //     setModalToggle(!modaltoggle)
     // }
     // var showModal = modaltoggle ? 'flex' : 'none';
+
+    //零打搜尋
+    // const [datetime, setDatetime] = useState('');
+    // const [starttime, setStarttime] = useState('');
+    // const [endtime, setEndtime] = useState('');
+    // const [fee, setFee] = useState('');
+    // const [county, setCounty] = useState('');
+    // const [area, aetArea] = useState('');
+    // const [zerolevel, setZerolevel] = useState('');
+    // const [zeroinput, setZeroinput] = useState('');
+    // const zerosearch = () => {
+    //     Axios.post("http://localhost:3001/searchzero", {
+    //         datetime: datetime,
+    //         starttime: starttime,
+    //         endtime: endtime,
+    //         fee: fee,
+    //         county: county,
+    //         area: area,
+    //         zerolevel: zerolevel,
+    //         zeroinput:zeroinput,
+    //     }).then((response) => {
+    //         console.log(response);
+    //     })
+    // }
 
 
 
@@ -76,11 +101,65 @@ const Search = () => {
                             <div className={comm.time}>
                                 <div className={comm.date}>
                                     <label htmlFor="start_d_input">時間</label><br />
-                                    <input id="start_d_input" type="date" /><img className={comm.selectedDate} src="./icon/arrowup2.svg" alt="" />
+                                    <input id="start_d_input" type="date" /><img className={comm.selectedDate} alt="" />
                                 </div>
                                 <div className={comm.datatime}>
                                     <label htmlFor="">時段</label><br />
-                                    <input type="time" /> 至 <input type="time" />
+                                    <select>
+                                        <option>0</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                        <option>13</option>
+                                        <option>14</option>
+                                        <option>15</option>
+                                        <option>16</option>
+                                        <option>17</option>
+                                        <option>18</option>
+                                        <option>19</option>
+                                        <option>20</option>
+                                        <option>21</option>
+                                        <option>22</option>
+                                        <option>23</option>
+                                        <option>24</option>
+                                    </select><span className={comm.timespan}>:00</span>
+                                    至
+                                    <select>
+                                        <option>0</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                        <option>13</option>
+                                        <option>14</option>
+                                        <option>15</option>
+                                        <option>16</option>
+                                        <option>17</option>
+                                        <option>18</option>
+                                        <option>19</option>
+                                        <option>20</option>
+                                        <option>21</option>
+                                        <option>22</option>
+                                        <option>23</option>
+                                        <option>24</option>
+                                    </select><span className={comm.timespan}>:00</span>
                                 </div>
                                 <div className={comm.fee}>
                                     <span>費用上限</span><br />
@@ -98,9 +177,6 @@ const Search = () => {
                                     <h5>縣市</h5>
                                     <select style={{ width: '150px' }}>
                                         <option>台中</option>
-                                        <option>彰化</option>
-                                        <option>南投</option>
-                                        <option>苗栗</option>
                                     </select>
                                 </div>
                                 <div className={comm.cityarea}>
@@ -110,6 +186,31 @@ const Search = () => {
                                         <option>西屯</option>
                                         <option>西</option>
                                         <option>東</option>
+                                        <option>中</option>
+                                        <option>南</option>
+                                        <option>北</option>
+                                        <option>北屯</option>
+                                        <option>豐原</option>
+                                        <option>大里</option>
+                                        <option>太平</option>
+                                        <option>清水</option>
+                                        <option>沙鹿</option>
+                                        <option>大甲</option>
+                                        <option>東勢</option>
+                                        <option>梧棲</option>
+                                        <option>烏日</option>
+                                        <option>神岡</option>
+                                        <option>大肚</option>
+                                        <option>大雅</option>
+                                        <option>后里</option>
+                                        <option>霧峰</option>
+                                        <option>潭子</option>
+                                        <option>龍井</option>
+                                        <option>外埔</option>
+                                        <option>和平</option>
+                                        <option>石崗</option>
+                                        <option>大安</option>
+                                        <option>新社</option>
                                     </select>
                                 </div>
                                 <div className={comm.level}>
@@ -137,9 +238,6 @@ const Search = () => {
                                 <h5>縣市</h5>
                                 <select style={{ width: '150px' }}>
                                     <option>台中</option>
-                                    <option>彰化</option>
-                                    <option>南投</option>
-                                    <option>苗栗</option>
                                 </select>
                             </div>
                             <div className={comm}>
@@ -149,6 +247,31 @@ const Search = () => {
                                     <option>西屯</option>
                                     <option>西</option>
                                     <option>東</option>
+                                    <option>中</option>
+                                    <option>南</option>
+                                    <option>北</option>
+                                    <option>北屯</option>
+                                    <option>豐原</option>
+                                    <option>大里</option>
+                                    <option>太平</option>
+                                    <option>清水</option>
+                                    <option>沙鹿</option>
+                                    <option>大甲</option>
+                                    <option>東勢</option>
+                                    <option>梧棲</option>
+                                    <option>烏日</option>
+                                    <option>神岡</option>
+                                    <option>大肚</option>
+                                    <option>大雅</option>
+                                    <option>后里</option>
+                                    <option>霧峰</option>
+                                    <option>潭子</option>
+                                    <option>龍井</option>
+                                    <option>外埔</option>
+                                    <option>和平</option>
+                                    <option>石崗</option>
+                                    <option>大安</option>
+                                    <option>新社</option>
                                 </select>
                             </div>
                         </div>
@@ -170,7 +293,61 @@ const Search = () => {
                                 </div>
                                 <div className={comm.datatime}>
                                     <label htmlFor="">打球時段</label><br />
-                                    <input type="time" /> 至 <input type="time" />
+                                    <select>
+                                        <option>0</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                        <option>13</option>
+                                        <option>14</option>
+                                        <option>15</option>
+                                        <option>16</option>
+                                        <option>17</option>
+                                        <option>18</option>
+                                        <option>19</option>
+                                        <option>20</option>
+                                        <option>21</option>
+                                        <option>22</option>
+                                        <option>23</option>
+                                        <option>24</option>
+                                    </select><span className={comm.timespan}>:00</span>
+                                    至
+                                    <select>
+                                        <option>0</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                        <option>13</option>
+                                        <option>14</option>
+                                        <option>15</option>
+                                        <option>16</option>
+                                        <option>17</option>
+                                        <option>18</option>
+                                        <option>19</option>
+                                        <option>20</option>
+                                        <option>21</option>
+                                        <option>22</option>
+                                        <option>23</option>
+                                        <option>24</option>
+                                    </select><span className={comm.timespan}>:00</span>
                                 </div>
                             </div>
                             {/* 中層 */}
@@ -215,9 +392,6 @@ const Search = () => {
                                 <h5>縣市</h5>
                                 <select style={{ width: '150px' }}>
                                     <option>台中</option>
-                                    <option>彰化</option>
-                                    <option>南投</option>
-                                    <option>苗栗</option>
                                 </select>
                             </div>
                             <div className={comm}>
@@ -227,6 +401,31 @@ const Search = () => {
                                     <option>西屯</option>
                                     <option>西</option>
                                     <option>東</option>
+                                    <option>中</option>
+                                    <option>南</option>
+                                    <option>北</option>
+                                    <option>北屯</option>
+                                    <option>豐原</option>
+                                    <option>大里</option>
+                                    <option>太平</option>
+                                    <option>清水</option>
+                                    <option>沙鹿</option>
+                                    <option>大甲</option>
+                                    <option>東勢</option>
+                                    <option>梧棲</option>
+                                    <option>烏日</option>
+                                    <option>神岡</option>
+                                    <option>大肚</option>
+                                    <option>大雅</option>
+                                    <option>后里</option>
+                                    <option>霧峰</option>
+                                    <option>潭子</option>
+                                    <option>龍井</option>
+                                    <option>外埔</option>
+                                    <option>和平</option>
+                                    <option>石崗</option>
+                                    <option>大安</option>
+                                    <option>新社</option>
                                 </select>
                             </div>
                         </div>
@@ -240,7 +439,61 @@ const Search = () => {
                                 </div>
                                 <div className={comm.datatime}>
                                     <label htmlFor="">打球時段</label><br />
-                                    <input type="time" /> 至 <input type="time" />
+                                    <select>
+                                        <option>0</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                        <option>13</option>
+                                        <option>14</option>
+                                        <option>15</option>
+                                        <option>16</option>
+                                        <option>17</option>
+                                        <option>18</option>
+                                        <option>19</option>
+                                        <option>20</option>
+                                        <option>21</option>
+                                        <option>22</option>
+                                        <option>23</option>
+                                        <option>24</option>
+                                    </select><span className={comm.timespan}>:00</span>
+                                    至
+                                    <select>
+                                        <option>0</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                        <option>13</option>
+                                        <option>14</option>
+                                        <option>15</option>
+                                        <option>16</option>
+                                        <option>17</option>
+                                        <option>18</option>
+                                        <option>19</option>
+                                        <option>20</option>
+                                        <option>21</option>
+                                        <option>22</option>
+                                        <option>23</option>
+                                        <option>24</option>
+                                    </select><span className={comm.timespan}>:00</span>
                                 </div>
                             </div>
                             {/* 中層 */}

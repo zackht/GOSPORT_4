@@ -92,7 +92,7 @@ const Handya = () =>{
       const[mes,setmes] = useState([]);
       const sendmsg = () => {
         // setmes([]);
-        //	socket.emit(“要對 server 發送的事件名稱”,data)
+        	// socket.emit(“要對 server 發送的事件名稱”,data)
         socket.emit("send_mesg",{message})
         // console.log(messagereceive);
       }
