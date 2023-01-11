@@ -9,37 +9,37 @@ app.listen(3001 , ()=>{
 
 //阿柯聊天室
 
-const http = require('http');
-const { Server } = require('socket.io');
-const server = http.createServer(app);
-const io = new Server(server,{
-  cors :{
-    origin:"http://localhost:3000",
-    methods:["GET,POST"],
-  }
-})
-//建立連線
-var datas = [
-  {message: "Welcome!"  }
-]
-io.on("connection",(socket)=>{
-  console.log(`User Connected:${socket.id}`);
-  //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
-  io.emit("receive_message",datas);
+// const http = require('http');
+// const { Server } = require('socket.io');
+// const server = http.createServer(app);
+// const io = new Server(server,{
+//   cors :{
+//     origin:"http://localhost:3000",
+//     methods:["GET,POST"],
+//   }
+// })
+// //建立連線
+// var datas = [
+//   {message: "Welcome!"  }
+// ]
+// io.on("connection",(socket)=>{
+//   console.log(`User Connected:${socket.id}`);
+//   //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
+//   io.emit("receive_message",datas);
 
-    socket.on("send_mesg",(data)=>{
-      //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
+//     socket.on("send_mesg",(data)=>{
+//       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
       
-      console.log(data);
-      datas.push(data)
-      io.emit("receive_message",[data]);
-io.emit("receive_message",datas);
-  })
-})
+//       console.log(data);
+//       datas.push(data)
+//       io.emit("receive_message",[data]);
+// io.emit("receive_message",datas);
+//   })
+// })
 
-server.listen(3002,()=>{
-  console.log('ok, server is running on port 3002');
-})
+// server.listen(3002,()=>{
+//   console.log('ok, server is running on port 3002');
+// })
 //阿柯聊天室
 
 const cors = require('cors');

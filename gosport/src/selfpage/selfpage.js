@@ -10,27 +10,32 @@ import './selfpage.css'
 
 const Selfpage = () => {
     let [userInfo, setUserInfo] = useState([{
+        activeTime:'',
         username: '預備中',
         userdescribe: '',
         tname: '',
-        userimg:{data:''}
+        userimg: { data: '' },
+        badminton: '',
+        volleyball: '',
+        tabletennis: ''
     }]);
     // 讀取個人資料
     const account = Cookies.get('token');
     useEffect(() => {
+        console.log(account)
         Axios.post("http://localhost:3001/selfinfo", {
             account: account,
         }).then((response) => {
             console.log(response.data);
             setUserInfo(response.data)
         });
-    }, []);
+    }, [account]);
     //球隊
     let restname = userInfo.map(function (item, index) { return item.tname })
     const alltname = Array.from(new Set(restname.filter((x, i, self) => self.indexOf(x) === i)));
     // 照片
     const [userurl, setUserurl] = useState();
-    useEffect(()=>{
+    useEffect(() => {
         var u8Arr = new Uint8Array(userInfo[0].userimg.data);
         var blob = new Blob([u8Arr], { type: "image/jpeg" });
         var fr = new FileReader
@@ -38,13 +43,13 @@ const Selfpage = () => {
             setUserurl(fr.result);
         };
         fr.readAsDataURL(blob);
-    },[userInfo])
-    
+    }, [userInfo])
+
     // 徽章
     let sta = userInfo.map((item) => { return item.badgeid })
     const allstar = Array.from(new Set(sta.filter((x, i, self) => self.indexOf(x) === i)));
-    console.log(allstar)
-    
+    // console.log(allstar)
+
     return (
         <React.Fragment>
             {/* 主體 */}
@@ -56,7 +61,11 @@ const Selfpage = () => {
                             <div>{userInfo[0].username}</div>
                             {/* <div>aaa</div> */}
                             <div>程度</div>
-                            <div>羽球初階、桌球新手、網球初階</div>
+                            <div>
+                                羽球{userInfo[0].badminton}、
+                                桌球{userInfo[0].tabletennis}、
+                                排球{userInfo[0].volleyball}
+                            </div>
                             <div>球隊</div>
                             <div>
                                 {alltname.map(function (item, index) { return <span key={index}>{item}&nbsp;&nbsp;</span> })}
