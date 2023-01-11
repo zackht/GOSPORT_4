@@ -1,35 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import pay from './pay.module.css';
+import DateSearch from './dateSearch';
 
 export default function Pay(params) {
     return(
         <>
             {/* 支出 */}
             <div className={pay.pay}>
-                <div className={pay.search}>
-                    <form action="">
-                        <div className={pay.sTitle}>日期區間</div>
-                        <input type="date" name="" id=""/>
-                        <input type="date" name="" id=""/>
-                        <div className={pay.sTitle}>訂單日期</div>
-                        <div className={pay.sDate}>
-                            <div>2022/12/31</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                            <div>2022/12/29</div>
-                        </div>
-                        <button>搜尋</button>
-                    </form>
-                </div>
+
+                {/* 日期搜索 */}
+                <DateSearch/>
 
                 {/* 訂單資訊 */}
                 <div className={pay.order}>

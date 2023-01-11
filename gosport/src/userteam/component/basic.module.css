@@ -27,19 +27,6 @@
     align-items: center;
     justify-content: center;
 }
-/* 照片 容器 */
-.basic>div:nth-of-type(1){
-    overflow: hidden;
-    height: 200px;
-    width: 500px;
-    margin-bottom: 20px;
-}
-/* 照片 */
-.mBimg {
-    width: 500px;
-    position: relative;
-    
-}
 /* 大標題 */
 .mBigTitle {
     font-family: 'Noto Sans TC';
@@ -63,4 +50,16 @@
     font-weight: 400;
     color: rgb(56, 56, 56);
     margin-bottom: 10px;
+}
+/* 照片 容器 */
+.basic>:last-child{
+    overflow: hidden;
+    height: 300px;
+    width: 100%;
+    margin-top: 30px;
+}
+/* 照片 */
+.mBimg {
+    width: 100%;
+    position: relative;
 }
