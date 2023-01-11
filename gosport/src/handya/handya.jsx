@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useRef } from 'react';
 import cc from './cc.module.css';
 import Axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -91,7 +91,7 @@ const Handya = () =>{
       const[messagereceive,setmessagereceive] = useState("");
       const[mes,setmes] = useState([]);
       const sendmsg = () => {
-        setmes([]);
+        // setmes([]);
         //	socket.emit(“要對 server 發送的事件名稱”,data)
         socket.emit("send_mesg",{message})
         // console.log(messagereceive);
@@ -103,8 +103,23 @@ const Handya = () =>{
              setmes(data);
             //  console.log(data)
             //  console.log(mes)
-         setmessagereceive(data.message);})},[socket]);
+         ;})},[socket]);
 
+
+         const messagesEnd = useRef(null);
+
+         const scrollToBottom = () => {
+           if (messagesEnd && messagesEnd.current) {
+             messagesEnd.current.scrollIntoView({ behavior: 'smooth' });
+           }
+         };
+       
+         useEffect(() => {
+           scrollToBottom();
+         }, []);
+
+          
+            
         return (
         <React.Fragment>
     <div className={`${cc.dd1} container-fluid`}>
@@ -137,15 +152,15 @@ const Handya = () =>{
             </div>
         </div>
 
-  <input type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
+  {/* <input type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
   
 <button onClick={sendmsg}>send</button>
 
  {mes.map((v,k)=>{
-    return(<span>{v.message}</span>)
+    return(<p>{v.message}</p>)
     
     console.log(v.message);
-})}
+})} */}
 
 
 
@@ -475,24 +490,26 @@ const Handya = () =>{
         </div>
     </div>
 
-    <div className={cc.d130}>
-    </div>
-
-
-    
-    {/* <div class="footer">
-        <div class="fContent">
-            <div>Copyright © 2022 GOsport. 保留一切權利。</div>
-        </div>
+    {/* <div className={cc.d146}>
     </div> */}
 
-
-        </React.Fragment >
+    <div className={cc.d148}>
+       <button className={`${cc.d147}`}>大廳聊天</button>
+        <div ref={messagesEnd} className={cc.d130}>
+        {mes.map((v,k)=>{
+    return(<p>{v.message}</p>)
+    
+    console.log(v.message);
+})}
+        </div>
+        <input className={cc.d149} type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
+        <button className={cc.d150} onClick={sendmsg}>send</button>
+    </div>
+      </React.Fragment >
     
         );
     }
 
-    
 //     changerent =() =>{
 // let newstate = {...this.state};
 // newstate.rent=true;

@@ -25,14 +25,15 @@ var datas = [
 io.on("connection",(socket)=>{
   console.log(`User Connected:${socket.id}`);
   //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
-  io.emit("receive_message",datas);
+  // io.emit("receive_message",datas);
 
     socket.on("send_mesg",(data)=>{
       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
       
       console.log(data);
+      // console.log(datas);
       datas.push(data)
-      io.emit("receive_message",[data]);
+      // io.emit("receive_message",[data]);
 io.emit("receive_message",datas);
   })
 })
