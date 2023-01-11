@@ -49,6 +49,7 @@ body {
     float: left;
     outline: none;
 }
+
 /* 
 .tablink:hover {
     background-color: #777;
@@ -227,6 +228,10 @@ body {
     margin-left: 190px;
 } */
 
+.timespan {
+    font-size: 20px;
+    /* text-decoration: underline; */
+}
 
 
 

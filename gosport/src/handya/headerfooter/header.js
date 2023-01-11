@@ -89,7 +89,7 @@ logsigchange('none')
                 </div>
                 <div className="nRight">
                     <div id={splitPathname[2] === "index" ? "tabline" : ""}>
-                        <Link to='/gosport/index'>首頁</Link>
+                        <Link to='/gosport'>首頁</Link>
                     </div>
                     <div id={splitPathname[2] === "rent" ? "tabline" : ""}>
                         <Link to='/gosport/rent'>租場地</Link>

@@ -39,11 +39,13 @@ const Selfalter = () => {
 
     // 讀取用戶資訊
     const account = Cookies.get('token');
-    const [userInfo, setUserInfo] = useState({ userimg: { data: '' } });
+    const [userInfo, setUserInfo] = useState({ userimg: { data: '' }});
+    const [userInfoli, setUserInfoli] = useState([]);
     useEffect(() => {
         Axios.post("http://localhost:3001/selfinfo", {
             account: account,
         }).then((response) => {
+            setUserInfoli(response.data)
             setUserInfo(response.data[0])
             console.log(response.data[0])
             setEmail(response.data[0].email)
@@ -52,8 +54,11 @@ const Selfalter = () => {
             // setImageSrc(response.data[0].userimg)
             setTel(response.data[0].tel)
             setDescribe(response.data[0].userdescribe)
+            setBdegree(response.data[0].badminton)
+            setTdegree(response.data[0].tabletennis)
+            setVdegree(response.data[0].volleyball)
         });
-    }, []);
+    }, [account]);
 
     // 照片自資料庫讀取
     const [imageSrc, setImageSrc] = useState('');
@@ -77,7 +82,7 @@ const Selfalter = () => {
 
 
     // 相片上傳 同時顯示 
-    const[picSourse,setPicSourse]=useState(imageSrc);
+    // const[picSourse,setPicSourse]=useState(imageSrc);
     const handleOnPreview = (event) => {
         const file = event.target.files[0];
         const reader = new FileReader();
@@ -113,18 +118,36 @@ const Selfalter = () => {
             email: email,
             password: password,
             username: username,
-            userimg: picSourse,
+            userimg: imageSrc, // picSourse
             tel: tel,
             userdescribe: describe,
+            badminton:Bdegree,
+            volleyball:Vdegree,
+            tabletennis:Tdegree,
+
         }).then((response) => {
             console.log(response);
-            // window.location = '/gosport/user';
+            window.location = '/gosport/user';
         })
     }
-
-
-
-
+// 程度
+console.log(userInfo)
+const [Bdegree,setBdegree]= useState('新手');
+const BdegreeCh = (e) =>{
+    setBdegree(e.target.value)
+}
+const [Tdegree,setTdegree] = useState('新手')
+const TdegreeCh = (e)=>{
+    setTdegree(e.target.value)
+}
+const [Vdegree,setVdegree] = useState('新手')
+const VdegreeCh = (e)=>{
+    setVdegree(e.target.value)
+}
+// 徽章
+let sta = userInfoli.map((item) => { return item.badgeid })
+const allstar = Array.from(new Set(sta.filter((x, i, self) => self.indexOf(x) === i)));
+console.log(allstar)
     return (
         <React.Fragment>
             {/* 主體 */}
@@ -160,28 +183,25 @@ const Selfalter = () => {
                                 <label className='alter_label'>我的程度</label><br />
                                 <div className="alter_degree">
                                     <div>羽球</div>
-                                    <input type="radio" name="Badmin" id="newB" /><label htmlFor="newB">新手</label>
-                                    <input type="radio" name="Badmin" id="nomalB" /><label htmlFor="nomalB">初階</label>
-                                    <input type="radio" name="Badmin" id="highB" /><label htmlFor="highB">高手</label>
+                                    <input type="radio" name="Badmin" id="newB" value="新手" checked={Bdegree === '新手'} onChange={BdegreeCh}/><label htmlFor="newB">新手</label>
+                                    <input type="radio" name="Badmin" id="nomalB" value="初階" checked={Bdegree === '初階'} onChange={BdegreeCh}/><label htmlFor="nomalB">初階</label>
+                                    <input type="radio" name="Badmin" id="highB" value="高手" checked={Bdegree === '高手'} onChange={BdegreeCh}/><label htmlFor="highB">高手</label>
                                 </div>
                                 <div className="alter_degree">
                                     <div>桌球</div>
-                                    <input type="radio" name="Ttennis" id="newT" /><label htmlFor="newT">新手</label>
-                                    <input type="radio" name="Ttennis" id="nomalT" /><label htmlFor="nomalT">初階</label>
-                                    <input type="radio" name="Ttennis" id="highT" /><label htmlFor="highT">高手</label>
+                                    <input type="radio" name="Ttennis" id="newT" value="新手" checked={Tdegree === '新手'} onChange={TdegreeCh}/><label htmlFor="newT">新手</label>
+                                    <input type="radio" name="Ttennis" id="nomalT" value="初階" checked={Tdegree === '初階'} onChange={TdegreeCh}/><label htmlFor="nomalT">初階</label>
+                                    <input type="radio" name="Ttennis" id="highT" value="高手" checked={Tdegree === '高手'} onChange={TdegreeCh}/><label htmlFor="highT">高手</label>
                                 </div>
                                 <div className="alter_degree">
                                     <div>排球</div>
-                                    <input type="radio" name="Vodi" id="newV" /><label htmlFor="newV">新手</label>
-                                    <input type="radio" name="Vodi" id="nomalV" /><label htmlFor="nomalV">初階</label>
-                                    <input type="radio" name="Vodi" id="highV" /><label htmlFor="highV">高手</label>
+                                    <input type="radio" name="Vodi" id="newV" value="新手" checked={Vdegree === '新手'} onChange={VdegreeCh}/><label htmlFor="newV">新手</label>
+                                    <input type="radio" name="Vodi" id="nomalV" value="初階" checked={Vdegree === '初階'} onChange={VdegreeCh}/><label htmlFor="nomalV">初階</label>
+                                    <input type="radio" name="Vodi" id="highV" value="高手" checked={Vdegree === '高手'} onChange={VdegreeCh}/><label htmlFor="highV">高手</label>
                                 </div>
                                 <label className='alter_label'>我的徽章</label>
                                 <div className="alter_mark">
-                                    <embed src={star} type="" />
-                                    <embed src={star} type="" />
-                                    <embed src={star} type="" />
-                                    <embed src={star} type="" />
+                                {allstar.map(item=><embed key={item} src={star}></embed>)}
                                 </div>
                                 <label className='alter_label' htmlFor="account_describe">描述</label><br />
                                 <textarea className='alter_textarea' id="account_describe" value={describe} onChange={describeChange}></textarea><br />

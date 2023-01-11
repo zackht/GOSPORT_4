@@ -25,37 +25,38 @@ app.listen(3001 , ()=>{
 
 //阿柯聊天室
 
-// const http = require('http');
-// const { Server } = require('socket.io');
-// const server = http.createServer(app);
-// const io = new Server(server,{
-//   cors :{
-//     origin:"http://localhost:3000",
-//     methods:["GET,POST"],
-//   }
-// })
-// //建立連線
-// var datas = [
-//   {message: "Welcome!"  }
-// ]
-// io.on("connection",(socket)=>{
-//   console.log(`User Connected:${socket.id}`);
-//   //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
-//   io.emit("receive_message",datas);
+const http = require('http');
+const { Server } = require('socket.io');
+const server = http.createServer(app);
+const io = new Server(server,{
+  cors :{
+    origin:"http://localhost:3000",
+    methods:["GET,POST"],
+  }
+})
+//建立連線
+var datas = [
+  {message: "Welcome!"  }
+]
+io.on("connection",(socket)=>{
+  console.log(`User Connected:${socket.id}`);
+  //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
+  // io.emit("receive_message",datas);
 
-//     socket.on("send_mesg",(data)=>{
+    socket.on("send_mesg",(data)=>{
 //       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
       
-//       console.log(data);
-//       datas.push(data)
-//       io.emit("receive_message",[data]);
-// io.emit("receive_message",datas);
-//   })
-// })
+      console.log(data);
+      // console.log(datas);
+      datas.push(data)
+      // io.emit("receive_message",[data]);
+io.emit("receive_message",datas);
+  })
+})
 
-// server.listen(3002,()=>{
-//   console.log('ok, server is running on port 3002');
-// })
+server.listen(3002,()=>{
+  console.log('ok, server is running on port 3002');
+})
 //阿柯聊天室
 
 const cors = require('cors');
@@ -325,9 +326,13 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
       // const userimg = req.body.userimg;
       const tel = req.body.tel;
       const userdescribe = req.body.userdescribe;
+      const badminton = req.body.badminton
+      const tabletennis = req.body.tabletennis;
+      const volleyball = req.body.volleyball;
       const account = req.body.account;
-      db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? WHERE `email`= ?",
-      [email,password,username,tel,userdescribe,account], (err, result) => {
+
+      db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? WHERE `email`= ?",
+      [email,password,username,tel,userdescribe,badminton,tabletennis,volleyball,account], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -336,6 +341,57 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
         
       });
     });
+    //會員零打文章搜尋
+  app.post("/findzoro", (req, res) => {
+    const userid = req.body.userid;
+    const starttime = req.body.stratDate;
+    const endtime = req.body.endDate;
+    db.query("SELECT * FROM `userarticle_zeroda` WHERE userid = ? AND date BETWEEN ? AND ?",[userid,starttime,endtime], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
+  //會員轉租文章搜尋
+  app.post("/findsub", (req, res) => {
+    const userid = req.body.userid;
+    const starttime = req.body.stratDate;
+    const endtime = req.body.endDate;
+    db.query("SELECT * FROM `userarticle_sublet` WHERE userid = ? AND date BETWEEN ? AND ?",[userid,starttime,endtime], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
+  // 取得留言數
+  app.post("/countsub", (req, res) => {
+    const articleid = req.body.articleid;
+    db.query("SELECT count(*)as a FROM articlemessage_sublet WHERE `articleid_sublet`= ?",[articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
+  app.post("/countzero", (req, res) => {
+    const articleid = req.body.articleid;
+    db.query("SELECT count(*)as a FROM articlemessage_zeroda WHERE `articleid_zeroda`= ?",[articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
 
     // 芝｜Basic 搜尋結果
     app.post('/teambasic', (req,res)=>{
@@ -381,4 +437,30 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
           }
       });
     });
+
+    //------------------
+      //
+      app.post('/searchzero', (req,res)=>{
+        const datetime = req.body.datetime;
+        const starttime = req.body.starttime;
+        const endtime = req.body.endtime;
+        const fee = req.body.fee;
+        const county = req.body.county;
+        const area = req.body.area;
+        const zerolevel = req.body.zerolevel;
+        const zeroinput = req.body.zeroinput;
+        db.query(
+          `SELECT username, county, area, fieldname, date, starttime, endtime, cost, level, number
+          FROM userarticle_zeroda, user 
+          WHERE userarticle_zeroda.userid = user.userid`,
+          [],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+          );
+      });
     
