@@ -354,9 +354,6 @@ app.post("/userinfo", (req, res) => {
     }
   });
 });
-
-
-
 //觀看個人資料
 app.post("/selfinfo", (req, res) => {
   const account = req.body.account;
