@@ -50,7 +50,7 @@ io.on("connection",(socket)=>{
       // console.log(datas);
       datas.push(data)
       // io.emit("receive_message",[data]);
-      socket.broadcast.emit("receive_message",datas);
+      // socket.broadcast.emit("receive_message",datas);
       // socket.broadcast 自己收不到自己
       io.emit("receive_message",datas);
   })
