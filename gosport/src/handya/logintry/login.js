@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Axios from "axios";
-
+import loginimg from '../icon/快速搜尋.svg'
 
 const PageLogin = ({ saveToken,saveId}) => {
     // 輸入
@@ -47,7 +47,8 @@ const PageLogin = ({ saveToken,saveId}) => {
                     <input type="password" onChange={e => setPassword(e.target.value)}  />
                 </label>
                 <p>
-                    <button type='submit'>Submit</button>
+                    <button type='submit'><img src={loginimg}></img></button>
+                    
                 </p>
 
             </form>
