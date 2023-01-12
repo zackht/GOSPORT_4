@@ -225,25 +225,45 @@ const Backarticle2 = () => {
     const [teamtext, setteamtext] = useState('');
     const [teamfile, setteamfile] = useState();
     const ttt2 = () => {
-        const teamData = new FormData();
-        console.log(teamfile);
-        teamData.append('teamfile',teamfile);
-        teamData.append('teamstartdate',teamstartdate);
-        teamData.append('teamenddate',teamenddate);
-        teamData.append('teamstarttime',teamstarttime);
-        teamData.append('teamendtime',teamendtime);
-        teamData.append('teamtype2',teamtype2);
-        teamData.append('teamtitle',teamtitle);
-        teamData.append('teamlocation',teamlocation);
-        teamData.append('teampay',teampay);
-        teamData.append('teamtext',teamtext);
-        teamData.append('teameventid',teameventid);
-        Axios.post("http://localhost:3001/teamupdate",teamData,{
-            headers: {'Content-Type': 'multipart/form-data'},
-        }).then((response) => {
-            setdiv2(!div2);
-            alert("更新成功");
-        });
+        if(teamfile){
+            const teamData = new FormData();
+            console.log(teamfile);
+            teamData.append('teamfile',teamfile);
+            teamData.append('teamstartdate',teamstartdate);
+            teamData.append('teamenddate',teamenddate);
+            teamData.append('teamstarttime',teamstarttime);
+            teamData.append('teamendtime',teamendtime);
+            teamData.append('teamtype2',teamtype2);
+            teamData.append('teamtitle',teamtitle);
+            teamData.append('teamlocation',teamlocation);
+            teamData.append('teampay',teampay);
+            teamData.append('teamtext',teamtext);
+            teamData.append('teameventid',teameventid);
+            Axios.post("http://localhost:3001/teamupdate",teamData,{
+                headers: {'Content-Type': 'multipart/form-data'},
+            }).then((response) => {
+                setdiv2(!div2);
+                alert("更新成功");
+            });
+        }else{
+            const teamData2= new FormData();
+            teamData2.append('teamstartdate',teamstartdate);
+            teamData2.append('teamenddate',teamenddate);
+            teamData2.append('teamstarttime',teamstarttime);
+            teamData2.append('teamendtime',teamendtime);
+            teamData2.append('teamtype2',teamtype2);
+            teamData2.append('teamtitle',teamtitle);
+            teamData2.append('teamlocation',teamlocation);
+            teamData2.append('teampay',teampay);
+            teamData2.append('teamtext',teamtext);
+            teamData2.append('teameventid',teameventid);
+            Axios.post("http://localhost:3001/teamupdate2",teamData2,{
+                headers: {'Content-Type': 'multipart/form-data'},
+            }).then((response) => {
+                setdiv2(!div2);
+                alert("更新成功");
+            });
+        }
     }
     const [teamimg, setteamimg] = useState();
     const ttt3 =(e)=>{

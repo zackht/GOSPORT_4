@@ -80,8 +80,8 @@ export default function BasicEdit(props) {
     }
     // 更新 資料 to資料庫
     const updateBasic =()=>{
-        updateBasicText;
-        updateBasicImg;
+        updateBasicText();
+        updateBasicImg();
     }
     // 更新 文字資料 to 資料庫
     const updateBasicText= () => {

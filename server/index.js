@@ -233,7 +233,7 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
         }
       });
     });
-    // 後臺球隊編輯儲存
+    // 後臺球隊編輯儲存   有圖片
     app.post("/teamupdate",upload.single('teamfile'), (req, res) => {
       const teamstartdate = req.body.teamstartdate;
       const teamenddate = req.body.teamenddate;
@@ -247,6 +247,27 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
       const teameventid = req.body.teameventid;
       db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,pay=?,text=?,teameventimg=?  where teameventid=?"
       ,[teamstartdate,teamenddate,teamstarttime,teamendtime,teamtype2,teamtitle,teamlocation,teampay,teamtext,req.file.buffer,teameventid], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    // 後臺球隊編輯儲存   沒圖片
+    app.post("/teamupdate2", (req, res) => {
+      const teamstartdate = req.body.teamstartdate;
+      const teamenddate = req.body.teamenddate;
+      const teamstarttime = req.body.teamstarttime;
+      const teamendtime = req.body.teamendtime;
+      const teamtype2 = req.body.teamtype2;
+      const teamtitle = req.body.teamtitle;
+      const teamlocation = req.body.teamlocation;
+      const teampay = req.body.teampay;
+      const teamtext = req.body.teamtext;
+      const teameventid = req.body.teameventid;
+      db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,pay=?,text=? where teameventid=?"
+      ,[teamstartdate,teamenddate,teamstarttime,teamendtime,teamtype2,teamtitle,teamlocation,teampay,teamtext,teameventid], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -285,7 +306,7 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
       const rentselectcounty = req.body.rentselectcounty;
       const rentselectarea = req.body.rentselectarea;
       const fieldname = req.body.fieldname;
-      if(fieldname==''){
+      if(fieldname=='' && renttime && renttime1 ){
         db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =?"
         ,[renttime,renttime1,rentselectarea,rentselectcounty], (err, result) => {
           if (err) {
@@ -294,9 +315,18 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
             res.send(result);
           }
         });
-      }else{
+      }else if(fieldname && renttime && renttime1 ){
         db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =? AND fieldname LIKE ?"
         ,[renttime,renttime1,rentselectarea,rentselectcounty,fieldname], (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        });
+      }else if(fieldname=='' && !renttime ){
+        db.query("SELECT * FROM userarticle_sublet where area = ? AND county =? "
+        ,[rentselectarea,rentselectcounty], (err, result) => {
           if (err) {
             console.log(err);
           } else {
