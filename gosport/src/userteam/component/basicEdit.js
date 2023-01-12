@@ -24,7 +24,7 @@ export default function BasicEdit(props) {
     // 尚無照片 顯示「上傳照片...」
     const [uploadimg, setUploadimg] = useState(img.upload_c);
 
-    // 查詢資料庫
+    // 查 資料庫
     const handleBasicResult = async () => {
         let res = await Axios.post("http://localhost:3001/teambasic",{
             userid: userid,
@@ -42,6 +42,8 @@ export default function BasicEdit(props) {
         setText(res.data[0].text);
         // 轉 照片格式
         const u8Arr = new Uint8Array(res.data[0].teamimg.data);
+        // console.log(res.data[0].teamimg);
+        // console.log(typeof res.data[0].teamimg.data);
         const blob = new Blob([u8Arr],{type:"image/jpeg"});
         const fr = new FileReader;
         fr.onload = function () {
@@ -76,11 +78,16 @@ export default function BasicEdit(props) {
             setUploadimg('none');
         }, false);
     }
-
-    // 更新資料庫
-    const updateBasic= () => {
-        Axios.post("http://localhost:3001/updateteambasic",{
+    // 更新 資料 to資料庫
+    const updateBasic =()=>{
+        updateBasicText();
+        updateBasicImg();
+    }
+    // 更新 文字資料 to 資料庫
+    const updateBasicText= () => {
+        Axios.post("http://localhost:3001/updatebasictext",{
             teamid:     teamid,
+
             tname:      tname,
             sidename:   sidename,
             week:       week,
@@ -89,11 +96,18 @@ export default function BasicEdit(props) {
             type:       type,
             level:      level,
             fee:        fee,
-            text:       text,
-            teamimg:    teamimg
+            text:       text
         }).then(()=>{
             alert("更新成功");
-        // <Link to={`/gosport/user/myteam/basic`}/>
+        })
+    }
+    // 更新 照片 to 資料庫
+    const updateBasicImg= () => {
+        Axios.post("http://localhost:3001/updatebasicimg",{
+            teamid:  teamid,
+            teamimg: teamimg
+        }).then(()=>{
+            alert("更新成功");
         })
     }
     

@@ -693,7 +693,7 @@ right: 25px;
 .d127{padding-right: 40px;font-size: 14px;}
 .d128{background-color:rgb(245,245,245); border-radius: 99px;font-size: 14px;}
 .d129{padding-right: 40px;font-size: 14px;}
-.d130{height: 8vh;}
+
 .d131{margin:50px 0 25px 0 ;}
 .d132{margin: 0px; font-size:24px; font-weight: 500;}
 .d133{width: 426px; height: 60px; border-radius: 99px; font-size: 30px; margin-bottom: 25px;border: none; background-color: rgb(245, 245, 245);text-align: center}
@@ -711,3 +711,12 @@ right: 25px;
 .d143{float: right; margin-right: 10px;color:rgb(170, 170, 170);}
 .d144{margin-top:0px; display: flex; justify-content: space-between;}
 .d145{height: 25vh;}
+.d146{height: 8vh;}
+.d148{background-color: white;border: #e64637 solid 2px;height: 40vh;width:350px;position: fixed; left: 1090px;bottom: 8vh;
+    z-index: 500;overflow-x: hidden;}
+/* .d130{background-color: white;border: #e64637 solid 2px;height: 40vh;width:350px;overflow: scroll;position: fixed; left: 1090px;bottom: 8vh;
+    z-index: 500;overflow-x: hidden;} */
+    .d130{margin-bottom: 33px;}
+.d147{width: 350px;border: 2px solid rgb(230, 70, 55); background-color: white; color:  rgb(230, 70, 55); font-size: large; font-weight: bolder;position: fixed;left: 1090px; top: 468px;}
+.d149{position: fixed; bottom: 8vh;left: 1090px;}
+.d150{position: fixed;bottom: 8vh;left: 1300px;}

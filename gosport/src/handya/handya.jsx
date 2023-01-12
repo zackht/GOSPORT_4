@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useRef } from 'react';
 import cc from './cc.module.css';
 import Axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -87,24 +87,40 @@ const Handya = () =>{
             console.log(e.target.value);
         })
       };
+      const newref = useRef(null);
+      const bottomref = useRef(null);
       const[message,setmessage] =useState("");
       const[messagereceive,setmessagereceive] = useState("");
       const[mes,setmes] = useState([]);
       const sendmsg = () => {
-        setmes([]);
-        //	socket.emit(“要對 server 發送的事件名稱”,data)
-        socket.emit("send_mesg",{message})
-        // console.log(messagereceive);
+        // bottomref.current?.scrollIntoView({behavior: 'smooth'});
+        // setmes([]);
+        	// socket.emit(“要對 server 發送的事件名稱”,data)
+        socket.emit("send_mesg",{message});
+        
       }
       useEffect(()=>{
         //	socket.on(“監聽來自server的receive_message事件名稱”, callback)
          socket.on("receive_message",(data)=>{
             //  console.log(mes);
              setmes(data);
+                     
             //  console.log(data)
-            //  console.log(mes)
-         setmessagereceive(data.message);})},[socket]);
+            // bottomref.current?.scrollIntoView({behavior: 'smooth'});
+            // scrollToMyRef();
+         ;})},[socket]);
+      useEffect(()=>{
+        bottomref.current.scrollIntoView({behavior: 'smooth'});
+        // newref.current?.lastElementChild?.scrollIntoView();
 
+      },[mes]);
+
+    //  const scrollToMyRef = () => {
+    //     const scroll =
+    //       newref.current.scrollHeight -
+    //       newref.current.clientHeight;
+    //     newref.current.scrollTo(0, scroll);
+    //   };
         return (
         <React.Fragment>
     <div className={`${cc.dd1} container-fluid`}>
@@ -142,7 +158,7 @@ const Handya = () =>{
 <button onClick={sendmsg}>send</button>
 
  {mes.map((v,k)=>{
-    return(<span>{v.message}</span>)
+    return(<p>{v.message}</p>)
     
     console.log(v.message);
 })}
@@ -475,24 +491,28 @@ const Handya = () =>{
         </div>
     </div>
 
-    <div className={cc.d130}>
-    </div>
-
-
-    
-    {/* <div class="footer">
-        <div class="fContent">
-            <div>Copyright © 2022 GOsport. 保留一切權利。</div>
-        </div>
+    {/* <div className={cc.d146}>
     </div> */}
 
+    <div className={cc.d148}>
+       <button className={`${cc.d147}`}>大廳聊天</button>
+        <div ref={newref} className={cc.d130}>
+        {mes.map((v,k)=>{
+            
+    return(<p>{v.message}</p>)
 
-        </React.Fragment >
+    console.log(v.message);
+})}
+<div ref={bottomref}></div>
+        </div>
+        <input className={cc.d149} type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
+        <button className={cc.d150} onClick={sendmsg}>send</button>
+    </div>
+      </React.Fragment >
     
         );
     }
 
-    
 //     changerent =() =>{
 // let newstate = {...this.state};
 // newstate.rent=true;
