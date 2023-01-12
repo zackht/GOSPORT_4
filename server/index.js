@@ -317,6 +317,38 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
         
       });
     });
+    app.post("/self", (req, res) => {
+      const id = req.body.userid;
+      db.query(" SELECT * FROM `user` WHERE user.userid = ?;",[id], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+        
+      });
+    });
+    app.post("/selfbadge", (req, res) => {
+      const id = req.body.userid;
+      db.query(" SELECT * FROM userbadge , userbadgeimg WHERE userbadge.userid = ? AND userbadge.badgeid = userbadgeimg.badgeid;",[id], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+        
+      });
+    });app.post("/selfteam", (req, res) => {
+      const id = req.body.userid;
+      db.query(" SELECT * FROM userteam WHERE userteam.userid = ?;",[id], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+        
+      });
+    });
 
     //更新個人資料
     app.post("/selfalter", (req, res) => {
@@ -341,6 +373,21 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
         
       });
     });
+     //會員訂單搜尋 進行中
+  app.post("/ordering", (req, res) => {
+    const userid = req.body.userid;
+    const starttime = req.body.stratFind;
+    const endtime = req.body.endFind;
+    db.query("SELECT * FROM `userorder` WHERE now() BETWEEN startdate AND enddate AND orderdate BETWEEN ? AND ? AND userid = 1",
+    [starttime,endtime,userid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+      
+    });
+  });
     //會員零打文章搜尋
   app.post("/findzoro", (req, res) => {
     const userid = req.body.userid;
