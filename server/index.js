@@ -6,13 +6,13 @@ const upload = multer({
   limits: {
     fileSize: 2 * 1024 * 1024,  // 限制 2 MB
   },
-  fileFilter (req, file, callback) {  // 限制檔案格式為 image
-    if (!file.mimetype.match(/^image/)) {
-      callback(new Error().message = '檔案格式錯誤');
-    } else {
-      callback(null, true);
-    }
-  }
+  // fileFilter (req, file, callback) {  // 限制檔案格式為 image
+  //   if (!file.mimetype.match(/^image/)) {
+  //     callback(new Error().message = '檔案格式錯誤');
+  //   } else {
+  //     callback(null, true);
+  //   }
+  // }
 });
 const app = express();
 const bodyParser = require('body-parser');
@@ -41,15 +41,18 @@ var datas = [
 io.on("connection",(socket)=>{
   console.log(`User Connected:${socket.id}`);
   //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
-  io.emit("receive_message",datas);
+  // io.emit("receive_message",datas);
 
     socket.on("send_mesg",(data)=>{
-      //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
+//       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
       
       console.log(data);
+      // console.log(datas);
       datas.push(data)
-      io.emit("receive_message",[data]);
-io.emit("receive_message",datas);
+      // io.emit("receive_message",[data]);
+      socket.broadcast.emit("receive_message",datas);
+      // socket.broadcast 自己收不到自己
+      io.emit("receive_message",datas);
   })
 })
 
@@ -95,7 +98,7 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
       );
     })
     //  client測試
-    app.get("/employee", (req, res) => {
+    app.post("/employee", (req, res) => {
       db.query("SELECT * FROM user where userid = 1", (err, result) => {
         if (err) {
           console.log(err);
@@ -248,6 +251,30 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
         }
       });
     });
+    // 後台球隊刪除
+    app.post("/teamdelete", (req, res) => {
+      const teameventid = req.body.teameventid;
+      db.query("DELETE from teamevent where teameventid = ?"
+      ,[teameventid], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
+    // 後台轉租刪除
+    app.post("/rentdelete", (req, res) => {
+      const articleid_sublet = req.body.articleid_sublet;
+      db.query("DELETE from userarticle_sublet where articleid_sublet = ?"
+      ,[articleid_sublet], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
     //搜尋轉租 
     app.post("/rent", (req, res) => {
       const renttime = req.body.renttime;
@@ -301,9 +328,13 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
       // const userimg = req.body.userimg;
       const tel = req.body.tel;
       const userdescribe = req.body.userdescribe;
+      const badminton = req.body.badminton
+      const tabletennis = req.body.tabletennis;
+      const volleyball = req.body.volleyball;
       const account = req.body.account;
-      db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? WHERE `email`= ?",
-      [email,password,username,tel,userdescribe,account], (err, result) => {
+
+      db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? WHERE `email`= ?",
+      [email,password,username,tel,userdescribe,badminton,tabletennis,volleyball,account], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -313,7 +344,7 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
       });
     });
 
-    // 芝｜Basic 查資料庫
+    // 芝｜Basic 搜尋結果
     app.post('/teambasic', (req,res)=>{
       const userid = req.body.userid;
       const teamid = req.body.teamid;
@@ -374,4 +405,30 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
           }
       });
     });
+
+    //------------------
+      //
+      app.post('/searchzero', (req,res)=>{
+        const datetime = req.body.datetime;
+        const starttime = req.body.starttime;
+        const endtime = req.body.endtime;
+        const fee = req.body.fee;
+        const county = req.body.county;
+        const area = req.body.area;
+        const zerolevel = req.body.zerolevel;
+        const zeroinput = req.body.zeroinput;
+        db.query(
+          `SELECT username, county, area, fieldname, date, starttime, endtime, cost, level, number
+          FROM userarticle_zeroda, user 
+          WHERE userarticle_zeroda.userid = user.userid`,
+          [],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+          );
+      });
     

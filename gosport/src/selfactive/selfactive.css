@@ -125,6 +125,18 @@
     width: 27px;
     opacity: 0;
 }
+.selfactive .searchbox{
+    display: block;
+    position: relative;
+    top: 11px;
+    width: 100px;
+    height: 20px;
+    text-align: center;
+    padding: 4px;
+    font-size: 10px;
+    background-color: #E64637;
+    color: white;
+}
 
 .selectedDate {
     position: relative;
@@ -141,6 +153,8 @@
     margin: 15px 0px;
 }
 
+.selfactive .searchbox:hover,
+.selfactive .searchbox:focus,
 .showDate button:hover,
 .showDate button:focus {
     color: rgb(230, 70, 55);

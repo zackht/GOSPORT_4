@@ -203,6 +203,7 @@ const Backarticle2 = () => {
     var [teamedit, setteamedit] = useState([]);
     const ttt = (e) => {
         setdiv2(!div2);
+        console.log(e);
         Axios.post("http://localhost:3001/teamedit", {
             teameventid: e,
         }).then((response) => {
@@ -220,8 +221,6 @@ const Backarticle2 = () => {
     const [teamlocation, setteamlocation] = useState('');
     const [teampay, setteampay] = useState('');
     const [teamtext, setteamtext] = useState('');
-    //儲存圖片檔案base64字串 
-    const [teamimgstring, setteamimgstring] = useState('');
     const ttt2 = () => {
         Axios.post("http://localhost:3001/teamupdate", {
             teamstartdate: teamstartdate,
@@ -237,6 +236,10 @@ const Backarticle2 = () => {
             setdiv2(!div2);
             alert("更新成功");
         });
+    }
+    const [teamimg, setteamimg] = useState();
+    const ttt3 =(e)=>{
+        console.log(e[0]);
     }
     // 零打搜尋結果
     let title = null;
@@ -767,7 +770,7 @@ const Backarticle2 = () => {
                                 </div>
                                 <div className={backteam.div6}>
                                     <label htmlFor="inputfile" className={backteam.filelabel}>
-                                        <img src={teamurl} alt="" className={backteam.fileimg} /></label>
+                                        <img src={teamurl} alt="" className={backteam.fileimg} onChange={(e)=>{setteamimg(e.target.files)}}/></label>
                                     <input type="file" id='inputfile' className={backteam.file} />
                                 </div>
                             </div>
@@ -819,7 +822,7 @@ const Backarticle2 = () => {
                             </div>
                             <div className={`${backteam.div10} d-flex justify-content-around`}>
                                 <button className={backteam.button1} onClick={ddd2}>取消</button>
-                                <button className={backteam.button2} onClick={ttt2}>儲存</button>
+                                <button className={backteam.button2} onClick={()=>{ttt2();ttt3()}}>儲存</button>
                             </div>
                         </div>
                     );
