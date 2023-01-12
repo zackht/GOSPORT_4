@@ -7,12 +7,13 @@ import Cookies from 'js-cookie';
 import arrowup from '../icon/arrowup2.svg'
 
 const Ordering = () => {
-    // const [orderInfo, setOrderInfo] = useState("");
+    // 接取資料 起訖查詢時間 查詢人
+    const [orderInfo, setOrderInfo] = useState([{orderdate:'',orderid:''}]);
     const [stratDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const userid = Cookies.get('id');
-    
-    console.log(stratDate , endDate , userid)
+    // console.log(stratDate , endDate , userid)
+    // 資料查詢
     const getdata = () => {
         Axios.post("http://localhost:3001/ordering", {
             stratFind: stratDate,
@@ -20,8 +21,11 @@ const Ordering = () => {
             userid: userid
         }).then((response) => {
             console.log(response.data);
-            // setOrderInfo(response.data)
+            setOrderInfo(response.data)
         });
+    }
+    const showdata = ()=>{
+        console.log('a')
     }
     return (
         <React.Fragment>
@@ -36,14 +40,13 @@ const Ordering = () => {
                 </div>
                 <div>訂單日期</div>
                 <div className="showDate">
-                    <button>2022/12/31</button>
-                    <button>2023/1/31</button>
-                    <button>2023/1/31</button>
-                    <button>2023/1/31</button>
+                    {orderInfo.map(item => <button key={item.orderid} >{item.orderdate.substring(0,10)}</button> )}                    
+                    <button onClick={showdata}>2023/1/31</button>
                 </div>
             </div>
             {/* <!-- 訂單詳細 --> */}
-            <div className="ordermenu">
+            <div className='ordermenu' style={{display:'block'}}> 尚未選擇 </div>
+            <div className="ordermenu" style={{display:'none'}}>
                 <div>訂單日期</div>
                 <div>2022/12/31</div>
                 {/* <div style={{ display: "flex" }}>

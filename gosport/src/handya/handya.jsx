@@ -87,24 +87,40 @@ const Handya = () =>{
             console.log(e.target.value);
         })
       };
+      const newref = useRef(null);
       const bottomref = useRef(null);
       const[message,setmessage] =useState("");
       const[messagereceive,setmessagereceive] = useState("");
       const[mes,setmes] = useState([]);
       const sendmsg = () => {
-        bottomref.current?.scrollIntoView({behavior: 'smooth'});
+        // bottomref.current?.scrollIntoView({behavior: 'smooth'});
         // setmes([]);
         	// socket.emit(“要對 server 發送的事件名稱”,data)
-        socket.emit("send_mesg",{message})
+        socket.emit("send_mesg",{message});
+        
       }
       useEffect(()=>{
         //	socket.on(“監聽來自server的receive_message事件名稱”, callback)
          socket.on("receive_message",(data)=>{
             //  console.log(mes);
              setmes(data);
-             bottomref.current?.scrollIntoView({behavior: 'smooth'});
-             console.log(bottomref);
-             ;})},[socket]);
+
+           //  console.log(data)
+           // bottomref.current?.scrollIntoView({behavior: 'smooth'});
+           // scrollToMyRef();
+           ;})},[socket]);
+     useEffect(()=>{
+       bottomref.current.scrollIntoView({behavior: 'smooth'});
+       // newref.current?.lastElementChild?.scrollIntoView();
+
+     },[mes]);
+
+   //  const scrollToMyRef = () => {
+   //     const scroll =
+   //       newref.current.scrollHeight -
+   //       newref.current.clientHeight;
+   //     newref.current.scrollTo(0, scroll);
+   //   };
              
         return (
         <React.Fragment>
@@ -138,7 +154,7 @@ const Handya = () =>{
             </div>
         </div>
 
-  {/* <input type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
+  <input type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
   
 <button onClick={sendmsg}>send</button>
 
@@ -146,7 +162,7 @@ const Handya = () =>{
     return(<p>{v.message}</p>)
     
     console.log(v.message);
-})} */}
+})}
 
 
 
@@ -481,10 +497,11 @@ const Handya = () =>{
 
     <div className={cc.d148}>
        <button className={`${cc.d147}`}>大廳聊天</button>
-        <div className={cc.d130}>
+        <div ref={newref} className={cc.d130}>
         {mes.map((v,k)=>{
+            
     return(<p>{v.message}</p>)
-    
+
     console.log(v.message);
 })}
 <div ref={bottomref}></div>

@@ -14,6 +14,7 @@ export default function Basic(props) {
     
     // 資料庫查詢結果
     const [basicResult,setBasicResult] = useState(null);
+    console.log(basicResult);
 
     // 將資料放入basicResult
     const handleBasicResult = async () => {

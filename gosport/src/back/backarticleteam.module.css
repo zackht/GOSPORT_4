@@ -5,6 +5,7 @@
     width: 1060px;
     box-sizing: border-box;
     overflow-y: scroll;
+    overflow-x: hidden;
     background-color: white;
     align-items: center;
     margin-top: 50px;
