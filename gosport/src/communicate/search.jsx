@@ -34,30 +34,35 @@ const Search = () => {
     // var showModal = modaltoggle ? 'flex' : 'none';
 
     //零打搜尋
-    // const [datetime, setDatetime] = useState('');
-    // const [starttime, setStarttime] = useState('');
-    // const [endtime, setEndtime] = useState('');
-    // const [fee, setFee] = useState('');
-    // const [county, setCounty] = useState('');
-    // const [area, aetArea] = useState('');
-    // const [zerolevel, setZerolevel] = useState('');
+    let dt = new Date();
+    console.log(typeof dt.getMonth());
+    const [datetime, setDatetime] = useState('');
+    const [starttime, setStarttime] = useState('');
+    const [endtime, setEndtime] = useState('');
+    const [fee, setFee] = useState('');
+    const [county, setCounty] = useState('');
+    const [area, setArea] = useState('');
+    const [zerolevel, setZerolevel] = useState('');
     // const [zeroinput, setZeroinput] = useState('');
-    // const zerosearch = () => {
-    //     Axios.post("http://localhost:3001/searchzero", {
-    //         datetime: datetime,
-    //         starttime: starttime,
-    //         endtime: endtime,
-    //         fee: fee,
-    //         county: county,
-    //         area: area,
-    //         zerolevel: zerolevel,
-    //         zeroinput:zeroinput,
-    //     }).then((response) => {
-    //         console.log(response);
-    //     })
-    // }
+    const [zeroarticle, setZeroarticle] = useState([]);
+    const zerosearch = () => {
+        Axios.post("http://localhost:3001/searchzero", {
+            datetime: datetime,
+            starttime: starttime,
+            endtime: endtime,
+            fee: fee,
+            county: county,
+            area: area,
+            zerolevel: zerolevel,
+            // zeroinput: zeroinput,
+        }).then((response) => {
+            console.log(response);
+        })
+    }
 
-
+    const time  = [
+        '0:00','1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '0:00'
+    ]
 
 
     return (
@@ -93,7 +98,12 @@ const Search = () => {
                         <div className={`col-3 row ${comm.type}`}>
                             <div className={comm.type1}>類別</div> <br />
                             <div className={comm.img}><img src={badminton} alt="" /></div> <br />
-                            <div>羽球</div>
+                            <div>
+                                <select>
+                                    <option>羽球</option>
+                                    <option>籃球</option>
+                                </select>
+                            </div>
                         </div>
                         {/* <!-- 搜尋資料 --> */}
                         <div className={`col-9 ${comm.data}`}>
@@ -101,87 +111,38 @@ const Search = () => {
                             <div className={comm.time}>
                                 <div className={comm.date}>
                                     <label htmlFor="start_d_input">時間</label><br />
-                                    <input id="start_d_input" type="date" /><img className={comm.selectedDate} alt="" />
+                                    <input name="start_d_input" type="date" value="1990-1-13" onChange={(e) => setDatetime(e.target.value)} /><img className={comm.selectedDate} alt="" />
                                 </div>
                                 <div className={comm.datatime}>
                                     <label htmlFor="">時段</label><br />
-                                    <select>
-                                        <option>0</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
-                                        <option>11</option>
-                                        <option>12</option>
-                                        <option>13</option>
-                                        <option>14</option>
-                                        <option>15</option>
-                                        <option>16</option>
-                                        <option>17</option>
-                                        <option>18</option>
-                                        <option>19</option>
-                                        <option>20</option>
-                                        <option>21</option>
-                                        <option>22</option>
-                                        <option>23</option>
-                                        <option>24</option>
-                                    </select><span className={comm.timespan}>:00</span>
+                                    <select onChange={(e) => setStarttime(e.target.value)}>
+                                        {time.map((val, key) => {
+                                            return (<option key={key} value={key + 1}>{val}</option>);
+                                        })}
+                                    </select>
                                     至
-                                    <select>
-                                        <option>0</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
-                                        <option>11</option>
-                                        <option>12</option>
-                                        <option>13</option>
-                                        <option>14</option>
-                                        <option>15</option>
-                                        <option>16</option>
-                                        <option>17</option>
-                                        <option>18</option>
-                                        <option>19</option>
-                                        <option>20</option>
-                                        <option>21</option>
-                                        <option>22</option>
-                                        <option>23</option>
-                                        <option>24</option>
-                                    </select><span className={comm.timespan}>:00</span>
+                                    <select onChange={(e) => setEndtime(e.target.value)}>
+                                        {time.map((val, key) => {
+                                            return (<option key={key} value={key + 1}>{val}</option>);
+                                        })}
+                                    </select>
                                 </div>
                                 <div className={comm.fee}>
-                                    <span>費用上限</span><br />
-                                    <select>
-                                        <option>350</option>
-                                        <option>400</option>
-                                        <option>450</option>
-                                        <option>500</option>
-                                    </select>
+                                    <label htmlFor="fee_input">費用上限</label><br />
+                                    <input type="number" name="fee_input" onChange={(e) => setFee(e.target.value)} />
                                 </div>
                             </div>
                             {/* <!-- 下層 --> */}
                             <div className={comm.place}>
                                 <div className={comm.cityname1}>
                                     <h5>縣市</h5>
-                                    <select style={{ width: '150px' }}>
+                                    <select style={{ width: '150px' }} onChange={(e) => setCounty(e.target.value)}>
                                         <option>台中</option>
                                     </select>
                                 </div>
                                 <div className={comm.cityarea}>
                                     <h5>地區</h5>
-                                    <select style={{ width: '150px' }}>
+                                    <select style={{ width: '150px' }} onChange={(e) => setArea(e.target.value)}>
                                         <option>南屯</option>
                                         <option>西屯</option>
                                         <option>西</option>
@@ -215,14 +176,14 @@ const Search = () => {
                                 </div>
                                 <div className={comm.level}>
                                     <h5>程度</h5>
-                                    <select style={{ width: '150px' }}>
+                                    <select style={{ width: '150px' }} onChange={(e) => setZerolevel(e.target.value) } >
                                         <option>新手</option>
                                         <option>普通</option>
                                         <option>高手</option>
                                     </select>
                                 </div>
                                 <div className={comm.search_input}>
-                                    <input type="button" value="搜尋" className={comm.buttoninput} />
+                                    <button className={comm.buttoninput} onClick={zerosearch}>搜尋</button>
                                 </div>
                             </div>
                         </div>
@@ -504,11 +465,15 @@ const Search = () => {
                             {/* 下層 */}
                             <div className={comm.place}>
                                 <div className={comm.level}>
-                                    <h5>程度</h5>
+                                    <h5>費用</h5>
                                     <select style={{ width: '150px' }}>
-                                        <option>新手</option>
-                                        <option>普通</option>
-                                        <option>高手</option>
+                                        <option>100</option>
+                                        <option>200</option>
+                                        <option>300</option>
+                                        <option>400</option>
+                                        <option>500</option>
+                                        <option>600</option>
+                                        <option>700</option>
                                     </select>
                                 </div>
                                 <div className={comm.fee}>
