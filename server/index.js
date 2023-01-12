@@ -50,7 +50,9 @@ io.on("connection",(socket)=>{
       // console.log(datas);
       datas.push(data)
       // io.emit("receive_message",[data]);
-io.emit("receive_message",datas);
+      socket.broadcast.emit("receive_message",datas);
+      // socket.broadcast 自己收不到自己
+      io.emit("receive_message",datas);
   })
 })
 
@@ -458,24 +460,41 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
           }
         );
       });
-    // 芝｜Basic 更新
-    app.post("/updateteambasic", (req, res) => {
+    // 芝｜Basic 文字資料更新
+    app.post("/updatebasictext", (req, res) => {
       const teamid = req.body.teamid;
+
       const tname = req.body.tname;
       const sidename = req.body.sidename;
+      const week = req.body.week;
       const starttime = req.body.starttime;
       const endtime = req.body.endtime;
       const type = req.body.type;
       const level = req.body.level;
       const fee = req.body.fee;
       const text = req.body.text;
-      const teamimg = req.body.teamimg;
-      // const teamimg = req.body.teamimg;
       db.query(`
         UPDATE team 
-        SET tname=?, sidename=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?, teamimg=?
+        SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?
         where teamid=?;`,
-        [tname,sidename,starttime,endtime,type,level,fee,text,teamimg,teamid], 
+        [tname,sidename,week,starttime,endtime,type,level,fee,text,teamid], 
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+      });
+    });
+    // 芝｜Basic 照片更新
+    app.post("/updatebasicimg",upload.single('image'), (req, res) => {
+      const teamid = req.body.teamid;
+      const teamimg = req.body.teamimg;
+      db.query(`
+        UPDATE team
+        SET teamimg=?
+        where teamid=?;`,
+        [teamimg,teamid], 
         (err, result) => {
           if (err) {
             console.log(err);

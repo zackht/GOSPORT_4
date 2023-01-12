@@ -87,14 +87,15 @@ const Handya = () =>{
             console.log(e.target.value);
         })
       };
+      const bottomref = useRef(null);
       const[message,setmessage] =useState("");
       const[messagereceive,setmessagereceive] = useState("");
       const[mes,setmes] = useState([]);
       const sendmsg = () => {
+        bottomref.current?.scrollIntoView({behavior: 'smooth'});
         // setmes([]);
         	// socket.emit(“要對 server 發送的事件名稱”,data)
         socket.emit("send_mesg",{message})
-        // console.log(messagereceive);
       }
       useEffect(()=>{
         //	socket.on(“監聽來自server的receive_message事件名稱”, callback)
@@ -102,24 +103,9 @@ const Handya = () =>{
             //  console.log(mes);
              setmes(data);
             //  console.log(data)
-            //  console.log(mes)
+            bottomref.current?.scrollIntoView({behavior: 'smooth'});
          ;})},[socket]);
-
-
-         const messagesEnd = useRef(null);
-
-         const scrollToBottom = () => {
-           if (messagesEnd && messagesEnd.current) {
-             messagesEnd.current.scrollIntoView({ behavior: 'smooth' });
-           }
-         };
-       
-         useEffect(() => {
-           scrollToBottom();
-         }, []);
-
-          
-            
+                    
         return (
         <React.Fragment>
     <div className={`${cc.dd1} container-fluid`}>
@@ -495,12 +481,13 @@ const Handya = () =>{
 
     <div className={cc.d148}>
        <button className={`${cc.d147}`}>大廳聊天</button>
-        <div ref={messagesEnd} className={cc.d130}>
+        <div className={cc.d130}>
         {mes.map((v,k)=>{
     return(<p>{v.message}</p>)
     
     console.log(v.message);
 })}
+<div ref={bottomref}></div>
         </div>
         <input className={cc.d149} type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
         <button className={cc.d150} onClick={sendmsg}>send</button>
