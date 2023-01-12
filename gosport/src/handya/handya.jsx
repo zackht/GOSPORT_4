@@ -102,10 +102,10 @@ const Handya = () =>{
          socket.on("receive_message",(data)=>{
             //  console.log(mes);
              setmes(data);
-            //  console.log(data)
-            bottomref.current?.scrollIntoView({behavior: 'smooth'});
-         ;})},[socket]);
-                    
+             bottomref.current?.scrollIntoView({behavior: 'smooth'});
+             console.log(bottomref);
+             ;})},[socket]);
+             
         return (
         <React.Fragment>
     <div className={`${cc.dd1} container-fluid`}>

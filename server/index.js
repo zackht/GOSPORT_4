@@ -405,6 +405,40 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
           }
       });
     });
+    // 芝｜Member 搜尋隊長頭像
+    app.post('/teamleader', (req,res)=>{
+      const teamid = req.body.teamid;
+      db.query(
+          `SELECT userimg
+          FROM teamuser,user
+          where user.userid = teamuser.userid and teamid=? and leader=1;`,
+          [teamid],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+      });
+      // 芝｜Member 搜尋成員頭像
+    app.post('/teammember', (req,res)=>{
+      const teamid = req.body.teamid;
+      db.query(
+          `SELECT user.userid,userimg
+          FROM teamuser,user
+          where user.userid = teamuser.userid and teamid=?;`,
+          [teamid],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+      });
 
     //------------------
       //

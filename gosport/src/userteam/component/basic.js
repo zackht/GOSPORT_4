@@ -5,9 +5,10 @@ import basic from './basic.module.css';
 import Axios from "axios";
 export default function Basic(props) {
 
-    // 假設目前查詢的會員id=1、球場id=1
+    // 假設目前查詢 會員id=1 球隊id=1
     const [userid, setUserid] = useState('1');
     const [teamid, setTeamid] = useState('1');
+
     // team img src
     const [teamimg, setTeamimg] = useState('');
     
@@ -30,17 +31,8 @@ export default function Basic(props) {
             };
         fr.readAsDataURL(blob);
     };
-    // console.log(basicResult);    
-    // 智鈞寫法
-    // const handleBasicResult = () => {
-    //     Axios.post("http://localhost:3001/teambasic", {
-    //         userid: userid,
-    //         teamid: teamid
-    //     }).then((response) => {
-    //         setBasicResult(response.data[0]);
-    //     });
-    // }
 
+    // 當畫面載入 抓資料庫
     useEffect(()=>{
         handleBasicResult();
     },[]);
