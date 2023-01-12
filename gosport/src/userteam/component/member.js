@@ -9,13 +9,15 @@ export default function Member(params) {
     // 假設目前查詢 球隊id=1
     const [teamid, setTeamid] = useState('1');
 
-    // 資料庫查詢
     // 隊長頭像
-    const [leaderImg, setLeaderImg] = useState(null);
+    const [leaderImg, setLeaderImg] = useState('');
     // 成員頭像
-    const [memberImg, setMemberImg] = useState(null);
+    const [memberImg, setMemberImg] = useState('');
+    const [memberSrc, setMemberSrc] = useState('');
+    // 成員頭像 map值
+    // const [memberImgMap, setMemberImgMap] = useState(null);
 
-    // 將資料放入 隊長頭像
+    // 搜尋隊長頭像
     const handleLeaderImg = async () => {
         let res = await Axios.post("http://localhost:3001/teamleader",{
             teamid: teamid
@@ -24,26 +26,58 @@ export default function Member(params) {
         let u8Arr = new Uint8Array(res.data[0].userimg.data);
         let blob = new Blob([u8Arr],{type:"image/jpeg"});
         let fr = new FileReader;
+        fr.readAsDataURL(blob);
         fr.onload = function () {
+            // 設置
             setLeaderImg(fr.result);
             };
-        fr.readAsDataURL(blob);
     };
-    // 將資料放入 成員頭像
+
+    // 搜尋成員頭像
     const handleMemberImg = async () => {
         let res = await Axios.post("http://localhost:3001/teammember",{
             teamid: teamid
         });
-        setMemberImg(res.data);
+        // 設置
+        // setMemberImg(res.data);
+        // console.log(memberImg);
+        // console.log(res.data);
+        // map 成員頭像
+        const memberList = res.data.map((val,key) => {
+            // console.log(val);
+            // 若成員沒有設置頭貼時
+            if(val.userimg.data === null){
+                return <img key={key} className={member.mImg} src={img.m} />;
+            }else{
+                // 照片轉換
+                let u8Arr = new Uint8Array(val.userimg.data);
+                let blob = new Blob([u8Arr], {type:"image/jpeg"});
+                let fr = new FileReader;
+                fr.readAsDataURL(blob);
+                fr.onload = ()=>{
+                    setMemberSrc([...memberSrc,fr.result]);
+                    // setMemberSrc(fr.result);
+                    console.log(memberSrc);
+                };
+                
+                return <img key={key} className={member.mImg} src={memberSrc} />;
+                
+            };
+        });
+        // console.log(memberList);
     };
+    
+
+    // // map 成員頭像
+    // const handleMemberImgMap=()=>{
+        
+    // }
 
     // 當畫面載入 抓資料庫
     useEffect(()=>{
         handleLeaderImg();
         handleMemberImg();
     },[]);
-
-    console.log(memberImg);
 
     return(
         <>
@@ -56,28 +90,12 @@ export default function Member(params) {
                     <img className={member.mImg} src={leaderImg} alt=""/>
                     {/* 成員 */}
                     <div className={member.mTitle}>成員</div>
-                    { memberImg? memberImg.map((val,key) => {
-                        console.log(val.userimg);
-
-                        if(val.userimg.data === null){
-                            return <img className={member.mImg} src={img.m2} />
-                        }else{
-                            let u8Arr = new Uint8Array(val.userimg.data);
-                            // 轉檔
-                            let blob = new Blob([u8Arr], {type:"image/jpeg"});
-                            // 讀取
-                            let fr = new FileReader;
-                            fr.onload = ()=>{
-                                return <img className={member.mImg} src={fr.result} />
-                            }
-                            fr.readAsDataURL(blob);
-                        }
-                    }):''}  
-                    <img className={member.mImg} src={img.m2} alt=""/>
+                    { memberImg? memberImg:'' }  
+                    {/* <img className={member.mImg} src={img.m2} alt=""/>
                     <img className={member.mImg} src={img.m3} alt=""/>
                     <img className={member.mImg} src={img.m4} alt=""/>
                     <img className={member.mImg} src={img.m5} alt=""/>
-                    <img className={member.mImg} src={img.m6} alt=""/>
+                    <img className={member.mImg} src={img.m6} alt=""/> */}
 
                     {/* 待審核區 */}
                     <div className={member.mTitle}>未審核</div>
