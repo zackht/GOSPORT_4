@@ -14,7 +14,7 @@ export default function Basic(props) {
     
     // 資料庫查詢結果
     const [basicResult,setBasicResult] = useState(null);
-    console.log(basicResult);
+    
 
     // 將資料放入basicResult
     const handleBasicResult = async () => {
@@ -22,15 +22,18 @@ export default function Basic(props) {
             userid: userid,
             teamid: teamid
         });
+        console.log(res.data);
         setBasicResult(res.data[0]);
         // 照片格式轉換
         const u8Arr = new Uint8Array(res.data[0].teamimg.data);
+        // 轉檔
         const blob = new Blob([u8Arr],{type:"image/jpeg"});
+        // 讀取
         const fr = new FileReader
+        fr.readAsDataURL(blob);
         fr.onload = function () {
             setTeamimg(fr.result);
-            };
-        fr.readAsDataURL(blob);
+        };
     };
 
     // 當畫面載入 抓資料庫

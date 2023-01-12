@@ -36,7 +36,6 @@ const Selfalter = () => {
         inputFile.current.click();
     }
 
-    const account = Cookies.get('token');
 
     // 讀取個人資料
     const userid = Cookies.get('id');
@@ -65,6 +64,7 @@ const Selfalter = () => {
             console.log('baddge', response.data);
             setSelfBadge(response.data)
         });
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userid]);
 
     // 照片自資料庫讀取
@@ -76,7 +76,7 @@ const Selfalter = () => {
         console.log(selfInfo)
         var u8Arr = new Uint8Array(selfInfo.userimg.data);
         var blob = new Blob([u8Arr], { type: "image/jpeg" });
-        var fr = new FileReader
+        var fr = new FileReader;
         fr.onload = function () {
             setImageSrc(fr.result);
             if (imageSrc) {
@@ -85,6 +85,7 @@ const Selfalter = () => {
             }
         };
         fr.readAsDataURL(blob);
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selfInfo])
 
 
@@ -110,22 +111,6 @@ const Selfalter = () => {
     // 上傳更新
     let update = (e) => {
         e.preventDefault();
-        // Axios.post("http://localhost:3001/selfalter", {
-        //     account: account,
-        //     email: email,
-        //     password: password,
-        //     username: username,
-        //     userimg: imageSrc, // picSourse
-        //     tel: tel,
-        //     userdescribe: describe,
-        //     badminton: Bdegree,
-        //     volleyball: Vdegree,
-        //     tabletennis: Tdegree,
-
-        // }).then((response) => {
-        //     console.log(response);
-        //     window.location = '/gosport/user';
-        // })
         if (!picSourse) {
             const withoutpic = new FormData();
             withoutpic.append('email', email);
