@@ -472,13 +472,18 @@ input[type='date'] {
     z-index: 2;
 }
 
-input[type='time'] {
+.select {
     position: relative;
     border: none;
     border-bottom: 1px black solid;
     line-height: 30px;
     background-color: transparent;
     z-index: 2;
+    appearance: none;
+    width: 137px;
+    height: 32px;
+    font-size: 20px;
+    text-align: center;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -584,9 +589,9 @@ right: 25px;
 .d14{float:left;padding: 6px 0px 0 0px; margin-left:-16px ;}
 .d15{float:left;margin:0px 0 0 0;font-size: 20px;}
 .d16{float:left;margin:-5px 0 0 0px;}
-.d17{float:left; margin:0px 0 0 46px;font-size: 20px;}
+.d17{float:left; margin:2px 0px 2px 46px;font-size: 20px;}
 .d18{float:left;margin:-5px 0 0 0px;}
-.d19{float:left; margin:0px 0px 0 40px;font-size: 20px;}
+.d19{float:left; margin:2px 0px 2px 40px;font-size: 20px;}
 .d20{float:left;margin:-5px 0 0 0px;}
 .d21{float: left; margin:22px 0 0 20px;}
 .d22{float: left;}

@@ -65,30 +65,22 @@ const Client = () => {
     const [employeeList, setEmployeeList] = useState([]);
     const getEmployee = () => {
         Axios.post("http://localhost:3001/employee").then((response) => {
-            // console.log(response.data);
+            console.log(response.data);
             setEmployeeList(response.data);
         });
     };
     
     const [url,seturl]=useState('');
     // 取得檔案並轉換
-    const [data,setdata]=useState();
-    const aaa =(e)=>{
-          const formData = new FormData();
-          formData.append('image',e[0]);
-          setdata(formData);
-          Axios.post("http://localhost:3001/userupdate",formData,{
+    const [text,settext]=useState('');
+    const [img,setimg]=useState();
+
+    const bbb =(e)=>{
+          const data = new FormData();
+          data.append('image',img);
+          data.append('name',text);
+          Axios.post("http://localhost:3001/userupdate",data,{
             headers: {'Content-Type': 'multipart/form-data'},
-          }).then((response) => {
-              alert("更新成功");
-              console.log(response.data);
-          });
-        }
-        // 上傳圖片
-        const bbb=()=>{
-          Axios.post("http://localhost:3001/userupdate",
-            data,
-            {headers: {'Content-Type': 'multipart/form-data'},
           }).then((response) => {
               alert("更新成功");
               console.log(response.data);
@@ -117,8 +109,9 @@ const Client = () => {
                   };
                 return <div key={key}><img src={Url} alt=""/></div>;
             })}
-            <input type="file" onChange={(e)=>{aaa(e.target.files)}} />
+            <input type="file" onChange={(e)=>{setimg(e.target.files[0])}} />
             <img src={url} alt="" />
+            會員編號:<input type="text" onChange={(e)=>{settext(e.target.value)}}/>
             <button onClick={bbb}>12345</button>
         </div>
     );

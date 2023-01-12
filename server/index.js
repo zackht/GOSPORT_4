@@ -107,8 +107,11 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
     });
     // user頭像更改
     app.post("/userupdate",upload.single('image'), (req, res) => {
-      db.query("UPDATE user SET userimg=? where userid =1"
-      ,[req.file.buffer], (err, result) => {
+      const name = req.body.name;
+      console.log(name);
+      console.log(req.file.buffer);
+      db.query("UPDATE user SET userimg=? where userid =?"
+      ,[req.file.buffer,name], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -229,7 +232,7 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
       });
     });
     // 後臺球隊編輯儲存
-    app.post("/teamupdate", (req, res) => {
+    app.post("/teamupdate",upload.single('teamfile'), (req, res) => {
       const teamstartdate = req.body.teamstartdate;
       const teamenddate = req.body.teamenddate;
       const teamstarttime = req.body.teamstarttime;
@@ -237,11 +240,11 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
       const teamtype2 = req.body.teamtype2;
       const teamtitle = req.body.teamtitle;
       const teamlocation = req.body.teamlocation;
-      const zerodalevel = req.body.zerodalevel;
       const teampay = req.body.teampay;
       const teamtext = req.body.teamtext;
-      db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?, title =  where teameventid=1"
-      ,[teameventid], (err, result) => {
+      const teameventid = req.body.teameventid;
+      db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,pay=?,text=?,teameventimg=?  where teameventid=?"
+      ,[teamstartdate,teamenddate,teamstarttime,teamendtime,teamtype2,teamtitle,teamlocation,teampay,teamtext,req.file.buffer,teameventid], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -279,9 +282,32 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
       const renttime1 = req.body.renttime1;
       const rentselectcounty = req.body.rentselectcounty;
       const rentselectarea = req.body.rentselectarea;
-
-      db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =?"
-      ,[renttime,renttime1,rentselectarea,rentselectcounty], (err, result) => {
+      const fieldname = req.body.fieldname;
+      if(fieldname==''){
+        db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =?"
+        ,[renttime,renttime1,rentselectarea,rentselectcounty], (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        });
+      }else{
+        db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =? AND fieldname LIKE ?"
+        ,[renttime,renttime1,rentselectarea,rentselectcounty,fieldname], (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        });
+      }
+    });
+    // 轉租編輯
+    app.post("/rentedit", (req, res) => {
+      const articleid_sublet = req.body.articleid_sublet;
+      db.query("SELECT * FROM userarticle_sublet where articleid_sublet = ?"
+      ,[articleid_sublet], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -289,6 +315,29 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended:true} ));
         }
       });
     });
+    // 轉租儲存
+    app.post("/rentupdate", (req, res) => {
+      const articleid_sublet =req.body.articleid_sublet;
+      const rentcontent = req.body.rentcontent;
+      const rentstarttime = req.body.rentstarttime;
+      const rentendtime = req.body.rentendtime;
+      const rentdate = req.body.rentdate;
+      const rentcounty = req.body.rentcounty;
+      const rentarea = req.body.rentarea;
+      const rentfieldname = req.body.rentfieldname;
+      const rentaddress = req.body.rentaddress;
+      const rentcost = req.body.rentcost;
+      const number2 = req.body.number2;
+      console.log(`後端${number2}`);
+      db.query("UPDATE userarticle_sublet SET content=?,starttime=?,endtime=?,date=?,county=?,area=?,fieldname=?,address=?,cost=?,amount=?  where articleid_sublet=?"
+      ,[rentcontent,rentstarttime,rentendtime,rentdate,rentcounty,rentarea,rentfieldname,rentaddress,rentcost,number2,articleid_sublet]
+      ,(err, result) => {if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+  });
     // 登入資料
     app.post("/userinfo", (req, res) => {
       const account = req.body.account;

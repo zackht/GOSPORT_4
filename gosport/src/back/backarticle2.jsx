@@ -201,9 +201,11 @@ const Backarticle2 = () => {
     }
     // 球隊編輯畫面
     var [teamedit, setteamedit] = useState([]);
+    const [teameventid, setteameventid] = useState('');
     const ttt = (e) => {
         setdiv2(!div2);
         console.log(e);
+        setteameventid(e);
         Axios.post("http://localhost:3001/teamedit", {
             teameventid: e,
         }).then((response) => {
@@ -221,17 +223,23 @@ const Backarticle2 = () => {
     const [teamlocation, setteamlocation] = useState('');
     const [teampay, setteampay] = useState('');
     const [teamtext, setteamtext] = useState('');
+    const [teamfile, setteamfile] = useState();
     const ttt2 = () => {
-        Axios.post("http://localhost:3001/teamupdate", {
-            teamstartdate: teamstartdate,
-            teamenddate: teamenddate,
-            teamstarttime: teamstarttime,
-            teamendtime: teamendtime,
-            teamtype2: teamtype2,
-            teamtitle: teamtitle,
-            teamlocation: teamlocation,
-            teampay: teampay,
-            teamtext: teamtext,
+        const teamData = new FormData();
+        console.log(teamfile);
+        teamData.append('teamfile',teamfile);
+        teamData.append('teamstartdate',teamstartdate);
+        teamData.append('teamenddate',teamenddate);
+        teamData.append('teamstarttime',teamstarttime);
+        teamData.append('teamendtime',teamendtime);
+        teamData.append('teamtype2',teamtype2);
+        teamData.append('teamtitle',teamtitle);
+        teamData.append('teamlocation',teamlocation);
+        teamData.append('teampay',teampay);
+        teamData.append('teamtext',teamtext);
+        teamData.append('teameventid',teameventid);
+        Axios.post("http://localhost:3001/teamupdate",teamData,{
+            headers: {'Content-Type': 'multipart/form-data'},
         }).then((response) => {
             setdiv2(!div2);
             alert("更新成功");
@@ -356,7 +364,6 @@ const Backarticle2 = () => {
                                 </div>
                             </div>
                         </React.Fragment>
-                        // 要更改select項目-------------------------------------------------------------------------------------------------------
                     );
                 })}
             </div>
@@ -366,7 +373,7 @@ const Backarticle2 = () => {
         "中區", "東區", "西區", "南區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "清水區", "沙鹿區", "大甲區", "東勢區", "梧棲區", "烏日區", "神岡區", "大肚區", "大雅區", "后里區", "霧峰區", "潭子區", "龍井區", "外埔區", "和平區", "石岡區", "大安區", "新社區"
     ]);
     const [time,settime] =useState([
-        '1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00','0:00'
+        '0:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00','0:00'
     ])
     const [number1, setnumber1] = useState(0);
     const [number2, setnumber2] = useState(0);
@@ -640,11 +647,9 @@ const Backarticle2 = () => {
                                     <div class={ba.ct_time}>
                                         <div className={ba.iimgdiv}>
                                             <select class={ba.dselect} name="ct_" id="" defaultValue={val.starttime} onChange={(e) => { setzerodastarttime(e.target.value) }}>
-                                                <option value="8">8:00</option>
-                                                <option value="9">9:00</option>
-                                                <option value="15">15:00</option>
-                                                <option value="16">16:00</option>
-                                                <option value="17">17:00</option>
+                                                {time.map((val, key) => {
+                                                    return (<option key={key} value={key+1}>{val}</option>);
+                                                })}
                                             </select>
                                             <img src={Group41} alt="" className={ba.iimg2} />
                                         </div>
@@ -653,8 +658,9 @@ const Backarticle2 = () => {
                                         </div>
                                         <div className={ba.iimgdiv}>
                                             <select class={ba.dselect} name="ct_" id="" defaultValue={val.endtime} onChange={(e) => { setzerodaendtime(e.target.value) }}>
-                                                <option value="10">10:00</option>
-                                                <option value="17">17:00</option>
+                                                {time.map((val, key) => {
+                                                    return (<option key={key} value={key+1}>{val}</option>);
+                                                })}
                                             </select>
                                             <img src={Group41} alt="" className={ba.iimg2} />
                                         </div>
@@ -739,14 +745,9 @@ const Backarticle2 = () => {
                                     <div className={`d-flex`}>
                                         <div className={backteam.div2}>
                                             <select name="" id="" className={`${backteam.div3} ${backteam.font}`} defaultValue={val.starttime} onChange={(e) => setteamstarttime(e.target.value)}>
-                                                <option value="1">1:00</option>
-                                                <option value="2">2:00</option>
-                                                <option value="3">3:00</option>
-                                                <option value="4">4:00</option>
-                                                <option value="5">5:00</option>
-                                                <option value="10">10:00</option>
-                                                <option value="11">11:00</option>
-                                                <option value="12">12:00</option>
+                                                {time.map((val, key) => {
+                                                    return (<option key={key} value={key+1}>{val}</option>);
+                                                })}
                                             </select>
                                             <img className={backteam.selectimg} src={group41} alt="" />
                                         </div>
@@ -755,14 +756,9 @@ const Backarticle2 = () => {
                                         </div>
                                         <div className={backteam.div5}>
                                             <select name="" id="" className={`${backteam.div3} ${backteam.font}`} defaultValue={val.endtime} onChange={(e) => setteamendtime(e.target.value)}>
-                                                <option value="1">1:00</option>
-                                                <option value="2">2:00</option>
-                                                <option value="3">3:00</option>
-                                                <option value="4">4:00</option>
-                                                <option value="5">5:00</option>
-                                                <option value="10">10:00</option>
-                                                <option value="11">11:00</option>
-                                                <option value="12">12:00</option>
+                                                {time.map((val, key) => {
+                                                    return (<option key={key} value={key+1}>{val}</option>);
+                                                })}
                                             </select>
                                             <img className={backteam.selectimg} src={group41} alt="" />
                                         </div>
@@ -771,7 +767,7 @@ const Backarticle2 = () => {
                                 <div className={backteam.div6}>
                                     <label htmlFor="inputfile" className={backteam.filelabel}>
                                         <img src={teamurl} alt="" className={backteam.fileimg} onChange={(e)=>{setteamimg(e.target.files)}}/></label>
-                                    <input type="file" id='inputfile' className={backteam.file} />
+                                    <input type="file" id='inputfile' className={backteam.file}  onChange={(e)=>{setteamfile(e.target.files[0])}}/>
                                 </div>
                             </div>
                             <div>
@@ -822,7 +818,7 @@ const Backarticle2 = () => {
                             </div>
                             <div className={`${backteam.div10} d-flex justify-content-around`}>
                                 <button className={backteam.button1} onClick={ddd2}>取消</button>
-                                <button className={backteam.button2} onClick={()=>{ttt2();ttt3()}}>儲存</button>
+                                <button className={backteam.button2} onClick={ttt2}>儲存</button>
                             </div>
                         </div>
                     );
