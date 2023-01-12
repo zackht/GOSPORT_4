@@ -186,6 +186,26 @@
 .chuse_order:hover {
     background-color: rgb(255, 87, 87);
 }
+/* 進行中 */
+#ordering>:nth-child(1),
+#ordering>:nth-child(3),
+#ordering>:nth-child(4),
+#ordering>:nth-child(7),
+#ordering>:nth-child(9),
+#ordering>:nth-child(11),
+#ordering>:nth-child(13){
+    font-weight: 300;
+    padding-top: 7px;
+    color: gray;
+    font-size: 1rem;
+    line-height: 5vh;
+}
+#ordering>:nth-child(5){
+    font-size: 1.5rem;
+    color: #000;
+    line-height: 15px;
+    font-weight: 400;
+}
 
 /* 文章內文 */
 #artclein {
