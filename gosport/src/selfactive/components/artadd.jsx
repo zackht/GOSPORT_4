@@ -27,11 +27,13 @@ const Artadd = ({ control }) => {
     const userid = Cookies.get('id');
     // 留言數
     const [countsub, setcountsublist] = useState(0);
-    const [countzero, setcountcountzero] = useState([]);
+    const [countzero, setcountcountzero] = useState(0);
     // tr操作
     const[showsub,setsubShow] = useState('none');
     const[showzero,setzeroShow] = useState('none');
     let findArticle = () => {
+        setcountcountzero(0)
+        setcountsublist(0)
         Axios.post("http://localhost:3001/findzoro", {
             stratDate: stratDate,
             endDate: endDate,
@@ -44,7 +46,8 @@ const Artadd = ({ control }) => {
                     articleid: response.data[i].articleid_zeroda
                 }).then((response) => {
                     console.log(response.data[0]);
-                    setcountcountzero(countzero+response.data)
+                    let count = response.data[0].a
+                    setcountcountzero(pre => pre+count)
                 });
             }
             if(response.data[0].date){
@@ -99,7 +102,7 @@ const Artadd = ({ control }) => {
                         <td>{item.ballgames}</td>
                         <td>{item.content}</td>
                         <td style={{ textAlign: "center", cursor: "pointer" }} onClick={control}>{item.number}</td>
-                        <td style={{ textAlign: "center" }}>{countsub}</td>
+                        <td style={{ textAlign: "center" }}>{countzero}</td>
                         <td style={{ position: "relative" }}>
                             <button>編輯</button>
                             <button>刪除</button>
