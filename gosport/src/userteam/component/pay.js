@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import pay from './pay.module.css';
 import DateSearch from './dateSearch';
+import { Axios } from 'axios';
 
 export default function Pay(params) {
+
+    
+
     return(
         <>
             {/* 支出 */}

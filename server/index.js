@@ -528,6 +528,25 @@ app.post('/teambasic', (req, res) => {
     }
   );
 });
+// // 芝｜Basic 搜尋 球隊照片
+// app.post('/teamimg', (req, res) => {
+//   const userid = req.body.userid;
+//   const teamid = req.body.teamid;
+//   db.query(
+//     `SELECT teamimg
+//      FROM userteam, team 
+//      where userteam.teamid=team.teamid and userteam.userid=? and userteam.teamid=?`,
+//     [userid, teamid],
+//     (err, result) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         res.send(result);
+//       }
+//     }
+//   );
+// });
+
 // 芝｜Basic 文字資料更新
 app.post("/updatebasictext", (req, res) => {
   const teamid = req.body.teamid;
@@ -588,7 +607,7 @@ app.post("/updatebasicimg", upload.single('image'), (req, res) => {
           }
         );
       });
-      // 芝｜Member 搜尋成員頭像
+    // 芝｜Member 搜尋成員頭像
     app.post('/teammember', (req,res)=>{
       const teamid = req.body.teamid;
       db.query(
@@ -604,7 +623,48 @@ app.post("/updatebasicimg", upload.single('image'), (req, res) => {
             }
           }
         );
-      });
+    });
+    // 芝｜Member 搜尋 未審核成員頭像
+    app.post('/teampendingimg', (req,res)=>{
+      const teamid = req.body.teamid;
+      db.query(
+          `SELECT teampendinguser.userid,userimg,username,type as 'team type',badminton,tabletennis,volleyball
+          FROM teampendinguser,user,team
+          where teampendinguser.userid = user.userid and teampendinguser.teamid=1
+          ORDER BY teampendinguser.userid;`,
+          [teamid],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+    });
+
+    // 芝｜Pay 依日期區間 搜尋文章
+    app.post('/teamdate', (req,res)=>{
+      const pathend = req.body.pathend;
+      const userid = req.body.userid;
+      const teamid = req.body.teamid;
+      const startdate = req.body.startdate;
+      // console.log(startdate);
+      const enddate = req.body.enddate;
+      db.query(
+          `SELECT date 
+          FROM ?
+          WHERE date BETWEEN ? AND ? AND userid=? and teamid=?`,
+          [pathend,startdate,enddate,userid,teamid],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+    });
 
 //------------------
 // 交流零打搜尋

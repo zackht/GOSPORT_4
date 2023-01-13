@@ -8,25 +8,23 @@ export default function Basic(props) {
     // 假設目前查詢 會員id=1 球隊id=1
     const [userid, setUserid] = useState('1');
     const [teamid, setTeamid] = useState('1');
-
-    // team img src
-    const [teamimg, setTeamimg] = useState('');
     
-    // 資料庫查詢結果
+    // 基本資料
     const [basicResult,setBasicResult] = useState(null);
-    
+    // 球隊照片
+    const [teamimg, setTeamimg] = useState('');
 
-    // 將資料放入basicResult
+    // 搜尋基本資料
     const handleBasicResult = async () => {
         let res = await Axios.post("http://localhost:3001/teambasic",{
             userid: userid,
             teamid: teamid
         });
-        console.log(res.data);
-        setBasicResult(res.data[0]);
+        // 放入 basicResult
+        setBasicResult(res.data[0]); 
         // 照片格式轉換
         const u8Arr = new Uint8Array(res.data[0].teamimg.data);
-        // 轉檔
+        // u8Arr to url
         const blob = new Blob([u8Arr],{type:"image/jpeg"});
         // 讀取
         const fr = new FileReader
@@ -36,9 +34,29 @@ export default function Basic(props) {
         };
     };
 
+    // // 搜尋球隊照片
+    // const handleBasicImg = () => {
+    //     Axios.post("http://localhost:3001/teamimg",{
+    //         userid: userid,
+    //         teamid: teamid
+    //     }).then((response)=>{
+    //         // 照片格式轉換
+    //         const u8Arr = new Uint8Array(response.data[0].teamimg.data);
+    //         // u8Arr to url
+    //         const blob = new Blob([u8Arr],{type:"image/jpeg"});
+    //         // 讀取
+    //         const fr = new FileReader
+    //         fr.readAsDataURL(blob);
+    //         fr.onload = function () {
+    //             setTeamimg(fr.result);
+    //         };
+    //     })
+    // };
+
     // 當畫面載入 抓資料庫
     useEffect(()=>{
         handleBasicResult();
+        // handleBasicImg();
     },[]);
 
     return(

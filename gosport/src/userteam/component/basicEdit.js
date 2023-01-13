@@ -42,8 +42,6 @@ export default function BasicEdit(props) {
         setText(res.data[0].text);
         // 轉 照片格式
         const u8Arr = new Uint8Array(res.data[0].teamimg.data);
-        // console.log(res.data[0].teamimg);
-        // console.log(typeof res.data[0].teamimg.data);
         const blob = new Blob([u8Arr],{type:"image/jpeg"});
         const fr = new FileReader;
         fr.onload = function () {
@@ -78,16 +76,11 @@ export default function BasicEdit(props) {
             setUploadimg('none');
         }, false);
     }
-    // 更新 資料 to資料庫
-    const updateBasic =()=>{
-        updateBasicText();
-        updateBasicImg();
-    }
+
     // 更新 文字資料 to 資料庫
     const updateBasicText= () => {
         Axios.post("http://localhost:3001/updatebasictext",{
             teamid:     teamid,
-
             tname:      tname,
             sidename:   sidename,
             week:       week,
@@ -109,7 +102,13 @@ export default function BasicEdit(props) {
         }).then(()=>{
             alert("照片更新成功");
         })
-    }
+    };
+
+    // 更新 資料 to資料庫
+    const updateBasic =()=>{
+        updateBasicText();
+        updateBasicImg();
+    };
     
 
     return(
