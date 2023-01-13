@@ -448,7 +448,52 @@ app.post("/ordering", (req, res) => {
   const userid = req.body.userid;
   const starttime = req.body.stratFind;
   const endtime = req.body.endFind;
-  db.query("SELECT * FROM `userorder` WHERE now() BETWEEN startdate AND enddate AND orderdate BETWEEN ? AND ? AND userid = 1",
+  db.query("SELECT * FROM `userorder` WHERE now() BETWEEN startdate AND enddate AND orderdate BETWEEN ? AND ? AND userid = ? AND flag = '成立'",
+    [starttime, endtime, userid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+
+    });
+});
+//會員訂單搜尋 未來
+app.post("/orderfutrue", (req, res) => {
+  const userid = req.body.userid;
+  const starttime = req.body.stratFind;
+  const endtime = req.body.endFind;
+  db.query("SELECT * FROM `userorder` WHERE now() < startdate AND orderdate BETWEEN ? AND ? AND userid = ? AND flag = '成立'",
+    [starttime, endtime, userid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+
+    });
+});
+//會員訂單搜尋 結束
+app.post("/orderend", (req, res) => {
+  const userid = req.body.userid;
+  const starttime = req.body.stratFind;
+  const endtime = req.body.endFind;
+  db.query("SELECT * FROM `userorder` WHERE now() > enddate AND orderdate BETWEEN ? AND ? AND userid = ? AND flag = '成立'",
+    [starttime, endtime, userid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+
+    });
+});
+//會員訂單搜尋 不成立
+app.post("/orderfalse", (req, res) => {
+  const userid = req.body.userid;
+  const starttime = req.body.stratFind;
+  const endtime = req.body.endFind;
+  db.query("SELECT * FROM `userorder` WHERE orderdate BETWEEN ? AND ? AND userid = ? AND flag = '不成立'",
     [starttime, endtime, userid], (err, result) => {
       if (err) {
         console.log(err);
