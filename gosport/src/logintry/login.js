@@ -31,6 +31,7 @@ const PageLogin = ({ saveToken,saveId}) => {
             saveToken(account);
         } else {
             alert('輸入有誤喔!!');
+            console.log(account);
         }
     }
 
