@@ -104,23 +104,24 @@ const Handya = () =>{
          socket.on("receive_message",(data)=>{
             //  console.log(mes);
              setmes(data);
-                     
-            //  console.log(data)
-            // bottomref.current?.scrollIntoView({behavior: 'smooth'});
-            // scrollToMyRef();
-         ;})},[socket]);
-      useEffect(()=>{
-        bottomref.current.scrollIntoView({behavior: 'smooth'});
-        // newref.current?.lastElementChild?.scrollIntoView();
 
-      },[mes]);
+           //  console.log(data)
+           // bottomref.current?.scrollIntoView({behavior: 'smooth'});
+           // scrollToMyRef();
+           ;})},[socket]);
+     useEffect(()=>{
+       bottomref.current.scrollIntoView({behavior: 'smooth'});
+       // newref.current?.lastElementChild?.scrollIntoView();
 
-    //  const scrollToMyRef = () => {
-    //     const scroll =
-    //       newref.current.scrollHeight -
-    //       newref.current.clientHeight;
-    //     newref.current.scrollTo(0, scroll);
-    //   };
+     },[mes]);
+
+   //  const scrollToMyRef = () => {
+   //     const scroll =
+   //       newref.current.scrollHeight -
+   //       newref.current.clientHeight;
+   //     newref.current.scrollTo(0, scroll);
+   //   };
+             
         return (
         <React.Fragment>
     <div className={`${cc.dd1} container-fluid`}>
@@ -153,7 +154,7 @@ const Handya = () =>{
             </div>
         </div>
 
-  {/* <input type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
+  <input type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
   
 <button onClick={sendmsg}>send</button>
 
@@ -161,7 +162,7 @@ const Handya = () =>{
     return(<p>{v.message}</p>)
     
     console.log(v.message);
-})} */}
+})}
 
 
 

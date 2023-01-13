@@ -384,9 +384,6 @@ app.post("/userinfo", (req, res) => {
     }
   });
 });
-
-
-
 //觀看個人資料
 app.post("/selfinfo", (req, res) => {
   const account = req.body.account;
@@ -604,9 +601,43 @@ app.post("/updatebasicimg", upload.single('image'), (req, res) => {
       }
     });
 });
+    // 芝｜Member 搜尋隊長頭像
+    app.post('/teamleader', (req,res)=>{
+      const teamid = req.body.teamid;
+      db.query(
+          `SELECT userimg
+          FROM teamuser,user
+          where user.userid = teamuser.userid and teamid=? and leader=1;`,
+          [teamid],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+      });
+      // 芝｜Member 搜尋成員頭像
+    app.post('/teammember', (req,res)=>{
+      const teamid = req.body.teamid;
+      db.query(
+          `SELECT user.userid,userimg
+          FROM teamuser,user
+          where user.userid = teamuser.userid and teamid=?;`,
+          [teamid],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+      });
 
 //------------------
-//
+// 交流零打搜尋
 app.post('/searchzero', (req, res) => {
   const datetime = req.body.datetime;
   const starttime = req.body.starttime;
@@ -615,7 +646,7 @@ app.post('/searchzero', (req, res) => {
   const county = req.body.county;
   const area = req.body.area;
   const zerolevel = req.body.zerolevel;
-  const zeroinput = req.body.zeroinput;
+  // const zeroinput = req.body.zeroinput;
   db.query(
     `SELECT username, county, area, fieldname, date, starttime, endtime, cost, level, number
           FROM userarticle_zeroda, user 

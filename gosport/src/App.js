@@ -28,6 +28,7 @@ import Client from './client/req';
 import Backarticle from './back/backarticle2';
 import Serchdi from "./handya/serchdi.jsx";
 import Applayout from './logintry/Applayout'
+import Applayout2 from './handya/logintry/Applayout'
 
 class App extends Component {
   render() {
@@ -84,6 +85,7 @@ class App extends Component {
             <Route path="/testt"      component={Testt} />
             <Route path="/testt1"      component={Serchdi} />
             <Route path="/applayout"      component={Applayout} />
+            <Route path="/applayout2"      component={Applayout2} />
 
             <Route path="/testt" component={Testt} />
             <Route path="/backqa" component={backqa} />

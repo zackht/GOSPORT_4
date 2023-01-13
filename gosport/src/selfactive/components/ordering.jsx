@@ -8,7 +8,7 @@ import arrowup from '../icon/arrowup2.svg'
 
 const Ordering = () => {
     // 接取資料 起訖查詢時間 查詢人
-    const [orderInfo, setOrderInfo] = useState([{orderdate:'',orderid:''}]);
+    const [orderInfo, setOrderInfo] = useState([{ orderdate: '', orderid: '' }]);
     const [stratDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const userid = Cookies.get('id');
@@ -24,8 +24,31 @@ const Ordering = () => {
             setOrderInfo(response.data)
         });
     }
-    const showdata = ()=>{
-        console.log('a')
+    const activeTimeList = orderInfo.map((item, index) => <button key={item.orderid} onClick={() => { showdata(index) }}>{item.orderdate.substring(0, 10)}</button>)
+    // 點擊活動日期顯示查詢結果
+    const [orderNone, setOderNoneOut] = useState('block')
+    const [ordermenu, setShowOrder] = useState('none');
+    const [orderData, setOrderData] = useState({
+        duringtime: "",
+        duringtype: "",
+        enddate: "",
+        flag: "",
+        ordercount: '',
+        orderdate: "",
+        sideaddr: "",
+        sidename: "",
+        startdate: "",
+        week: ""
+    });
+    const[rentType,setRentType] = useState(false)
+    const showdata = (index) => {
+        setOderNoneOut('none')
+        setShowOrder('block')
+        setOrderData(orderInfo[index])
+        console.log(orderData)
+        if (orderData.duringtype === '長租') {
+            setRentType(true)
+        }
     }
     return (
         <React.Fragment>
@@ -39,31 +62,33 @@ const Ordering = () => {
                     <span className='searchbox' onClick={getdata}>搜尋</span>
                 </div>
                 <div>訂單日期</div>
-                <div className="showDate">
-                    {orderInfo.map(item => <button key={item.orderid} >{item.orderdate.substring(0,10)}</button> )}                    
+                <div className="showDate" >
+                    {activeTimeList}
                     <button onClick={showdata}>2023/1/31</button>
                 </div>
             </div>
             {/* <!-- 訂單詳細 --> */}
-            <div className='ordermenu' style={{display:'block'}}> 尚未選擇 </div>
-            <div className="ordermenu" style={{display:'none'}}>
+            <div className='ordermenu' style={{ display: orderNone }}> 尚未選擇下單日期 </div>
+            <div className="ordermenu" id='ordering' style={{ display: ordermenu }}>
                 <div>訂單日期</div>
-                <div>2022/12/31</div>
-                {/* <div style={{ display: "flex" }}>
+                <div>{orderData.orderdate.substring(0, 10)}</div>
+                <div style={{ display: rentType? 'flex':'none' }}>
                     <div style={{ flex: "1" }}>開始時間</div>
                     <div style={{ flex: "1" }}>結束時間</div>
                     <div style={{ flex: "1" }}>星期</div>
-                </div> */}
-                <div>
-                    <div>時段</div>
                 </div>
-                {/* <div style={{ display: "flex" }}>
+                <div style={{ display: rentType? 'none':'flex' }}>
+                    <div style={{ flex: "1" }}>活動日期</div>
+                    <div style={{ flex: "2" }}>時段</div>
+                </div>
+                <div style={{ display: rentType? 'flex':'none' }}>
                     <div style={{ flex: "1" }}>2022/12/31</div>
                     <div style={{ flex: "1" }}>2022/12/31</div>
                     <div style={{ flex: "1" }}>星期三</div>
-                </div> */}
-                <div>
-                    <div>9:00-11:00</div>
+                </div>
+                <div style={{ display: rentType? 'none':'flex' }}>
+                    <div style={{ flex: "1" }}>2022/12/31</div>
+                    <div style={{ flex: "2" }}>9:00-11:00</div>
                 </div>
                 <div>數量</div>
                 <div>1</div>
