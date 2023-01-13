@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './createside.css';
+// import './createside.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import aa from './icon/上傳照片.svg';
 import group41 from "./icon/Group 41.png";
@@ -20,22 +20,6 @@ class createside extends Component {
     render() {
         return (
             <React.Fragment>
-                {/* <!-- 導覽列 --> */}
-                <div class="navbar">
-                    <div class="nContent">
-                        <div class="nLeft">
-                            <div>GOsport</div>
-                        </div>
-                        <div class="nRight">
-                            <div><a href="">租場地</a></div>
-                            <div><a href="">交流區</a></div>
-                            <div><a href="">成為場地方</a></div>
-                            <div><a href="">Q&A</a></div>
-                            <img src="./icon/notice.svg" alt="" />
-                            <img src="./icon/user.svg"></img>
-                        </div>
-                    </div>
-                </div>
                 <form action="">
                     <div class="container div0">
                         <div class="row div1">
@@ -322,12 +306,6 @@ class createside extends Component {
                         </div>
                     </div>
                 </form>
-                {/* <!-- footer --> */}
-                <div class="footer">
-                    <div class="fContent">
-                        <div>Copyright © 2022 GOsport. 保留一切權利。</div>
-                    </div>
-                </div>
             </React.Fragment>
         );
     }

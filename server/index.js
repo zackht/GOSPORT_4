@@ -233,6 +233,21 @@ app.post("/team", (req, res) => {
         }
       });
     });
+    // 後臺球隊顯示會員頭像
+    app.post("/teameventuser", (req, res) => {
+      const teameventid = req.body.teameventid;
+      db.query(`SELECT * FROM (teamevent inner join teameventuser 
+        on teamevent.teameventid = teameventuser.teameventid AND teamevent.teameventid=?) inner JOIN
+        user 
+        on teameventuser.userid = user.userid`
+      ,[teameventid], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+    });
     // 後臺球隊編輯儲存   有圖片
     app.post("/teamupdate",upload.single('teamfile'), (req, res) => {
       const teamstartdate = req.body.teamstartdate;
@@ -371,6 +386,76 @@ app.post("/rentupdate", (req, res) => {
       }
     });
 });
+// ===============後臺場地查詢========================================
+app.post("/backsidesearch", (req, res) => {
+  const startdate = req.body.startdate;
+  const enddate = req.body.enddate;
+  const type = req.body.type;
+  const text = req.body.text;
+  if(text === ''){
+    db.query("SELECT * FROM `side` WHERE addday BETWEEN ? AND ? AND sidetype = ?"
+    ,[startdate,enddate,type], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+  }else{
+    db.query("SELECT * FROM `side` WHERE addday BETWEEN ? AND ? AND sidetype = ? AND sidename LIKE ?"
+    ,[startdate,enddate,type,text], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+  }
+});
+// 後臺場地編輯畫面
+app.post("/backsideedit ", (req, res) => {
+  const sideid =req.body.sideid;
+  db.query(`SELECT * FROM (side inner join sidedevice 
+    on side.sideid = sidedevice.sideid AND side.sideid=?) inner JOIN
+    sidetime 
+    on side.sideid = sidetime.sideid AND side.sideid=?`
+    , [sideid,sideid]
+    , (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // 登入資料
 app.post("/userinfo", (req, res) => {
   const account = req.body.account;
