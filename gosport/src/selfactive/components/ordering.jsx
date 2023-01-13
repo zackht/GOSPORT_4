@@ -29,7 +29,8 @@ const Ordering = () => {
     const [orderNone, setOderNoneOut] = useState('block')
     const [ordermenu, setShowOrder] = useState('none');
     const [orderData, setOrderData] = useState({
-        duringtime: "",
+        starttime: "",
+        endtime:"",
         duringtype: "",
         enddate: "",
         flag: "",
@@ -47,7 +48,10 @@ const Ordering = () => {
         setOrderData(orderInfo[index])
         console.log(orderData)
         if (orderData.duringtype === '長租') {
+            console.log('長租')
             setRentType(true)
+        }else{
+            console.log('日租')
         }
     }
     return (
@@ -64,7 +68,6 @@ const Ordering = () => {
                 <div>訂單日期</div>
                 <div className="showDate" >
                     {activeTimeList}
-                    <button onClick={showdata}>2023/1/31</button>
                 </div>
             </div>
             {/* <!-- 訂單詳細 --> */}
@@ -82,23 +85,22 @@ const Ordering = () => {
                     <div style={{ flex: "2" }}>時段</div>
                 </div>
                 <div style={{ display: rentType? 'flex':'none' }}>
-                    <div style={{ flex: "1" }}>2022/12/31</div>
-                    <div style={{ flex: "1" }}>2022/12/31</div>
-                    <div style={{ flex: "1" }}>星期三</div>
+                    <div style={{ flex: "1" }}>{orderData.startdate.substring(0, 10)}</div>
+                    <div style={{ flex: "1" }}>{orderData.enddate.substring(0, 10)}</div>
+                    <div style={{ flex: "1" }}>{orderData.week}</div>
                 </div>
                 <div style={{ display: rentType? 'none':'flex' }}>
-                    <div style={{ flex: "1" }}>2022/12/31</div>
-                    <div style={{ flex: "2" }}>9:00-11:00</div>
+                    <div style={{ flex: "1" }}>{orderData.startdate.substring(0, 10)}</div>
+                    <div style={{ flex: "2" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
                 </div>
                 <div>數量</div>
-                <div>1</div>
+                <div>{orderData.ordercount}</div>
                 <div>日/長租</div>
-                <div>長租</div>
+                <div>{orderData.duringtype}</div>
                 <div>場地</div>
-                <div>群月羽球場</div>
+                <div>{orderData.sidename}</div>
                 <div>地址</div>
-                <div style={{ position: "relative" }}>台中市北區福德路那條巷123號
-                    <button id='ing' className="chuse_order">取消預約</button>
+                <div style={{ position: "relative" }}>{orderData.sideaddr}
                 </div>
             </div>
         </React.Fragment>

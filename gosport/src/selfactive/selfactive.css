@@ -126,6 +126,7 @@
     opacity: 0;
 }
 .selfactive .searchbox{
+    border-radius: 20px;
     display: block;
     position: relative;
     top: 11px;
@@ -153,8 +154,7 @@
     margin: 15px 0px;
 }
 
-.selfactive .searchbox:hover,
-.selfactive .searchbox:focus,
+
 .showDate button:hover,
 .showDate button:focus {
     color: rgb(230, 70, 55);
@@ -182,7 +182,8 @@
     width: 197px;
     height: 72px;
 }
-
+.selfactive .searchbox:hover,
+.selfactive .searchbox:focus,
 .chuse_order:hover {
     background-color: rgb(255, 87, 87);
 }
