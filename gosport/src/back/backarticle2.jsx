@@ -145,7 +145,7 @@ const Backarticle2 = () => {
     const [rentselectcounty, setrentselectcounty] = useState('台中市');
     const [rentselectarea, setrentselectarea] = useState('中區');
     const [rentlist, setrentlist] = useState([]);
-    const [fieldname,setfieldname]=useState('');
+    const [fieldname, setfieldname] = useState('');
     const ccc = () => {
         setrentlist([]);
         Axios.post("http://localhost:3001/rent", {
@@ -153,7 +153,7 @@ const Backarticle2 = () => {
             renttime1: renttime1,
             rentselectcounty: rentselectcounty,
             rentselectarea: rentselectarea,
-            fieldname:fieldname,
+            fieldname: fieldname,
         }).then((response) => {
             console.log(response);
             setrentlist(response.data);
@@ -201,16 +201,24 @@ const Backarticle2 = () => {
     }
     // 球隊編輯畫面
     var [teamedit, setteamedit] = useState([]);
+    const [userlist1, setuserlist1] = useState('');
     const [teameventid, setteameventid] = useState('');
+    const [userlist, setuserlist] = useState([]);
     const ttt = (e) => {
         setdiv2(!div2);
-        console.log(e);
+        // console.log(e);
         setteameventid(e);
         Axios.post("http://localhost:3001/teamedit", {
             teameventid: e,
         }).then((response) => {
-            console.log(response);
+            // console.log(response);
             setteamedit(response.data);
+        });
+        Axios.post("http://localhost:3001/teameventuser", {
+            teameventid: e,
+        }).then((response) => {
+            // console.log(response.data);
+            setuserlist(response.data);
         });
     }
     // 球隊儲存
@@ -225,28 +233,48 @@ const Backarticle2 = () => {
     const [teamtext, setteamtext] = useState('');
     const [teamfile, setteamfile] = useState();
     const ttt2 = () => {
-        const teamData = new FormData();
-        console.log(teamfile);
-        teamData.append('teamfile',teamfile);
-        teamData.append('teamstartdate',teamstartdate);
-        teamData.append('teamenddate',teamenddate);
-        teamData.append('teamstarttime',teamstarttime);
-        teamData.append('teamendtime',teamendtime);
-        teamData.append('teamtype2',teamtype2);
-        teamData.append('teamtitle',teamtitle);
-        teamData.append('teamlocation',teamlocation);
-        teamData.append('teampay',teampay);
-        teamData.append('teamtext',teamtext);
-        teamData.append('teameventid',teameventid);
-        Axios.post("http://localhost:3001/teamupdate",teamData,{
-            headers: {'Content-Type': 'multipart/form-data'},
-        }).then((response) => {
-            setdiv2(!div2);
-            alert("更新成功");
-        });
+        if (teamfile) {
+            const teamData = new FormData();
+            console.log(teamfile);
+            teamData.append('teamfile', teamfile);
+            teamData.append('teamstartdate', teamstartdate);
+            teamData.append('teamenddate', teamenddate);
+            teamData.append('teamstarttime', teamstarttime);
+            teamData.append('teamendtime', teamendtime);
+            teamData.append('teamtype2', teamtype2);
+            teamData.append('teamtitle', teamtitle);
+            teamData.append('teamlocation', teamlocation);
+            teamData.append('teampay', teampay);
+            teamData.append('teamtext', teamtext);
+            teamData.append('teameventid', teameventid);
+            Axios.post("http://localhost:3001/teamupdate", teamData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            }).then((response) => {
+                setdiv2(!div2);
+                alert("更新成功");
+            });
+        } else {
+            const teamData2 = new FormData();
+            teamData2.append('teamstartdate', teamstartdate);
+            teamData2.append('teamenddate', teamenddate);
+            teamData2.append('teamstarttime', teamstarttime);
+            teamData2.append('teamendtime', teamendtime);
+            teamData2.append('teamtype2', teamtype2);
+            teamData2.append('teamtitle', teamtitle);
+            teamData2.append('teamlocation', teamlocation);
+            teamData2.append('teampay', teampay);
+            teamData2.append('teamtext', teamtext);
+            teamData2.append('teameventid', teameventid);
+            Axios.post("http://localhost:3001/teamupdate2", teamData2, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            }).then((response) => {
+                setdiv2(!div2);
+                alert("更新成功");
+            });
+        }
     }
     const [teamimg, setteamimg] = useState();
-    const ttt3 =(e)=>{
+    const ttt3 = (e) => {
         console.log(e[0]);
     }
     // 零打搜尋結果
@@ -372,8 +400,8 @@ const Backarticle2 = () => {
     const [Taichung, setTaichung] = useState([
         "中區", "東區", "西區", "南區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "清水區", "沙鹿區", "大甲區", "東勢區", "梧棲區", "烏日區", "神岡區", "大肚區", "大雅區", "后里區", "霧峰區", "潭子區", "龍井區", "外埔區", "和平區", "石岡區", "大安區", "新社區"
     ]);
-    const [time,settime] =useState([
-        '0:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00','0:00'
+    const [time, settime] = useState([
+        '0:00', '1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '0:00'
     ])
     const [number1, setnumber1] = useState(0);
     const [number2, setnumber2] = useState(0);
@@ -383,7 +411,7 @@ const Backarticle2 = () => {
     // 球隊活動編輯顯示活動成員頭向
     const [userimg, setuserimg] = useState('');
     // 轉租取消
-    const rrr2=()=>{
+    const rrr2 = () => {
         setdiv3(!div3);
         setrentedit([]);
     }
@@ -416,7 +444,7 @@ const Backarticle2 = () => {
     }
     // rent編輯 textarea自動伸縮
     const renttext = useRef(0);
-    const textarea2=(text)=>{
+    const textarea2 = (text) => {
         setrentcontent(text);
         renttext.current.style.height = 'auto';
         // if(renttext.scrollHeight>=renttext.offsetHeight){
@@ -424,20 +452,20 @@ const Backarticle2 = () => {
         // }
     }
     // 轉租儲存
-    const [articleid_sublet,setarticleid_sublet]=useState('');
-    const [rentcontent,setrentcontent]=useState('');
-    const [rentstarttime,setrentstarttime]=useState('');
-    const [rentendtime,setrentendtime]=useState('');
-    const [rentdate,setrentdate]=useState('');
-    const [rentcounty,setrentcounty]=useState('');
-    const [rentarea,setrentarea]=useState('');
-    const [rentfieldname,setrentfieldname]=useState('');
-    const [rentaddress,setrentaddress]=useState('');
-    const [rentcost,setrentcost]=useState('');
+    const [articleid_sublet, setarticleid_sublet] = useState('');
+    const [rentcontent, setrentcontent] = useState('');
+    const [rentstarttime, setrentstarttime] = useState('');
+    const [rentendtime, setrentendtime] = useState('');
+    const [rentdate, setrentdate] = useState('');
+    const [rentcounty, setrentcounty] = useState('');
+    const [rentarea, setrentarea] = useState('');
+    const [rentfieldname, setrentfieldname] = useState('');
+    const [rentaddress, setrentaddress] = useState('');
+    const [rentcost, setrentcost] = useState('');
     const rrr3 = () => {
         console.log(rentdate);
         Axios.post("http://localhost:3001/rentupdate", {
-            articleid_sublet:articleid_sublet,
+            articleid_sublet: articleid_sublet,
             rentcontent: rentcontent,
             rentstarttime: rentstarttime,
             rentendtime: rentendtime,
@@ -447,7 +475,7 @@ const Backarticle2 = () => {
             rentfieldname: rentfieldname,
             rentaddress: rentaddress,
             rentcost: rentcost,
-            number2:number2,
+            number2: number2,
         }).then((response) => {
             setdiv3(!div3);
             alert("更新成功");
@@ -564,7 +592,7 @@ const Backarticle2 = () => {
                                     <span className={ba.span}>場館名稱</span>
                                     <div>
                                         <input type="text" class={`${ba.ccc} ${ba.div33}`}
-                                            placeholder="請輸入關鍵字" onChange={(e) => { setfieldname(`%${e.target.value}%`) }}/>
+                                            placeholder="請輸入關鍵字" onChange={(e) => { setfieldname(`%${e.target.value}%`) }} />
                                     </div>
                                 </div>
                                 <div class={`mt-auto`}>
@@ -648,7 +676,7 @@ const Backarticle2 = () => {
                                         <div className={ba.iimgdiv}>
                                             <select class={ba.dselect} name="ct_" id="" defaultValue={val.starttime} onChange={(e) => { setzerodastarttime(e.target.value) }}>
                                                 {time.map((val, key) => {
-                                                    return (<option key={key} value={key+1}>{val}</option>);
+                                                    return (<option key={key} value={key + 1}>{val}</option>);
                                                 })}
                                             </select>
                                             <img src={Group41} alt="" className={ba.iimg2} />
@@ -659,7 +687,7 @@ const Backarticle2 = () => {
                                         <div className={ba.iimgdiv}>
                                             <select class={ba.dselect} name="ct_" id="" defaultValue={val.endtime} onChange={(e) => { setzerodaendtime(e.target.value) }}>
                                                 {time.map((val, key) => {
-                                                    return (<option key={key} value={key+1}>{val}</option>);
+                                                    return (<option key={key} value={key + 1}>{val}</option>);
                                                 })}
                                             </select>
                                             <img src={Group41} alt="" className={ba.iimg2} />
@@ -746,7 +774,7 @@ const Backarticle2 = () => {
                                         <div className={backteam.div2}>
                                             <select name="" id="" className={`${backteam.div3} ${backteam.font}`} defaultValue={val.starttime} onChange={(e) => setteamstarttime(e.target.value)}>
                                                 {time.map((val, key) => {
-                                                    return (<option key={key} value={key+1}>{val}</option>);
+                                                    return (<option key={key} value={key + 1}>{val}</option>);
                                                 })}
                                             </select>
                                             <img className={backteam.selectimg} src={group41} alt="" />
@@ -757,7 +785,7 @@ const Backarticle2 = () => {
                                         <div className={backteam.div5}>
                                             <select name="" id="" className={`${backteam.div3} ${backteam.font}`} defaultValue={val.endtime} onChange={(e) => setteamendtime(e.target.value)}>
                                                 {time.map((val, key) => {
-                                                    return (<option key={key} value={key+1}>{val}</option>);
+                                                    return (<option key={key} value={key + 1}>{val}</option>);
                                                 })}
                                             </select>
                                             <img className={backteam.selectimg} src={group41} alt="" />
@@ -766,8 +794,8 @@ const Backarticle2 = () => {
                                 </div>
                                 <div className={backteam.div6}>
                                     <label htmlFor="inputfile" className={backteam.filelabel}>
-                                        <img src={teamurl} alt="" className={backteam.fileimg} onChange={(e)=>{setteamimg(e.target.files)}}/></label>
-                                    <input type="file" id='inputfile' className={backteam.file}  onChange={(e)=>{setteamfile(e.target.files[0])}}/>
+                                        <img src={teamurl} alt="" className={backteam.fileimg} onChange={(e) => { setteamimg(e.target.files) }} /></label>
+                                    <input type="file" id='inputfile' className={backteam.file} onChange={(e) => { setteamfile(e.target.files[0]) }} />
                                 </div>
                             </div>
                             <div>
@@ -805,6 +833,20 @@ const Backarticle2 = () => {
                             <div className={backteam.div9}>
                                 <span className={backteam.font}>成員</span>
                                 <div className='d-flex'>
+                                    {userlist.map((val,key)=>{
+                                        var u8Arr = new Uint8Array(val.userimg.data);
+                                        var blob = new Blob([u8Arr], {type: "image/jpeg" });
+                                        var fr = new FileReader;
+                                        fr.onload = function () {
+                                            setuserlist1(fr.result);
+                                            // console.log(fr.result);
+                                        };
+                                        fr.readAsDataURL(blob);
+                                        return (
+                                            <img src={userlist1} alt="" className={backteam.div57}/>
+                                            // <div>{val.userid}</div>
+                                        );
+                                    })}
                                 </div>
                             </div>
                             <div className={backteam.div8}>
@@ -843,19 +885,19 @@ const Backarticle2 = () => {
                                 <div class={backrent.contain}>
                                     <div>
                                         <label class={backrent.dlabel} for="ct_pname">場館</label><br />
-                                        <input class={backrent.dinput} id="ct_pname" type="text" defaultValue={val.fieldname} onChange={(e)=>{setrentfieldname(e.target.value)}}/>
+                                        <input class={backrent.dinput} id="ct_pname" type="text" defaultValue={val.fieldname} onChange={(e) => { setrentfieldname(e.target.value) }} />
                                     </div>
                                     <div class={backrent.ct_citycover}>
                                         <div className={backrent.div3} >
                                             <label class={backrent.dlabel} for="ct_city">縣市</label><br />
-                                            <select class={backrent.dselect} name="ct" id="ct_city" defaultValue={val.county} onChange={(e)=>{setrentcounty(e.target.value)}}>
+                                            <select class={backrent.dselect} name="ct" id="ct_city" defaultValue={val.county} onChange={(e) => { setrentcounty(e.target.value) }}>
                                                 <option value="台中市">台中市</option>
                                             </select>
                                             <img src={group41} alt="" className={backrent.div2} />
                                         </div>
                                         <div className={backrent.div3}>
                                             <label class={backrent.dlabel} for="">地區</label><br />
-                                            <select class={backrent.dselect} name="ct_" id="" defaultValue={val.area} onChange={(e)=>{setrentarea(e.target.value)}}>
+                                            <select class={backrent.dselect} name="ct_" id="" defaultValue={val.area} onChange={(e) => { setrentarea(e.target.value) }}>
                                                 {Taichung.map((val, key) => {
                                                     return (<option key={key} value={val}>{val}</option>);
                                                 })}
@@ -865,13 +907,13 @@ const Backarticle2 = () => {
                                     </div>
                                     <div>
                                         <label class={backrent.dlabel} for="ct_addr">地址</label><br />
-                                        <input class={backrent.dinput} type="text" id="ct_addr" defaultValue={val.address} onChange={(e)=>{setrentaddress(e.target.value)}} />
+                                        <input class={backrent.dinput} type="text" id="ct_addr" defaultValue={val.address} onChange={(e) => { setrentaddress(e.target.value) }} />
                                     </div>
                                     <div >
                                         <label class={backrent.dlabel} for="ct_d_input">日期</label>
                                         <div className={`${backrent.div3} d-flex`}>
-                                            <input class={backrent.dinputdate} id="ct_d_input" type="date" defaultValue={`${y}-${m = (m < 10 ? '0' : '') + m}-${d = (d < 10 ? '0' : '') + d}`} onChange={(e)=>{setrentdate(e.target.value)}}/>
-                                            <img src={group41} alt="" className={backrent.div5}/>
+                                            <input class={backrent.dinputdate} id="ct_d_input" type="date" defaultValue={`${y}-${m = (m < 10 ? '0' : '') + m}-${d = (d < 10 ? '0' : '') + d}`} onChange={(e) => { setrentdate(e.target.value) }} />
+                                            <img src={group41} alt="" className={backrent.div5} />
                                         </div>
                                     </div>
                                     <div>
@@ -879,9 +921,9 @@ const Backarticle2 = () => {
                                     </div>
                                     <div class={backrent.ct_time}>
                                         <div className={backrent.div3}>
-                                            <select class={backrent.dselect} name="ct_" id="" defaultValue={val.starttime} onChange={(e)=>{setrentstarttime(e.target.value)}}>
+                                            <select class={backrent.dselect} name="ct_" id="" defaultValue={val.starttime} onChange={(e) => { setrentstarttime(e.target.value) }}>
                                                 {time.map((val, key) => {
-                                                    return (<option key={key} value={key+1}>{val}</option>);
+                                                    return (<option key={key} value={key + 1}>{val}</option>);
                                                 })}
                                             </select>
                                             <img src={group41} alt="" className={backrent.div4} />
@@ -890,9 +932,9 @@ const Backarticle2 = () => {
                                             至
                                         </div>
                                         <div className={backrent.div3}>
-                                            <select class={backrent.dselect} name="ct_" id="" defaultValue={val.endtime} onChange={(e)=>{setrentendtime(e.target.value)}}>
+                                            <select class={backrent.dselect} name="ct_" id="" defaultValue={val.endtime} onChange={(e) => { setrentendtime(e.target.value) }}>
                                                 {time.map((val, key) => {
-                                                    return (<option key={key} value={key+1}>{val}</option>);
+                                                    return (<option key={key} value={key + 1}>{val}</option>);
                                                 })}
                                             </select>
                                             <img src={group41} alt="" className={backrent.div4} />
@@ -901,19 +943,19 @@ const Backarticle2 = () => {
                                     <div>
                                         <label class={backrent.dlabel} for="">場地數</label><br />
                                         <input class={`${backrent.minus} ${backrent.dinput}`} type="button" onClick={dda} value="-" />
-                                        <input class={`${backrent.numbox} ${backrent.dinput3}`} type="number" key={number2} id="val" defaultValue={number2} onChange={(e)=>{setnumber2(e.target.value)}} />
+                                        <input class={`${backrent.numbox} ${backrent.dinput3}`} type="number" key={number2} id="val" defaultValue={number2} onChange={(e) => { setnumber2(e.target.value) }} />
                                         <input class={`${backrent.minus} ${backrent.dinput}`} type="button" onClick={add} value="+" />
                                     </div>
                                     <div>
                                         <label class={backrent.dlabel} for="ct_pay">費用</label><br />
-                                        <input class={backrent.dinput2} id="ct_pay" type="number" defaultValue={val.cost} onChange={(e)=>{setrentcost(e.target.value)}} />
+                                        <input class={backrent.dinput2} id="ct_pay" type="number" defaultValue={val.cost} onChange={(e) => { setrentcost(e.target.value) }} />
                                     </div>
                                     <div>
                                         <label class={backrent.dlabel} for="ct_discribe">描述</label><br />
-                                        <textarea name="" class={backrent.dtextarea} id="ct_discribe" cols="30" rows="10" defaultValue={val.content} onChange={(e)=>textarea2(e.target.value)} ref={renttext}></textarea>
+                                        <textarea name="" class={backrent.dtextarea} id="ct_discribe" cols="30" rows="10" defaultValue={val.content} onChange={(e) => textarea2(e.target.value)} ref={renttext}></textarea>
                                     </div>
                                     <div class={`${backrent.ct_yesOrNot} d-flex justify-content-around`}>
-                                        <input class={`${backrent.div6} ${backrent.dinputsubmit}`} type="submit" value="取消" onClick={rrr2}/>
+                                        <input class={`${backrent.div6} ${backrent.dinputsubmit}`} type="submit" value="取消" onClick={rrr2} />
                                         <input class={`${backrent.dinput} ${backrent.dinputsubmit}`} type="submit" value="儲存" onClick={rrr3} />
                                     </div>
                                 </div>

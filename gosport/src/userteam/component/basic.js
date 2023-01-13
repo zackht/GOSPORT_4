@@ -5,14 +5,16 @@ import basic from './basic.module.css';
 import Axios from "axios";
 export default function Basic(props) {
 
-    // 假設目前查詢的會員id=1、球場id=1
+    // 假設目前查詢 會員id=1 球隊id=1
     const [userid, setUserid] = useState('1');
     const [teamid, setTeamid] = useState('1');
+
     // team img src
     const [teamimg, setTeamimg] = useState('');
     
     // 資料庫查詢結果
     const [basicResult,setBasicResult] = useState(null);
+    
 
     // 將資料放入basicResult
     const handleBasicResult = async () => {
@@ -20,27 +22,21 @@ export default function Basic(props) {
             userid: userid,
             teamid: teamid
         });
+        console.log(res.data);
         setBasicResult(res.data[0]);
         // 照片格式轉換
         const u8Arr = new Uint8Array(res.data[0].teamimg.data);
+        // 轉檔
         const blob = new Blob([u8Arr],{type:"image/jpeg"});
+        // 讀取
         const fr = new FileReader
+        fr.readAsDataURL(blob);
         fr.onload = function () {
             setTeamimg(fr.result);
-            };
-        fr.readAsDataURL(blob);
+        };
     };
-    // console.log(basicResult);    
-    // 智鈞寫法
-    // const handleBasicResult = () => {
-    //     Axios.post("http://localhost:3001/teambasic", {
-    //         userid: userid,
-    //         teamid: teamid
-    //     }).then((response) => {
-    //         setBasicResult(response.data[0]);
-    //     });
-    // }
 
+    // 當畫面載入 抓資料庫
     useEffect(()=>{
         handleBasicResult();
     },[]);

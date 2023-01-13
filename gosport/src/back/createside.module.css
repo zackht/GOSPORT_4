@@ -14,9 +14,11 @@
 }
 .div0{
     width: 1060px;
-    height: 2061px;
-    margin-top: 200px;
+    height: 80vh;
+    margin-top: 45px;
     padding: 40px;
+    background-color: white;
+    overflow: scroll;
 }
 .div1{
     margin: 0;

@@ -98,7 +98,7 @@ export default function BasicEdit(props) {
             fee:        fee,
             text:       text
         }).then(()=>{
-            alert("更新成功");
+            alert("文字更新成功");
         })
     }
     // 更新 照片 to 資料庫
@@ -107,7 +107,7 @@ export default function BasicEdit(props) {
             teamid:  teamid,
             teamimg: teamimg
         }).then(()=>{
-            alert("更新成功");
+            alert("照片更新成功");
         })
     }
     
