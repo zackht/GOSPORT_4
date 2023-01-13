@@ -43,16 +43,16 @@ io.on("connection", (socket) => {
   //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
   // io.emit("receive_message",datas);
 
-    socket.on("send_mesg",(data)=>{
-//       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
-      
-      console.log(data);
-      // console.log(datas);
-      datas.push(data)
-      // io.emit("receive_message",[data]);
-      // socket.broadcast.emit("receive_message",datas);
-      // socket.broadcast 自己收不到自己
-      io.emit("receive_message",datas);
+  socket.on("send_mesg", (data) => {
+    //       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
+
+    console.log(data);
+    // console.log(datas);
+    datas.push(data)
+    // io.emit("receive_message",[data]);
+    // socket.broadcast.emit("receive_message",datas);
+    // socket.broadcast 自己收不到自己
+    io.emit("receive_message", datas);
   })
 })
 
@@ -71,7 +71,27 @@ const db = mysql.createConnection({
   password: "root",
   database: "gosport",
   port: 3306,
+  useConnectionPooling: true,
 });
+
+process.on('uncaughtException', function (err) {
+  if (err.code == "PROTOCOL_CONNECTION_LOST") {
+    mysql.restart();
+  }
+});
+
+// db.getConnection(function(err, connection) {
+//   connection.query( 'SELECT * FROM user', function(err, rows) {
+
+//     console.log(db._freeConnections.indexOf(connection)); // -1
+
+//     connection.release();
+
+//     console.log(db._freeConnections.indexOf(connection)); // 0
+
+//  });
+// });
+
 // 連接mysql
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb' }));
@@ -403,7 +423,7 @@ app.post("/selfbadge", (req, res) => {
 });
 
 //更新個人資料 有改照片
-app.post("/selfalter",  upload.single('image') , (req, res) => {
+app.post("/selfalter", upload.single('image'), (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const username = req.body.username;
@@ -415,14 +435,14 @@ app.post("/selfalter",  upload.single('image') , (req, res) => {
   const volleyball = req.body.volleyball;
   const userId = req.body.userid;
   console.log(req.file.buffer)
-    db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? WHERE `userid`= ?",
-      [email, password, username, req.file.buffer, tel, userdescribe, badminton, tabletennis, volleyball, userId], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      });
+  db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? WHERE `userid`= ?",
+    [email, password, username, req.file.buffer, tel, userdescribe, badminton, tabletennis, volleyball, userId], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
 });
 //更新個人資料 沒改照片
 app.post("/selfalterwithoutpic", (req, res) => {
@@ -437,13 +457,13 @@ app.post("/selfalterwithoutpic", (req, res) => {
   const volleyball = req.body.volleyball;
   const userId = req.body.userid;
   db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? WHERE `userid`= ?",
-      [email, password, username,  tel, userdescribe, badminton, tabletennis, volleyball, userId], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      });
+    [email, password, username, tel, userdescribe, badminton, tabletennis, volleyball, userId], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
 });
 
 //會員訂單搜尋 進行中
@@ -578,19 +598,23 @@ app.post("/updatebasicimg", upload.single('image'), (req, res) => {
 //------------------
 // 交流零打搜尋
 app.post('/searchzero', (req, res) => {
-  const datetime = req.body.datetime;
-  const starttime = req.body.starttime;
-  const endtime = req.body.endtime;
-  const fee = req.body.fee;
-  const county = req.body.county;
-  const area = req.body.area;
+  const ballgameszero = req.body.ballgameszero;
+  const startdatezero = req.body.startdatezero;
+  const enddatezero = req.body.enddatezero;
+  const starttimezero = req.body.starttimezero;
+  const endtimezero = req.body.endtimezero;
+  const costzero = req.body.costzero;
+  const countyzero = req.body.countyzero;
+  const areazero = req.body.areazero;
   const zerolevel = req.body.zerolevel;
   // const zeroinput = req.body.zeroinput;
+  // console.log(ballgameszero, startdatezero, enddatezero, starttimezero, endtimezero, costzero, countyzero, areazero, zerolevel)
   db.query(
-    `SELECT username, county, area, fieldname, date, starttime, endtime, cost, level, number
-          FROM userarticle_zeroda, user 
-          WHERE userarticle_zeroda.userid = user.userid`,
-    [],
+    `SELECT * FROM userarticle_zeroda, user 
+    WHERE userarticle_zeroda.userid = user.userid
+    AND ballgames = ? AND startdate >= ? AND enddate <= ?
+    AND starttime >= ? AND endtime <= ? AND cost <= ? AND county = ? AND area = ? AND level = ?`,
+    [ballgameszero, startdatezero, enddatezero, starttimezero, endtimezero, costzero, countyzero, areazero, zerolevel],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -600,4 +624,54 @@ app.post('/searchzero', (req, res) => {
     }
   );
 });
+
+//交流轉租搜尋
+app.post('/rentsearch', (req, res) => {
+  const ballgamesrent = req.body.ballgamesrent;
+  const countyrent = req.body.countyrent;
+  const arearent = req.body.arearent;
+  const startdaterent = req.body.startdaterent;
+  const enddaterent = req.body.enddaterent;
+  const starttimerent = req.body.starttimerent;
+  const endtimerent = req.body.endtimerent;
+  const fieldnamerent = req.body.fieldnamerent;
+  const costrent = req.body.costrent;
+  const numberrent = req.body.numberrent;
+
+  console.log(ballgamesrent, countyrent, arearent, startdaterent, enddaterent, starttimerent, endtimerent, costrent, numberrent, fieldnamerent)
+  if (fieldnamerent == '') {
+    db.query(
+      `SELECT * FROM userarticle_sublet, user 
+    WHERE userarticle_sublet.userid = user.userid
+    AND ballgames = ? AND county = ? AND area = ? AND startdate >= ?
+    AND enddate <= ? AND starttime >= ? AND endtime <= ? 
+    AND cost <= ? AND amount <= ? `,
+      [ballgamesrent, countyrent, arearent, startdaterent, enddaterent, starttimerent, endtimerent, costrent, numberrent],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  } else {
+    db.query(
+      `SELECT * FROM userarticle_sublet, user 
+    WHERE userarticle_sublet.userid = user.userid
+    AND ballgames = ? AND county = ? AND area = ? AND startdate >= ?
+    AND enddate <= ? AND starttime >= ? AND endtime <= ? 
+    AND cost <= ? AND amount <= ? AND fieldname LIKE ?`,
+      [ballgamesrent, countyrent, arearent, startdaterent, enddaterent, starttimerent, endtimerent, costrent, numberrent, fieldnamerent],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  }
+
+})
 
