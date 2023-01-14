@@ -709,7 +709,7 @@ right: 25px;
 .d141{margin: 0px; font-size:24px; font-weight: 500;}
 .d142{width: 426px; height: 60px; border-radius: 99px; font-size: 30px;border: none; background-color: rgb(245, 245, 245);text-align: center}
 .d143{float: right; margin-right: 10px;color:rgb(170, 170, 170);}
-.d144{margin-top:0px; display: flex; justify-content: space-between;}
+.d144{float: right;margin-top:20px; margin-bottom: 50px; display: flex; justify-content: space-between;}
 .d145{height: 25vh;}
 .d146{height: 8vh;}
 .d148{background-color: white;border: #e64637 solid 2px;height: 40vh;width:350px;position: fixed; left: 1090px;bottom: 8vh;

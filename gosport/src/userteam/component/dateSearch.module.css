@@ -17,7 +17,7 @@
     color: rgb(170, 170, 170);
     margin-bottom: 10px;
 }
-form{
+.sForm{
     height: 50vh;
 }
 .sDate{
@@ -32,7 +32,7 @@ form{
     color: rgb(56, 56, 56);
     margin-bottom: 10px;
 }
-.search>form>input{
+.sForm>input{
     border: none;
     border-bottom: 1px solid rgb(56, 56, 56);
     width: 150px;
@@ -48,10 +48,10 @@ form{
     background-position: 100% 50%;
 }
 /* 日曆icon清除 */
-.search>form>input::-webkit-calendar-picker-indicator {
+.sForm>input::-webkit-calendar-picker-indicator {
     opacity: 0;
 }
-.search>form>input:nth-of-type(2){
+.sForm>input:nth-of-type(2){
     margin-bottom: 20px;
 }
 .search button{
