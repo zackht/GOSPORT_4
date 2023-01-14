@@ -5,11 +5,11 @@ import img from '../img.module.js';
 import Axios from "axios";
 export default function BasicEdit(props) {
 
-    // 會員、球場
+    // SQL參數 會員id 球隊id
     const [userid, setUserid] = useState('1');
     const [teamid, setTeamid] = useState('1');
 
-    // input 
+    // input值
     const [tname, setTname] = useState('');
     const [sidename, setSidename] = useState('');
     const [week, setWeek] = useState('');
@@ -19,18 +19,18 @@ export default function BasicEdit(props) {
     const [level, setLevel] = useState('');
     const [fee, setFee] = useState('');
     const [text, setText] = useState('');
-    const [teamimg, setTeamimg] = useState('');
-
-    // 尚無照片 顯示「上傳照片...」
+    const [teamimg, setTeamimg] = useState(); // 顯示
+    const [teamfile, setTeamfile] = useState(); // 傳照片test
+    // 上傳照片...
     const [uploadimg, setUploadimg] = useState(img.upload_c);
 
-    // 查 資料庫
+    // 抓資料
     const handleBasicResult = async () => {
-        let res = await Axios.post("http://localhost:3001/teambasic",{
+        let res = await Axios.post("http://localhost:3001/basicsearch",{
             userid: userid,
             teamid: teamid
         });
-        // 將資料放入狀態
+        // 給input值
         setTname(res.data[0].tname);
         setSidename(res.data[0].sidename);
         setWeek(res.data[0].week);
@@ -40,76 +40,89 @@ export default function BasicEdit(props) {
         setLevel(res.data[0].level);
         setFee(res.data[0].fee);
         setText(res.data[0].text);
-        // 轉 照片格式
-        const u8Arr = new Uint8Array(res.data[0].teamimg.data);
-        const blob = new Blob([u8Arr],{type:"image/jpeg"});
-        const fr = new FileReader;
-        fr.onload = function () {
-            // 照片放入狀態
+        // 讀照片
+        const u8Arr = new Uint8Array(res.data[0].teamimg.data); // 轉unit8array
+        const blob = new Blob([u8Arr],{type:"image/jpeg"});     // 轉blob
+        const fr = new FileReader; // 異步讀取方法
+        fr.readAsDataURL(blob);    // 讀取 以base64編碼的URL
+        fr.onload = function () {  // 讀取完成時
+            // 給input
             setTeamimg(fr.result);
+            // 隱藏uploadimg
             setUploadimg('none');
             };
-        fr.readAsDataURL(blob);
     };
-    // 第一次渲染即抓資料
+    // 畫面載入即抓資料
     useEffect(()=>{
         handleBasicResult();
     },[]);
     
-    // 打開檔案
+    // 更新照片
     const inputFile = useRef();
     const upLoadImg=()=>{
         inputFile.current.click();
     }
-    // 顯示上傳的照片
+    // 顯示
     const handleImgChange =(e)=>{
         const file = e.target.files[0];
         const reader = new FileReader();
         if (file) {
-            // base64編碼讀取
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file); // 讀取 以base64編碼的URL
+            // 放入儲存的值
+            console.log(file);
+            setTeamfile(file);
         }
         reader.addEventListener("load", function () {
-            // 將照片放入狀態
+            // 給div
             setTeamimg(reader.result);
-            // 將upload設定為none
+            // 隱藏uploadimg
             setUploadimg('none');
+            // 上傳照片
+            
         }, false);
     }
 
-    // 更新 文字資料 to 資料庫
-    const updateBasicText= () => {
-        Axios.post("http://localhost:3001/updatebasictext",{
-            teamid:     teamid,
-            tname:      tname,
-            sidename:   sidename,
-            week:       week,
-            starttime:  starttime,
-            endtime:    endtime,
-            type:       type,
-            level:      level,
-            fee:        fee,
-            text:       text
-        }).then(()=>{
-            alert("文字更新成功");
-        })
-    }
-    // 更新 照片 to 資料庫
-    const updateBasicImg= () => {
-        Axios.post("http://localhost:3001/updatebasicimg",{
-            teamid:  teamid,
-            teamimg: teamimg
-        }).then(()=>{
-            alert("照片更新成功");
-        })
-    };
-
-    // 更新 資料 to資料庫
+    // 更新資料
     const updateBasic =()=>{
-        updateBasicText();
-        updateBasicImg();
-    };
-    
+        // 有圖片
+        if(teamfile){ 
+            // 將資料打包
+            const teamData = new FormData(); 
+            teamData.append('teamid', teamid);
+            teamData.append('tname', tname);
+            teamData.append('sidename', sidename);
+            teamData.append('week', week);
+            teamData.append('starttime', starttime);
+            teamData.append('endtime', endtime);
+            teamData.append('type', type);
+            teamData.append('level', level);
+            teamData.append('fee', fee);
+            teamData.append('text', text);
+            teamData.append('teamfile', teamfile); // img
+            Axios.post("http://localhost:3001/basicupdate", teamData,{
+                headers: { 'Content-Type': 'multipart/form-data' },
+            }).then((response) => {
+                alert("有圖片更新成功");
+            });
+        // 沒圖片
+        } else {
+            const teamData2 = new FormData();
+            teamData2.append('tname', tname);
+            teamData2.append('sidename', sidename);
+            teamData2.append('week', week);
+            teamData2.append('starttime', starttime);
+            teamData2.append('endtime', endtime);
+            teamData2.append('type', type);
+            teamData2.append('level', level);
+            teamData2.append('fee', fee);
+            teamData2.append('text', text);
+            Axios.post("http://localhost:3001/basicupdate2", teamData2, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            }).then((response) => {
+                alert("沒圖片更新成功");
+            });
+        }
+    }
 
     return(
         <>
