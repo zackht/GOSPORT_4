@@ -5,58 +5,35 @@ import basic from './basic.module.css';
 import Axios from "axios";
 export default function Basic(props) {
 
-    // 假設目前查詢 會員id=1 球隊id=1
+    // SQL參數 會員id 球隊id
     const [userid, setUserid] = useState('1');
     const [teamid, setTeamid] = useState('1');
     
-    // 基本資料
-    const [basicResult,setBasicResult] = useState(null);
-    // 球隊照片
-    const [teamimg, setTeamimg] = useState('');
+    // input值
+    const [basicResult,setBasicResult] = useState(null); // all
+    const [teamimg, setTeamimg] = useState('');          // 球隊img
 
-    // 搜尋基本資料
+    // 抓資料
     const handleBasicResult = async () => {
-        let res = await Axios.post("http://localhost:3001/teambasic",{
+        let res = await Axios.post("http://localhost:3001/basicsearch",{
             userid: userid,
             teamid: teamid
         });
-        // 放入 basicResult
+        // 給input
         setBasicResult(res.data[0]); 
-        // 照片格式轉換
-        const u8Arr = new Uint8Array(res.data[0].teamimg.data);
-        // u8Arr to url
-        const blob = new Blob([u8Arr],{type:"image/jpeg"});
-        // 讀取
-        const fr = new FileReader
-        fr.readAsDataURL(blob);
-        fr.onload = function () {
+        // 讀照片
+        const u8Arr = new Uint8Array(res.data[0].teamimg.data); // 轉unit8array
+        const blob = new Blob([u8Arr],{type:"image/jpeg"});     // 轉blob
+        const fr = new FileReader; // 異步讀取方法
+        fr.readAsDataURL(blob);    // 讀取 以base64編碼的URL
+        fr.onload = function () {  // 讀取完成時
             setTeamimg(fr.result);
         };
     };
 
-    // // 搜尋球隊照片
-    // const handleBasicImg = () => {
-    //     Axios.post("http://localhost:3001/teamimg",{
-    //         userid: userid,
-    //         teamid: teamid
-    //     }).then((response)=>{
-    //         // 照片格式轉換
-    //         const u8Arr = new Uint8Array(response.data[0].teamimg.data);
-    //         // u8Arr to url
-    //         const blob = new Blob([u8Arr],{type:"image/jpeg"});
-    //         // 讀取
-    //         const fr = new FileReader
-    //         fr.readAsDataURL(blob);
-    //         fr.onload = function () {
-    //             setTeamimg(fr.result);
-    //         };
-    //     })
-    // };
-
-    // 當畫面載入 抓資料庫
+    // 畫面載入即抓資料
     useEffect(()=>{
         handleBasicResult();
-        // handleBasicImg();
     },[]);
 
     return(

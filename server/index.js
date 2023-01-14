@@ -690,14 +690,14 @@ app.post("/countzero", (req, res) => {
   });
 });
 
-// 芝｜Basic 搜尋結果
-app.post('/teambasic', (req, res) => {
-  const userid = req.body.userid;
-  const teamid = req.body.teamid;
+// 芝｜Basic 查
+app.post('/basicsearch', (req, res) => {
+  const userid = req.body.userid; // 會員
+  const teamid = req.body.teamid; // 球隊
   db.query(
     `SELECT tname,sidename, week,type,level,teamimg,fee,text,starttime,endtime,county,area,teamimgpath,teamimg
-          FROM userteam, team 
-          where userteam.teamid=team.teamid and userteam.userid=? and userteam.teamid=?`,
+    FROM userteam, team 
+    where userteam.teamid=team.teamid and userteam.userid=? and userteam.teamid=?`,
     [userid, teamid],
     (err, result) => {
       if (err) {
@@ -708,29 +708,36 @@ app.post('/teambasic', (req, res) => {
     }
   );
 });
-// // 芝｜Basic 搜尋 球隊照片
-// app.post('/teamimg', (req, res) => {
-//   const userid = req.body.userid;
-//   const teamid = req.body.teamid;
-//   db.query(
-//     `SELECT teamimg
-//      FROM userteam, team 
-//      where userteam.teamid=team.teamid and userteam.userid=? and userteam.teamid=?`,
-//     [userid, teamid],
-//     (err, result) => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         res.send(result);
-//       }
-//     }
-//   );
-// });
 
-// 芝｜Basic 文字資料更新
-app.post("/updatebasictext", (req, res) => {
-  const teamid = req.body.teamid;
-
+// 芝｜Basic 更新 有圖
+app.post("/basicupdate",upload.single('teamfile'), (req, res) => {
+  const tname = req.body.tname;
+  const sidename = req.body.sidename;
+  const week = req.body.week;
+  const starttime = req.body.starttime;
+  const endtime = req.body.endtime;
+  const type = req.body.type;
+  const level = req.body.level;
+  const fee = req.body.fee;
+  const text = req.body.text;
+  const teamfile = req.file.buffer; // img
+  const teamid = req.body.teamid; // 球隊
+  db.query(`
+      UPDATE team 
+      SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?, teamimg=?
+      where teamid=?;`,
+    [tname, sidename, week, starttime, endtime, type, level, fee, text, teamfile, teamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+// 芝｜Basic 更新 無圖
+app.post("/basicupdate2",upload.single('teamimg'), (req, res) => {
+  const teamid = req.body.teamid; // 球隊
   const tname = req.body.tname;
   const sidename = req.body.sidename;
   const week = req.body.week;
@@ -753,23 +760,23 @@ app.post("/updatebasictext", (req, res) => {
       }
     });
 });
-// 芝｜Basic 照片更新
-app.post("/updatebasicimg", upload.single('image'), (req, res) => {
-  const teamid = req.body.teamid;
-  const teamimg = req.body.teamimg;
-  db.query(`
-        UPDATE team
-        SET teamimg=?
-        where teamid=?;`,
-    [teamimg, teamid],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
-});
+// // 芝｜Basic 照片更新
+// app.post("/updatebasicimg", upload.single('image'), (req, res) => {
+//   const teamid = req.body.teamid;
+//   const teamimg = req.body.teamimg;
+//   db.query(`
+//         UPDATE team
+//         SET teamimg=?
+//         where teamid=?;`,
+//     [teamimg, teamid],
+//     (err, result) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         res.send(result);
+//       }
+//     });
+// });
     // 芝｜Member 搜尋隊長頭像
     app.post('/teamleader', (req,res)=>{
       const teamid = req.body.teamid;
