@@ -2,6 +2,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap');
 
+.rootnavbar{
+    background-color: rgb(230, 70, 55);
+    width: 100vw;
+    height: 15vh;
+    position: fixed;
+    top: 0px;
+    z-index: 500;
+    transition-duration: .8s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+}
+/* .navbar {
+    background-color: white;
+    width: 100vw;
+    height: 15vh;
+    position: fixed;
+    top: 0px;
+    z-index: 500;
+    transition-duration: .8s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+} */
 .dd1{
     overflow: hidden;
     padding: 0px;
@@ -504,6 +530,7 @@ z-index: 2;
 
     opacity: 0;
 } */
+
 .aa1{
    right: 0;
     top: 0;
@@ -720,3 +747,12 @@ right: 25px;
 .d147{width: 350px;border: 2px solid rgb(230, 70, 55); background-color: white; color:  rgb(230, 70, 55); font-size: large; font-weight: bolder;position: fixed;left: 1090px; top: 468px;}
 .d149{position: fixed; bottom: 8vh;left: 1090px;}
 .d150{position: fixed;bottom: 8vh;left: 1300px;}
+.d151{
+    width: 426px; height: 60px; border-radius: 99px; font-size: 30px; margin-bottom: 25px;border: none; background-color: rgb(238, 183, 183);text-align: center
+}
+.d152{ display: flex;
+    align-items: center;
+    justify-content: end;
+margin-right: 30px;}
+
+

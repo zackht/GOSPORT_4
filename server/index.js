@@ -489,6 +489,17 @@ app.post("/userinfo", (req, res) => {
     }
   });
 });
+app.post("/userinfo1", (req, res) => {
+  const account = req.body.account;
+  db.query("SELECT * FROM user WHERE email = ? ", [account], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+
+    }
+  });
+});
 //觀看個人資料
 app.post("/selfinfo", (req, res) => {
   const account = req.body.account;
