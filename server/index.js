@@ -411,9 +411,10 @@ app.post("/selfalter",  upload.single('image') , (req, res) => {
   const tabletennis = req.body.tabletennis;
   const volleyball = req.body.volleyball;
   const userId = req.body.userid;
+  const usebadge = req.body.usebadge;
   console.log(req.file.buffer)
-    db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? WHERE `userid`= ?",
-      [email, password, username, req.file.buffer, tel, userdescribe, badminton, tabletennis, volleyball, userId], (err, result) => {
+    db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? ,`usebadge`= ?  WHERE `userid`= ?",
+      [email, password, username, req.file.buffer, tel, userdescribe, badminton, tabletennis, volleyball, usebadge ,userId], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -433,8 +434,9 @@ app.post("/selfalterwithoutpic", (req, res) => {
   const tabletennis = req.body.tabletennis;
   const volleyball = req.body.volleyball;
   const userId = req.body.userid;
-  db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? WHERE `userid`= ?",
-      [email, password, username,  tel, userdescribe, badminton, tabletennis, volleyball, userId], (err, result) => {
+  const usebadge = req.body.usebadge;
+  db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? ,`usebadge`= ? WHERE `userid`= ?",
+      [email, password, username,  tel, userdescribe, badminton, tabletennis, volleyball,usebadge , userId], (err, result) => {
         if (err) {
           console.log(err);
         } else {
