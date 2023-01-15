@@ -69,7 +69,7 @@ export default function BasicEdit(props) {
         if (file) {
             reader.readAsDataURL(file); // 讀取 以base64編碼的URL
             // 放入儲存的值
-            console.log(file);
+            // console.log(file);
             setTeamfile(file);
         }
         reader.addEventListener("load", function () {
@@ -77,16 +77,13 @@ export default function BasicEdit(props) {
             setTeamimg(reader.result);
             // 隱藏uploadimg
             setUploadimg('none');
-            // 上傳照片
-            
         }, false);
     }
 
     // 更新資料
     const updateBasic =()=>{
-        // 有圖片
-        if(teamfile){ 
-            // 將資料打包
+        if(teamfile){ // 有圖片
+            // 打包
             const teamData = new FormData(); 
             teamData.append('teamid', teamid);
             teamData.append('tname', tname);
@@ -104,8 +101,7 @@ export default function BasicEdit(props) {
             }).then((response) => {
                 alert("有圖片更新成功");
             });
-        // 沒圖片
-        } else {
+        } else { // 沒圖片
             const teamData2 = new FormData();
             teamData2.append('tname', tname);
             teamData2.append('sidename', sidename);

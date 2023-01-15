@@ -55,6 +55,7 @@ export default function Navbar(props) {
     }]);
     const [userurl, setUserurl] = useState();
     const [userimg, setuserimg] = useState([{}]);
+    const[token1,settoken] = useState();
     const ccc = () => {
         Axios.post("http://localhost:3001/userinfo", {
             account: account,
@@ -65,6 +66,7 @@ export default function Navbar(props) {
 
             setuser(response.data);
             console.log(userInfo)
+            settoken(account)
             Cookies.set(
                 'token',//key
                 response.data[0].email,//value
@@ -83,18 +85,21 @@ export default function Navbar(props) {
                     sameSite: 'strict'//只有當前url與請求目標一致才會帶上cookie
                 }
             )
-            const token = (Cookies.get('token'))
-            const id = ((Cookies.get('id')))
+            // token = (Cookies.get('token'))
+            // settoken(Cookies.get('token'))
+            // const id = ((Cookies.get('id')))
         }).catch(() => {
             alert('87');
         });
     }
-    const token = (Cookies.get('token'))
+    // token = (Cookies.get('token'))
+    const token=(Cookies.get('token'))
     const id = ((Cookies.get('id')))
 
     const getimg = async () => {
-        const token = (Cookies.get('token'))
-        const id = ((Cookies.get('id')))
+        // settoken(Cookies.get('token'))
+        // const token = (Cookies.get('token'))
+        // const id = ((Cookies.get('id')))
         let response1 = await Axios.post("http://localhost:3001/self", {
             userid: id
         });
@@ -112,31 +117,56 @@ export default function Navbar(props) {
     }
     useEffect(() => {
         getimg()
+        
     }, []);
 
 //註冊輸入
 // const[sighemail,emailput]=useState('');
 const[sighput,pasput]=useState('');
-const[sighput2,pasput2]=useState('');
-const[emaillist,setemail] = useState('');
+const[sighput2,passput2]=useState('');
+const[email,setemail] = useState('');
 //存在的email
-const[realmail,setrealmail] = useState('');
+const[realmail,setrealmail] = useState();
+const [emailhint, setemailhint] = useState();
+const [username, setusername] = useState();
+const [userimg1, setuserimg1] = useState();
+const [tel, settel] = useState();
+const sighsend = () =>{
+    Axios.post("http://localhost:3001/create1",{
+        email:email,
+        password:password,
+    }).then(() => {
+        console.log("success");
+    });
 
-const emailput =(e)=>{
-    Axios.post("http://localhost:3001/userinfo1", {
-        account:e.target.value,
-    })
-    .then((res)=>{
-        console.log(res)
-        setrealmail(e.target.value)
-        setemail(res.data[0].email)
-
-        console.log(realmail)
-    })
-    .catch(()=>{
-       
-    })
 }
+const emailcheck = (Event) => {
+    const text = Event.target.value;
+    const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    // 任意字元開頭@gmail.com結尾
+    if (text.match(reg)) {
+        setemailhint("可以註冊");
+        setemail(text);
+    } else {
+        setemailhint("信箱已重複或格式不正確");
+    }
+}
+
+const handleLogout = (e) => {
+    e.preventDefault();
+settoken("")
+    Cookies.remove('token', {
+        path: ''
+    })
+
+    // settoken=(null);
+
+    Cookies.remove('id', {
+        path: ''
+    })
+
+}
+
 
 
     if (!token) {
@@ -154,18 +184,18 @@ const emailput =(e)=>{
                             <p className={cc.d132}>註冊信箱</p>
                             <form action="">
 <div className={cc.d152}>
-                                {/* {realmail.length == '4' && realmail.length >'5' ? <p>已重複 請更換</p>:<p>可使用</p>} */}
-                                {realmail===emaillist || realmail.length<'7' ? <p>最少輸入7位數or信箱已重複</p>:<p>可使用</p>}
+                               
+                                <p>{emailhint}</p>
 </div>
-                                <input onChange={emailput} className={`${realmail===emaillist || realmail.length<'7' ? cc.d151:cc.d133}`} type="text" />
+                                <input onChange={emailcheck} className={`${emailhint === "可以註冊"? cc.d133:cc.d151}`} type="text" />
                                 <p className={cc.d134}>密碼</p>
-                                <input onChange={e=>pasput(e.target.value)} className={cc.d135} type="text" />
+                                <input onChange={e => setPassword(e.target.value)} className={cc.d135} type="text" />
                                 <p className={cc.d136}>至少8個字,含至少1個數字及1個英文字母</p>
                                 <p className={cc.d137}>確認密碼</p>
-                                <input onChange={e=>pasput2(e.target.value)} className={cc.d138} type="text" />
+                                <input onChange={passput2} className={cc.d138} type="text" />
                                 <div className={cc.d139}>
-                                    <img src={cancel} alt="" />
-                                    <img src={sighimg} alt="" />
+                                    <img src={cancel} onClick={close} alt="" />
+                                    <img onClick={sighsend} type="submit" src={sighimg} alt="" />
                                 </div>
 
                             </form>
@@ -178,7 +208,7 @@ const emailput =(e)=>{
                                 <input className={cc.d142} type="password" onChange={e => setPassword(e.target.value)} />
                                 <p className={cc.d143}>忘記密碼</p></form>
                             <div className={cc.d144}>
-                                <button style={{ border: "None", backgroundColor: "transparent" }}><img src={cancel}></img></button>
+                                <button style={{ border: "None", backgroundColor: "transparent" }}><img onClick={close} src={cancel}></img></button>
                                 <button onClick={ccc} style={{ border: "None", backgroundColor: "transparent" }} type='submit'><img src={loginimg}></img></button>
                             </div>
 
@@ -284,7 +314,8 @@ const emailput =(e)=>{
                         {userInfo.map((v, k) => {
 
                             console.log(v)
-                            if (v.userimg === null) { return <img className="userimg1" onClick={logsig} src={user}></img> }
+                            if (v.userimg === null) { return<React.Fragment> <img className="userimg1" onClick={logsig} src={user}></img> <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p> </React.Fragment>                                  
+                        }
                             else {
                                 let u8Arr = new Uint8Array(v.userimg.data);
                                 let blob = new Blob([u8Arr], { type: "image/jpeg" });
@@ -293,7 +324,9 @@ const emailput =(e)=>{
                                 fr.onload = function () {
                                     setUserurl(fr.result);
                                 }
-                                return <img className="userimg" onClick={logsig} src={userurl} />
+                                return<React.Fragment><img className="userimg" onClick={logsig} src={userurl} /> 
+                                 <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>  
+                                 </React.Fragment>
                             }
                         })}
 

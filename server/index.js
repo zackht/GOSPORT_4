@@ -117,6 +117,37 @@ app.post('/create', (req, res) => {
     }
   );
 })
+app.post('/create1', (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  db.query(
+    "INSERT INTO user (email,password) VALUES (?,?)",
+    [email, password],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("value Inserted");
+      }
+    }
+  );
+})
+app.post('/sigh', (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  db.query(
+    "INSERT INTO user (email,password) VALUES (?,?)",
+    [email, password,],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("value Inserted");
+      }
+    }
+  );
+})
 //  client測試
 app.post("/employee", (req, res) => {
   db.query("SELECT * FROM user where userid = 1", (err, result) => {
@@ -749,7 +780,6 @@ app.post("/basicupdate",upload.single('teamfile'), (req, res) => {
 });
 // 芝｜Basic 更新 無圖
 app.post("/basicupdate2",upload.single('teamimg'), (req, res) => {
-  const teamid = req.body.teamid; // 球隊
   const tname = req.body.tname;
   const sidename = req.body.sidename;
   const week = req.body.week;
@@ -759,6 +789,7 @@ app.post("/basicupdate2",upload.single('teamimg'), (req, res) => {
   const level = req.body.level;
   const fee = req.body.fee;
   const text = req.body.text;
+  const teamid = req.body.teamid; // 球隊
   db.query(`
         UPDATE team 
         SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?
@@ -772,41 +803,25 @@ app.post("/basicupdate2",upload.single('teamimg'), (req, res) => {
       }
     });
 });
-// // 芝｜Basic 照片更新
-// app.post("/updatebasicimg", upload.single('image'), (req, res) => {
-//   const teamid = req.body.teamid;
-//   const teamimg = req.body.teamimg;
-//   db.query(`
-//         UPDATE team
-//         SET teamimg=?
-//         where teamid=?;`,
-//     [teamimg, teamid],
-//     (err, result) => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         res.send(result);
-//       }
-//     });
-// });
-    // 芝｜Member 搜尋隊長頭像
-    app.post('/teamleader', (req,res)=>{
-      const teamid = req.body.teamid;
-      db.query(
-          `SELECT userimg
-          FROM teamuser,user
-          where user.userid = teamuser.userid and teamid=? and leader=1;`,
-          [teamid],
-          (err, result) => {
-            if (err) {
-              console.log(err);
-            } else {
-              res.send(result);
-            }
-          }
-        );
-      });
-    // 芝｜Member 搜尋成員頭像
+
+// 芝｜Member 抓隊長img
+app.post('/teamleader', (req,res)=>{
+  const teamid = req.body.teamid;
+  db.query(
+      `SELECT userimg
+      FROM teamuser,user
+      where user.userid = teamuser.userid and teamid=? and leader=1;`,
+      [teamid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+    // 芝｜Member 抓成員img
     app.post('/teammember', (req,res)=>{
       const teamid = req.body.teamid;
       db.query(
@@ -823,7 +838,7 @@ app.post("/basicupdate2",upload.single('teamimg'), (req, res) => {
           }
         );
     });
-    // 芝｜Member 搜尋 未審核成員頭像
+    // 芝｜Member 抓 未審核成員img
     app.post('/teampendingimg', (req,res)=>{
       const teamid = req.body.teamid;
       db.query(

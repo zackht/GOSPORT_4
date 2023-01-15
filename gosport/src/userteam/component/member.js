@@ -6,94 +6,96 @@ import Axios from "axios";
 
 export default function Member(params) {
 
-    // 假設目前查詢 會員id=1 球隊id=1
-    const [userid, setUserid] = useState('1');
+    // SQL參數 球隊id 會員id(好像不需要...待定)
+    // const [userid, setUserid] = useState('1');
     const [teamid, setTeamid] = useState('1');
 
-    // 隊長頭像
-    const [leaderImg, setLeaderImg] = useState('');
-    // 成員頭像
-    const [memberImg, setMemberImg] = useState('');
-    // 未審核成員頭像
-    const [pendingMemberImg, setPendingMemberImg] = useState('');
+    // input值
+    const [leaderImg, setLeaderImg] = useState('');         // 隊長
+    const [memberImgs, setmemberImgs] = useState([]);       // 成員s 未讀取（二進位）
+    const [memberImgUrls, setMemberImgUrls] = useState({}); // 成員s 已讀取
+    const [pendingmemberImgs, setPendingmemberImgs] = useState(''); // 未審核成員
 
-    // 搜尋隊長頭像
+    // 畫面載入即抓資料
+    useEffect(()=>{
+        handleLeaderImg();  // 隊長
+        handlememberImgs(); // 成員
+        handlePendingImg(); // 未審核成員
+    },[]);
+
+    // 抓 隊長img
     const handleLeaderImg = async () => {
         let res = await Axios.post("http://localhost:3001/teamleader",{
             teamid: teamid
         });
-        // 照片格式轉換
         let u8Arr = new Uint8Array(res.data[0].userimg.data);
         let blob = new Blob([u8Arr],{type:"image/jpeg"});
         let fr = new FileReader;
         fr.readAsDataURL(blob);
         fr.onload = function () {
-            // 設置
-            setLeaderImg(fr.result);
-            };
+            setLeaderImg(fr.result); // 給input
+        };
     };
 
-    // 搜尋成員頭像
-    const handleMemberImg = () => {
+    // 抓 成員img 
+    const handlememberImgs = () => {
         Axios.post("http://localhost:3001/teammember",{
             teamid: teamid
         }).then((response)=>{
-            setMemberImg(response.data); // 放入memberImg
+            setmemberImgs(response.data); // 未讀取 給input 
         })
     }
 
-    // 成員列表
-    const memberImgList = memberImg? 
-        memberImg.map((val,key)=>{
-            let aa='';
-            // 當會員無頭像時
-            if(val.userimg===null){
-                return <img key={key} className={member.mImg} src={img.m} />;
-            }else{
+    // 讀取 成員img
+    useEffect(() => {
+        memberImgs.forEach((val, key) => {
+            if (val.userimg !== null) {
                 let u8Arr = new Uint8Array(val.userimg.data);
-                let blob = new Blob([u8Arr], {type:"image/jpeg"});
+                let blob = new Blob([u8Arr], {type: "image/jpeg"});
                 let fr = new FileReader;
                 fr.readAsDataURL(blob);
-                fr.onload= function(){
-                    aa=fr.result;
+                fr.onload = function () {
+                    setMemberImgUrls(prevmemberImgUrls => {
+                        return { ...prevmemberImgUrls, [key]: fr.result }
+                    });
                 }
-                return <img key={key} className={member.mImg} src={aa} />;
             }
-        }) 
-    :'' ;
+        });
+    }, [memberImgs]);
 
-    // 搜尋 未審核成員頭像
+    // 成員清單
+    const memberList = memberImgs.map((val, key) => {
+        return val.userimg !== null? (
+            <img key={key} className={member.mImg} src={memberImgUrls[key]} />
+        ):(
+            <img key={key} className={member.mImg} src={img.m} /> // 會員無頭像時
+        );
+    });
+
+
+    // 抓 未審核成員img
     const handlePendingImg = () => {
         Axios.post("http://localhost:3001/teampendingimg",{
             teamid: teamid
         }).then((response)=>{
-            setPendingMemberImg(response.data); // 放入pendingMemberImg
+            setPendingmemberImgs(response.data); // 給input
         })
     }
-    console.log(pendingMemberImg);
+    // console.log(pendingmemberImgs);
 
-    // const pendingMemberList = pendingMemberImg?
-    
 
-    // 當畫面載入 抓資料庫
-    useEffect(()=>{
-        handleLeaderImg();
-        handleMemberImg();
-        handlePendingImg();
-    },[]);
 
     return(
         <>
             <div className={member.memberContent}>
                 <div>
-                    {/* 只有隊長可以編輯 */}
                     <Link to={"/gosport/user/myteam/member/edit"} className={member.mbtn}>編輯</Link>
                     {/* 隊長 */}
                     <div className={member.mTitle}>隊長</div>
                     <img className={member.mImg} src={leaderImg} alt=""/>
                     {/* 成員 */}
                     <div className={member.mTitle}>成員</div>
-                    { memberImgList }  
+                    { memberList }  
                     {/* <img className={member.mImg} src={img.m2} alt=""/>
                     <img className={member.mImg} src={img.m3} alt=""/>
                     <img className={member.mImg} src={img.m4} alt=""/>
