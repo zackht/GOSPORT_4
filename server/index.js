@@ -117,6 +117,37 @@ app.post('/create', (req, res) => {
     }
   );
 })
+app.post('/create1', (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  db.query(
+    "INSERT INTO user (email,password) VALUES (?,?)",
+    [email, password],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("value Inserted");
+      }
+    }
+  );
+})
+app.post('/sigh', (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  db.query(
+    "INSERT INTO user (email,password) VALUES (?,?)",
+    [email, password,],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("value Inserted");
+      }
+    }
+  );
+})
 //  client測試
 app.post("/employee", (req, res) => {
   db.query("SELECT * FROM user where userid = 1", (err, result) => {
@@ -489,6 +520,17 @@ app.post("/userinfo", (req, res) => {
     }
   });
 });
+app.post("/userinfo1", (req, res) => {
+  const account = req.body.account;
+  db.query("SELECT * FROM user WHERE email = ? ", [account], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+
+    }
+  });
+});
 //觀看個人資料
 app.post("/selfinfo", (req, res) => {
   const account = req.body.account;
@@ -546,15 +588,16 @@ app.post("/selfalter", upload.single('image'), (req, res) => {
   const tabletennis = req.body.tabletennis;
   const volleyball = req.body.volleyball;
   const userId = req.body.userid;
+  const usebadge = req.body.usebadge;
   console.log(req.file.buffer)
-  db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? WHERE `userid`= ?",
-    [email, password, username, req.file.buffer, tel, userdescribe, badminton, tabletennis, volleyball, userId], (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
+    db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? ,`usebadge`= ?  WHERE `userid`= ?",
+      [email, password, username, req.file.buffer, tel, userdescribe, badminton, tabletennis, volleyball, usebadge ,userId], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
 });
 //更新個人資料 沒改照片
 app.post("/selfalterwithoutpic", (req, res) => {
@@ -569,13 +612,13 @@ app.post("/selfalterwithoutpic", (req, res) => {
   const volleyball = req.body.volleyball;
   const userId = req.body.userid;
   db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? WHERE `userid`= ?",
-    [email, password, username, tel, userdescribe, badminton, tabletennis, volleyball, userId], (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
+      [email, password, username,  tel, userdescribe, badminton, tabletennis, volleyball, userId], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
 });
 
 //會員訂單搜尋 進行中

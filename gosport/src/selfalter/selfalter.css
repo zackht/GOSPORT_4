@@ -125,6 +125,7 @@
     font-size: 20px;
     position: relative;
     padding: 0px 25px 0px 12px;
+    cursor: pointer;
 }
 
 
@@ -140,10 +141,16 @@
     padding: 0px 30px;
 }
 
-.alter_mark embed {
-    width: 20px;
-    height: 20px;
-    padding-right: 7px;
+.alter_mark img {
+    width: 30px;
+    height: 30px;
+    padding: 0px 3px;
+    margin: 0px 5px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+.selectedstars{
+    box-shadow: #eaff00 0px 0px 2px 2px;
 }
 
 /* 描述 */
