@@ -16,10 +16,11 @@ const Selfpage = () => {
         userimg: { data: '' },
         badminton: '',
         volleyball: '',
-        tabletennis: ''
+        tabletennis: '',
+        usebadge:''
     }]);
     const [selfteam,setSelfTeam]=useState([{tname:''}]);
-    const [selfBadge,setSelfBadge]=useState([{badgeid:''}]);
+    const [selfBadge,setSelfBadge]=useState([{badgeid:'',badgeurl:'#'}]);
     // 讀取個人資料
     const userid = Cookies.get('id');
     useEffect(() => {
@@ -27,21 +28,23 @@ const Selfpage = () => {
         Axios.post("http://localhost:3001/self", {
             userid: userid,
         }).then((response) => {
-            console.log("self", response.data);
+            // console.log("self", response.data);
             setSelf(response.data)
+            let badge = JSON.parse(response.data[0].usebadge)
+            setSelfBadge(badge)
         });
         Axios.post("http://localhost:3001/selfteam", {
             userid: userid,
         }).then((response) => {
-            console.log('team', response.data);
+            // console.log('team', response.data);
             setSelfTeam(response.data)
         });
-        Axios.post("http://localhost:3001/selfbadge", {
-            userid: userid,
-        }).then((response) => {
-            console.log('baddge', response.data);
-            setSelfBadge(response.data)
-        });
+        // Axios.post("http://localhost:3001/selfbadge", {
+        //     userid: userid,
+        // }).then((response) => {
+        //     console.log('baddge', response.data);
+        //     setSelfBadge(response.data)
+        // });
     }, [userid]);
     //球隊
     let restname = selfteam.map(function (item, index) { return item.tname })
@@ -57,10 +60,11 @@ const Selfpage = () => {
         };
         fr.readAsDataURL(blob);
     }, [selfInfo])
+    console.log(selfBadge)
 
     // 徽章
-    let sta = selfBadge.map((item) => { return item.badgeid })
-    const allstar = Array.from(new Set(sta.filter((x, i, self) => self.indexOf(x) === i)));
+    // let sta = selfBadge.map((item) => { return item.badgeid })
+    // const allstar = Array.from(new Set(sta.filter((x, i, self) => self.indexOf(x) === i)));
     // console.log(allstar)
 
     return (
@@ -91,7 +95,7 @@ const Selfpage = () => {
                             <div id="tt" style={{ height: "50%", width: "100%", position: "relative", display: "flex", flexDirection: "column", alignItems: "center" }}>
                                 <img className='self_img' src={userurl} alt="" />
                                 <div className="show_star">
-                                    {allstar.map(item=><embed key={item} src={star}></embed>)}
+                                    {selfBadge.map(item=><embed key={item.badgeid} src={item.badgeurl}></embed>)}
                                     {/* <embed src={star}></embed> */}
                                     {/* <embed src={star}></embed> */}
                                     {/* <embed src={star}></embed> */}
