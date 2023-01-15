@@ -222,6 +222,27 @@ app.post("/userupdate", upload.single('image'), (req, res) => {
       }
     });
 });
+
+// 租場地搜尋
+app.post("/rentside", (req, res) => {
+  const type = req.body.type;
+  const starttime = req.body.starttime;
+  const endtime = req.body.endtime;
+  const startdate = req.body.startdate;
+  const enddate = req.body.enddate;
+  const county = req.body.county;
+  const area = req.body.area;
+  const text = req.body.text;
+  db.query("SELECT * FROM teamevent where teameventid = ?"
+  ,[teameventid], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 // 後台零打搜尋
 app.post("/zeroda", (req, res) => {
   const starttime1 = req.body.starttime1;
@@ -701,6 +722,17 @@ app.post("/orderfutrue", (req, res) => {
 
     });
 });
+app.post("/cancelOrder", (req, res) => {
+  const orderid = req.body.orderid;
+  db.query("UPDATE `userorder` SET `flag`='不成立' WHERE `orderid`= ? ",
+    [orderid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
 //會員訂單搜尋 結束
 app.post("/orderend", (req, res) => {
   const userid = req.body.userid;
@@ -742,7 +774,30 @@ app.post("/findzoro", (req, res) => {
     } else {
       res.send(result);
     }
-
+  });
+});
+//取得零打報名人
+app.post("/followsublet", (req, res) => {
+  const articleid_sublet = req.body.articleid_sublet;
+  db.query(" SELECT * FROM `follow_sublet`,`user` WHERE follow_sublet.articleid_sublet = ? AND follow_sublet.userid = user.userid",
+   [articleid_sublet], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+//取得零打報名人
+app.post("/followzeroda", (req, res) => {
+  const articleid_zeroda = req.body.articleid_zeroda;
+  db.query(" SELECT * FROM `follow_zeroda`,`user` WHERE follow_zeroda.articleid_zeroda = ? AND follow_zeroda.userid = user.userid",
+   [articleid_zeroda], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
   });
 });
 //會員轉租文章搜尋
@@ -756,10 +811,9 @@ app.post("/findsub", (req, res) => {
     } else {
       res.send(result);
     }
-
   });
 });
-// 取得留言數
+// 取得承租文章留言數
 app.post("/countsub", (req, res) => {
   const articleid = req.body.articleid;
   db.query("SELECT count(*)as a FROM articlemessage_sublet WHERE `articleid_sublet`= ?", [articleid], (err, result) => {
@@ -771,6 +825,7 @@ app.post("/countsub", (req, res) => {
 
   });
 });
+// 取得零打文章留言數
 app.post("/countzero", (req, res) => {
   const articleid = req.body.articleid;
   db.query("SELECT count(*)as a FROM articlemessage_zeroda WHERE `articleid_zeroda`= ?", [articleid], (err, result) => {
@@ -830,7 +885,6 @@ app.post("/basicupdate",upload.single('teamfile'), (req, res) => {
 });
 // 芝｜Basic 更新 無圖
 app.post("/basicupdate2",upload.single('teamimg'), (req, res) => {
-  const teamid = req.body.teamid; // 球隊
   const tname = req.body.tname;
   const sidename = req.body.sidename;
   const week = req.body.week;
@@ -840,6 +894,7 @@ app.post("/basicupdate2",upload.single('teamimg'), (req, res) => {
   const level = req.body.level;
   const fee = req.body.fee;
   const text = req.body.text;
+  const teamid = req.body.teamid; // 球隊
   db.query(`
         UPDATE team 
         SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?
@@ -853,41 +908,25 @@ app.post("/basicupdate2",upload.single('teamimg'), (req, res) => {
       }
     });
 });
-// // 芝｜Basic 照片更新
-// app.post("/updatebasicimg", upload.single('image'), (req, res) => {
-//   const teamid = req.body.teamid;
-//   const teamimg = req.body.teamimg;
-//   db.query(`
-//         UPDATE team
-//         SET teamimg=?
-//         where teamid=?;`,
-//     [teamimg, teamid],
-//     (err, result) => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         res.send(result);
-//       }
-//     });
-// });
-    // 芝｜Member 搜尋隊長頭像
-    app.post('/teamleader', (req,res)=>{
-      const teamid = req.body.teamid;
-      db.query(
-          `SELECT userimg
-          FROM teamuser,user
-          where user.userid = teamuser.userid and teamid=? and leader=1;`,
-          [teamid],
-          (err, result) => {
-            if (err) {
-              console.log(err);
-            } else {
-              res.send(result);
-            }
-          }
-        );
-      });
-    // 芝｜Member 搜尋成員頭像
+
+// 芝｜Member 抓隊長img
+app.post('/teamleader', (req,res)=>{
+  const teamid = req.body.teamid;
+  db.query(
+      `SELECT userimg
+      FROM teamuser,user
+      where user.userid = teamuser.userid and teamid=? and leader=1;`,
+      [teamid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+    // 芝｜Member 抓成員img
     app.post('/teammember', (req,res)=>{
       const teamid = req.body.teamid;
       db.query(
@@ -904,7 +943,7 @@ app.post("/basicupdate2",upload.single('teamimg'), (req, res) => {
           }
         );
     });
-    // 芝｜Member 搜尋 未審核成員頭像
+    // 芝｜Member 抓 未審核成員img
     app.post('/teampendingimg', (req,res)=>{
       const teamid = req.body.teamid;
       db.query(

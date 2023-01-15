@@ -61,7 +61,7 @@ const Selfalter = () => {
             setTdegree(response.data[0].tabletennis)
             setVdegree(response.data[0].volleyball)
             let badge = JSON.parse(response.data[0].usebadge)
-            setSelectedImages(badge)
+            setSelectedImages(badge) 
         });
         Axios.post("http://localhost:3001/selfbadge", {
             userid: userid,

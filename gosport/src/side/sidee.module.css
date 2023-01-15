@@ -576,7 +576,19 @@ right: 25px;
 .d1{padding:9px 0  0 15px;}
 .d2{float: left;}
 .d3{padding:30px 0 0 0px;}
-.d4{padding:0 0 0 20px;}
+.d4s{
+    font-size: 20px;
+    color: #000000;
+    border: 0;
+    appearance: none;
+    width: 100%;
+    text-align: center;
+}
+.d4d{
+    align-items: center;
+    text-align: center;
+    width: 145px;
+}
 .d5{padding:12px 0 0 0px;}
 .d6{margin:-17px 0 0 0;}
 .d7{float:right; margin: 44px 0px 0 -30px;}

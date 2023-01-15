@@ -4,6 +4,9 @@ import memberEdit from './memberEdit.module.css';
 import img from '../img.module.js';
 
 export default function MemberEdit(params) {
+
+    // 只有隊長可以進入編輯畫面
+
     return(
         <>
             <form action="" className={memberEdit.mForm}>

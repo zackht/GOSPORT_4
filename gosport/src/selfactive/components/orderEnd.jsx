@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import Axios from "axios";
 import Cookies from 'js-cookie';
 
@@ -45,14 +45,16 @@ const OrderEnd = () => {
         setOderNoneOut('none')
         setShowOrder('block')
         setOrderData(orderInfo[index])
-        console.log(orderData)
+    }
+    useEffect(() => {
         if (orderData.duringtype === '長租') {
             console.log('長租')
             setRentType(true)
         }else{
             console.log('日租')
+            setRentType(false)
         }
-    }
+    }, [orderData])
     return (
         <React.Fragment>
             {/* 場地訂單 */}
