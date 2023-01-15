@@ -8,6 +8,7 @@ import a2 from "./icon/方向.png";
 import a3 from "./icon/方向 (1).png";
 import a4 from "./icon/方向 (2).png";
 import a5 from "./icon/Group 41.png";
+import a6 from './icon/Group.png';
 
 const Rentside = () => {
     const [Taichung, setTaichung] = useState([
@@ -22,12 +23,20 @@ const Rentside = () => {
     return (
         <React.Fragment>
             <div className={side.div7}>
+                {/* 快速搜尋 */}
                 <div style={{ height: 325 }} className={cc.ezsurch1}>
                     <div id="London" style={{ padding: 0, paddingRight: 50, paddingLeft: 50 }} className={cc.tabcontent}>
                         <div>
                             <div id="local" className={cc.d2}>
                                 <p className={cc.d3}>類別</p>
-                                <img className={cc.d4} src={ball} alt="" />
+                                <div className={cc.d4d}>
+                                    <img className={cc.d4} src={a6} alt="" /><br />
+                                    <select name="" id="aaa" className={cc.d4s}>
+                                        <option value="羽球">羽球</option>
+                                        <option value="桌球">桌球</option>
+                                        <option value="籃球">籃球</option>
+                                    </select>
+                                </div>
                                 <p className={cc.d5}>地區</p>
                                 <img className={`${cc.d6} ${cc.selectedDate}`} src={arr} />
                                 <img className={`${cc.d7} ${cc.selectedDate}`} src={arr} />
@@ -131,6 +140,7 @@ const Rentside = () => {
                         </div>
                     </div>
                 </div>
+                {/* 下一頁按鈕 */}
                 <div class="row">
                     <div class="d-flex justify-content-center col-md-12">
                         <div class={`d-flex ${side.div6}`}>
