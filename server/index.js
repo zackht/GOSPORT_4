@@ -117,6 +117,37 @@ app.post('/create', (req, res) => {
     }
   );
 })
+app.post('/create1', (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  db.query(
+    "INSERT INTO user (email,password) VALUES (?,?)",
+    [email, password],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("value Inserted");
+      }
+    }
+  );
+})
+app.post('/sigh', (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  db.query(
+    "INSERT INTO user (email,password) VALUES (?,?)",
+    [email, password,],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("value Inserted");
+      }
+    }
+  );
+})
 //  client測試
 app.post("/employee", (req, res) => {
   db.query("SELECT * FROM user where userid = 1", (err, result) => {

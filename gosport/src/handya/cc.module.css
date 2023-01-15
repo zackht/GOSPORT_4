@@ -748,11 +748,15 @@ right: 25px;
 .d149{position: fixed; bottom: 8vh;left: 1090px;}
 .d150{position: fixed;bottom: 8vh;left: 1300px;}
 .d151{
-    width: 426px; height: 60px; border-radius: 99px; font-size: 30px; margin-bottom: 25px;border: none; background-color: rgb(238, 183, 183);text-align: center
+    width: 426px; height: 60px; border-radius: 99px; font-size: 30px; margin-bottom: 25px;border: none; background-color: rgb(247, 208, 208);text-align: center
 }
 .d152{ display: flex;
     align-items: center;
     justify-content: end;
 margin-right: 30px;}
+.d153{
+    margin-left: 60px;
+    margin-top: 20px;
+}
 
 
