@@ -703,7 +703,30 @@ app.post("/findzoro", (req, res) => {
     } else {
       res.send(result);
     }
-
+  });
+});
+//取得零打報名人
+app.post("/followsublet", (req, res) => {
+  const articleid_sublet = req.body.articleid_sublet;
+  db.query(" SELECT * FROM `follow_sublet`,`user` WHERE follow_sublet.articleid_sublet = ? AND follow_sublet.userid = user.userid",
+   [articleid_sublet], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+//取得零打報名人
+app.post("/followzeroda", (req, res) => {
+  const articleid_zeroda = req.body.articleid_zeroda;
+  db.query(" SELECT * FROM `follow_zeroda`,`user` WHERE follow_zeroda.articleid_zeroda = ? AND follow_zeroda.userid = user.userid",
+   [articleid_zeroda], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
   });
 });
 //會員轉租文章搜尋
@@ -717,10 +740,9 @@ app.post("/findsub", (req, res) => {
     } else {
       res.send(result);
     }
-
   });
 });
-// 取得留言數
+// 取得承租文章留言數
 app.post("/countsub", (req, res) => {
   const articleid = req.body.articleid;
   db.query("SELECT count(*)as a FROM articlemessage_sublet WHERE `articleid_sublet`= ?", [articleid], (err, result) => {
@@ -732,6 +754,7 @@ app.post("/countsub", (req, res) => {
 
   });
 });
+// 取得零打文章留言數
 app.post("/countzero", (req, res) => {
   const articleid = req.body.articleid;
   db.query("SELECT count(*)as a FROM articlemessage_zeroda WHERE `articleid_zeroda`= ?", [articleid], (err, result) => {

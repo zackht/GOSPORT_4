@@ -76,8 +76,6 @@ const Artadd = ({ control }) => {
             }
         });
     }
-    let datalist = sublist + zerolist
-    // console.log(datalist)
     return (
         <React.Fragment>
             <div>
@@ -101,7 +99,7 @@ const Artadd = ({ control }) => {
                         <td>{item.date.substring(0,10)}</td>
                         <td>{item.ballgames}</td>
                         <td>{item.content}</td>
-                        <td style={{ textAlign: "center", cursor: "pointer" }} onClick={control}>{item.number}</td>
+                        <td style={{ textAlign: "center", cursor: "pointer" }} onClick={()=>{control(item)}}>{item.number}</td>
                         <td style={{ textAlign: "center" }}>{countzero}</td>
                         <td style={{ position: "relative" }}>
                             <button>編輯</button>
@@ -114,7 +112,7 @@ const Artadd = ({ control }) => {
                        <td>{item.date.substring(0,10)}</td>
                        <td>{item.ballgames}</td>
                        <td>{item.content}</td>
-                       <td style={{ textAlign: "center", cursor: "pointer" }} onClick={control}>{item.amount}</td>
+                       <td style={{ textAlign: "center", cursor: "pointer" }} onClick={()=>{control(item)}}>{item.amount}</td>
                        <td style={{ textAlign: "center" }}>{countsub}</td>
                        <td style={{ position: "relative" }}>
                            <button>編輯</button>
