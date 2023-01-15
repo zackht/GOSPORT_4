@@ -651,6 +651,17 @@ app.post("/orderfutrue", (req, res) => {
 
     });
 });
+app.post("/cancelOrder", (req, res) => {
+  const orderid = req.body.orderid;
+  db.query("UPDATE `userorder` SET `flag`='不成立' WHERE `orderid`= ? ",
+    [orderid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
 //會員訂單搜尋 結束
 app.post("/orderend", (req, res) => {
   const userid = req.body.userid;
