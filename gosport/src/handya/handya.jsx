@@ -1,6 +1,7 @@
 import React, { useState,useEffect,useRef } from 'react';
 import cc from './cc.module.css';
 import Axios from "axios";
+import Cookies from 'js-cookie';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import q from './icon/Q.png'
 import team from './icon/下載.jpg'
@@ -87,41 +88,86 @@ const Handya = () =>{
             console.log(e.target.value);
         })
       };
+    //   socket.on("receive_message",(data)=>{
+    //     //  console.log(mes);
+    //      setmes(data);})
+//    bottomref.current.scrollIntoView({behavior: 'smooth'});
       const newref = useRef(null);
       const bottomref = useRef(null);
       const[message,setmessage] =useState("");
-      const[messagereceive,setmessagereceive] = useState("");
-      const[mes,setmes] = useState([]);
+      const[message1,setmessage1] =useState([{}]);
+      const[message2,setmessage2] =useState("");
+      const[mes,setmes] = useState([{}]);
+      const userid = (Cookies.get('id'));
+      const [userInfo, setuser] = useState([{}]);
+    const[usern,setusern] = useState("")
       const sendmsg = () => {
+
         // bottomref.current?.scrollIntoView({behavior: 'smooth'});
         // setmes([]);
         	// socket.emit(“要對 server 發送的事件名稱”,data)
         socket.emit("send_mesg",{message});
+        bottomref.current?.scrollIntoView({behavior: 'smooth'});
+
+        // socket.emit("send_mesg1",{message});
         
       }
+
       useEffect(()=>{
-        //	socket.on(“監聽來自server的receive_message事件名稱”, callback)
-         socket.on("receive_message",(data)=>{
-            //  console.log(mes);
-             setmes(data);
+        Axios.post("http://localhost:3001/self", {
+            userid: userid,
+        }).then((response) => {
+            console.log("self", response.data);
+            setuser(response.data)
+            setusern(response.data[0].username)
+        });
+      },[userid])
+    //   const getmesg = ()=>{
+    //     socket.on()
+    //   }
 
-           //  console.log(data)
-           // bottomref.current?.scrollIntoView({behavior: 'smooth'});
-           // scrollToMyRef();
-           ;})},[socket]);
-     useEffect(()=>{
-       bottomref.current.scrollIntoView({behavior: 'smooth'});
-       // newref.current?.lastElementChild?.scrollIntoView();
-
-     },[mes]);
-
-   //  const scrollToMyRef = () => {
-   //     const scroll =
-   //       newref.current.scrollHeight -
-   //       newref.current.clientHeight;
-   //     newref.current.scrollTo(0, scroll);
-   //   };
+// useEffect(()=>{
+//     socket.on("gobackMessageall",(data)=>{
+//         //  console.log(mes);
+//         console.log(data)
+//         setmes(data);
+//     })
              
+// //    bottomref.current.scrollIntoView({behavior: 'smooth'});
+// },[mes])
+
+      useEffect(()=>{
+        socket.on("receive_message1",(data)=>{
+            setmessage1(data);})
+       bottomref.current.scrollIntoView({behavior: 'smooth'});
+    
+        
+    //     //	socket.on(“監聽來自server的receive_message事件名稱”, callback)
+         socket.on("receive_message",(data)=>{
+    //         //  console.log(mes);
+            //  setmes(data);
+
+    //        //  console.log(data)
+    //        // scrollToMyRef();
+    //        ;})},[socket]);
+    //      useEffect(()=>{
+        //         // socket.on("gobackMessage"),(data)=>{
+            //         //     setmessage(data)
+            //         //     console.log(data)
+            //         // }
+            //         socket.on("gobackMessage",(data)=>{
+                //             //  console.log(mes);
+                //              setmessage1(data);})
+                
+                //        bottomref.current.scrollIntoView({behavior: 'smooth'});
+                // console.log(typeof mes)
+                // console.log(message1)
+                //     //     socket.on("receive_message",(data)=>{
+                    //     //         //  console.log(mes);
+                    setmes(data);})
+       bottomref.current.scrollIntoView({behavior: 'smooth'});
+     },[mes,message1]);
+        
         return (
         <React.Fragment>
     <div className={`${cc.dd1} container-fluid`}>
@@ -154,15 +200,20 @@ const Handya = () =>{
             </div>
         </div>
 
-  <input type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
+  {/* <input type="text" onChange={(e)=>{setmessage(e.target.value)}} name="" id="" />
   
-<button onClick={sendmsg}>send</button>
+<button onClick={sendmsg}>send1</button> */}
 
- {mes.map((v,k)=>{
-    return(<p>{v.message}</p>)
+ {/* {mes.map((v,k)=>{
+    return(<p >{v.message}</p>)
     
     console.log(v.message);
-})}
+})} */}
+ {/* {message1.map((v,k)=>{
+    return(<p>{v.message1}</p>)
+    
+    console.log(v.message);
+})} */}
 
 
 
@@ -498,11 +549,17 @@ const Handya = () =>{
     <div className={cc.d148}>
        <button className={`${cc.d147}`}>大廳聊天</button>
         <div ref={newref} className={cc.d130}>
+        {/* {message1.map((v,k)=>{
+            
+            return(<div className='dwwe2'><p className='www2'>{v.message}</p></div>)
+        
+            // console.log(v.message);
+        })} */}
         {mes.map((v,k)=>{
             
-    return(<p>{v.message}</p>)
+    return(<div className='dwwe'><p className='www'>{v.message}</p></div>)
 
-    console.log(v.message);
+    // console.log(v.message);
 })}
 <div ref={bottomref}></div>
         </div>

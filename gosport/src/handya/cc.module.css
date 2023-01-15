@@ -743,7 +743,7 @@ right: 25px;
     z-index: 500;overflow-x: hidden;}
 /* .d130{background-color: white;border: #e64637 solid 2px;height: 40vh;width:350px;overflow: scroll;position: fixed; left: 1090px;bottom: 8vh;
     z-index: 500;overflow-x: hidden;} */
-    .d130{margin-bottom: 33px;}
+    .d130{margin-bottom: 33px; justify-content: space-between;}
 .d147{width: 350px;border: 2px solid rgb(230, 70, 55); background-color: white; color:  rgb(230, 70, 55); font-size: large; font-weight: bolder;position: fixed;left: 1090px; top: 468px;}
 .d149{position: fixed; bottom: 8vh;left: 1090px;}
 .d150{position: fixed;bottom: 8vh;left: 1300px;}

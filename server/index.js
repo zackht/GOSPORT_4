@@ -35,24 +35,74 @@ const io = new Server(server, {
   }
 })
 //建立連線
+var owndata = [{message:"1"}]
 var datas = [
-  { message: "Welcome!" }
+  { message: "2" },{username:[0].username}
 ]
 io.on("connection", (socket) => {
+  
+  // onlineCount++;
+  //   // 發送人數給網頁
+  //   io.emit("online", onlineCount);
+ 
+  //   socket.on("greet", () => {
+  //       socket.emit("greet", onlineCount);
+  //   });
+ 
+  //   socket.on('disconnect', () => {
+  //       // 有人離線了，扣人
+  //       onlineCount = (onlineCount < 0) ? 0 : onlineCount-=1;
+  //       io.emit("online", onlineCount);
+  //   });
+
+
   console.log(`User Connected:${socket.id}`);
   //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
   // io.emit("receive_message",datas);
+// socket.on("send_mesg1", (data) => {
+//   owndata.push(data);
+//   socket.emit('gobackMessage', data)})
+//   console.log(owndata);
+
+// socket.on("send_mesg", (data) => {
+//   datas.push(data);
+//   console.log(datas);
+//   socket.broadcast('gobackMessageall', datas)});
+  // socket.on("send_mesg", (data1) => {
+  // //   //       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
+
+  //   // console.log(data);
+  //   // console.log(datas);
+  //   owndata.push(data1)
+  //   // io.emit("receive_message",datas);
+  //   socket.broadcast('receive_message1', owndata)
+  //   // socket.broadcast.emit("receive_message",datas);
+  //   // io.emit("receive_message",datas);
+  //   // socket.broadcast 自己收不到自己
+  //   // socket.broadcast.emit("receive_message", datas);
+  //   // io.emit("receive_message", datas);
+  //   // io.sockets.socket(socket.id).emit([data]);
+  // })
 
   socket.on("send_mesg", (data) => {
-    //       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
+  //   //       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
 
+    // console.log(data);
     console.log(data);
-    // console.log(datas);
     datas.push(data)
-    // io.emit("receive_message",[data]);
+    // io.emit("receive_message",datas);
+    socket.emit('receive_message', datas)
+
+
+    owndata.push(data)
+    socket.broadcast('receive_message1', owndata)
+
     // socket.broadcast.emit("receive_message",datas);
+    // io.emit("receive_message",datas);
     // socket.broadcast 自己收不到自己
-    io.emit("receive_message", datas);
+    // socket.broadcast.emit("receive_message", datas);
+    // io.emit("receive_message", datas);
+    // io.sockets.socket(socket.id).emit([data]);
   })
 })
 
