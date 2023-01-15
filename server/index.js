@@ -172,6 +172,27 @@ app.post("/userupdate", upload.single('image'), (req, res) => {
       }
     });
 });
+
+// 租場地搜尋
+app.post("/rentside", (req, res) => {
+  const type = req.body.type;
+  const starttime = req.body.starttime;
+  const endtime = req.body.endtime;
+  const startdate = req.body.startdate;
+  const enddate = req.body.enddate;
+  const county = req.body.county;
+  const area = req.body.area;
+  const text = req.body.text;
+  db.query("SELECT * FROM teamevent where teameventid = ?"
+  ,[teameventid], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 // 後台零打搜尋
 app.post("/zeroda", (req, res) => {
   const starttime1 = req.body.starttime1;
