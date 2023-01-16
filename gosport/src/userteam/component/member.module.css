@@ -49,7 +49,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    position: relative;
 }
 .checkMember:last-child{
     border-bottom:none;
@@ -69,9 +69,14 @@
     font-weight: 600;
     display: inline;
     margin-left: 15px;
-    
+    position: absolute;
+    left: 109px;
+    width: 150px;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    overflow: hidden;
 }
-.checkMember>div:nth-child(3){
+.checkMember>div:nth-child(4){
     width: 60px;
     height: 30px;
     background-color: rgb(255, 255, 255);
@@ -83,9 +88,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 } 
-.checkMember>div:nth-child(4){
+.checkMember>div:nth-child(5){
     font-family: 'Noto Sans TC';
     color: rgb(56, 56, 56);
     font-size: 1.1rem;
@@ -93,7 +98,7 @@
     /* display: flex; */
     justify-content: center;
     align-items: center;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     display: block;
 } 
 .checkbtn{
@@ -125,12 +130,18 @@
     display: flex;
     align-items: center;
     align-content: center;
-    position: relative;
-    left: -238px;
-    top: 25px;
+    position: absolute;
+    left: 109px;
+    top: 65px;
+    margin-left: 15px;
 }
 .badge>img{
     width: 15px;
     height: 15px;
     margin: 0px;
+}
+.mSpace{
+    width: 150px;
+    height: 10px;
+    /* background-color: aqua; */
 }
