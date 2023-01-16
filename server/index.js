@@ -35,24 +35,74 @@ const io = new Server(server, {
   }
 })
 //建立連線
+var owndata = [{message:"1"}]
 var datas = [
-  { message: "Welcome!" }
+  { message: "2" },{username:[0].username}
 ]
 io.on("connection", (socket) => {
+  
+  // onlineCount++;
+  //   // 發送人數給網頁
+  //   io.emit("online", onlineCount);
+ 
+  //   socket.on("greet", () => {
+  //       socket.emit("greet", onlineCount);
+  //   });
+ 
+  //   socket.on('disconnect', () => {
+  //       // 有人離線了，扣人
+  //       onlineCount = (onlineCount < 0) ? 0 : onlineCount-=1;
+  //       io.emit("online", onlineCount);
+  //   });
+
+
   console.log(`User Connected:${socket.id}`);
   //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
   // io.emit("receive_message",datas);
+// socket.on("send_mesg1", (data) => {
+//   owndata.push(data);
+//   socket.emit('gobackMessage', data)})
+//   console.log(owndata);
+
+// socket.on("send_mesg", (data) => {
+//   datas.push(data);
+//   console.log(datas);
+//   socket.broadcast('gobackMessageall', datas)});
+  // socket.on("send_mesg", (data1) => {
+  // //   //       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
+
+  //   // console.log(data);
+  //   // console.log(datas);
+  //   owndata.push(data1)
+  //   // io.emit("receive_message",datas);
+  //   socket.broadcast('receive_message1', owndata)
+  //   // socket.broadcast.emit("receive_message",datas);
+  //   // io.emit("receive_message",datas);
+  //   // socket.broadcast 自己收不到自己
+  //   // socket.broadcast.emit("receive_message", datas);
+  //   // io.emit("receive_message", datas);
+  //   // io.sockets.socket(socket.id).emit([data]);
+  // })
 
   socket.on("send_mesg", (data) => {
-    //       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
+  //   //       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
 
+    // console.log(data);
     console.log(data);
-    // console.log(datas);
     datas.push(data)
-    // io.emit("receive_message",[data]);
+    // io.emit("receive_message",datas);
+    socket.emit('receive_message', datas)
+
+
+    owndata.push(data)
+    socket.broadcast('receive_message1', owndata)
+
     // socket.broadcast.emit("receive_message",datas);
+    // io.emit("receive_message",datas);
     // socket.broadcast 自己收不到自己
-    io.emit("receive_message", datas);
+    // socket.broadcast.emit("receive_message", datas);
+    // io.emit("receive_message", datas);
+    // io.sockets.socket(socket.id).emit([data]);
   })
 })
 
@@ -172,6 +222,27 @@ app.post("/userupdate", upload.single('image'), (req, res) => {
       }
     });
 });
+
+// 租場地搜尋
+app.post("/rentside", (req, res) => {
+  const type = req.body.type;
+  const starttime = req.body.starttime;
+  const endtime = req.body.endtime;
+  const startdate = req.body.startdate;
+  const enddate = req.body.enddate;
+  const county = req.body.county;
+  const area = req.body.area;
+  const text = req.body.text;
+  db.query("SELECT * FROM teamevent where teameventid = ?"
+  ,[teameventid], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 // 後台零打搜尋
 app.post("/zeroda", (req, res) => {
   const starttime1 = req.body.starttime1;
@@ -651,6 +722,17 @@ app.post("/orderfutrue", (req, res) => {
 
     });
 });
+app.post("/cancelOrder", (req, res) => {
+  const orderid = req.body.orderid;
+  db.query("UPDATE `userorder` SET `flag`='不成立' WHERE `orderid`= ? ",
+    [orderid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
 //會員訂單搜尋 結束
 app.post("/orderend", (req, res) => {
   const userid = req.body.userid;
@@ -692,7 +774,30 @@ app.post("/findzoro", (req, res) => {
     } else {
       res.send(result);
     }
-
+  });
+});
+//取得零打報名人
+app.post("/followsublet", (req, res) => {
+  const articleid_sublet = req.body.articleid_sublet;
+  db.query(" SELECT * FROM `follow_sublet`,`user` WHERE follow_sublet.articleid_sublet = ? AND follow_sublet.userid = user.userid",
+   [articleid_sublet], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+//取得零打報名人
+app.post("/followzeroda", (req, res) => {
+  const articleid_zeroda = req.body.articleid_zeroda;
+  db.query(" SELECT * FROM `follow_zeroda`,`user` WHERE follow_zeroda.articleid_zeroda = ? AND follow_zeroda.userid = user.userid",
+   [articleid_zeroda], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
   });
 });
 //會員轉租文章搜尋
@@ -706,10 +811,9 @@ app.post("/findsub", (req, res) => {
     } else {
       res.send(result);
     }
-
   });
 });
-// 取得留言數
+// 取得承租文章留言數
 app.post("/countsub", (req, res) => {
   const articleid = req.body.articleid;
   db.query("SELECT count(*)as a FROM articlemessage_sublet WHERE `articleid_sublet`= ?", [articleid], (err, result) => {
@@ -721,6 +825,7 @@ app.post("/countsub", (req, res) => {
 
   });
 });
+// 取得零打文章留言數
 app.post("/countzero", (req, res) => {
   const articleid = req.body.articleid;
   db.query("SELECT count(*)as a FROM articlemessage_zeroda WHERE `articleid_zeroda`= ?", [articleid], (err, result) => {

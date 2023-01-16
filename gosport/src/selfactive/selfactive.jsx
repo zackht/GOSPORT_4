@@ -1,5 +1,6 @@
 // import React, { Component } from 'react';
 import React, { useState } from 'react';
+import Axios from "axios";
 import Ordering from './components/ordering';
 import OrderFutrue from './components/orderfutrue'
 import OrderEnd from './components/orderEnd'
@@ -50,11 +51,43 @@ const Selfactive = () => {
     var isAddShow = artInnerIndex === 1 ? 'block' : 'none';
     var isDelShow = artInnerIndex === 2 ? 'block' : 'none';
 
+    // 取得文章報名/承租人資料
+    // 彈窗控制
     const [modaltoggle, setModalToggle] = useState(false);
-    function controlModal() {
-        setModalToggle(!modaltoggle)
-    }
     var showModal = modaltoggle ? 'flex' : 'none';
+    // 資料初值
+    const [followdata, setFollowData] = useState([{
+        badminton: '',
+        tabletennis: '',
+        volleyball: '',
+        usebadge: '',
+        username: '',
+    }]);
+    const controlModal = (data) => {
+        setModalToggle(!modaltoggle)
+        console.log(data)
+        if (data.articleid_zeroda) {
+            console.log('zeroda')
+            Axios.post("http://localhost:3001/followzeroda", {
+                articleid_zeroda: data.articleid_zeroda
+            }).then((response) => {
+                console.log(response.data);
+                setFollowData(response.data)
+            });
+        } else if (data.articleid_sublet) {
+            console.log('sub')
+            Axios.post("http://localhost:3001/followsublet", {
+                articleid_sublet: data.articleid_sublet
+            }).then((response) => {
+                console.log(response.data);
+                setFollowData(response.data)
+            });
+        }
+    }
+    const closeModal = () => {
+        setModalToggle(!modaltoggle)
+
+    }
 
 
     return (
@@ -84,7 +117,7 @@ const Selfactive = () => {
                     </div>
                     <div className="active_inner">
                         {/* <!-- 訂單 --> */}
-                        <div id="orderin"  style={{ display: isActiveShow }}>
+                        <div id="orderin" style={{ display: isActiveShow }}>
                             <div className='eachOrder' style={{ display: isOrderingShow }}>
                                 <Ordering />
                             </div>
@@ -99,7 +132,7 @@ const Selfactive = () => {
                             </div>
                         </div>
                         {/* <!-- 文章 --> */}
-                        <div id="artclein"  style={{ display: isArticleShow }}>
+                        <div id="artclein" style={{ display: isArticleShow }}>
                             {/* <!-- 以新增 --> */}
                             <div id="tein" style={{ display: isAddShow }}>
                                 <Artadd control={controlModal} />
@@ -113,9 +146,36 @@ const Selfactive = () => {
                 </div>
                 <div className="active_modal" style={{ display: showModal }}>
                     <div className="modal-content">
-                        <span className="active_close" onClick={controlModal}>&times;</span>
+                        <span className="active_close" onClick={() => { closeModal() }}>&times;</span>
                         <div>
-                            <div>
+                            {followdata.map(item => {
+                                return (
+                                    <div>
+                                        <div className="clientPic">
+                                            <img className="clientImg" src={pic} alt="" />
+                                            <div>
+                                                <img src={star} alt="" />
+                                                <img src={star} alt="" />
+                                                <img src={star} alt="" />
+                                            </div>
+                                        </div>
+                                        <div className="clientIntro">
+                                            <div>{item.username}</div>
+                                            <div><span>程度</span><span>高手</span></div>
+                                        </div>
+                                        <div className="clientYesNo">
+                                            <div>
+                                                2022/12/22 9:05
+                                            </div>
+                                            <div>
+                                                <button>拒絕</button>
+                                                <button>接受</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                            {/* <div>
                                 <div className="clientPic">
                                     <img className="clientImg" src={pic} alt="" />
                                     <div>
@@ -137,9 +197,9 @@ const Selfactive = () => {
                                         <button>接受</button>
                                     </div>
                                 </div>
-                            </div>
-                            <div></div>
-                            <div></div>
+                            </div> */}
+                            {/* <div></div> */}
+                            {/* <div></div> */}
                         </div>
                     </div>
                 </div>

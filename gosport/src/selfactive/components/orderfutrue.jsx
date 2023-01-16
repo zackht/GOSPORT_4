@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Axios from "axios";
 import Cookies from 'js-cookie';
 
@@ -29,7 +29,7 @@ const Orderfutrue = () => {
     const [ordermenu, setShowOrder] = useState('none');
     const [orderData, setOrderData] = useState({
         starttime: "",
-        endtime:"",
+        endtime: "",
         duringtype: "",
         enddate: "",
         flag: "",
@@ -40,18 +40,28 @@ const Orderfutrue = () => {
         startdate: "",
         week: ""
     });
-    const[rentType,setRentType] = useState(false)
+    const [rentType, setRentType] = useState(false)
     const showdata = (index) => {
         setOderNoneOut('none')
         setShowOrder('block')
         setOrderData(orderInfo[index])
-        console.log(orderData)
+    }
+    useEffect(() => {
         if (orderData.duringtype === '長租') {
             console.log('長租')
             setRentType(true)
-        }else{
+        } else {
             console.log('日租')
+            setRentType(false)
         }
+    }, [orderData])
+    // 取消預約
+    const cancelOrder = () => {
+        Axios.post("http://localhost:3001/cancelOrder", {
+            orderid: orderData.orderid
+        }).then((response) => {
+            console.log(response.data);
+        });
     }
     return (
         <React.Fragment>
@@ -74,21 +84,21 @@ const Orderfutrue = () => {
             <div className="ordermenu" id='ordering' style={{ display: ordermenu }}>
                 <div>訂單日期</div>
                 <div>{orderData.orderdate.substring(0, 10)}</div>
-                <div style={{ display: rentType? 'flex':'none' }}>
+                <div style={{ display: rentType ? 'flex' : 'none' }}>
                     <div style={{ flex: "1" }}>開始時間</div>
                     <div style={{ flex: "1" }}>結束時間</div>
                     <div style={{ flex: "1" }}>星期</div>
                 </div>
-                <div style={{ display: rentType? 'none':'flex' }}>
+                <div style={{ display: rentType ? 'none' : 'flex' }}>
                     <div style={{ flex: "1" }}>活動日期</div>
                     <div style={{ flex: "2" }}>時段</div>
                 </div>
-                <div style={{ display: rentType? 'flex':'none' }}>
+                <div style={{ display: rentType ? 'flex' : 'none' }}>
                     <div style={{ flex: "1" }}>{orderData.startdate.substring(0, 10)}</div>
                     <div style={{ flex: "1" }}>{orderData.enddate.substring(0, 10)}</div>
                     <div style={{ flex: "1" }}>{orderData.week}</div>
                 </div>
-                <div style={{ display: rentType? 'none':'flex' }}>
+                <div style={{ display: rentType ? 'none' : 'flex' }}>
                     <div style={{ flex: "1" }}>{orderData.startdate.substring(0, 10)}</div>
                     <div style={{ flex: "2" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
                 </div>
@@ -100,7 +110,7 @@ const Orderfutrue = () => {
                 <div>{orderData.sidename}</div>
                 <div>地址</div>
                 <div style={{ position: "relative" }}>{orderData.sideaddr}
-                    <button id='ing' className="chuse_order">取消預約</button>
+                    <button id='ing' className="chuse_order" onClick={cancelOrder}>取消預約</button>
                 </div>
             </div>
         </React.Fragment>

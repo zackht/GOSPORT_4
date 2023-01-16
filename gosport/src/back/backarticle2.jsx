@@ -8,6 +8,7 @@ import backrent from './後臺轉租.module.css';
 import a from "./icon/上傳照片.svg";
 import group41 from "./icon/Group 41.png";
 import { useRef } from 'react';
+import { useEffect } from 'react';
 const Backarticle2 = () => {
     const [zerodaseach, setzerodaseach] = useState('block');
     const [teamseach, setteamseach] = useState('none');
@@ -169,6 +170,9 @@ const Backarticle2 = () => {
     const ddd2 = () => {
         setdiv2(!div2);
         setteamedit([]);
+        setuserlist1([]);
+        seth1(false);
+        clearTimeout(time);
     }
     // 零打編輯畫面
     var [div1, setdiv1] = useState(false);
@@ -201,25 +205,49 @@ const Backarticle2 = () => {
     }
     // 球隊編輯畫面
     var [teamedit, setteamedit] = useState([]);
-    const [userlist1, setuserlist1] = useState('');
+    const [userlist1, setuserlist1] = useState([]);
     const [teameventid, setteameventid] = useState('');
     const [userlist, setuserlist] = useState([]);
-    const ttt = (e) => {
-        setdiv2(!div2);
+    const ttt = async (e) => {
         // console.log(e);
         setteameventid(e);
-        Axios.post("http://localhost:3001/teamedit", {
+        setdiv2(!div2);
+        await Axios.post("http://localhost:3001/teamedit", {
             teameventid: e,
         }).then((response) => {
             // console.log(response);
             setteamedit(response.data);
         });
-        Axios.post("http://localhost:3001/teameventuser", {
+        await Axios.post("http://localhost:3001/teameventuser", {
             teameventid: e,
         }).then((response) => {
-            // console.log(response.data);
-            setuserlist(response.data);
+            console.log(response.data);
+            for (let i = 0; i < response.data.length; i++) {
+                var u8Arr = new Uint8Array(response.data[i].userimg.data);
+                var blob = new Blob([u8Arr], { type: "image/jpeg" });
+                var fr = new FileReader;
+                fr.readAsDataURL(blob);
+                fr.onload = function (e) {
+                    userlist1.push(e.target.result);
+                };
+            }
         });
+        setuserlist(userlist1);
+    }
+    // 設置會員頭像
+    const aaaa =
+        userlist.map((val, key) => {
+            return (
+                    <img key={key} src={val} alt="" className={backteam.div57} />
+            );
+        })
+        // 因為只有push所以不會rerender所以設置延遲後再set觸發rerender再回傳頭像
+    const [h1,seth1]=useState(false);
+    const ee = () => {
+        const time = setTimeout(()=>{seth1(true)},100);
+        if(h1){
+            return aaaa;
+        }
     }
     // 球隊儲存
     const [teamstartdate, setteamstartdate] = useState('');
@@ -833,20 +861,16 @@ const Backarticle2 = () => {
                             <div className={backteam.div9}>
                                 <span className={backteam.font}>成員</span>
                                 <div className='d-flex'>
-                                    {userlist.map((val,key)=>{
-                                        var u8Arr = new Uint8Array(val.userimg.data);
-                                        var blob = new Blob([u8Arr], {type: "image/jpeg" });
-                                        var fr = new FileReader;
-                                        fr.onload = function () {
-                                            setuserlist1(fr.result);
-                                            // console.log(fr.result);
-                                        };
-                                        fr.readAsDataURL(blob);
-                                        return (
-                                            <img src={userlist1} alt="" className={backteam.div57}/>
-                                            // <div>{val.userid}</div>
-                                        );
-                                    })}
+                                    {/* {
+                                                userlist.map((val, key) => {
+                                                return (
+                                                    <React.Fragment>
+                                                        <img key={key} src={val} alt="" className={backteam.div57} />
+                                                    </React.Fragment>
+                                                );
+                                                })
+                                            } */}
+                                    {ee()}
                                 </div>
                             </div>
                             <div className={backteam.div8}>
