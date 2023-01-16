@@ -9,6 +9,7 @@ import user from "./icon/user.svg";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import side2 from './rentside_more.module.css';
 import team from './icon/team.jpg';
+import map from './icon/map.png'
 
 const Side2 = () => {
   const add = () => {
@@ -28,24 +29,42 @@ const Side2 = () => {
             <div className={side2.thecover}>
               <img src={team} alt="" />
             </div>
-          <div className={`col-xl-4 d-flex flex-column ${side2.div3}`}>
+          <div className={`col-xl-4 d-flex flex-column ${side2.div3x}`}>
             <div>
               <span className={side2.span}>設施</span>
-              <div className={`d-flex`}>
                 <div><img src={a1} alt="" /></div>
                 <div><img src={a2} alt="" /></div>
                 <div><img src={a3} alt="" /></div>
+            </div>
+            <div><span className={side2.span}>開放時間</span></div>
+            <div className={side2.font}>平日9:00~20:00</div>
+            <div className={side2.font}>假日9:00~20:00</div>
+            <div><span className={side2.span}>收費標準</span></div>
+            <div>尖峰 300元/hr</div>
+            <div>離峰 200元/hr</div>
+            <div>
+              <div className={`d-flex`}>
+                <div>
+                <span className={side2.smlspan}>平日</span>
+                <div>尖峰 14:00~20:00</div>
+                <div>離峰 09:00~14:00</div>
+                </div>
+                <div className={side2.smlspan2}>
+                <span className={side2.smlspan}>假日</span>
+                <div>尖峰 14:00~20:00</div>
+                <div>離峰 09:00~14:00</div>
+                </div>
               </div>
             </div>
-            <div><span className={side2.span}>營業時間</span></div>
-            <div className={side2.font}>平日9:00~19:00</div>
-            <div className={side2.font}>假日9:00~20:00</div>
             <div><span className={side2.span}>電話</span></div>
             <div className={side2.font}>04-22256322</div>
             <div><span className={side2.span}>描述</span></div>
             <div className={side2.font}>共五面、9.8M挑高場地
               提供羽球教學課程
-              共245坪 </div>
+              共245坪 
+              </div>
+              <div><span className={side2.span}>地址</span></div>
+            <div className={side2.font}>台中市西區大西區街1巷3號</div>
           </div>
           <div className={`col-xl-8 d-flex flex-column ${side2.div3}`}>
             <form action="http://127.0.0.1/phpd03/aaa.php" method="get">
@@ -53,12 +72,9 @@ const Side2 = () => {
                 <div>
                   <b className={side2.fontsize1}>群月羽球館</b>
                 </div>
-                <div className={`ml-auto`}>
-                  <input className={side2.aa} type="submit" defaultValue="預定" />
-                </div>
               </div>
               <div>
-                <span className={side2.span}>租期</span>
+                <span className={side2.span}>日/長租</span>
                 <div className={`d-flex`}>
                   <div>
                     <input type="radio" id="radio1" className={side2.radio} name="a" defaultValue="date" />
@@ -76,7 +92,7 @@ const Side2 = () => {
                 </div>
               </div>
               <div className={side2.div7}>
-                <span className={side2.span}>租期</span>
+                <span className={side2.span}>日期</span>
                 <div className={side2.div8}>
                   <input type="date" name="inputdate" className={side2.date} /><img className={`${side2.selectedDate}`} src={group41} alt="" />
                 </div>
@@ -141,24 +157,26 @@ const Side2 = () => {
                   <span className={side2.span}>數量</span>
                   <div className={`d-flex`}>
                     <div onClick={minus} className={side2.buttom3} id="add">-</div>
-                    <input type="number" className={side2.input} id="my-input" min="0" max="10" step="1" />
+                    <input type="number" className={side2.input} id="my-input" min="0" max="10" step="1" defaultValue={1}/>
                     <div onClick={add} className={side2.buttom3} id="minus">+</div>
                   </div>
                 </div>
-                <div className={side2.div11}>
+                <div className={`${side2.div11}`}>
                   <span className={side2.span}>費用</span>
                   <div>
                     <span className={side2.div12}>700</span>
                     <span className={side2.span}>元</span>
                   </div>
                 </div>
+                <div className={`ml-auto`}>
+                  <input className={side2.aa} type="button" defaultValue="預定" />
+                </div>
               </div>
             </form>
           </div>
           <div className={side2.div4}>
-            <span className={side2.span}>地址</span>
             <div className={side2.div5}>
-
+              <img src={map} alt="" className={side2.div5img}/>
             </div>
           </div>
         </div>
