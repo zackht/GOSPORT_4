@@ -233,8 +233,24 @@ app.post("/rentside", (req, res) => {
   const county = req.body.county;
   const area = req.body.area;
   const text = req.body.text;
-  db.query("SELECT * FROM teamevent where teameventid = ?"
-  ,[teameventid], (err, result) => {
+  const park = `${req.body.park}`;
+  const bath = `${req.body.bath}`;
+  const baulk = `${req.body.baulk}`;
+        console.log(type);
+        console.log(starttime);
+        console.log(endtime);
+        console.log(startdate);
+        console.log(enddate);
+        console.log(county);
+        console.log(area);
+        console.log(bath);
+        console.log(park);
+        console.log(baulk);
+        console.log(text);
+  db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
+  weekstarttime BETWEEN  ? AND ? AND county =? AND area =? AND (sidename LIKE ? OR adress LIKE ?)`
+  // AND bath = ? AND park=? AND baulk=?`
+  ,[startdate,enddate,type,starttime,endtime,county,area,text,text], (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -242,7 +258,18 @@ app.post("/rentside", (req, res) => {
     }
   });
 });
-
+// 租場地查看更多
+app.post("/rentsideedit", (req, res) => {
+  const sideid = req.body.sideid;
+  db.query("SELECT * FROM side where sideid = ?"
+    , [sideid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
 // 後台零打搜尋
 app.post("/zeroda", (req, res) => {
   const starttime1 = req.body.starttime1;
@@ -884,7 +911,7 @@ app.post("/basicupdate",upload.single('teamfile'), (req, res) => {
     });
 });
 // 芝｜Basic 更新 無圖
-app.post("/basicupdate2",upload.single('teamimg'), (req, res) => {
+app.post("/basicupdate2", (req, res) => {
   const tname = req.body.tname;
   const sidename = req.body.sidename;
   const week = req.body.week;
@@ -926,13 +953,31 @@ app.post('/teamleader', (req,res)=>{
       }
     );
   });
-    // 芝｜Member 抓成員img
-    app.post('/teammember', (req,res)=>{
+  // 芝｜Member 抓成員img
+  app.post('/teammember', (req,res)=>{
+    const teamid = req.body.teamid;
+    db.query(
+        `SELECT user.userid,userimg
+        FROM teamuser,user
+        where user.userid = teamuser.userid and teamid=?;`,
+        [teamid],
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        }
+      );
+  });
+    // 芝｜Member 抓 未審核成員img
+    app.post('/teampendingimg', (req,res)=>{
       const teamid = req.body.teamid;
       db.query(
-          `SELECT user.userid,userimg
-          FROM teamuser,user
-          where user.userid = teamuser.userid and teamid=?;`,
+          `SELECT teampendinguser.userid,userimg,username,type as 'teamtype',badminton,tabletennis,volleyball
+          FROM teampendinguser,user,team
+          where teampendinguser.userid = user.userid and teampendinguser.teamid=1
+          ORDER BY teampendinguser.userid;`,
           [teamid],
           (err, result) => {
             if (err) {
@@ -943,9 +988,11 @@ app.post('/teamleader', (req,res)=>{
           }
         );
     });
-    // 芝｜Member 抓 未審核成員img
-    app.post('/teampendingimg', (req,res)=>{
+
+    // 芝｜Member 拒絕 未審核成員
+    app.post('/teampendingreject', (req,res)=>{
       const teamid = req.body.teamid;
+      const userid = req.body.userid;
       db.query(
           `SELECT teampendinguser.userid,userimg,username,type as 'teamtype',badminton,tabletennis,volleyball
           FROM teampendinguser,user,team
@@ -968,7 +1015,6 @@ app.post('/teamleader', (req,res)=>{
       const userid = req.body.userid;
       const teamid = req.body.teamid;
       const startdate = req.body.startdate;
-      // console.log(startdate);
       const enddate = req.body.enddate;
       db.query(
           `SELECT date 
