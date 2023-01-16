@@ -1,17 +1,29 @@
 import React, { useState,useEffect } from 'react';
 import { Link } from "react-router-dom";
 import basic from './basic.module.css';
-// import img from '../img.module.js';
 import Axios from "axios";
-export default function Basic(props) {
+import Cookies from 'js-cookie';
 
-    // SQL參數 會員id 球隊id
-    const [userid, setUserid] = useState('1');
-    const [teamid, setTeamid] = useState('1');
+export default function Basic(props) {
+    
+    // SQL參數
+    const [userid, setUserid] = useState( Cookies.get('id') ); // 登入者id
+    const [teamid, setTeamid] = useState('1');                 // 球隊id
+
+    // 其他判斷
+    const [leaderId, setLeaderId] = useState(''); // 隊長id
     
     // input值
     const [basicResult,setBasicResult] = useState(null); // all
     const [teamimg, setTeamimg] = useState('');          // 球隊img
+
+    // 抓 隊長id
+    const handleLeaderImg = async () => {
+        let res = await Axios.post("http://localhost:3001/teamleader",{
+            teamid: teamid
+        });
+        setLeaderId(res.data[0].userid);
+    };
 
     // 抓資料
     const handleBasicResult = async () => {
@@ -34,14 +46,14 @@ export default function Basic(props) {
     // 畫面載入即抓資料
     useEffect(()=>{
         handleBasicResult();
+        handleLeaderImg();
     },[]);
 
     return(
         <>
             <div className={basic.basic}>
-                {/* <button onClick={handleBasicResult}>顯示資料</button> */}
-                {/* 只有隊長可以編輯 */}
-                <Link to={`/gosport/user/myteam/basic/edit`}>編輯</Link>
+                {/* 只有隊長可編輯 */}
+                { userid===`${leaderId}`? <Link to={`/gosport/user/myteam/basic/edit`}>編輯</Link>:'' }
                 {/* 基本資料 */}
                 <div className={basic.mBigTitle}>{basicResult? basicResult.tname:''}</div>
 
