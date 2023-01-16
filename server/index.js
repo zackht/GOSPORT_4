@@ -808,7 +808,7 @@ app.post("/basicupdate2",upload.single('teamimg'), (req, res) => {
 app.post('/teamleader', (req,res)=>{
   const teamid = req.body.teamid;
   db.query(
-      `SELECT userimg
+      `SELECT userimg ,user.userid
       FROM teamuser,user
       where user.userid = teamuser.userid and teamid=? and leader=1;`,
       [teamid],
@@ -842,7 +842,7 @@ app.post('/teamleader', (req,res)=>{
     app.post('/teampendingimg', (req,res)=>{
       const teamid = req.body.teamid;
       db.query(
-          `SELECT teampendinguser.userid,userimg,username,type as 'team type',badminton,tabletennis,volleyball
+          `SELECT teampendinguser.userid,userimg,username,type as 'teamtype',badminton,tabletennis,volleyball
           FROM teampendinguser,user,team
           where teampendinguser.userid = user.userid and teampendinguser.teamid=1
           ORDER BY teampendinguser.userid;`,

@@ -11,16 +11,18 @@ export default function Member(params) {
     const [teamid, setTeamid] = useState('1');
 
     // input值
-    const [leaderImg, setLeaderImg] = useState('');         // 隊長
-    const [memberImgs, setmemberImgs] = useState([]);       // 成員s 未讀取（二進位）
-    const [memberImgUrls, setMemberImgUrls] = useState({}); // 成員s 已讀取
-    const [pendingmemberImgs, setPendingmemberImgs] = useState(''); // 未審核成員
+    const [leaderImg, setLeaderImg] = useState('');         // 隊長img
+    const [leaderId, setLeaderId] = useState('');           // 隊長id
+    const [memberImgs, setmemberImgs] = useState([]);       // 成員imgs 資料庫二進位檔
+    const [memberImgUrls, setMemberImgUrls] = useState({}); // 成員urls 已讀取
+    const [pendingmember, setpendingmember] = useState([]);   // 未審核成員
+    const [pendingImgUrls, setPendingImgUrls] = useState({}); // 未審核成員urls 已讀取
 
     // 畫面載入即抓資料
     useEffect(()=>{
         handleLeaderImg();  // 隊長
         handlememberImgs(); // 成員
-        handlePendingImg(); // 未審核成員
+        handlePending(); // 未審核成員
     },[]);
 
     // 抓 隊長img
@@ -28,6 +30,8 @@ export default function Member(params) {
         let res = await Axios.post("http://localhost:3001/teamleader",{
             teamid: teamid
         });
+        setLeaderId(res.data[0].userid);
+        // console.log(res.data[0].userid);
         let u8Arr = new Uint8Array(res.data[0].userimg.data);
         let blob = new Blob([u8Arr],{type:"image/jpeg"});
         let fr = new FileReader;
@@ -55,8 +59,8 @@ export default function Member(params) {
                 let fr = new FileReader;
                 fr.readAsDataURL(blob);
                 fr.onload = function () {
-                    setMemberImgUrls(prevmemberImgUrls => {
-                        return { ...prevmemberImgUrls, [key]: fr.result }
+                    setMemberImgUrls(e => {
+                        return { ...e, [key]: fr.result }
                     });
                 }
             }
@@ -65,26 +69,82 @@ export default function Member(params) {
 
     // 成員清單
     const memberList = memberImgs.map((val, key) => {
-        return val.userimg !== null? (
-            <img key={key} className={member.mImg} src={memberImgUrls[key]} />
-        ):(
-            <img key={key} className={member.mImg} src={img.m} /> // 會員無頭像時
-        );
+        if(val.userimg !== null){
+            // 隊長排除
+            return val.userid === leaderId? '':( <img key={key} className={member.mImg} src={memberImgUrls[key]} />);    
+        }else{
+            // 會員無頭像時
+            return <img key={key} className={member.mImg} src={img.m} />; 
+        }
     });
 
-
     // 抓 未審核成員img
-    const handlePendingImg = () => {
+    const handlePending = () => {
         Axios.post("http://localhost:3001/teampendingimg",{
             teamid: teamid
         }).then((response)=>{
-            setPendingmemberImgs(response.data); // 給input
+            setpendingmember(response.data); // 給input
         })
     }
-    // console.log(pendingmemberImgs);
+    // console.log(typeof pendingmember);
 
+    // 讀取 未審核成員
+    useEffect(() => {
+        pendingmember.forEach((val, key) => {
+            if (val.userimg !== null) {
+                // console.log(val.userimg);
+                let u8Arr = new Uint8Array(val.userimg.data);
+                let blob = new Blob([u8Arr], {type: "image/jpeg"});
+                let fr = new FileReader;
+                fr.readAsDataURL(blob);
+                fr.onload = function () {
+                    setPendingImgUrls(e => {
+                        return { ...e, [key]: fr.result }
+                    });
+                }
+            }
+        });
+    }, [pendingmember]);
+    // console.log(pendingmember);
 
+    // 顯示對應球隊類別的會員程度
+    const handleteamtype =(val)=>{
+        if(val.teamtype==='羽球'){ 
+            return <div>{val.badminton}</div>;
+        }else if(val.teamtype==='桌球'){
+            return <div>{val.tabletennis}</div>;
+        }else{
+            return <div>{val.volleyball}</div>;
+        }
+    };
 
+    // 未審核成員清單
+    const pendingMemberList = pendingmember.map((val, key) => {
+        // console.log(pendingmember[key+1].userid);
+        if(key%3===0){ // 篩出重複資料
+            return (
+                <div className={member.checkMember}>
+                    <img className={member.mImg} src={pendingImgUrls[key]} alt="使用者頭貼"/>
+                    <div>{val.username}</div>
+                    <div className={member.mSpace} ></div>
+                    <div>程度</div>
+                    { handleteamtype(val) }
+                    <div className={member.badge}>
+                        <img src={img.star} alt=""/>
+                        <img src={img.star} alt=""/>
+                        <img src={img.star} alt=""/>
+                    </div>
+                    <div className={member.checkbtn}>
+                        <button>拒絕</button>
+                        <button>接受</button>
+                    </div>
+                </div>
+                    )
+        }else{
+            return '';
+        }
+    });
+    
     return(
         <>
             <div className={member.memberContent}>
@@ -96,49 +156,10 @@ export default function Member(params) {
                     {/* 成員 */}
                     <div className={member.mTitle}>成員</div>
                     { memberList }  
-                    {/* <img className={member.mImg} src={img.m2} alt=""/>
-                    <img className={member.mImg} src={img.m3} alt=""/>
-                    <img className={member.mImg} src={img.m4} alt=""/>
-                    <img className={member.mImg} src={img.m5} alt=""/>
-                    <img className={member.mImg} src={img.m6} alt=""/> */}
-
                     {/* 待審核區 */}
                     <div className={member.mTitle}>未審核</div>
                 </div>
-                {/* 待審核成員 -1 */}
-                <div className={member.checkMember}>
-                    <img className={member.mImg} src={img.m7} alt=""/>
-                    <div>七期許效舜</div>
-                    <div>程度</div>
-                    <div>高手</div>
-                    <div className={member.badge}>
-                        <img src={img.star} alt=""/>
-                        <img src={img.star} alt=""/>
-                        <img src={img.star} alt=""/>
-                    </div>
-                    <div className={member.checkbtn}>
-                        <button>拒絕</button>
-                        <button>接受</button>
-                    </div>
-                </div>
-
-                {/* 待審核成員 -2 */}
-                <div className={member.checkMember}>
-                    <img className={member.mImg}  src={img.m8} alt=""/>
-                    <div>資策會羅志祥</div>
-                    <div>程度</div>
-                    <div>新人</div>
-                    <div className={member.badge}>
-                        <img src={img.star} alt=""/>
-                        <img src={img.star} alt=""/>
-                        <img src={img.star} alt=""/>
-                    </div>
-                    <div className={member.checkbtn}>
-                        <button>拒絕</button>
-                        <button>接受</button>
-                    </div>
-                </div>
-                
+                { pendingMemberList }
             </div>
         </>
     )
