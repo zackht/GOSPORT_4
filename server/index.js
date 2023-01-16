@@ -233,8 +233,24 @@ app.post("/rentside", (req, res) => {
   const county = req.body.county;
   const area = req.body.area;
   const text = req.body.text;
-  db.query("SELECT * FROM teamevent where teameventid = ?"
-  ,[teameventid], (err, result) => {
+  const park = `${req.body.park}`;
+  const bath = `${req.body.bath}`;
+  const baulk = `${req.body.baulk}`;
+        console.log(type);
+        console.log(starttime);
+        console.log(endtime);
+        console.log(startdate);
+        console.log(enddate);
+        console.log(county);
+        console.log(area);
+        console.log(bath);
+        console.log(park);
+        console.log(baulk);
+        console.log(text);
+  db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
+  weekstarttime BETWEEN  ? AND ? AND county =? AND area =? AND (sidename LIKE ? OR adress LIKE ?)`
+  // AND bath = ? AND park=? AND baulk=?`
+  ,[startdate,enddate,type,starttime,endtime,county,area,text,text], (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -242,7 +258,18 @@ app.post("/rentside", (req, res) => {
     }
   });
 });
-
+// 租場地查看更多
+app.post("/rentsideedit", (req, res) => {
+  const sideid = req.body.sideid;
+  db.query("SELECT * FROM side where sideid = ?"
+    , [sideid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
 // 後台零打搜尋
 app.post("/zeroda", (req, res) => {
   const starttime1 = req.body.starttime1;

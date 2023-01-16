@@ -43,7 +43,7 @@ class App extends Component {
 
             {/* 租場地 */}
             {/* <Route path="/gosport/rent" 	   component={} exact/> */}
-            <Route path="/gosport/rent/side/b" component={rentside_more} />
+            <Route path="/gosport/rent/side/:id" component={rentside_more} />
             <Route path="/gosport/rent" component={rentside} />
 
             {/* 交流區 */}
