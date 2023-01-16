@@ -6,6 +6,8 @@
     margin-left: 212px;
     margin-top: 200px;
     color: rgba(56, 56, 56, 1);
+    padding-left: 100px;
+    padding-top: 20px;
 }
 
 #add-place {
@@ -71,8 +73,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .cancel,
 .store {
-    width: 414.36px;
-    height: 87px;
+    width: 300px;
+    height: 70px;
     border-radius: 30px;
 }
 
@@ -112,14 +114,19 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     color: rgba(170, 170, 170, 1);
 }
 
+.contentdescribe_text {
+    width: 700px;
+    height: 100px;
+}
+
 .cancel {
     border: 0.5px rgba(230, 70, 55, 1) solid;
     color: rgba(230, 70, 55, 1);
     background-color: white;
     font-size: 32px;
     position: absolute;
-    left: 250px;
-    top: 950px;
+    left: 350px;
+    top: 1070px;
 }
 
 .store {
@@ -128,6 +135,14 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     background-color: rgba(230, 70, 55, 1);
     font-size: 32px;
     position: absolute;
-    right: 250px;
-    top: 950px;
+    right: 350px;
+    top: 1070px;
 }
+
+.addcontent input {
+    background-color: #f5f5f5;
+    border-radius: 30px;
+    border: 0px;
+    text-align: center;
+}
+

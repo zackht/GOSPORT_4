@@ -233,8 +233,24 @@ app.post("/rentside", (req, res) => {
   const county = req.body.county;
   const area = req.body.area;
   const text = req.body.text;
-  db.query("SELECT * FROM teamevent where teameventid = ?"
-  ,[teameventid], (err, result) => {
+  const park = `${req.body.park}`;
+  const bath = `${req.body.bath}`;
+  const baulk = `${req.body.baulk}`;
+        console.log(type);
+        console.log(starttime);
+        console.log(endtime);
+        console.log(startdate);
+        console.log(enddate);
+        console.log(county);
+        console.log(area);
+        console.log(bath);
+        console.log(park);
+        console.log(baulk);
+        console.log(text);
+  db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
+  weekstarttime BETWEEN  ? AND ? AND county =? AND area =? AND (sidename LIKE ? OR adress LIKE ?)`
+  // AND bath = ? AND park=? AND baulk=?`
+  ,[startdate,enddate,type,starttime,endtime,county,area,text,text], (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -242,7 +258,18 @@ app.post("/rentside", (req, res) => {
     }
   });
 });
-
+// 租場地查看更多
+app.post("/rentsideedit", (req, res) => {
+  const sideid = req.body.sideid;
+  db.query("SELECT * FROM side where sideid = ?"
+    , [sideid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
 // 後台零打搜尋
 app.post("/zeroda", (req, res) => {
   const starttime1 = req.body.starttime1;
@@ -1082,5 +1109,118 @@ app.post('/rentsearch', (req, res) => {
     );
   }
 
+})
+
+//交流球隊搜尋
+app.post('/teamsearch', (req, res) => {
+  const ballgamesteam = req.body.ballgamesteam;
+  const countyteam = req.body.countyteam;
+  const areateam = req.body.areateam;
+  const weekteam = req.body.weekteam;
+  const starttimeteam = req.body.starttimeteam;
+  const endtimeteam = req.body.endtimeteam;
+  const tnameteam = req.body.tnameteam;
+  const levelteam = req.body.levelteam;
+  const costteam = req.body.costteam;
+
+  console.log(ballgamesteam, countyteam, areateam, weekteam, starttimeteam, endtimeteam, costteam, levelteam, tnameteam);
+  if (tnameteam == "") {
+    db.query(
+      `SELECT * FROM team
+    WHERE type = ? AND county = ? AND area = ? AND week = ?
+    AND starttime >= ? AND endtime <= ? AND fee < ? AND level = ?`,
+      [ballgamesteam, countyteam, areateam, weekteam, starttimeteam, endtimeteam, costteam, levelteam],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  }else {
+    db.query(
+      `SELECT * FROM team
+    WHERE type = ? AND county = ? AND area = ? AND week = ?
+    AND starttime >= ? AND endtime <= ? AND fee < ? AND level = ? AND tname LIKE ?`,
+      [ballgamesteam, countytaem, areateam, weekteam, starttimeteam, endtimeteam, costteam, levelteam, tnameteam],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  }
+
+})
+
+//交流零打新增
+app.post('/zerocreate', (req, res) => {
+  const fieldnameczero = req.body.fieldnameczero;
+  const useridczero = req.body.useridczero;
+  const ballgamesczero = req.body.ballgamesczero;
+  const countyczero = req.body.countyczero;
+  const areaczero = req.body.areaczero;
+  const addressczero = req.body.addressczero;
+  const startdateczero = req.body.startdateczero;
+  const enddateczero = req.body.enddateczero;
+  const starttimeczero = req.body.starttimeczero;
+  const endtimeczero = req.body.endtimeczero;
+  const levelczero = req.body.levelczero;
+  const numberczero = req.body.numberczero;
+  const costczero = req.body.costczero;
+  const contentczero = req.body.contentczero;
+
+  console.log(useridczero,fieldnameczero,ballgamesczero,countyczero,areaczero,addressczero,startdateczero,enddateczero,starttimeczero
+    ,endtimeczero,levelczero,numberczero,costczero,contentczero)
+  db.query(
+    `INSERT INTO userarticle_zeroda (fieldname, userid, ballgames, county, area, address, startdate, enddate, starttime, endtime, level, number, cost, content) 
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);`
+    [fieldnameczero,useridczero,ballgamesczero,countyczero,areaczero,addressczero,startdateczero,enddateczero,starttimeczero,endtimeczero,levelczero,numberczero,costczero,contentczero],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+})
+
+//交流轉租新增
+app.post('/rentcreate',(req, res) => {
+  const useridcrent = req.body.useridcrent;
+  const fieldnamecrent = req.body.fieldnamecrent;
+  const ballgamescrent = req.body.ballgamescrent;
+  const countycrent = req.body.countycrent;
+  const areacrent = req.body.areacrent;
+  const addresscrent = req.body.addresscrent;
+  const startdatecrent = req.body.startdatecrent;
+  const enddatecrent = req.body.enddatecrent;
+  const starttimecrent = req.body.starttimecrent;
+  const endtimecrent = req.body.endtimecrent;
+  const numbercrent = req.body.numbercrent;
+  const costcrent = req.body.costcrent;
+  const contentcrent = req.body.contentcrent;
+
+  console.log(useridcrent,fieldnamecrent,ballgamescrent,countycrent,areacrent,addresscrent,startdatecrent,
+    enddatecrent,starttimecrent,endtimecrent,numbercrent,costcrent,contentcrent)
+
+  db.query(
+    `INSERT INTO userarticle_sublet (articleid_sublet, userid, fieldname, ballgames, county, area, address, startdate, 
+    enddate, starttime, endtime, amount, cost ,content)
+    VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [useridcrent,fieldnamecrent,ballgamescrent,countycrent,areacrent,addresscrent,startdatecrent,
+      enddatecrent,starttimecrent,endtimecrent,numbercrent,costcrent,contentcrent],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
 })
 
