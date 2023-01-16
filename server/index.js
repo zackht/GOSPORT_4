@@ -998,7 +998,7 @@ app.post('/searchzero', (req, res) => {
   const areazero = req.body.areazero;
   const zerolevel = req.body.zerolevel;
   // const zeroinput = req.body.zeroinput;
-  // console.log(ballgameszero, startdatezero, enddatezero, starttimezero, endtimezero, costzero, countyzero, areazero, zerolevel)
+  console.log(ballgameszero, startdatezero, enddatezero, starttimezero, endtimezero, costzero, countyzero, areazero, zerolevel)
   db.query(
     `SELECT * FROM userarticle_zeroda, user 
     WHERE userarticle_zeroda.userid = user.userid
@@ -1131,7 +1131,7 @@ app.post('/zerocreate', (req, res) => {
     ,endtimeczero,levelczero,numberczero,costczero,contentczero)
   db.query(
     `INSERT INTO userarticle_zeroda (fieldname, userid, ballgames, county, area, address, startdate, enddate, starttime, endtime, level, number, cost, content) 
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);`
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
     [fieldnameczero,useridczero,ballgamesczero,countyczero,areaczero,addressczero,startdateczero,enddateczero,starttimeczero,endtimeczero,levelczero,numberczero,costczero,contentczero],
     (err, result) => {
       if (err) {
