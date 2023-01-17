@@ -1,5 +1,5 @@
 // import React, { Component } from 'react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Axios from "axios";
 import Ordering from './components/ordering';
 import OrderFutrue from './components/orderfutrue'
@@ -62,33 +62,44 @@ const Selfactive = () => {
         volleyball: '',
         usebadge: '',
         username: '',
+        userimg: '',
+        usebadge: '[{}]'
     }]);
+    const [degree, setdegree] = useState('');
+    // 取得follow人
     const controlModal = (data) => {
         setModalToggle(!modaltoggle)
         console.log(data)
-        if (data.articleid_zeroda) {
-            console.log('zeroda')
-            Axios.post("http://localhost:3001/followzeroda", {
-                articleid_zeroda: data.articleid_zeroda
-            }).then((response) => {
-                console.log(response.data);
-                setFollowData(response.data)
-            });
-        } else if (data.articleid_sublet) {
-            console.log('sub')
-            Axios.post("http://localhost:3001/followsublet", {
-                articleid_sublet: data.articleid_sublet
-            }).then((response) => {
-                console.log(response.data);
-                setFollowData(response.data)
-            });
-        }
+        setdegree(data.ballgames)
+        Axios.post("http://localhost:3001/followzeroda", {
+            articleid_zeroda: data.articleid_zeroda
+        }).then((response) => {
+            // console.log(response.data);
+            setFollowData(response.data)
+        })
     }
+    const [userimglist, setuserimglist] = useState({});
+    useEffect(() => {
+        // follow人的照片
+        followdata.forEach((val, key) => {
+            if (val.userimg !== null) {
+                let u8Arr = new Uint8Array(val.userimg.data);
+                let blob = new Blob([u8Arr], { type: "image/jpeg" });
+                let fr = new FileReader;
+                fr.readAsDataURL(blob);
+                fr.onload = function () {
+                    setuserimglist(e => {
+                        return { ...e, [key]: fr.result }
+                    });
+                }
+            }
+        });
+    }, [followdata])
     const closeModal = () => {
+        console.group(followdata)
         setModalToggle(!modaltoggle)
-
+        // clearTimeout(time);
     }
-
 
     return (
         <React.Fragment>
@@ -148,20 +159,36 @@ const Selfactive = () => {
                     <div className="modal-content">
                         <span className="active_close" onClick={() => { closeModal() }}>&times;</span>
                         <div>
-                            {followdata.map(item => {
+                            {followdata.map((item, index) => {
+                                // var u8Arr = new Uint8Array(item.userimg.data);
+                                // var blob = new Blob([u8Arr], { type: "image/jpeg" });
+                                // var fr = new FileReader;
+                                // fr.readAsDataURL(blob);
+                                // fr.onload = function (e) {
+                                //     userimglist.push(e.target.result);
+                                // };
                                 return (
-                                    <div>
+                                    <div key={index}>
                                         <div className="clientPic">
-                                            <img className="clientImg" src={pic} alt="" />
+                                            <img src={userimglist[index]} alt="" className="clientImg" />
                                             <div>
-                                                <img src={star} alt="" />
-                                                <img src={star} alt="" />
-                                                <img src={star} alt="" />
+                                                {JSON.parse(item.usebadge).map((item,index)=>{return(
+                                                    <img key={index} src={item.badgeurl} alt="badge" />
+                                                )})}
+                                                {/* <img src={JSON.parse(item.usebadge)[0].badgeurl} alt="aa" /> */}
+                                                {/* <img src={star} alt="" /> */}
+                                                {/* <img src={star} alt="" /> */}
+                                                {/* <img src={star} alt="" /> */}
                                             </div>
                                         </div>
                                         <div className="clientIntro">
                                             <div>{item.username}</div>
-                                            <div><span>程度</span><span>高手</span></div>
+                                            <div >
+                                                <span>程度</span>
+                                                <span style={{display:degree==="羽球"?"inline":"none"}}>{item.badminton}</span>
+                                                <span style={{display:degree==="排球"?"inline":"none"}}>{item.volleyball}</span>
+                                                <span style={{display:degree==="桌球"?"inline":"none"}}>{item.tabletennis}</span>
+                                            </div>
                                         </div>
                                         <div className="clientYesNo">
                                             <div>

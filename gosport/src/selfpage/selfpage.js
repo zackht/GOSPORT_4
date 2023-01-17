@@ -9,18 +9,18 @@ import './selfpage.css'
 
 
 const Selfpage = () => {
-    const [selfInfo,setSelf]=useState([{
-        activeTime:'預備中',
+    const [selfInfo, setSelf] = useState([{
+        activeTime: '預備中',
         username: '預備中',
         userdescribe: '預備',
         userimg: { data: '' },
         badminton: '',
         volleyball: '',
         tabletennis: '',
-        usebadge:''
+        usebadge: ''
     }]);
-    const [selfteam,setSelfTeam]=useState([{tname:''}]);
-    const [selfBadge,setSelfBadge]=useState([{badgeid:'',badgeurl:'#'}]);
+    const [selfteam, setSelfTeam] = useState([{ tname: '' }]);
+    const [selfBadge, setSelfBadge] = useState([{ badgeid: '', badgeurl: '#' }]);
     // 讀取個人資料
     const userid = Cookies.get('id');
     useEffect(() => {
@@ -89,13 +89,15 @@ const Selfpage = () => {
                             <div>活動時數</div>
                             <div>{selfInfo[0].activeTime}</div>
                             <div>描述</div>
-                            {selfInfo[0].userdescribe}
+                            <article className='describe'>
+                                {selfInfo[0].userdescribe}
+                            </article>
                         </div>
                         <div style={{ flex: 1, position: "relative" }}>
                             <div id="tt" style={{ height: "50%", width: "100%", position: "relative", display: "flex", flexDirection: "column", alignItems: "center" }}>
                                 <img className='self_img' src={userurl} alt="" />
                                 <div className="show_star">
-                                    {selfBadge.map(item=><embed key={item.badgeid} src={item.badgeurl}></embed>)}
+                                    {selfBadge.map(item => <embed key={item.badgeid} src={item.badgeurl}></embed>)}
                                     {/* <embed src={star}></embed> */}
                                     {/* <embed src={star}></embed> */}
                                     {/* <embed src={star}></embed> */}

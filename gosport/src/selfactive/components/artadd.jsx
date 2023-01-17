@@ -97,7 +97,7 @@ const Artadd = ({ control }) => {
                     {zerolist.map((item)=>{return(
                        <tr style={{display:showzero}}>
                         <td>{item.date.substring(0,10)}</td>
-                        <td>{item.ballgames}</td>
+                        <td>零打</td>
                         <td>{item.content}</td>
                         <td style={{ textAlign: "center", cursor: "pointer" }} onClick={()=>{control(item)}}>{item.number}</td>
                         <td style={{ textAlign: "center" }}>{countzero}</td>
@@ -110,9 +110,9 @@ const Artadd = ({ control }) => {
                     {sublist.map((item)=>{return(
                        <tr style={{display:showsub}}>
                        <td>{item.date.substring(0,10)}</td>
-                       <td>{item.ballgames}</td>
+                       <td>轉租</td>
                        <td>{item.content}</td>
-                       <td style={{ textAlign: "center", cursor: "pointer" }} onClick={()=>{control(item)}}>{item.amount}</td>
+                       <td style={{ textAlign: "center", cursor: "pointer" }}>{item.amount}</td>
                        <td style={{ textAlign: "center" }}>{countsub}</td>
                        <td style={{ position: "relative" }}>
                            <button>編輯</button>

@@ -629,6 +629,41 @@ app.post("/userinfo1", (req, res) => {
     }
   });
 });
+// 興建個資 給予徽章
+app.post("/selfbuildbadge", (req, res) => {
+  const userid = req.body.userid;
+  db.query("INSERT INTO `userbadge`(`userid`, `badgeid`) VALUES ( ? ,'1')", [userid], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+
+    }
+  });
+});
+// 興建個資 初始用戶資料
+app.post("/selfbuildinfo", upload.single('image'), (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const username = req.body.username;
+  // const userimg = req.body.userimg;
+  const tel = req.body.tel;
+  const userdescribe = req.body.userdescribe;
+  const badminton = req.body.badminton
+  const tabletennis = req.body.tabletennis;
+  const volleyball = req.body.volleyball;
+  const userId = req.body.userid;
+  const usebadge = req.body.usebadge;
+  console.log(req.file.buffer)
+    db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? ,`activeTime`='0hr',`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? ,`usebadge`= ?  WHERE `userid`= ?",
+      [email, password, username, req.file.buffer, tel, userdescribe, badminton, tabletennis, volleyball, usebadge ,userId], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+});
 //觀看個人資料
 app.post("/selfinfo", (req, res) => {
   const account = req.body.account;

@@ -21,6 +21,7 @@ import rentside from "./side/rentside";
 // import Backteam from "./back/backarticleteam";
 import Selfactive from "./selfactive/selfactive";
 import Selfalter from "./selfalter/selfalter";
+import Selfbuild from "./selfalter/selfbuild";
 import Selfpage from "./selfpage/selfpage";
 import Myteam from "./userteam/index.js";
 import Backuser from './back/backuser';
@@ -62,6 +63,7 @@ class App extends Component {
 
             {/* 會員  */}
             <Route path="/gosport/user" 		     component={Selfpage} exact />
+            <Route path="/gosport/user/build" 		     component={Selfbuild} exact />
             <Route path="/gosport/user/settings" component={Selfalter} />
             <Route path="/gosport/user/activity" component={Selfactive} />
 
