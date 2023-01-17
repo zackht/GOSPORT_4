@@ -1,6 +1,12 @@
 body {
     overflow: scroll;
 }
+
+.contentcontent {
+ height: 1000px;
+ display: block;
+}
+
 .searchbox {
     background-color: white;
     box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
@@ -8,7 +14,7 @@ body {
     width: 1060px;
     /* border: #777 1px solid; */
     position: relative;
-    margin: 200px auto 1% auto; 
+    margin: 220px auto 1% auto; 
 }
 
 .active_type {
@@ -42,11 +48,11 @@ body {
     justify-content: center;
 }
 
-/* .tablink {
+.tablink {
     color: black;
     float: left;
     outline: none;
-} */
+}
 
 /* 
 .tablink:hover {
@@ -104,7 +110,7 @@ body {
 .addarticle {
     position: absolute;
     left: 190px;
-    top: 750px;
+    top: 420px;
 }
 
 .article {
@@ -120,7 +126,7 @@ body {
 .addrelated {
     position: absolute;
     left: 190px;
-    top: 850px;
+    top: 500px;
 }
 
 .related {
@@ -142,7 +148,7 @@ body {
 
 .articlelist {
     position: absolute;
-    top: 900px;
+    top: 535px;
 }
 
 .articlecontent {
@@ -243,6 +249,11 @@ body {
     /* text-decoration: underline; */
 }
 
+.imggg {
+    overflow: hidden;
+    width: 325px;
+    height: 145px;
+}
 
 
 

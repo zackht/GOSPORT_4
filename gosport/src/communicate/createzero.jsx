@@ -59,7 +59,7 @@ const Create = () => {
                     <div className={com.addplace}>
                         <label for="add-place" className={com.contenttitle}>場館</label><br />
                         <input type="text" id="add-place" className={com.contentdescribe} onChange={(e) => setFieldnameczero(e.target.value)} />
-                        <input type="text"  onChange={(e) => setUseridczero(e.target.value)}/>
+                        {/* <input type="text"  onChange={(e) => setUseridczero(e.target.value)}/> */}
                     </div>
                     {/* 球類 */}
                     <div className={com}>

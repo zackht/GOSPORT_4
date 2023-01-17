@@ -19,8 +19,8 @@ export default function BasicEdit(props) {
     const [level, setLevel] = useState('');
     const [fee, setFee] = useState('');
     const [text, setText] = useState('');
-    const [teamimg, setTeamimg] = useState(); // 顯示
-    const [teamfile, setTeamfile] = useState(); // 傳照片test
+    const [teamimg, setTeamimg] = useState();   // 顯示
+    const [teamfile, setTeamfile] = useState(); // 傳照片
     // 上傳照片...
     const [uploadimg, setUploadimg] = useState(img.upload_c);
 
