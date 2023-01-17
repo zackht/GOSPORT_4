@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import member from './member.module.css';
 import img from '../img.module.js';
 import Axios from "axios";
+import Cookies from 'js-cookie';
 
 export default function Member(params) {
-
-    // SQL參數 球隊id 會員id(好像不需要...待定)
-    // const [userid, setUserid] = useState('1');
-    const [teamid, setTeamid] = useState('1');
+    
+    // SQL參數
+    const [userid, setUserid] = useState( Cookies.get('id') ); // 登入者id
+    const [teamid, setTeamid] = useState('1');                 // 球隊id
 
     // input值
     const [leaderImg, setLeaderImg] = useState('');         // 隊長img
@@ -23,9 +24,10 @@ export default function Member(params) {
         handleLeaderImg();  // 隊長
         handlememberImgs(); // 成員
         handlePending(); // 未審核成員
+        
     },[]);
 
-    // 抓 隊長img
+    // 抓 隊長img id
     const handleLeaderImg = async () => {
         let res = await Axios.post("http://localhost:3001/teamleader",{
             teamid: teamid
@@ -105,7 +107,6 @@ export default function Member(params) {
             }
         });
     }, [pendingmember]);
-    // console.log(pendingmember);
 
     // 顯示對應球隊類別的會員程度
     const handleteamtype =(val)=>{
@@ -117,6 +118,22 @@ export default function Member(params) {
             return <div>{val.volleyball}</div>;
         }
     };
+
+    // 拒絕 未審核成員
+    const handlieReject=(val)=>{
+        console.log(`${val.userid}`);
+        Axios.post("http://localhost:3001/teampendingreject",{
+            teamid:teamid,
+            userid:val.userid // 未審核成員的id
+        }).then((response)=>{
+            // setpendingmember(response.data); // 給input
+        })
+    }
+
+    // 接受 未審核成員
+    const handlieAccept=()=>{
+        console.log('接受');
+    }
 
     // 未審核成員清單
     const pendingMemberList = pendingmember.map((val, key) => {
@@ -135,31 +152,32 @@ export default function Member(params) {
                         <img src={img.star} alt=""/>
                     </div>
                     <div className={member.checkbtn}>
-                        <button>拒絕</button>
-                        <button>接受</button>
+                        <button onClick={()=>{handlieReject(val)}}>拒絕</button>
+                        <button onClick={()=>{handlieAccept(val)}}>接受</button>
                     </div>
                 </div>
-                    )
+            )
         }else{
             return '';
         }
     });
-    
+
     return(
         <>
             <div className={member.memberContent}>
                 <div>
-                    <Link to={"/gosport/user/myteam/member/edit"} className={member.mbtn}>編輯</Link>
+                    {/* only 隊長可編輯 */}
+                    { userid===`${leaderId}`? (<Link to={"/gosport/user/myteam/member/edit"} className={member.mbtn}>編輯</Link>):'' }
                     {/* 隊長 */}
                     <div className={member.mTitle}>隊長</div>
                     <img className={member.mImg} src={leaderImg} alt=""/>
                     {/* 成員 */}
                     <div className={member.mTitle}>成員</div>
                     { memberList }  
-                    {/* 待審核區 */}
-                    <div className={member.mTitle}>未審核</div>
                 </div>
-                { pendingMemberList }
+                {/* 未審核 */}
+                { userid===`${leaderId}`? (<div className={`${member.mTitle} ${member.mPending}`}>未審核</div>):'' }
+                { userid===`${leaderId}`? pendingMemberList:'' }
             </div>
         </>
     )

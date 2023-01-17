@@ -1,9 +1,22 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import zzz from './zeroinfo.module.css'
 import star from './icon/star.svg';
 import leader from './icon/Ellipse.svg';
+import axios from 'axios';
+// import { response } from 'express';
 
 const Rentinfo = () => {
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:3001/rentsearch")
+        .then(response => {
+            setData(data);
+            console.log(response.data)
+        })
+    },[])
+
 
     return (
         <React.Fragment>
@@ -59,7 +72,7 @@ const Rentinfo = () => {
                             <h4>南區金城武</h4>
                             <input type="text" className={zzz.level} value="  程度" /><span>高手</span>
                         </div>
-                        <div className={zzz.msgtext}>請問不參加對句可以參加球隊嗎?</div>
+                        <div className={zzz.msgtext}>請問場地租出去了嗎?</div>
                         <div className={zzz.msgtime}>2022/12/12 09:05</div>
                     </div>
                     <div className={zzz.mess}>

@@ -288,7 +288,33 @@
     box-sizing: border-box;
     font-size: 18px;
     color: #E64637;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
 }
+.div12{
+    width: 104px;
+    height: 44px;
+    border-radius: 30px;
+    background-color: #e64637;
+    border: 1px solid #e64637;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: white;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
+.div10:hover{
+    color: white;
+    background-color: #E64637;
+}
+/* a:hover{
+    color: red;
+    text-decoration: none;
+} */
 .div11{
     width: 100%;
     height: 100%;

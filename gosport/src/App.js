@@ -6,7 +6,7 @@ import CreateRent from './communicate/createrent';
 import TeamInfo from './communicate/teaminfo';
 import TeamActivity from './communicate/teamactivity';
 import ZeroInfo from './communicate/zeroinfo';
-// import RentInfo from './communicate/rentinfo';
+import RentInfo from './communicate/rentinfo';
 
 import Header1 from "./handya/headerfooter/header";
 
@@ -45,7 +45,7 @@ class App extends Component {
 
             {/* 租場地 */}
             {/* <Route path="/gosport/rent" 	   component={} exact/> */}
-            <Route path="/gosport/rent/side/b" component={rentside_more} />
+            <Route path="/gosport/rent/side/:id" component={rentside_more} />
             <Route path="/gosport/rent" component={rentside} />
 
             {/* 交流區 */}
@@ -56,7 +56,7 @@ class App extends Component {
             <Route path="/gosport/communicate/teaminfo" 	  component={TeamInfo} />
             <Route path="/gosport/communicate/teamactivity" 	  component={TeamActivity} />
             <Route path="/gosport/communicate/zeroinfo" 	  component={ZeroInfo} />
-            {/* <Route path="/gosport/communicate/rentinfo" 	  component={RentInfo} /> */}
+            <Route path="/gosport/communicate/rentinfo" 	  component={RentInfo} />
 
             
 

@@ -38,6 +38,9 @@
     color: rgb(170, 170, 170);
     margin-bottom: 10px;
 }
+.mPending{
+    margin-left: 40px;
+}
 /* 未審核成員 */
 .checkMember {
     background-color: rgb(245, 245, 245);
