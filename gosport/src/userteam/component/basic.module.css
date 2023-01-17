@@ -1,8 +1,7 @@
 
 /* 會員功能 內容 */
 .basic {
-    /* background-color: rgb(35, 90, 31); */
-    height: 85%;
+    height: 80%;
     width: 100%;
     padding: 40px;
     box-sizing: border-box;
@@ -20,7 +19,7 @@
     width:100px;
     height: 60px;
     font-family: 'Noto Sans TC';
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 400;
     float: right;
     display: flex;
@@ -30,7 +29,7 @@
 /* 大標題 */
 .mBigTitle {
     font-family: 'Noto Sans TC';
-    font-size: 1.7rem;
+    font-size: 2rem;
     font-weight: 500;
     color: rgb(56, 56, 56);
     margin-bottom: 30px;
@@ -38,24 +37,49 @@
 /* 標題 */
 .mTitle {
     font-family: 'Noto Sans TC';
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: rgb(170, 170, 170);
     margin-bottom: 5px;
 }
+/* 區域 */
+.mR1{
+    position:absolute;
+    left:150px;
+    top:212px;
+}
+/* 區域內容 */
+.mR2{
+    position:absolute;
+    left:150px;
+    top:246px;
+}
+/* 時段 */
+.mR3{
+    position:absolute;
+    left:150px;
+    top:307px;
+}
+/* 時段內容 */
+.mR4{
+    position:absolute;
+    left:150px;
+    top:341px;
+}
 /* 內容 */
 .mText {
     font-family: 'Noto Sans TC';
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 400;
     color: rgb(56, 56, 56);
-    margin-bottom: 10px;
+    margin-bottom: 25px;
 }
 /* 照片 容器 */
-.basic>:last-child{
+.basic>:nth-child(3){
+    background-color: aqua;
     overflow: hidden;
-    height: 300px;
-    width: 100%;
+    height: 200px;
+    width: 200px;
     margin-top: 30px;
 }
 /* 照片 */

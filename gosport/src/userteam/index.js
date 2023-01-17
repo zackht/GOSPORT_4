@@ -15,32 +15,32 @@ import ActivityEdit from './component/activityEdit';
 
 export default function Myteam (){
 
-    // 分類bar 狀態
+    // 球隊列表
     const [filterList, setFilterList] = useState([
-        {filterName:'基本資料', id:'1', pathEnd:'basic'},
-        {filterName:'成員',    id:'2', pathEnd:'member'},
-        {filterName:'基金',    id:'3', pathEnd:'fund'},
-        {filterName:'支出',    id:'4', pathEnd:'pay'},
-        {filterName:'活動',    id:'5', pathEnd:'activity'}
+        {filterName:'介紹', id:'1', pathEnd:'basic'},
+        {filterName:'成員', id:'2', pathEnd:'member'},
+        {filterName:'基金', id:'3', pathEnd:'fund'},
+        {filterName:'支出', id:'4', pathEnd:'pay'},
+        {filterName:'活動', id:'5', pathEnd:'activity'}
     ]);
 
-    // 當前pathEnd [ basic | basic | fund | pay | activity ] 
+    // 網址 myteam/ 之後
     const [activedFilterPE, setActivedFilterPE] = useState('basic');
     
-    // 抓當前網址
+    // 抓 當前網址
     const location = useLocation();
     const splitLocaPath = location.pathname.split('/');
 
-    // 控制 分類bar的Css
+    // 依網址判斷 css
     const handleFilterCss = (e)=>{
-        if(splitLocaPath[4]===''){
+        if(splitLocaPath[4]===''){ 
             return e.pathEnd==='basic'? index.mFilteractive:index.mFilter;
         }else{
             return e.pathEnd===splitLocaPath[4]? index.mFilteractive:index.mFilter;
         };
     };
 
-    // map 分類bar
+    // map 球隊列表
     const filterListMap = filterList.map((e,id)=>{
         return (
             <Link to={`/gosport/user/myteam/${e.pathEnd}`}
@@ -57,12 +57,12 @@ export default function Myteam (){
             <div className={index.main}>
                 <div className={index.mContent}>
                     <div>
-                        {/* 分類 bar */}
+                        {/* 球隊列表 */}
                         {filterListMap}
                     </div>
-                        {/* 依據分類 切換內容 */}
+                        {/* 選擇列表 切換元件 */}
                         <Switch>
-                            <Route path="/gosport/user/myteam"               component={Basic} exact/>   
+                            <Route path="/gosport/user/myteam/"               component={Basic} exact/>   
                             <Route path="/gosport/user/myteam/basic"         component={Basic} exact/>
                             <Route path="/gosport/user/myteam/basic/edit"    component={BasicEdit} exact/>
                             <Route path="/gosport/user/myteam/member"        component={Member} exact/>

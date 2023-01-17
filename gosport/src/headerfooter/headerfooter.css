@@ -14,7 +14,8 @@
 .navbar {
     background-color: white;
     width: 100vw;
-    height: 15vh;
+    /* height: 15vh; */
+    height: 135px;
     position: fixed;
     top: 0px;
     z-index: 500;
@@ -83,7 +84,8 @@ a:hover{
 .footer {
     background-color: rgb(230, 70, 55);
     width: 100vw;
-    height: 8vh;
+    /* height: 8vh; */
+    height: 70px;
     position: fixed;
     bottom: 0px;
     display: flex;

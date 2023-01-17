@@ -56,6 +56,7 @@ export default function Basic(props) {
                 { userid===`${leaderId}`? <Link to={`/gosport/user/myteam/basic/edit`}>編輯</Link>:'' }
                 {/* 基本資料 */}
                 <div className={basic.mBigTitle}>{basicResult? basicResult.tname:''}</div>
+                <div><img src={teamimg} className={basic.mBimg} alt='團隊的照片'/></div>
 
                 <div className={basic.mTitle}>場館</div>
                 <div className={basic.mText}>{basicResult? basicResult.sidename:''}</div>
@@ -63,14 +64,14 @@ export default function Basic(props) {
                 <div className={basic.mTitle}>縣市</div>
                 <div className={basic.mText}>{basicResult? basicResult.county:''}</div>
 
-                <div className={basic.mTitle}>區域</div>
-                <div className={basic.mText}>{basicResult? basicResult.area:''}</div>
+                <div className={`${basic.mTitle} ${basic.mR1}`}>區域</div>
+                <div className={`${basic.mText} ${basic.mR2}`}>{basicResult? basicResult.area:''}</div>
 
                 <div className={basic.mTitle}>週期</div>
                 <div className={basic.mText}>{basicResult? basicResult.week:''}</div>
 
-                <div className={basic.mTitle}>時段</div>
-                <div className={basic.mText}>{`${basicResult? basicResult.starttime:''}:00-${basicResult? basicResult.endtime:''}:00`}</div>
+                <div className={`${basic.mTitle} ${basic.mR3}`}>時段</div>
+                <div className={`${basic.mText} ${basic.mR4}`}>{`${basicResult? basicResult.starttime:''}:00-${basicResult? basicResult.endtime:''}:00`}</div>
 
                 <div className={basic.mTitle}>程度</div>
                 <div className={basic.mText}>{basicResult? basicResult.level:''}</div>
@@ -81,7 +82,6 @@ export default function Basic(props) {
                 <div className={basic.mTitle}>描述</div>
                 <div className={basic.mText}>{basicResult? basicResult.text:''}</div>
 
-                <div><img src={teamimg} className={basic.mBimg} alt='團隊的照片'/></div>
             </div>
         </>
     )
