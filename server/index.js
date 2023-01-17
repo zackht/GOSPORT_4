@@ -270,6 +270,18 @@ app.post("/rentsideedit", (req, res) => {
       }
     });
 });
+// 租場地詳細頁面
+app.post("/rentsidemore", (req, res) => {
+  const sideid = req.body.sideid;
+  db.query("SELECT * FROM side where sideid = ?"
+    , [sideid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
 // 後台零打搜尋
 app.post("/zeroda", (req, res) => {
   const starttime1 = req.body.starttime1;
