@@ -13,22 +13,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const TeamInfo = () => {
     return (
         <React.Fragment>
-            {/* navbar */}
-            {/* <div className="navbar position_relative">
-                <div className="nContent">
-                    <div className="nLeft">
-                        <div>GOsport</div>
-                    </div>
-                    <div className="nRight">
-                        <div><a href="/#">首頁</a></div>
-                        <div><a href="/#">租場地</a></div>
-                        <div><a href={Search}>交流區</a></div>
-                        <div><a href="/#">Q&A</a></div>
-                        <img src={notice} alt=""></img>
-                        <img src={user} alt=""></img>
-                    </div>
-                </div>
-            </div> */}
             <div className={commm.Team}>
                 {/* 球隊 */}
                 <div className={`row ${commm.teamInfo}`}>
@@ -126,13 +110,6 @@ const TeamInfo = () => {
                     </div>
                 </div>
             </div>
-
-            {/* footer */}
-            {/* <div className="footer">
-                <div className="fContent">
-                    <div>Copyright © 2022 GOsport. 保留一切權利。</div>
-                </div>
-            </div> */}
         </React.Fragment>
     );
 }

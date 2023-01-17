@@ -39,9 +39,10 @@ padding-right: 10px;
     justify-content: center;
     box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
 }
-/* .navbar {
+.navbar {
     background-color: white;
     width: 100vw;
+    max-height:135px;
     height: 15vh;
     position: fixed;
     top: 0px;
@@ -51,7 +52,7 @@ padding-right: 10px;
     align-items: center;
     justify-content: center;
     box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
-} */
+}
 .navbar+div {
     position: relative;
 }
@@ -145,6 +146,7 @@ object-fit: cover;
     background-color: rgb(230, 70, 55);
     width: 100vw;
     height: 8vh;
+    max-height: 72px;
     position: fixed;
     bottom: 0px;
     display: flex;

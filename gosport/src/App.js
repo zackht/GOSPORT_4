@@ -6,7 +6,7 @@ import CreateRent from './communicate/createrent';
 import TeamInfo from './communicate/teaminfo';
 import TeamActivity from './communicate/teamactivity';
 import ZeroInfo from './communicate/zeroinfo';
-// import RentInfo from './communicate/rentinfo';
+import RentInfo from './communicate/rentinfo';
 
 import Header1 from "./handya/headerfooter/header";
 
@@ -21,6 +21,7 @@ import rentside from "./side/rentside";
 // import Backteam from "./back/backarticleteam";
 import Selfactive from "./selfactive/selfactive";
 import Selfalter from "./selfalter/selfalter";
+import Selfbuild from "./selfalter/selfbuild";
 import Selfpage from "./selfpage/selfpage";
 import Myteam from "./userteam/index.js";
 import Backuser from './back/backuser';
@@ -56,12 +57,13 @@ class App extends Component {
             <Route path="/gosport/communicate/teaminfo" 	  component={TeamInfo} />
             <Route path="/gosport/communicate/teamactivity" 	  component={TeamActivity} />
             <Route path="/gosport/communicate/zeroinfo" 	  component={ZeroInfo} />
-            {/* <Route path="/gosport/communicate/rentinfo" 	  component={RentInfo} /> */}
+            <Route path="/gosport/communicate/rentinfo" 	  component={RentInfo} />
 
             
 
             {/* 會員  */}
             <Route path="/gosport/user" 		     component={Selfpage} exact />
+            <Route path="/gosport/user/build" 		     component={Selfbuild} exact />
             <Route path="/gosport/user/settings" component={Selfalter} />
             <Route path="/gosport/user/activity" component={Selfactive} />
 
