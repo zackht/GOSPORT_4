@@ -117,7 +117,7 @@ const Handya = () =>{
         Axios.post("http://localhost:3001/self", {
             userid: userid,
         }).then((response) => {
-            console.log("self", response.data);
+            // console.log("self", response.data);
             setuser(response.data)
             setusern(response.data[0].username)
         });

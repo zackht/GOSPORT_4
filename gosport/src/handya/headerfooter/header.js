@@ -169,7 +169,7 @@ settoken("")
 
 
 
-    if (!token) {
+    if (!token1) {
         return (
             <React.Fragment>
                 <div style={{ display: logsigdiv }} className={`${cc.back} container-fluid`}>
@@ -244,7 +244,7 @@ settoken("")
     }
 
      return (
-        <React.Fragment>{console.log(userInfo)}
+        <React.Fragment>
             {/* <div style={{display:'none'}} className={`${cc.back} container-fluid`}>
                 <div onClick={close} className={`${cc.aa1} container-fluid`}>
                 </div>
@@ -313,7 +313,7 @@ settoken("")
                         <div className="username"><p>Hi: {token}</p></div>
                         {userInfo.map((v, k) => {
 
-                            console.log(v)
+                            
                             if (v.userimg === null) { return<React.Fragment> <img className="userimg1" onClick={logsig} src={user}></img> <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p> </React.Fragment>                                  
                         }
                             else {
