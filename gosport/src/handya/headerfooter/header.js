@@ -222,14 +222,14 @@ settoken("")
                             <div>GOsport</div>
                         </div>
                         <div className="nRight">
-                            <div id={splitPathname[2] === "gosport" ? "tabline" : ""}>
-                                <Link to='/gosport'>首頁</Link>
+                            <div id={splitPathname[2] === "home" ? "tabline" : ""}>
+                                <Link to='/gosport/home'>首頁</Link>
                             </div>
                             <div id={splitPathname[2] === "rent" ? "tabline" : ""}>
                                 <Link to='/gosport/rent'>租場地</Link>
                             </div>
                             <div id={splitPathname[2] === "communicate" ? "tabline" : ""}>
-                                <Link to='/gosport/communicate'>交流區</Link>
+                                <Link to='/gosport/communicate/search'>交流區</Link>
                             </div>
                             <div id={splitPathname[2] === "qa" ? "tabline" : ""}>
                                 <Link to='/gosport/qa'>Q&A</Link>
