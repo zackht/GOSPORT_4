@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Rectangle from "./icon/Rectangle 639.png";
 import a1 from "./icon/停車場.svg";
 import a2 from "./icon/淋浴間.svg";
@@ -12,6 +12,7 @@ import team from './icon/team.jpg';
 import map from './icon/map.png'
 import { useParams } from 'react-router-dom';
 import Axios from "axios";
+import Cookies from 'js-cookie';
 const Side2 = () => {
   const [num, setnum] = useState(1);
   const add = () => {
@@ -33,7 +34,7 @@ const Side2 = () => {
   }, [])
   const [sidelist, setsidelist] = useState();
   const [re, setre] = useState(false);
-// 進入網頁後查詢資料
+  // 進入網頁後查詢資料
   const getside = () => {
     Axios.post("http://localhost:3001/rentsidemore", {
       sideid: sideid,
@@ -49,7 +50,7 @@ const Side2 = () => {
       )
     });
   }
-  const aaa = () => {
+  const aaa = async () => {
     console.log(rentday); //日租月租季租
     console.log(date);  //日期
     console.log(Math.min(...checkboxselect)); //checkbox最小值
@@ -58,18 +59,42 @@ const Side2 = () => {
     console.log(checkboxselect); //數量
     // let a = num *  checkboxselect.length; //場地數量*小時數量
     // console.log(a);
-    for (let i = 0; i < checkboxselect.length; i++) {
-      let a = checkboxselect.includes(9||10||11||12||13||14||15||16||17||18||19);
-      let num=0;
-      if (a) {
-        num+=1;
-        setpeaktime(num);
-      }
-    }
-    
+    const peaktimenum = await Promisefn();
+    const offpeaktimenum = await Promisefn2();
+    console.log(peaktimenum);
+    console.log(offpeaktimenum);
+
   }
-  const [peaktime,setpeaktime]=useState(0);
-  const [cost,setcost]=useState(0);
+  const Promisefn = () => {
+    return new Promise((resolve, reject) => {
+      let a = 0;
+      let b = 0;
+      checkboxselect.map(val=>{
+        if(val==='13' || val ==='14'|| val ==='15'|| val ==='16'|| val ==='17'|| val ==='18'|| val ==='19'){
+          a+=1;
+        }
+      })
+      checkboxselect.map(val=>{
+        if(val==='9' || val ==='10'|| val ==='11'|| val ==='12'){
+          b+=1;
+        }
+      })
+      resolve(a,b);
+    })
+  }
+  const Promisefn2 = () => {
+    return new Promise((resolve, reject) => {
+      let b = 0;
+      checkboxselect.map(val=>{
+        if(val==='9' || val ==='10'|| val ==='11'|| val ==='12'){
+          b+=1;
+        }
+      })
+      resolve(b);
+    })
+  }
+  const [peaktime, setpeaktime] = useState(0);
+  const [cost, setcost] = useState(0);
 
   // 設定radio
   const [rentday, setrentday] = useState('日租');
@@ -99,7 +124,7 @@ const Side2 = () => {
   const [weekendtrue, setweekendtrue] = useState(false);
   const getweekend = (e) => {
     setdate(e);
-      // 判斷是否是假日
+    // 判斷是否是假日
     let date2 = new Date(e);
     let day = date2.getDay();
     if (day == 6 || day == 0) {
@@ -116,12 +141,12 @@ const Side2 = () => {
     setcheckbox(
       checkbox.fill(false)
     );
-    
-    
+    setpeaktime(0);
+
   }
   // 取得今天日期
-  const [today,settoday]=useState('');
-  const gettoday = ()=>{
+  const [today, settoday] = useState('');
+  const gettoday = () => {
     let c = new Date();
     let y = c.getFullYear();
     let m = c.getMonth() + 1;
@@ -132,16 +157,16 @@ const Side2 = () => {
     // 不知道為甚麼m多一個0
   }
   const weekday =
-  checkbox.map((val, key) => {
-    let c = key + sidelist.weekstarttime;
-    return (
-      <React.Fragment>
-        <input type="checkbox" name="box" key={key} className={side2.checkbox} checked={val} value={c} id={`checkbox+${key}`} onChange={(e) => handleOnChange(key, e.target.value)}/>
-        <label htmlFor={`checkbox+${key}`} className={`${side2.buttom1}`} >{c}:00~{c + 1}:00</label>
-      </React.Fragment>
-    );
-  })
-  const a =()=>{
+    checkbox.map((val, key) => {
+      let c = key + sidelist.weekstarttime;
+      return (
+        <React.Fragment>
+          <input type="checkbox" name="box" key={key} className={side2.checkbox} checked={val} value={c} id={`checkbox+${key}`} onChange={(e) => handleOnChange(key, e.target.value)} />
+          <label htmlFor={`checkbox+${key}`} className={`${side2.buttom1}`} >{c}:00~{c + 1}:00</label>
+        </React.Fragment>
+      );
+    })
+  const a = () => {
     return weekday;
   }
   const howeekday = hocheckbox.map((val, key) => {
@@ -153,7 +178,7 @@ const Side2 = () => {
       </React.Fragment>
     );
   })
-  const b =()=>{
+  const b = () => {
     return howeekday;
   }
   return (
@@ -234,7 +259,7 @@ const Side2 = () => {
                   <span className={side2.span}>時段</span>
                   <div className={`d-flex ${side2.div9}`} >
                     <div className={`d-flex flex-wrap ${side2.div10}`}>
-                      {weekendtrue? b():a()}
+                      {weekendtrue ? b() : a()}
                     </div>
                   </div>
                 </div>
@@ -247,13 +272,13 @@ const Side2 = () => {
                       <div onClick={add} className={side2.buttom3} id="minus">+</div>
                     </div>
                   </div>
-                  <div className={`${side2.div11}`}>
+                  {/* <div className={`${side2.div11}`}>
                     <span className={side2.span}>費用</span>
                     <div>
                       <span className={side2.div12}>700</span>
                       <span className={side2.span}>元</span>
                     </div>
-                  </div>
+                  </div> */}
                   <div className={`ml-auto`}>
                     <input className={side2.aa} type="button" defaultValue="預定" onClick={aaa} />
                   </div>

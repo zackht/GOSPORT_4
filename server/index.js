@@ -421,6 +421,7 @@ app.post("/team", (req, res) => {
       const teampay = req.body.teampay;
       const teamtext = req.body.teamtext;
       const teameventid = req.body.teameventid;
+      console.log(`${teamtitle}`);
       db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,pay=?,text=?,teameventimg=?  where teameventid=?"
       ,[teamstartdate,teamenddate,teamstarttime,teamendtime,teamtype2,teamtitle,teamlocation,teampay,teamtext,req.file.buffer,teameventid], (err, result) => {
         if (err) {
@@ -431,7 +432,7 @@ app.post("/team", (req, res) => {
       });
     });
     // 後臺球隊編輯儲存   沒圖片
-    app.post("/teamupdate2", (req, res) => {
+    app.post("/teamupdate2",upload.array(), (req, res) => {
       const teamstartdate = req.body.teamstartdate;
       const teamenddate = req.body.teamenddate;
       const teamstarttime = req.body.teamstarttime;

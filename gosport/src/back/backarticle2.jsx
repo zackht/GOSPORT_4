@@ -263,7 +263,6 @@ const Backarticle2 = () => {
     const ttt2 = () => {
         if (teamfile) {
             const teamData = new FormData();
-            console.log(teamfile);
             teamData.append('teamfile', teamfile);
             teamData.append('teamstartdate', teamstartdate);
             teamData.append('teamenddate', teamenddate);
