@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useRef } from 'react';
 // import React from 'react';
 import Axios from "axios";
 import Cookies from 'js-cookie';
@@ -28,9 +28,9 @@ const Artadd = ({ control }) => {
     // 留言數
     const [countsub, setcountsublist] = useState(0);
     const [countzero, setcountcountzero] = useState(0);
-    // tr操作
-    const[showsub,setsubShow] = useState('none');
-    const[showzero,setzeroShow] = useState('none');
+    // tr取資料操作
+    const [showsub, setsubShow] = useState('none');
+    const [showzero, setzeroShow] = useState('none');
     let findArticle = () => {
         setcountcountzero(0)
         setcountsublist(0)
@@ -47,10 +47,10 @@ const Artadd = ({ control }) => {
                 }).then((response) => {
                     console.log(response.data[0]);
                     let count = response.data[0].a
-                    setcountcountzero(pre => pre+count)
+                    setcountcountzero(pre => pre + count)
                 });
             }
-            if(response.data[0].date){
+            if (response.data[0].date) {
                 setzeroShow('table-row')
             }
         });
@@ -67,22 +67,50 @@ const Artadd = ({ control }) => {
                 }).then((response) => {
                     console.log(response.data[0].a);
                     let count = response.data[0].a
-                    setcountsublist(pre => pre+count)
+                    setcountsublist(pre => pre + count)
                     console.log(countsub)
                 });
             }
-            if(response.data[0].date){
+            if (response.data[0].date) {
                 setsubShow('table-row')
             }
         });
     }
+    // 刪除
+    const  find = useRef();
+    const deleZero = (trdata) => {
+        Axios.post("http://localhost:3001/insertdelezeroda", {
+            articleid_zeroda: trdata.articleid_zeroda
+        }).then((response) => {
+            console.log(response.data);
+        });
+        Axios.post("http://localhost:3001/delezeroda", {
+            articleid_zeroda: trdata.articleid_zeroda
+        }).then((response) => {
+            console.log(response.data);
+        });
+        find.current.click();
+    }
+    const deleSublet = (trdata) => {
+        Axios.post("http://localhost:3001/insertdelesublet", {
+            articleid_sublet: trdata.articleid_sublet
+        }).then((response) => {
+            console.log(response.data);
+        });
+        Axios.post("http://localhost:3001/delesublet", {
+            articleid_sublet: trdata.articleid_sublet
+        }).then((response) => {
+            console.log(response.data);
+        });
+        find.current.click();
+    }
     return (
         <React.Fragment>
             <div>
-                日期區間<br />
-                <input type="date" onChange={(e) => { setStartDate(e.target.value) }} /><img className="selectedDate" src={arrowup} alt='' />至&emsp;&thinsp;
-                <input type="date" onChange={(e) => { setEndtDate(e.target.value) }} /><img className="selectedDate" src={arrowup} alt='' />
-                <span onClick={findArticle}>搜尋</span>
+                活動日期區間<br />
+                <input type="date" onChange={(e) => { setStartDate(e.target.value) }} /><img className="selectedDate selectedfromart" src={arrowup} alt='' />至&emsp;&thinsp;
+                <input type="date" onChange={(e) => { setEndtDate(e.target.value) }} /><img className="selectedDate selectedfromart" src={arrowup} alt='' />
+                <span onClick={findArticle} ref={find}>搜尋</span>
             </div>
             <table>
                 <tbody>
@@ -94,33 +122,37 @@ const Artadd = ({ control }) => {
                         <td>留言數</td>
                         <td></td>
                     </tr>
-                    {zerolist.map((item)=>{return(
-                       <tr style={{display:showzero}}>
-                        <td>{item.date.substring(0,10)}</td>
-                        <td>零打</td>
-                        <td>{item.content}</td>
-                        <td style={{ textAlign: "center", cursor: "pointer" }} onClick={()=>{control(item)}}>{item.number}</td>
-                        <td style={{ textAlign: "center" }}>{countzero}</td>
-                        <td style={{ position: "relative" }}>
-                            <button>編輯</button>
-                            <button>刪除</button>
-                        </td>
-                    </tr> 
-                    )})}
-                    {sublist.map((item)=>{return(
-                       <tr style={{display:showsub}}>
-                       <td>{item.date.substring(0,10)}</td>
-                       <td>轉租</td>
-                       <td>{item.content}</td>
-                       <td style={{ textAlign: "center", cursor: "pointer" }}>{item.amount}</td>
-                       <td style={{ textAlign: "center" }}>{countsub}</td>
-                       <td style={{ position: "relative" }}>
-                           <button>編輯</button>
-                           <button>刪除</button>
-                       </td>
-                    </tr> 
-                    )})}
-                    
+                    {zerolist.map((item) => {
+                        return (
+                            <tr style={{ display: showzero }}>
+                                <td>{item.date.substring(0, 10)}</td>
+                                <td>零打</td>
+                                <td>{item.content}</td>
+                                <td style={{ textAlign: "center", cursor: "pointer" }} onClick={() => { control(item) }}>{item.number}</td>
+                                <td style={{ textAlign: "center" }}>{countzero}</td>
+                                <td style={{ position: "relative" }}>
+                                    <button>編輯</button>
+                                        <button onClick={() => { deleZero(item) }}>刪除</button>
+                                </td>
+                            </tr>
+                        )
+                    })}
+                    {sublist.map((item) => {
+                        return (
+                            <tr style={{ display: showsub }}>
+                                <td>{item.date.substring(0, 10)}</td>
+                                <td>轉租</td>
+                                <td>{item.content}</td>
+                                <td style={{ textAlign: "center", cursor: "pointer" }}>{item.amount}</td>
+                                <td style={{ textAlign: "center" }}>{countsub}</td>
+                                <td style={{ position: "relative" }}>
+                                    <button>編輯</button>
+                                        <button onClick={() => { deleSublet(item) }}>刪除</button>
+                                </td>
+                            </tr>
+                        )
+                    })}
+
                 </tbody>
             </table>
 
