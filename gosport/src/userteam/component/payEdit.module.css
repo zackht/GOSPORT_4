@@ -4,8 +4,9 @@
     font-size: 1rem;
     font-weight: 400;
     width: 100%;
+    height: 80%;
     position: relative;
-    padding: 40px 40px 0px 40px;
+    padding: 40px;
     overflow: scroll;
 }
 .pForm input[type="date"]{
@@ -18,10 +19,12 @@
     background-position: 100% 50%;
     display: flex;
     justify-content: center;
-    padding-left: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
     width: 200px;
+    height: 65px;
     font-family: 'Noto Sans TC';
-    font-size: 1.2rem;
+    font-size: 1.5rem;
 }
 .pForm input[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0;
@@ -30,11 +33,12 @@
 .pForm input{
     margin-top: 10px;
     margin-bottom: 30px;
-    background-color: rgb(245, 245, 245);
+    /* background-color: rgb(245, 245, 245); */
+    background-color: rgb(230, 230, 230);
     border-radius: 50px;
     border: none;
     width: 400px;
-    height: 55px;
+    height: 65px;
     font-size: 1.2rem;
     padding-left: 30px;
     padding-right: 30px;
@@ -44,9 +48,8 @@
 .pForm div{
     font-family: 'Noto Sans TC';
     color: rgb(170, 170, 170);
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 400;
-    margin-bottom: 10px;
 }
 .pForm div:last-child{
     display: flex;
@@ -77,8 +80,8 @@
     font-weight: 400;
     background-color: white;
     width: 48%;
-    height: 80px;
-    border-radius: 40px;
+    height: 90px;
+    border-radius: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -89,13 +92,14 @@
     color: white;
     margin: 0;
     width: 48%;
-    height: 80px;
+    height: 90px;
 }
 .pForm textarea{
     resize: none;
     margin-top: 10px;
     margin-bottom: 30px;
-    background-color: rgb(245, 245, 245);
+    /* background-color: rgb(245, 245, 245); */
+    background-color: rgb(230, 230, 230);
     border-radius: 30px;
     border: none;
     width: 100%;
