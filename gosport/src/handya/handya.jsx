@@ -172,9 +172,17 @@ useEffect(()=>{
                     setmes(data);})
        bottomref.current.scrollIntoView({behavior: 'smooth'});
      },[mes,message1]);
-        
+
+
+     const checkheight=()=>{
+        alert('here');
+        let qatext = document.getElementById('qateaxt');
+        qatext.scrollIntoView();
+     }        
+
         return (
         <React.Fragment>
+            
     <div className={`${cc.dd1} container-fluid`}>
     <div className={cc.nav}>
             
@@ -194,7 +202,6 @@ useEffect(()=>{
             {/* <div>
                 {weather.records.locations[0].location[0].locationName}
             </div> */}
-
         <div className={cc.season}>
             <div className={cc.season1}>
                 <div className={cc.seasoninfo}>
@@ -537,7 +544,8 @@ useEffect(()=>{
 
     </div>
 
-    <div className={cc.qa}>
+    <div className={cc.qa} id='qateaxt'>
+        
         <div className={cc.qa1}>
             <img src={q} alt=""/>
             <h4>什麼是零打??</h4>

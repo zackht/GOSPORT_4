@@ -112,6 +112,9 @@
 }
 
 /* 日期區間選擇 */
+.ordergettime{
+line-height: 50px;
+}
 .selfactive input[type='date'] {
     position: relative;
     border: none;
@@ -123,26 +126,35 @@
 
 .selfactive input[type="date"]::-webkit-calendar-picker-indicator {
     width: 27px;
-    opacity: 0;
+    opacity: 0; 
+    cursor: pointer;
 }
 .selfactive .searchbox{
+    line-height: normal;
     border-radius: 20px;
     display: block;
     position: relative;
     top: 11px;
     width: 100px;
-    height: 20px;
+    height: 26px;
     text-align: center;
-    padding: 4px;
+    padding: 5px 0px;
     font-size: 10px;
     background-color: #E64637;
-    color: white;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
 }
 
 .selectedDate {
+    /* 下拉標籤 */
     position: relative;
     /* top: 10px; */
     right: 25px;
+}
+
+.selectedfromart{
+    /* 文章下拉標籤微調 */
+    bottom: 5px;
 }
 
 /* 日期區間顯示 */

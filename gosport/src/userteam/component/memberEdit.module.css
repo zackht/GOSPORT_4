@@ -1,16 +1,17 @@
 .mForm{
-    font-family: 'Noto Sans TC';
     color: rgb(170, 170, 170);
     font-size: 1rem;
+    font-family: 'Noto Sans TC';
     font-weight: 400;
     width: 100%;
+    height: 80%;
     position: relative;
-    padding: 40px 40px 0px 40px;
+    padding: 40px;
     overflow: scroll;
 }
 .mTitle {
     font-family: 'Noto Sans TC';
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: rgb(170, 170, 170);
     margin-bottom: 10px;
@@ -19,11 +20,11 @@
     display: none;
 }
 .mForm label img {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     clip-path: circle(50% at 50% 50%);
-    margin-bottom: 20px;
-    margin-right: 5px;
+    margin-bottom: 35px;
+    margin-right: 15px;
     opacity: 30%;
 }
 .mForm input[name='teamL']:checked+label img {
@@ -32,38 +33,43 @@
 /* 成員 */
 .mForm .checkMember {
     width: 100%;
-    height: 100px;
+    height: 130px;
     border-bottom: 1px solid rgb(255, 255, 255);
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 .mForm .checkMember:last-child {
     border-bottom: none;
 }
 .mForm .checkMember>img {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     display: inline;
     margin-bottom: 0px;
 }
 .mForm .checkMember>div:nth-child(2) {
     font-family: 'Noto Sans TC';
     color: rgb(56, 56, 56);
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: 600;
     display: inline;
-    margin-left: 15px;
+    margin-left: 25px;
+    width: 200px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .mForm .checkMember>div:nth-child(3) {
-    width: 60px;
-    height: 30px;
-    background-color: rgb(255, 255, 255);
+    width: 80px;
+    height: 40px;
+    background-color: rgb(245, 245, 245);
     border-radius: 20px;
     font-family: 'Noto Sans TC';
     color: rgb(56, 56, 56);
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 400;
     display: flex;
     justify-content: center;
@@ -73,12 +79,13 @@
 .mForm .checkMember>div:nth-child(4) {
     font-family: 'Noto Sans TC';
     color: rgb(56, 56, 56);
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 400;
     justify-content: center;
     align-items: center;
-    margin-left: 10px;
+    margin-left: 20px;
     display: block;
+    width: 50px;
 }
 .mForm .checkbtn {
     width: 60%;
@@ -86,14 +93,17 @@
     justify-content: flex-end;
 }
 .mForm .checkbtn>button:nth-child(1) {
-    width: 80px;
-    height: 40px;
+    width: 90px;
+    height: 50px;
     border: 1px solid #AAAAAA;
     color: #AAAAAA;
     background-color: white;
     background-color: rgb(255, 255, 255, 0);
-    border-radius: 20px;
+    border-radius: 40px;
     float: right;
+    font-size: 1.2rem;
+    font-family: 'Noto Sans TC';
+    font-weight: 400;
 }
 .mForm .checkbtn>button:nth-of-type(2) {
     width: 80px;
@@ -112,9 +122,9 @@
     display: flex;
     align-items: center;
     align-content: center;
-    position: relative;
-    left: -238px;
-    top: 25px;
+    position: absolute;
+    left: 104px;
+    top: 82px;
 }
 .mForm .badge>img {
     width: 15px;

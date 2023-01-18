@@ -174,6 +174,11 @@ console.log("33")
 
 }
 
+// 滾到qa的位置
+const scrollToQa =()=>{
+    let qatext = document.getElementById('qateaxt');
+    qatext.scrollIntoView();
+}
 
 
     if (!token3) {
@@ -239,7 +244,7 @@ console.log("33")
                                 <Link to='/gosport/communicate/search'>交流區</Link>
                             </div>
                             <div id={splitPathname[2] === "qa" ? "tabline" : ""}>
-                                <Link to='/gosport/qa'>Q&A</Link>
+                                <Link to='/gosport/home' onClick={scrollToQa}>Q&A</Link>
                             </div>
                             <img className="notice" src={notice} />
                             <img className="nouserimg" onClick={logsig} src={user} />

@@ -23,7 +23,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0px 0px 25px rgba(180, 180, 180, 0.4);
+    /* box-shadow: 0px 0px 25px rgba(180, 180, 180, 0.4); */
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
 }
 .navbar+div {
     position: relative;
