@@ -11,6 +11,7 @@ import google from '../icon/google快速註冊.svg'
 import cancel from '../icon/快速搜尋＿取消.svg'
 import sighimg from '../icon/快速搜尋＿註冊.svg'
 import loginimg from '../icon/快速搜尋.svg'
+import noimg from './img/teams_m.png'
 
 import notice from './img/icon_notice.svg';
 import user from './img/icon_user.svg';
@@ -66,7 +67,7 @@ export default function Navbar(props) {
 
             setuser(response.data);
             console.log(userInfo)
-            settoken(account)
+            settoken3(account)
             Cookies.set(
                 'token',//key
                 response.data[0].email,//value
@@ -93,7 +94,8 @@ export default function Navbar(props) {
         });
     }
     // token = (Cookies.get('token'))
-    const token=(Cookies.get('token'))
+    const[token3,settoken3] = useState(Cookies.get('token'))
+    // const token3=(Cookies.get('token'))
     const id = ((Cookies.get('id')))
 
     const getimg = async () => {
@@ -154,22 +156,27 @@ const emailcheck = (Event) => {
 
 const handleLogout = (e) => {
     e.preventDefault();
-settoken("")
+    settoken3(null)
+
     Cookies.remove('token', {
-        path: ''
+        path: '/'
     })
 
+console.log("33")
     // settoken=(null);
 
     Cookies.remove('id', {
-        path: ''
+        path: '/'
+    })
+    Cookies.remove('id87', {
+        path: '/'
     })
 
 }
 
 
 
-    if (!token1) {
+    if (!token3) {
         return (
             <React.Fragment>
                 <div style={{ display: logsigdiv }} className={`${cc.back} container-fluid`}>
@@ -240,81 +247,48 @@ settoken("")
                     </div>
                 </div>
             </React.Fragment>
-        )
+        );
     }
 
      return (
         <React.Fragment>
-            {/* <div style={{display:'none'}} className={`${cc.back} container-fluid`}>
-                <div onClick={close} className={`${cc.aa1} container-fluid`}>
-                </div>
-                <div class={cc.apple}>
-
-                    <button className={` ${sighbtn === true ? cc.focus1 : cc.tablink1}`} onClick={sigh}  >註冊</button>
-                    <button className={` ${loginbtn === true ? cc.focus1 : cc.tablink1}`} onClick={login} >登入</button>
-                    <div id="Londo" style={{ display: sighdiv }} className={cc.tabcontent}>
-                        <img className={cc.d131} src={google} alt="" />
-                        <p className={cc.d132}>註冊信箱</p>
-                        <form action="">
-                            <input className={cc.d133} type="text" />
-                            <p className={cc.d134}>密碼</p>
-                            <input className={cc.d135} type="text" />
-                            <p className={cc.d136}>至少8個字,含至少1個數字及1個英文字母</p>
-                            <p className={cc.d137}>確認密碼</p>
-                            <input className={cc.d138} type="text" />
-                            <div className={cc.d139}>
-                                <img src={cancel} alt="" />
-                                <img src={sighimg} alt="" />
-                            </div>
-
-                        </form>
-                    </div>
-                    <div id="Pari" style={{ display: logindiv }} className={cc.tabcontent}>
-                        <p className={cc.d140}>註冊信箱</p>
-                        <form className={cc.d145}>
-                            <input className={cc.d133} type="text" onChange={e => setAccount(e.target.value)} />
-                            <p className={cc.d141}>密碼</p>
-                            <input className={cc.d142} type="password" onChange={e => setPassword(e.target.value)} />
-                            <p className={cc.d143}>忘記密碼</p></form>
-                        <div className={cc.d144}>
-                            <button style={{ border: "None", backgroundColor: "transparent" }}><img src={cancel}></img></button>
-                            <button onClick={ccc} style={{ border: "None", backgroundColor: "transparent" }} type='submit'><img src={loginimg}></img></button>
-                        </div>
-
-
-                    </div>
-                </div>
+            {/* <div className={cc.d154}>
+                <button>2222</button>
             </div> */}
-            <div className={userInfo[0].email==="root" ? 'rootnavbar':'navbar'}>
+            <div className="navbar">
                 <div className="nContent">
                     <div className="nLeft">
                         <div>GOsport</div>
                     </div>
                     <div className="nRight">
                         <div id={splitPathname[2] === "gosport" ? "tabline" : ""}>
-                            {userInfo[0].email==="root" ? <Link to='/gosport'>後台首頁</Link>  : <Link to='/gosport'>首頁</Link> }
+                            {userInfo[0].email==="root" ? <Link to='/gosport'>後台首頁</Link>  : <Link to='/gosport/home'>首頁</Link> }
                             {/* <Link to='/gosport'>首頁</Link> */}
 
                         
                         </div>
                         <div id={splitPathname[2] === "rent" ? "tabline" : ""}>
-                        {userInfo[0].email==="root" ? <Link to='/gosport'>後台租場地</Link>  : <Link to='/gosport'>租場地</Link> }
+                        {userInfo[0].email==="root" ? <Link to='/gosport'>後台租場地</Link>  :<Link to='/gosport/rent'>租場地</Link>
+ }
                             {/* <Link to='/gosport/rent'>租場地</Link> */}
                         </div>
                         <div id={splitPathname[2] === "communicate" ? "tabline" : ""}>
-                        {userInfo[0].email==="root" ? <Link to='/gosport'>後台交流區</Link>  : <Link to='/gosport'>交流區</Link> }
+                        {userInfo[0].email==="root" ? <Link to='/gosport'>後台交流區</Link>  : <Link to='/gosport/communicate/search'>交流區</Link> }
                             {/* <Link to='/gosport/communicate'>交流區</Link> */}
                         </div>
                         <div id={splitPathname[2] === "qa" ? "tabline" : ""}>
-                        {userInfo[0].email==="root" ? <Link to='/gosport'>後台Q&A</Link>  : <Link to='/gosport'>Q&A</Link> }
+                        {userInfo[0].email==="root" ? <Link to='/gosport'>後台Q&A</Link>  : <Link to='/gosport/qa'>Q&A</Link> }
                             {/* <Link to='/gosport/qa'>Q&A</Link> */}
                         </div>
                         <img className="notice" src={notice} />
-                        <div className="username"><p>Hi: {token}</p></div>
+                        {/* <div className="username"><p>Hi: {token3}</p></div> */}
                         {userInfo.map((v, k) => {
 
                             
-                            if (v.userimg === null) { return<React.Fragment> <img className="userimg1" onClick={logsig} src={user}></img> <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p> </React.Fragment>                                  
+                            if (v.userimg === null) { return(
+                            <React.Fragment> <img className="userimg1" onClick={logsig} src={noimg}></img> <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p> 
+                            </React.Fragment>
+                            );                            
                         }
                             else {
                                 let u8Arr = new Uint8Array(v.userimg.data);
@@ -324,9 +298,11 @@ settoken("")
                                 fr.onload = function () {
                                     setUserurl(fr.result);
                                 }
-                                return<React.Fragment><img className="userimg" onClick={logsig} src={userurl} /> 
+                                return(
+                                <React.Fragment><img className="userimg" onClick={logsig} src={userurl} /> 
                                  <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>  
                                  </React.Fragment>
+                                 );
                             }
                         })}
 
@@ -334,6 +310,6 @@ settoken("")
                 </div>
             </div>
         </React.Fragment>
-       )
+       );
     
 };
