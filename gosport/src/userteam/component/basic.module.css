@@ -3,10 +3,11 @@
 .basic {
     height: 80%;
     width: 100%;
-    padding: 40px;
+    padding: 40px 40px 40px 300px;
     box-sizing: border-box;
     overflow: scroll;
-    position: relative;
+    position: absolute;
+    top: 20%;
 }
 /* 編輯 按鈕 */
 .basic>a {
@@ -45,25 +46,25 @@
 /* 區域 */
 .mR1{
     position:absolute;
-    left:150px;
+    left:450px;
     top:212px;
 }
 /* 區域內容 */
 .mR2{
     position:absolute;
-    left:150px;
+    left:450px;
     top:246px;
 }
 /* 時段 */
 .mR3{
     position:absolute;
-    left:150px;
+    left:450px;
     top:307px;
 }
 /* 時段內容 */
 .mR4{
     position:absolute;
-    left:150px;
+    left:450px;
     top:341px;
 }
 /* 內容 */
@@ -75,15 +76,18 @@
     margin-bottom: 25px;
 }
 /* 照片 容器 */
-.basic>:nth-child(3){
+.mBimgBox{
     background-color: aqua;
     overflow: hidden;
     height: 200px;
     width: 200px;
-    margin-top: 30px;
+    margin-top: 40px;
+    margin-left: 40px;
+    clip-path: circle(50%);
 }
 /* 照片 */
 .mBimg {
-    width: 100%;
+    height: 100%;
     position: relative;
+    left:-50%;
 }

@@ -1,19 +1,22 @@
+/* 內容框 */
 .memberContent {
     box-sizing: border-box;
     overflow: scroll;
-    height: 85%;
+    height: 80%;
 }
+/* 目前成員框 */
 .memberContent>div:nth-child(1){
     margin: 40px 40px 0px 40px;
     position: relative;
 }
+/* 編輯 */
 .mbtn {
     border: 1px solid #AAAAAA;
     border-radius: 40px;
     width: 100px;
     height: 60px;
     font-family: 'Noto Sans TC';
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: #AAAAAA;
     background-color: white;
@@ -24,24 +27,35 @@
     align-items: center;
     justify-content: center;
 }
+/* 頭貼 */
 .mImg {
     clip-path: circle(50% at 50% 50%);
-    width: 80px;
-    height: 80px;
-    margin-bottom: 20px;
-    margin-right: 5px;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 35px;
+    margin-right: 15px;
 }
+/* 頭貼 未審核成員 */
+.checkMember>img {
+    width: 60px;
+    height: 60px;
+    display: inline;
+    margin-bottom: 0px;
+    
+}
+/* 標題 隊長、成員 */
 .mTitle {
     font-family: 'Noto Sans TC';
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: rgb(170, 170, 170);
     margin-bottom: 10px;
 }
+/* 標題 未審核 */
 .mPending{
     margin-left: 40px;
 }
-/* 未審核成員 */
+/* 未審核成員 個別框 */
 .checkMember {
     background-color: rgb(245, 245, 245);
     width: 100%;
@@ -54,81 +68,27 @@
     justify-content: space-between;
     position: relative;
 }
-.checkMember:last-child{
-    border-bottom:none;
-}
-
-.checkMember>img {
-    width: 60px;
-    height: 60px;
-    display: inline;
-    margin-bottom: 0px;
-    
-}
+/* 未審核成員 名字 */
 .checkMember>div:nth-child(2) {
     font-family: 'Noto Sans TC';
     color: rgb(56, 56, 56);
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: 600;
     display: inline;
     margin-left: 15px;
     position: absolute;
     left: 109px;
-    width: 150px;
+    width: 200px;
     white-space: nowrap;
     text-overflow:ellipsis;
     overflow: hidden;
 }
-.checkMember>div:nth-child(4){
-    width: 60px;
-    height: 30px;
-    background-color: rgb(255, 255, 255);
-    border-radius: 20px;
-    font-family: 'Noto Sans TC';
-    color: rgb(56, 56, 56);
-    font-size: 1.1rem;
-    font-weight: 400;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* margin-left: 10px; */
-} 
-.checkMember>div:nth-child(5){
-    font-family: 'Noto Sans TC';
-    color: rgb(56, 56, 56);
-    font-size: 1.1rem;
-    font-weight: 400;
-    /* display: flex; */
-    justify-content: center;
-    align-items: center;
-    /* margin-left: 10px; */
-    display: block;
-} 
-.checkbtn{
-    /* background-color: antiquewhite; */
-    width: 60%;
-    display: flex;
-    justify-content: flex-end;
+/* 未審核名字底下的空間 */
+.mSpace{
+    width: 200px;
 }
-.checkbtn>button{
-    width: 80px;
-    height: 50px;
-    float: right;
-    border-radius: 30px;
-}
-.checkbtn>button:nth-child(1){
-    border: 1px solid rgb(230, 70, 55);
-    color: rgb(230, 70, 55);
-    background-color: rgb(255, 255, 255,0);
-}
-.checkbtn>button:nth-of-type(2){
-    border: none;
-    color: white;
-    background-color: rgb(230, 70, 55);
-    margin-left: 10px;
-}
+/* 徽章 */
 .badge{
-    /* background-color: aqua; */
     height: 20px;
     display: flex;
     align-items: center;
@@ -138,13 +98,63 @@
     top: 65px;
     margin-left: 15px;
 }
+/* 徽章圖檔 */
 .badge>img{
     width: 15px;
     height: 15px;
     margin: 0px;
 }
-.mSpace{
-    width: 150px;
-    height: 10px;
-    /* background-color: aqua; */
+/* 程度 */
+.checkMember>div:nth-child(4){
+    width: 80px;
+    height: 40px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    font-family: 'Noto Sans TC';
+    color: rgb(56, 56, 56);
+    font-size: 1.2rem;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+/* 程度內容 */
+.checkMember>div:nth-child(5){
+    font-family: 'Noto Sans TC';
+    color: rgb(56, 56, 56);
+    font-size: 1.2rem;
+    font-weight: 400;
+    justify-content: center;
+    align-items: center;
+    display: block;
+} 
+/* 拒絕｜接受 容器 */
+.checkbtn{
+    width:50%;
+    display: flex;
+    justify-content: flex-end;
 }
+/* 拒絕｜接受 */
+.checkbtn>button{
+    width: 90px;
+    height: 50px;
+    float: right;
+    border-radius: 30px;
+    font-family: 'Noto Sans TC';
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+/* 拒絕 */
+.checkbtn>button:nth-child(1){
+    border: 1px solid rgb(230, 70, 55);
+    color: rgb(230, 70, 55);
+    background-color: rgb(255, 255, 255,0);
+}
+/* 接受 */
+.checkbtn>button:nth-of-type(2){
+    border: none;
+    color: white;
+    background-color: rgb(230, 70, 55);
+    margin-left: 10px;
+}
+

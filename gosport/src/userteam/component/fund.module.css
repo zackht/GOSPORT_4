@@ -1,28 +1,31 @@
+/* 基金框 */
 .fund{
     width: 100%;
-    height: 85%;
+    height: 80%;
     display: flex;
     flex-direction: row;
 }
+/* 標題 */
 .sTitle,
 .oTitle{
     font-family: 'Noto Sans TC';
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: rgb(170, 170, 170);
     margin-bottom: 10px;
 }
+/* 文字 */
 .oText{
     font-family: 'Noto Sans TC';
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 400;
     color: rgb(56, 56, 56);
-    margin-bottom: 10px;
+    margin-bottom: 25px;
 }
-/* 訂單資訊 */
+/* 文章資訊框 */
 .order{
     width: 80%;
-    height: 85%;
+    height: 80%;
     border-left: 1px solid rgb(230, 230, 230);
     margin-top: 40px;
     margin-right: 40px;
@@ -32,6 +35,7 @@
     overflow: scroll;
     position: relative;
 }
+/* 編輯｜刪除 */
 .order>a,
 .order>button{
     border: 1px solid #AAAAAA;
@@ -39,13 +43,14 @@
     width:100px;
     height: 60px;
     font-family: 'Noto Sans TC';
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: #AAAAAA;
     background-color: white;
     float: right;
-    margin-left: 10px;
+    margin-left: 20px;
     position:sticky;
+    top: 0px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,10 +61,11 @@
     border: 0px;
     background-color: rgb(170, 170, 170);
 }
+/* 頭貼 */
 .order>img{
     clip-path: circle(50% at 50% 50%);
-    width: 80px;
-    height: 80px;
-    margin-bottom: 20px;
-    margin-right: 5px;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 25px;
+    margin-right: 15px;
 }

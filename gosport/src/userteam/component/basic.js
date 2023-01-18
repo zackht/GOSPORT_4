@@ -51,12 +51,12 @@ export default function Basic(props) {
 
     return(
         <>
+            <div className={basic.mBimgBox}><img src={teamimg} className={basic.mBimg} alt='團隊的照片'/></div>
             <div className={basic.basic}>
                 {/* 只有隊長可編輯 */}
                 { userid===`${leaderId}`? <Link to={`/gosport/user/myteam/basic/edit`}>編輯</Link>:'' }
                 {/* 基本資料 */}
                 <div className={basic.mBigTitle}>{basicResult? basicResult.tname:''}</div>
-                <div><img src={teamimg} className={basic.mBimg} alt='團隊的照片'/></div>
 
                 <div className={basic.mTitle}>場館</div>
                 <div className={basic.mText}>{basicResult? basicResult.sidename:''}</div>

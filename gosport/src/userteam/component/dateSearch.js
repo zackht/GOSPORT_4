@@ -57,8 +57,7 @@ export default function DateSearch(params) {
         <>
             {/* 日期搜索 */}
             <div className={dateSearch.search}>
-                <div className={dateSearch.sForm}>
-                    <div className={dateSearch.sTitle}>日期區間</div>
+                    {/* <div className={dateSearch.sTitle}>日期區間</div> */}
                     <input type="date" name="" onChange={(e)=>{setStartdate(e.target.value)}} />
                     <input type="date" name="" onChange={(e)=>{setEnddate(e.target.value)}} />
                     <div className={dateSearch.sTitle}>訂單日期</div>
@@ -77,7 +76,6 @@ export default function DateSearch(params) {
                         <div>2022/12/29</div>
                     </div>
                     <button onClick={ handleDateSearch }>搜尋</button>
-                </div>
             </div>
         </>
     )

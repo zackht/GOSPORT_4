@@ -6,6 +6,8 @@ import Axios from "axios";
 import Cookies from 'js-cookie';
 
 export default function Member(params) {
+
+    // 徽章還沒找資料！！！！
     
     // SQL參數
     const [userid, setUserid] = useState( Cookies.get('id') ); // 登入者id
