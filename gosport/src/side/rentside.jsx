@@ -224,7 +224,7 @@ const Rentside = () => {
                 })}
                 {/* 下一頁按鈕 */}
                 <div class="row">
-                    <div class="d-flex justify-content-center col-md-12">
+                    <div class={`d-flex justify-content-center col-md-12 ${side.div13}`}>
                         <div class={`d-flex ${side.div6}`}>
                             <button class={side.buttom2}><img src={a1} alt="" /></button>
                             <button class={side.buttom2}><img src={a2} alt="" /></button>
