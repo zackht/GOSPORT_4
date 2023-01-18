@@ -10,5 +10,4 @@ import m8 from "./img/teams_m8.png";
 import star from "./img/icon_star.svg";
 import team from './img/team.jpg';
 import upload_c from "./img/upload_c.png";
-import upload_s from "./img/upload_s.png";
-export default {m,m1,m2,m3,m4,m5,m6,m7,m8,star,team,upload_c,upload_s};
+export default {m,m1,m2,m3,m4,m5,m6,m7,m8,star,team,upload_c};

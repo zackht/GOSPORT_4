@@ -62,7 +62,7 @@ const Ordering = () => {
             {/* <!-- 訂單日期選擇 --> */}
             <div style={{ flex: "1", borderRight: "2px solid rgb(233, 233, 233)" }}>
                 <div>下單日期區間</div>
-                <div>
+                <div className='ordergettime'>
                     <input type="date" onChange={(e) => { setStartDate(e.target.value) }} /><img className="selectedDate" src={arrowup} alt='' /><br />
                     <input type="date" onChange={(e) => { setEndDate(e.target.value) }} /><img className="selectedDate" src={arrowup} alt='' /><br />
                     <span className='searchbox' onClick={getdata}>搜尋</span>
