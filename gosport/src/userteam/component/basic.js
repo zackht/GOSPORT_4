@@ -50,6 +50,10 @@ export default function Basic(props) {
         handleBasicResult();
         handleLeaderImg();
     },[]);
+    useEffect(()=>{
+        handleBasicResult();
+        handleLeaderImg();
+    },[basicResult]);
 
     return(
         <>

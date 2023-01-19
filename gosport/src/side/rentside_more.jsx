@@ -34,6 +34,7 @@ const Side2 = () => {
   }, [])
   const [sidelist, setsidelist] = useState();
   const [re, setre] = useState(false);
+  const [img, setimg] = useState('');
   // 進入網頁後查詢資料
   const getside = () => {
     Axios.post("http://localhost:3001/rentsidemore", {
@@ -41,16 +42,24 @@ const Side2 = () => {
     }).then((response) => {
       // console.log(response);
       setsidelist(response.data[0]);
-      setre(true);
       setcheckbox(
         new Array(response.data[0].weekendtime - response.data[0].weekstarttime).fill(false)
-      )
-      sethocheckbox(
-        new Array(response.data[0].holidayendtime - response.data[0].holidaystarttime).fill(false)
-      )
-    });
+        )
+        sethocheckbox(
+          new Array(response.data[0].holidayendtime - response.data[0].holidaystarttime).fill(false)
+          )
+          var u8Arr = new Uint8Array(response.data[0].sideimg.data);
+          var blob = new Blob([u8Arr], { type: "image/jpeg" });
+          var fr = new FileReader;
+          fr.readAsDataURL(blob);
+          fr.onload = function () {
+            setimg(fr.result);
+          };
+          setre(true);
+        });
   }
   const aaa = async () => {
+    console.log(libaichi); //月租季租禮拜幾
     console.log(rentday); //日租月租季租
     console.log(date);  //日期
     console.log(Math.min(...checkboxselect)); //checkbox最小值
@@ -181,20 +190,39 @@ const Side2 = () => {
   const b = () => {
     return howeekday;
   }
+  const check =()=>{
+    console.log(sidelist.park);
+  }
+  const[libaichi,setlibaichi]=useState('禮拜一');
+  const ll=(e)=>{
+    setlibaichi(e);
+  }
+  const select =<div>
+  <select name="" id="" className={side2.div14} onChange={(e)=>{ll(e.target.value)}}>
+    <option value="禮拜一">禮拜一</option>
+    <option value="禮拜二">禮拜二</option>
+    <option value="禮拜三">禮拜三</option>
+    <option value="禮拜四">禮拜四</option>
+    <option value="禮拜五">禮拜五</option>
+    <option value="禮拜六">禮拜六</option>
+    <option value="禮拜日">禮拜日 </option>
+  </select>
+  <img className={`${side2.selectedDate2}`} src={group41} alt="" />
+</div>
   return (
     <React.Fragment>
       {(re) ?
         <div className={`container-fluid ${side2.div1}`}>
           <div className={`row ${side2.boxshadow} d-flex ${side2.div2}`}>
             <div className={side2.thecover}>
-              <img src={team} alt="" />
+              <img src={img} alt="" />
             </div>
             <div className={`col-xl-4 d-flex flex-column ${side2.div3x}`}>
               <div>
-                <span className={side2.span} >設施</span>
-                {sidelist.park === true ? <div><img src={a1} alt="" /></div> : <div>無</div>}
-                {sidelist.bath === true ? <div><img src={a2} alt="" /></div> : <div>無</div>}
-                {sidelist.baulk === true ? <div><img src={a3} alt="" /></div> : <div>無</div>}
+                <span className={side2.span} onClick={check}>設施</span>
+                {sidelist.park === 'true' ? <div><img src={a1} alt="" /></div> : <div>無</div>}
+                {sidelist.bath === 'true' ? <div><img src={a2} alt="" /></div> : <div>無</div>}
+                {sidelist.baulk === 'true' ? <div><img src={a3} alt="" /></div> : <div>無</div>}
               </div>
               <div><span className={side2.span}>開放時間</span></div>
               <div className={side2.font}>平日{sidelist.weekstarttime}:00~{sidelist.weekendtime}:00</div>
@@ -251,8 +279,10 @@ const Side2 = () => {
                 </div>
                 <div className={side2.div7}>
                   <span className={side2.span}>日期</span>
-                  <div className={side2.div8}>
-                    <input type="date" name="inputdate" defaultValue={today} className={side2.date} onChange={(e) => { getweekend(e.target.value) }} /><img className={`${side2.selectedDate}`} src={group41} alt="" />
+                  <div className={`${side2.div8} d-flex`}>
+                    <input type="date" name="inputdate" defaultValue={today} className={side2.date} onChange={(e) => { getweekend(e.target.value) }} />
+                    <img className={`${side2.selectedDate}`} src={group41} alt="" />
+                    {rentday==='日租'?'':select}
                   </div>
                 </div>
                 <div>
@@ -272,13 +302,6 @@ const Side2 = () => {
                       <div onClick={add} className={side2.buttom3} id="minus">+</div>
                     </div>
                   </div>
-                  {/* <div className={`${side2.div11}`}>
-                    <span className={side2.span}>費用</span>
-                    <div>
-                      <span className={side2.div12}>700</span>
-                      <span className={side2.span}>元</span>
-                    </div>
-                  </div> */}
                   <div className={`ml-auto`}>
                     <input className={side2.aa} type="button" defaultValue="預定" onClick={aaa} />
                   </div>
@@ -288,8 +311,8 @@ const Side2 = () => {
             <div className={side2.div4}>
               <div className={side2.div5}>
                 <iframe src={sidelist.goolemapurl}
-                  className={side2.div13} allowfullscreen="" loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"></iframe>
+                  className={side2.div13} allowFullScreen="" loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"></iframe>
               </div>
             </div>
           </div>

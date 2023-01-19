@@ -318,7 +318,7 @@ const Backarticle2 = () => {
         content =
             <div className={`${ba.div54}`}>
                 {zerodalist.map((val, key) => {
-                    let c = new Date(val.date);
+                    let c = new Date(val.startdate);
                     let y = c.getFullYear();
                     let m = c.getMonth();
                     let d = c.getDate();
@@ -397,7 +397,7 @@ const Backarticle2 = () => {
         content =
             <div className={`${ba.div54}`}>
                 {rentlist.map((val, key) => {
-                    let c = new Date(val.date);
+                    let c = new Date(val.startdate);
                     let y = c.getFullYear();
                     let m = c.getMonth();
                     let d = c.getDate();
