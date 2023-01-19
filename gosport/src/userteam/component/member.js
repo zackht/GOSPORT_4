@@ -11,7 +11,7 @@ export default function Member(params) {
     
     // SQL參數
     const [userid, setUserid] = useState( Cookies.get('id') ); // 登入者id
-    const [teamid, setTeamid] = useState('1');                 // 球隊id
+    const [teamid, setTeamid] = useState('1');                   // 球隊id
 
     // input值
     const [leaderImg, setLeaderImg] = useState('');         // 隊長img
@@ -20,6 +20,10 @@ export default function Member(params) {
     const [memberImgUrls, setMemberImgUrls] = useState({}); // 成員urls 已讀取
     const [pendingmember, setpendingmember] = useState([]);   // 未審核成員
     const [pendingImgUrls, setPendingImgUrls] = useState({}); // 未審核成員urls 已讀取
+    
+    // 其他
+    const [pendingTime, setPendingTime] = useState(''); // 未審核成員urls 已讀取
+
 
     // 畫面載入即抓資料
     useEffect(()=>{
@@ -28,6 +32,12 @@ export default function Member(params) {
         handlePending(); // 未審核成員
         
     },[]);
+    useEffect(()=>{
+        handleLeaderImg();  // 隊長
+        handlememberImgs(); // 成員
+        handlePending(); // 未審核成員
+        
+    },[leaderImg,leaderId,memberImgs,memberImgUrls,pendingmember,pendingImgUrls]);
 
     // 抓 隊長img id
     const handleLeaderImg = async () => {
@@ -57,6 +67,7 @@ export default function Member(params) {
     // 讀取 成員img
     useEffect(() => {
         memberImgs.forEach((val, key) => {
+            // setPendingTime()
             if (val.userimg !== null) {
                 let u8Arr = new Uint8Array(val.userimg.data);
                 let blob = new Blob([u8Arr], {type: "image/jpeg"});
@@ -92,9 +103,13 @@ export default function Member(params) {
     }
     // console.log(typeof pendingmember);
 
-    // 讀取 未審核成員
+    // 讀取 未審核成員 頭貼
     useEffect(() => {
         pendingmember.forEach((val, key) => {
+            // console.log(val.addtime);
+            // setPendingTime(e=>{
+            //     return {...e,[key]:val.addtime};
+            // });
             if (val.userimg !== null) {
                 // console.log(val.userimg);
                 let u8Arr = new Uint8Array(val.userimg.data);
@@ -108,6 +123,7 @@ export default function Member(params) {
                 }
             }
         });
+        // console.log(pendingTime);
     }, [pendingmember]);
 
     // 顯示對應球隊類別的會員程度
@@ -123,18 +139,24 @@ export default function Member(params) {
 
     // 拒絕 未審核成員
     const handlieReject=(val)=>{
-        console.log(`${val.userid}`);
+        // console.log(`${val.userid}`);
         Axios.post("http://localhost:3001/teampendingreject",{
             teamid:teamid,
             userid:val.userid // 未審核成員的id
         }).then((response)=>{
-            // setpendingmember(response.data); // 給input
+            handlePending();  // 再抓一次未審核成員
         })
     }
 
     // 接受 未審核成員
-    const handlieAccept=()=>{
-        console.log('接受');
+    const handlieAccept=(val)=>{
+        console.log(`${val.userid}`);
+        Axios.post("http://localhost:3001/teampendingaccept",{
+            teamid:teamid,
+            userid:val.userid // 未審核成員的id
+        }).then((response)=>{
+            handlePending();  // 再抓一次未審核成員
+        })
     }
 
     // 未審核成員清單
@@ -143,7 +165,7 @@ export default function Member(params) {
         if(key%3===0){ // 篩出重複資料
             return (
                 <div className={member.checkMember}>
-                    <img className={member.mImg} src={pendingImgUrls[key]} alt="使用者頭貼"/>
+                    <img className={member.mImg} src={pendingImgUrls[key]? pendingImgUrls[key]:img.m} alt="使用者頭貼"/>
                     <div>{val.username}</div>
                     <div className={member.mSpace} ></div>
                     <div>程度</div>
@@ -172,7 +194,7 @@ export default function Member(params) {
                     { userid===`${leaderId}`? (<Link to={"/gosport/user/myteam/member/edit"} className={member.mbtn}>編輯</Link>):'' }
                     {/* 隊長 */}
                     <div className={member.mTitle}>隊長</div>
-                    <img className={member.mImg} src={leaderImg} alt=""/>
+                        <img className={member.mImg} src={leaderImg} alt=""/>
                     {/* 成員 */}
                     <div className={member.mTitle}>成員</div>
                     { memberList }  
