@@ -755,8 +755,15 @@ right: 25px;
     justify-content: end;
 margin-right: 30px;}
 .d153{
-    margin-left: 60px;
+    margin-left: 30px;
     margin-top: 20px;
+}
+.d154{
+    position: fixed;
+    border: 1px solid red;
+    width: 555px;
+    height: 666px;
+    margin-top: 135px;
 }
 
 

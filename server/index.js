@@ -421,6 +421,7 @@ app.post("/team", (req, res) => {
       const teampay = req.body.teampay;
       const teamtext = req.body.teamtext;
       const teameventid = req.body.teameventid;
+      console.log(`${teamtitle}`);
       db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,pay=?,text=?,teameventimg=?  where teameventid=?"
       ,[teamstartdate,teamenddate,teamstarttime,teamendtime,teamtype2,teamtitle,teamlocation,teampay,teamtext,req.file.buffer,teameventid], (err, result) => {
         if (err) {
@@ -431,7 +432,7 @@ app.post("/team", (req, res) => {
       });
     });
     // 後臺球隊編輯儲存   沒圖片
-    app.post("/teamupdate2", (req, res) => {
+    app.post("/teamupdate2",upload.array(), (req, res) => {
       const teamstartdate = req.body.teamstartdate;
       const teamenddate = req.body.teamenddate;
       const teamstarttime = req.body.teamstarttime;
@@ -903,6 +904,136 @@ app.post("/countsub", (req, res) => {
 app.post("/countzero", (req, res) => {
   const articleid = req.body.articleid;
   db.query("SELECT count(*)as a FROM articlemessage_zeroda WHERE `articleid_zeroda`= ?", [articleid], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+
+  });
+});
+// 刪除轉租已新增文章
+app.post("/delesublet", (req, res) => {
+  const articleid = req.body.articleid_sublet;
+  db.query("DELETE FROM `userarticle_sublet` WHERE articleid_sublet = ? ", 
+  [articleid], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+
+  });
+});
+// 刪除零打已新增文章
+app.post("/delezeroda", (req, res) => {
+  const articleid = req.body.articleid_zeroda;
+  db.query("DELETE FROM `userarticle_zeroda` WHERE articleid_zeroda = ? ", 
+  [articleid], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+
+  });
+});
+// 新增零打已刪除文章
+app.post("/insertdelezeroda", (req, res) => {
+  const articleid = req.body.articleid_zeroda;
+  db.query("INSERT INTO `delete_zeroda`(`articleid_zeroda`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `date`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `number`) SELECT * from userarticle_zeroda WHERE articleid_zeroda = ? ", 
+  [articleid], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+
+  });
+});
+// 新增轉租已刪除文章
+app.post("/insertdelesublet", (req, res) => {
+  const articleid = req.body.articleid_sublet;
+  db.query("INSERT INTO `delete_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `date`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `amount`) SELECT * from userarticle_sublet WHERE articleid_sublet = ? ", 
+  [articleid], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+
+  });
+});
+//會員轉租已刪除文章搜尋
+app.post("/finddelesub", (req, res) => {
+  const userid = req.body.userid;
+  const starttime = req.body.stratDate;
+  const endtime = req.body.endDate;
+  db.query("SELECT * FROM `delete_sublet` WHERE userid = ? AND date BETWEEN ? AND ?", [userid, starttime, endtime], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+//會員零打已刪除文章搜尋
+app.post("/finddelezoro", (req, res) => {
+  const userid = req.body.userid;
+  const starttime = req.body.stratDate;
+  const endtime = req.body.endDate;
+  db.query("SELECT * FROM `delete_zeroda` WHERE userid = ? AND date BETWEEN ? AND ?", [userid, starttime, endtime], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+// 重建零打已新增文章
+app.post("/insertzeroda", (req, res) => { 
+  const articleid = req.body.articleid_zeroda;
+  db.query("INSERT INTO `userarticle_zeroda`(`articleid_zeroda`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `date`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `number`) SELECT * from delete_zeroda WHERE articleid_zeroda = ? ", 
+  [articleid], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+
+  });
+});
+// 重建轉租以新增文章
+app.post("/insertsub", (req, res) => { 
+  const articleid = req.body.articleid_sublet;
+  db.query("INSERT INTO `userarticle_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `date`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `amount`) SELECT * from delete_sublet WHERE articleid_sublet = ? ", 
+  [articleid], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+
+  });
+});
+// 刪除轉租已刪除文章
+app.post("/deledelesublet", (req, res) => {
+  const articleid = req.body.articleid_sublet;
+  db.query("DELETE FROM `delete_sublet` WHERE articleid_sublet = ? ", 
+  [articleid], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+
+  });
+});
+// 刪除零打已刪除文章
+app.post("/deledelezeroda", (req, res) => {
+  const articleid = req.body.articleid_zeroda;
+  db.query("DELETE FROM `delete_zeroda` WHERE articleid_zeroda = ? ", 
+  [articleid], (err, result) => {
     if (err) {
       console.log(err);
     } else {

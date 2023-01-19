@@ -26,7 +26,7 @@ const Selfactive = () => {
     var isArticleShow = tabIndex === 2 ? 'flex' : 'none';
 
     const activeList = [
-        { tabName: "進行活動", id: 1 },
+        { tabName: "進行活動", id: 1 }, 
         { tabName: "未來活動", id: 2 },
         { tabName: "結束活動", id: 3 },
         { tabName: "不成立", id: 4 },

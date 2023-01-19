@@ -69,6 +69,9 @@ const Handya = () =>{
     const changeweather = (e) => {
         Axios.get('https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-073?Authorization=CWB-CD60C32C-4797-4EA9-A3B6-E5837A37F9C1')
         .then(function (response) {
+            settemp(response.data.records.locations[0].location[0].weatherElement[2].time[0].elementValue[0].value)
+            setrain(response.data.records.locations[0].location[0].weatherElement[0].time[1].elementValue[0].value)
+            setname(response.data.records.locations[0].location[0].locationName)    
             console.log(response.data);
             if (e.target.value==1){
             settemp(response.data.records.locations[0].location[0].weatherElement[2].time[0].elementValue[0].value)
@@ -112,7 +115,9 @@ const Handya = () =>{
         // socket.emit("send_mesg1",{message});
         
       }
-
+useEffect(()=>{
+    changeweather()
+},[])
       useEffect(()=>{
         Axios.post("http://localhost:3001/self", {
             userid: userid,
