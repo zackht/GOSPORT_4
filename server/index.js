@@ -958,7 +958,7 @@ app.post("/basicupdate",upload.single('teamfile'), (req, res) => {
     });
 });
 // 芝｜Basic 更新 無圖
-app.post("/basicupdate2", (req, res) => {
+app.post("/basicupdate2",upload.array(), (req, res) => {
   const tname = req.body.tname;
   const sidename = req.body.sidename;
   const week = req.body.week;
@@ -969,10 +969,10 @@ app.post("/basicupdate2", (req, res) => {
   const fee = req.body.fee;
   const text = req.body.text;
   const teamid = req.body.teamid; // 球隊
-  db.query(`
-        UPDATE team 
-        SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?
-        where teamid=?;`,
+  db.query(
+    `UPDATE team 
+    SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?
+    where teamid=?;`,
     [tname, sidename, week, starttime, endtime, type, level, fee, text, teamid],
     (err, result) => {
       if (err) {
@@ -1021,9 +1021,9 @@ app.post('/teamleader', (req,res)=>{
     app.post('/teampendingimg', (req,res)=>{
       const teamid = req.body.teamid;
       db.query(
-          `SELECT teampendinguser.userid,userimg,username,type as 'teamtype',badminton,tabletennis,volleyball
+          `SELECT teampendinguser.userid,userimg,username,type as 'teamtype',badminton,tabletennis,volleyball,addtime
           FROM teampendinguser,user,team
-          where teampendinguser.userid = user.userid and teampendinguser.teamid=1
+          where teampendinguser.userid = user.userid and teampendinguser.teamid=?
           ORDER BY teampendinguser.userid;`,
           [teamid],
           (err, result) => {
@@ -1041,11 +1041,31 @@ app.post('/teamleader', (req,res)=>{
       const teamid = req.body.teamid;
       const userid = req.body.userid;
       db.query(
-          `SELECT teampendinguser.userid,userimg,username,type as 'teamtype',badminton,tabletennis,volleyball
-          FROM teampendinguser,user,team
-          where teampendinguser.userid = user.userid and teampendinguser.teamid=1
-          ORDER BY teampendinguser.userid;`,
-          [teamid],
+          `DELETE from teampendinguser
+          WHERE userid=? and teamid=?;`,
+          [userid,teamid],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+    });
+
+    // 芝｜Member 接受 未審核成員
+    app.post('/teampendingaccept', (req,res)=>{
+      const teamid = req.body.teamid;
+      const userid = req.body.userid;
+      console.log(teamid);
+      console.log(userid);
+      db.query(
+          `INSERT into teamuser(teamid,userid,leader)
+          VALUES(?,?,0);
+          DELETE from teampendinguser
+          WHERE userid=? and teamid=?;`,
+          [teamid,userid,userid,teamid],
           (err, result) => {
             if (err) {
               console.log(err);

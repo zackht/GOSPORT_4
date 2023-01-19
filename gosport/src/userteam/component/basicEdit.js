@@ -103,6 +103,7 @@ export default function BasicEdit(props) {
             });
         } else { // 沒圖片
             const teamData2 = new FormData();
+            teamData2.append('teamid', teamid);
             teamData2.append('tname', tname);
             teamData2.append('sidename', sidename);
             teamData2.append('week', week);
