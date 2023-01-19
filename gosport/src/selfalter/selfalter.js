@@ -114,11 +114,11 @@ const Selfalter = () => {
 
     };
     // 上傳更新
-    let update = (e) => {
+    let update = async(e) => {
         e.preventDefault();
         if (!picSourse) {
 
-            Axios.post("http://localhost:3001/selfalterwithoutpic", {
+           await Axios.post("http://localhost:3001/selfalterwithoutpic", {
                 usebadge:badge,
                 email: email,
                 password: password,
@@ -170,7 +170,7 @@ const Selfalter = () => {
     }
     // 徽章
     const [selectedImages, setSelectedImages] = useState([{ badgeurl: '#' }]);
-    const badge = JSON.stringify(selectedImages)
+    let badge = JSON.stringify(selectedImages)
     const [clickCount,setClickCount] = useState(0);
     const chuseStar = (item) => {
         // console.log(badge)
@@ -191,6 +191,7 @@ const Selfalter = () => {
                 // 當目前選中的圖片數量等於 3 個時，移除最後一個圖片，並加入新的圖片
                 return [ ...prevSelected.slice(0, 2),item];
             });
+            badge = JSON.stringify(selectedImages)
         }
     }
     return (

@@ -11,13 +11,13 @@ const Artdel = () => {
     // 資料初值
     const [sublist, setSubList] = useState([{
         articleid_sublet: '',
-        date: '',
+        startdate: '',
         content: '',
         ballgames: '',
         amount: ''
     }]);
     const [zerolist, setZeroList] = useState([{
-        date: '',
+        startdate: '',
         content: '',
         ballgames: '',
         number: ''
@@ -35,7 +35,7 @@ const Artdel = () => {
         }).then((response) => {
             console.log(response.data);
             setZeroList(response.data);
-            if (response.data[0].date) {
+            if (response.data[0].startdate) {
                 setzeroShow('table-row')
             }
         });
@@ -46,7 +46,7 @@ const Artdel = () => {
         }).then((response) => {
             console.log(response.data);
             setSubList(response.data);
-            if (response.data[0].date) {
+            if (response.data[0].startdate) {
                 setsubShow('table-row')
             }
         });
@@ -86,7 +86,7 @@ const Artdel = () => {
                 活動日期區間<br />
                 <input type="date" onChange={(e) => { setStartDate(e.target.value) }} /><img className="selectedDate selectedfromart" src={arrowup} alt="" />至&emsp;&thinsp;
                 <input type="date" onChange={(e) => { setEndtDate(e.target.value) }} /><img className="selectedDate selectedfromart" src={arrowup} alt="" />
-                <span onClick={findArticle} ref={find}>搜尋</span>
+                <span onClick={findArticle} ref={find} className="active_articlefind">搜尋</span>
             </div>
             <table>
                 <tbody>
@@ -121,7 +121,7 @@ const Artdel = () => {
                     {zerolist.map((item) => {
                         return (
                             <tr style={{ display: showzero }}>
-                                <td>{item.date.substring(0, 10)}</td>
+                                <td>{item.startdate.substring(0, 10)}</td>
                                 <td>零打</td>
                                 <td>{item.content}</td>
                                 <td style={{ textAlign: "center" }} >{item.number}</td>
@@ -134,7 +134,7 @@ const Artdel = () => {
                     {sublist.map((item) => {
                         return (
                             <tr style={{ display: showsub }}>
-                                <td>{item.date.substring(0, 10)}</td>
+                                <td>{item.startdate.substring(0, 10)}</td>
                                 <td>轉租</td>
                                 <td>{item.content}</td>
                                 <td style={{ textAlign: "center" }}>{item.amount}</td>

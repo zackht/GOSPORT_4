@@ -25,7 +25,7 @@ const Orderfutrue = () => {
     }
     const activeTimeList = orderInfo.map((item, index) => <button key={item.orderid} onClick={() => { showdata(index) }}>{item.orderdate.substring(0, 10)}</button>)
     // 點擊活動日期顯示查詢結果
-    const [orderNone, setOderNoneOut] = useState('block')
+    const [orderNone, setOderNoneOut] = useState('flex')
     const [ordermenu, setShowOrder] = useState('none');
     const [orderData, setOrderData] = useState({
         starttime: "",
@@ -47,7 +47,7 @@ const Orderfutrue = () => {
         setOrderData(orderInfo[index])
     }
     useEffect(() => {
-        if (orderData.duringtype === '長租') {
+        if (orderData.duringtype === '月租' || orderData.duringtype === '季租') {
             console.log('長租')
             setRentType(true)
         } else {
@@ -80,7 +80,7 @@ const Orderfutrue = () => {
                 </div>
             </div>
             {/* <!-- 訂單詳細 --> */}
-            <div className='ordermenu' style={{ display: orderNone }}> 尚未選擇下單日期 </div>
+            <div className='ordermenu' id="notalready" style={{ display: orderNone }}> <span>尚未選擇下單日期</span>  </div>
             <div className="ordermenu" id='ordering' style={{ display: ordermenu }}>
                 <div>訂單日期</div>
                 <div>{orderData.orderdate.substring(0, 10)}</div>

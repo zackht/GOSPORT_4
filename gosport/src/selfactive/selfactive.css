@@ -1,4 +1,4 @@
-.active_{
+.active_ {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,7 +12,7 @@
     /* height: 400px; */
     width: 1060px;
     height: 709px;
-    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
 
 }
 
@@ -21,6 +21,7 @@
     height: 16%;
     display: flex;
 }
+
 /* toggle */
 .active_subCtrl {
     font-size: 1.5rem;
@@ -31,6 +32,7 @@
     border: none;
     background-color: rgba(255, 255, 255, 0);
 }
+
 .active_act {
 
     background-color: white;
@@ -88,20 +90,23 @@
     font-weight: 300;
     padding-top: 7px;
     color: gray;
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 5vh;
+    cursor:default;
 }
 
 /* 場地 */
-#orderin{
+#orderin {
     display: flex;
-    height: 90%;width: 100%;
+    height: 90%;
+    width: 100%;
 }
 
-.eachOrder{
+.eachOrder {
     width: 100%;
     display: flex;
 }
+
 .eachOrder>div:nth-child(1)>div:nth-child(1),
 .eachOrder>div:nth-child(1)>div:nth-child(3) {
     margin-top: 10px;
@@ -112,9 +117,10 @@
 }
 
 /* 日期區間選擇 */
-.ordergettime{
-line-height: 50px;
+.ordergettime {
+    line-height: 50px;
 }
+
 .selfactive input[type='date'] {
     position: relative;
     border: none;
@@ -126,10 +132,11 @@ line-height: 50px;
 
 .selfactive input[type="date"]::-webkit-calendar-picker-indicator {
     width: 27px;
-    opacity: 0; 
+    opacity: 0;
     cursor: pointer;
 }
-.selfactive .searchbox{
+
+.selfactive .searchbox {
     line-height: normal;
     border-radius: 20px;
     display: block;
@@ -152,7 +159,7 @@ line-height: 50px;
     right: 25px;
 }
 
-.selectedfromart{
+.selectedfromart {
     /* 文章下拉標籤微調 */
     bottom: 5px;
 }
@@ -178,6 +185,21 @@ line-height: 50px;
     padding-bottom: 1px;
 }
 
+#notalready {
+    padding-left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#notalready span{
+    color: rgba(172, 172, 172, 0.547);
+    font-weight: 500;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    cursor:default;
+}
+
 /* 再次預約 取消預約 */
 .chuse_order {
     background-color: rgb(230, 70, 55);
@@ -194,11 +216,13 @@ line-height: 50px;
     width: 197px;
     height: 72px;
 }
+
 .selfactive .searchbox:hover,
 .selfactive .searchbox:focus,
 .chuse_order:hover {
     background-color: rgb(255, 87, 87);
 }
+
 /* 進行中 */
 #ordering>:nth-child(1),
 #ordering>:nth-child(3),
@@ -206,14 +230,15 @@ line-height: 50px;
 #ordering>:nth-child(7),
 #ordering>:nth-child(9),
 #ordering>:nth-child(11),
-#ordering>:nth-child(13){
+#ordering>:nth-child(13) {
     font-weight: 300;
     padding-top: 7px;
     color: gray;
     font-size: 1rem;
     line-height: 5vh;
 }
-#ordering>:nth-child(5){
+
+#ordering>:nth-child(5) {
     font-size: 1.5rem;
     color: #000;
     line-height: 15px;
@@ -223,14 +248,17 @@ line-height: 50px;
 /* 文章內文 */
 #artclein {
     justify-content: center;
-    height: 90%;width: 100%;
+    height: 90%;
+    width: 100%;
 }
-#artclein>div>div{
+
+#artclein>div>div {
     font-weight: 300;
     padding-top: 7px;
     color: gray;
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 5vh;
+    cursor:default;
 }
 
 #artclein table {
@@ -240,15 +268,31 @@ line-height: 50px;
 
 #artclein table tr:first-child {
     color: gray;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    height: 10vh;
+    cursor:default;
 }
+
 
 #artclein td {
     border-bottom: 1px rgb(233, 233, 233) solid;
     height: 30px;
-    height: 10vh;
+    height: 8vh;
 }
 
+/* 文章搜尋 */
+.active_articlefind {
+    cursor: pointer;
+    border: #aaaaaa 1px solid;
+    display: inline-block;
+    width: 4.2rem;
+    /* height: 2rem; */
+    line-height: 1.6rem;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 16px;
+    padding: 1px 6px;
+}
 
 
 /* 編輯 刪除 */
@@ -268,6 +312,7 @@ line-height: 50px;
     margin-right: 5px;
 }
 
+.active_articlefind:hover,
 #artclein td button:hover {
     background-color: rgb(230, 70, 55);
     color: white;
@@ -280,7 +325,7 @@ line-height: 50px;
     width: 100%;
     height: 100%;
     position: fixed;
-    top: 12vh;
+    top: 13vh;
     height: 80vh;
     /* display: flex; */
     /* display: none; */
@@ -299,6 +344,7 @@ line-height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 15px;
     box-shadow: 0px 0px 10px 5px rgb(185, 183, 183);
 }
 
@@ -314,7 +360,7 @@ line-height: 50px;
     width: 480px;
     height: 110px;
     margin: 9px auto 15px auto;
-    box-shadow: 0px 0px 10px 1px rgba(185, 183, 183, 0.467);
+    box-shadow: 0px 0px 10px 1px rgba(170, 170, 170, 0.7);
     display: flex;
 }
 
@@ -325,6 +371,12 @@ line-height: 50px;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.clientBadge img {
+    margin: 0px 2px;
+    width: 12px;
+    height: 12px;
 }
 
 .clientImg {
@@ -407,5 +459,91 @@ line-height: 50px;
 .active_close:focus {
     color: #000;
     text-decoration: none;
+    cursor: pointer;
+}
+
+/* 文章編輯modal */
+.zeroda_modal {
+    background-color: rgba(0, 0, 0, 0.303);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 13vh;
+    height: 80vh;
+    /* display: flex; */
+    /* display: none; */
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+.zeroda_modal_content {
+    /* position: relative; */
+    background-color: #fefefe;
+    width: 530px;
+    height: 585px;
+    padding: 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+    box-shadow: 0px 0px 10px 5px rgb(185, 183, 183);
+    overflow: auto;
+    border-radius: 15px;
+
+}
+
+.zeroda_modal label {
+    font-size: 20px;
+}
+
+.zeroda_modal input {
+    border: none;
+    background-color: rgb(230, 230, 230);
+    border-radius: 50px;
+    height: 45px;
+    margin-bottom: 27px;
+    padding: 10px 23px;
+    font-size: 24px;
+}
+
+.zeroda_modal_yesOrNot {
+    /* background-color: aqua; */
+    color: rgb(230, 70, 55);
+    padding: 0px;
+    display: inline-block;
+    /* width: 414px; */
+    height: 63px;
+    /* line-height: 63px; */
+    text-align: center;
+    font-size: 24px;
+    border-radius: 50px;
+}
+
+.zeroda_modal_yesOrNot span {
+    color: rgb(230, 70, 55);
+    border: 1px solid rgb(230, 70, 55);
+    padding: 0px;
+    display: inline-block;
+    border-radius: 50px;
+    width: 150px;
+    height: 55px;
+    line-height: 55px;
+    text-align: center;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.zeroda_modal_yesOrNot input {
+    color: white;
+    background-color: rgb(230, 70, 55);
+    ;
+    padding: 0px 0px;
+    margin-bottom: 0px;
+    margin-left: 5px;
+    width: 150px;
+    height: 55px;
+    line-height: 55px;
     cursor: pointer;
 }

@@ -10,8 +10,8 @@ import Artdel from './components/artdel'
 
 import './selfactive.css'
 
-import star from './icon/star1.svg'
-import pic from './icon/20130917_171106.jpg'
+// import star from './icon/star1.svg'
+// import pic from './icon/20130917_171106.jpg'
 const Selfactive = () => {
     const tabList = [
         { tabName: "我的訂單", id: 1 },
@@ -26,7 +26,7 @@ const Selfactive = () => {
     var isArticleShow = tabIndex === 2 ? 'flex' : 'none';
 
     const activeList = [
-        { tabName: "進行活動", id: 1 }, 
+        { tabName: "進行活動", id: 1 },
         { tabName: "未來活動", id: 2 },
         { tabName: "結束活動", id: 3 },
         { tabName: "不成立", id: 4 },
@@ -101,6 +101,27 @@ const Selfactive = () => {
         // clearTimeout(time);
     }
 
+    // 零打編輯彈窗控制
+    const[sidename,setsidename]=useState('');
+    const[sideaddress,setsideaddress]=useState('');
+    const[playDate,setPlayDate]=useState('');
+    const [zerodatoggle, setZerodaToggle] = useState(false);
+    var showZerodaModal = zerodatoggle ? 'flex' : 'none';
+    const editZeroda = (item) => {
+        setZerodaToggle(!zerodatoggle)
+        console.log(item)
+        setsidename(item.fieldname)
+        setsideaddress(item.address)
+        setPlayDate(item.date.substring(0, 10))
+    }
+
+    // 轉租編輯彈窗控制
+    const [subtoggle, setSubToggle] = useState(false);
+    var showSubModal = subtoggle ? 'flex' : 'none';
+    const editSublet = (item) => {
+        setSubToggle(!zerodatoggle)
+    }
+
     return (
         <React.Fragment>
             <div className='active_'>
@@ -146,7 +167,7 @@ const Selfactive = () => {
                         <div id="artclein" style={{ display: isArticleShow }}>
                             {/* <!-- 以新增 --> */}
                             <div id="tein" style={{ display: isAddShow }}>
-                                <Artadd control={controlModal} />
+                                <Artadd control={controlModal} editSublet={editSublet} editZeroda={editZeroda} />
                             </div>
                             {/* <!-- 已刪除 --> */}
                             <div id="teout" style={{ display: isDelShow }}>
@@ -155,6 +176,7 @@ const Selfactive = () => {
                         </div>
                     </div>
                 </div>
+                {/* follow視窗 */}
                 <div className="active_modal" style={{ display: showModal }}>
                     <div className="modal-content">
                         <span className="active_close" onClick={() => { closeModal() }}>&times;</span>
@@ -171,10 +193,12 @@ const Selfactive = () => {
                                     <div key={index}>
                                         <div className="clientPic">
                                             <img src={userimglist[index]} alt="" className="clientImg" />
-                                            <div>
-                                                {JSON.parse(item.usebadge).map((item,index)=>{return(
-                                                    <img key={index} src={item.badgeurl} alt="badge" />
-                                                )})}
+                                            <div className='clientBadge'>
+                                                {JSON.parse(item.usebadge).map((item, index) => {
+                                                    return (
+                                                        <img key={index} src={item.badgeurl} alt="badge" />
+                                                    )
+                                                })}
                                                 {/* <img src={JSON.parse(item.usebadge)[0].badgeurl} alt="aa" /> */}
                                                 {/* <img src={star} alt="" /> */}
                                                 {/* <img src={star} alt="" /> */}
@@ -185,9 +209,9 @@ const Selfactive = () => {
                                             <div>{item.username}</div>
                                             <div >
                                                 <span>程度</span>
-                                                <span style={{display:degree==="羽球"?"inline":"none"}}>{item.badminton}</span>
-                                                <span style={{display:degree==="排球"?"inline":"none"}}>{item.volleyball}</span>
-                                                <span style={{display:degree==="桌球"?"inline":"none"}}>{item.tabletennis}</span>
+                                                <span style={{ display: degree === "羽球" ? "inline" : "none" }}>{item.badminton}</span>
+                                                <span style={{ display: degree === "排球" ? "inline" : "none" }}>{item.volleyball}</span>
+                                                <span style={{ display: degree === "桌球" ? "inline" : "none" }}>{item.tabletennis}</span>
                                             </div>
                                         </div>
                                         <div className="clientYesNo">
@@ -202,31 +226,48 @@ const Selfactive = () => {
                                     </div>
                                 )
                             })}
-                            {/* <div>
-                                <div className="clientPic">
-                                    <img className="clientImg" src={pic} alt="" />
-                                    <div>
-                                        <img src={star} alt="" />
-                                        <img src={star} alt="" />
-                                        <img src={star} alt="" />
-                                    </div>
-                                </div>
-                                <div className="clientIntro">
-                                    <div>南區金城武</div>
-                                    <div><span>程度</span><span>高手</span></div>
-                                </div>
-                                <div className="clientYesNo">
-                                    <div>
-                                        2022/12/22 9:05
-                                    </div>
-                                    <div>
-                                        <button>拒絕</button>
-                                        <button>接受</button>
-                                    </div>
-                                </div>
-                            </div> */}
-                            {/* <div></div> */}
-                            {/* <div></div> */}
+                        </div>
+                    </div>
+                </div>
+                {/* style={{display: 'none'}} */}
+                {/* 零打編輯 */}
+                <div className="zeroda_modal" style={{ display: showZerodaModal }}>
+                    <div className="zeroda_modal_content">
+                        <div >
+                            <label htmlFor="place" >場館</label><br />
+                            <input type="text" name="place" value={sidename} onChange={setsidename}/>
+                        </div>
+                        <div >
+                            <label htmlFor="addresss">地址</label><br />
+                            <input type="text" name="addresss" value={sideaddress} onChange={setsideaddress} />
+                        </div>
+                        <div >
+                            <label htmlFor="dateee" >日期</label><br />
+                            <input type="text" name="dateee" value={playDate} onChange={setPlayDate} />
+                        </div>
+                        <div >
+                            <label htmlFor="timeee" >時段</label><br />
+                            <input type="text" name="timeee" value="09:00-12:00" />
+                        </div>
+                        <div >
+                            <label htmlFor="levelll" >程度</label><br />
+                            <input type="text" name="levelll" value="新手" />
+                        </div>
+                        <div>
+                            <label htmlFor="numberrr" >人數</label><br />
+                            <input type="text" name="numberrr" value="2" />
+                        </div>
+                        <div>
+                            <label htmlFor="costtt" >費用</label><br />
+                            <input type="text" name="costtt" value="200" />
+                        </div>
+                        <div>
+                            <label htmlFor="describeee" >描述</label><br />
+                            <textarea type="text" name="describeee" value="來打球哦" />
+                        </div>
+                        <div className="zeroda_modal_yesOrNot">
+                            <span onClick={()=>{setZerodaToggle(!zerodatoggle)}}>取消</span>
+                            <input type="submit" value="儲存" />
                         </div>
                     </div>
                 </div>
