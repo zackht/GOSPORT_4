@@ -236,17 +236,6 @@ app.post("/rentside", (req, res) => {
   const park = `${req.body.park}`;
   const bath = `${req.body.bath}`;
   const baulk = `${req.body.baulk}`;
-        console.log(type);
-        console.log(starttime);
-        console.log(endtime);
-        console.log(startdate);
-        console.log(enddate);
-        console.log(county);
-        console.log(area);
-        console.log(bath);
-        console.log(park);
-        console.log(baulk);
-        console.log(text);
   db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
   weekstarttime BETWEEN  ? AND ? AND county =? AND area =? AND (sidename LIKE ? OR adress LIKE ?)`
   // AND bath = ? AND park=? AND baulk=?`
@@ -289,7 +278,7 @@ app.post("/zeroda", (req, res) => {
   const ball1 = req.body.ball1;
   const zerodainput = req.body.zerodainput;
   if (zerodainput === '') {
-    db.query("SELECT * FROM userarticle_zeroda where date BETWEEN ? AND ? AND ballgames = ?"
+    db.query("SELECT * FROM userarticle_zeroda where startdate BETWEEN ? AND ? AND ballgames = ?"
       , [starttime1, endtime1, ball1], (err, result) => {
         if (err) {
           console.log(err);
@@ -298,7 +287,7 @@ app.post("/zeroda", (req, res) => {
         }
       });
   } else {
-    db.query("SELECT * FROM userarticle_zeroda where date BETWEEN ? AND ? AND ballgames = ? AND content LIKE ?"
+    db.query("SELECT * FROM userarticle_zeroda where startdate BETWEEN ? AND ? AND ballgames = ? AND content LIKE ?"
       , [starttime1, endtime1, ball1, zerodainput], (err, result) => {
         if (err) {
           console.log(err);
@@ -334,7 +323,7 @@ app.post("/zerodaupdate", (req, res) => {
   const zerodacontent = req.body.zerodacontent;
   const articleid_zeroda = req.body.articleid_zeroda;
   const number1 = req.body.number1;
-  db.query("UPDATE userarticle_zeroda SET content=?,starttime=?,endtime=?,date=?,county=?,area=?,fieldname=?,address=?,cost=?,level=?,number = ? where articleid_zeroda = ?"
+  db.query("UPDATE userarticle_zeroda SET content=?,starttime=?,endtime=?,startdate=?,county=?,area=?,fieldname=?,address=?,cost=?,level=?,number = ? where articleid_zeroda = ?"
     , [zerodacontent, zerodastarttime, zerodaendtime, zerodadate, zerodacounty, zerodaarea, zerodafieldname, zerodaaddress, zerodacost, zerodalevel, number1, articleid_zeroda], (err, result) => {
       if (err) {
         console.log(err);
@@ -484,7 +473,7 @@ app.post("/team", (req, res) => {
       const rentselectarea = req.body.rentselectarea;
       const fieldname = req.body.fieldname;
       if(fieldname=='' && renttime && renttime1 ){
-        db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =?"
+        db.query("SELECT * FROM userarticle_sublet where startdate BETWEEN ? AND ? AND area = ? AND county =?"
         ,[renttime,renttime1,rentselectarea,rentselectcounty], (err, result) => {
           if (err) {
             console.log(err);
@@ -493,7 +482,7 @@ app.post("/team", (req, res) => {
           }
         });
       }else if(fieldname && renttime && renttime1 ){
-        db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =? AND fieldname LIKE ?"
+        db.query("SELECT * FROM userarticle_sublet where startdate BETWEEN ? AND ? AND area = ? AND county =? AND fieldname LIKE ?"
         ,[renttime,renttime1,rentselectarea,rentselectcounty,fieldname], (err, result) => {
           if (err) {
             console.log(err);
@@ -538,7 +527,7 @@ app.post("/rentupdate", (req, res) => {
   const rentcost = req.body.rentcost;
   const number2 = req.body.number2;
   console.log(`後端${number2}`);
-  db.query("UPDATE userarticle_sublet SET content=?,starttime=?,endtime=?,date=?,county=?,area=?,fieldname=?,address=?,cost=?,amount=?  where articleid_sublet=?"
+  db.query("UPDATE userarticle_sublet SET content=?,starttime=?,endtime=?,startdate=?,county=?,area=?,fieldname=?,address=?,cost=?,amount=?  where articleid_sublet=?"
     , [rentcontent, rentstarttime, rentendtime, rentdate, rentcounty, rentarea, rentfieldname, rentaddress, rentcost, number2, articleid_sublet]
     , (err, result) => {
       if (err) {

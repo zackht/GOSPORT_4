@@ -463,7 +463,7 @@
     border: none;
 }
 
-input[type='date'] {
+.date {
     position: relative;
     border: none;
     border-bottom: 1px black solid;
