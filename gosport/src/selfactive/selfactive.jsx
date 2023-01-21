@@ -1,6 +1,7 @@
 // import React, { Component } from 'react';
 import React, { useEffect, useState } from 'react';
 import Axios from "axios";
+import Cookies from 'js-cookie';
 import Ordering from './components/ordering';
 import OrderFutrue from './components/orderfutrue'
 import OrderEnd from './components/orderEnd'
@@ -13,6 +14,10 @@ import './selfactive.css'
 // import star from './icon/star1.svg'
 // import pic from './icon/20130917_171106.jpg'
 const Selfactive = () => {
+    const userid = Cookies.get('id');
+    if (!userid) {
+        window.location = '/gosport/home';
+    }
     const tabList = [
         { tabName: "我的訂單", id: 1 },
         { tabName: "我的文章", id: 2 },
@@ -102,24 +107,52 @@ const Selfactive = () => {
     }
 
     // 零打編輯彈窗控制
-    const[sidename,setsidename]=useState('');
-    const[sideaddress,setsideaddress]=useState('');
-    const[playDate,setPlayDate]=useState('');
-    const [zerodatoggle, setZerodaToggle] = useState(false);
-    var showZerodaModal = zerodatoggle ? 'flex' : 'none';
+    const [sidename, setsidename] = useState('');
+    const [sideaddress, setsideaddress] = useState('');
+    const [playDate, setPlayDate] = useState('');
+    const [starttime, setStartTime] = useState('');
+    const [endtime, setEndTime] = useState('');
+
+    const [level, setLevel] = useState('');
+    const [number, setNumber] = useState('');
+    const [cost, setCost] = useState('');
+    const [describe, setDescribe] = useState('');
+
+    const [articleToggle, setArticleToggle] = useState(false);
+    var showZerodaModal = articleToggle ? 'flex' : 'none';
     const editZeroda = (item) => {
-        setZerodaToggle(!zerodatoggle)
+        setArticleToggle(!articleToggle)
         console.log(item)
         setsidename(item.fieldname)
         setsideaddress(item.address)
-        setPlayDate(item.date.substring(0, 10))
+        if (item.startdate) {
+            let playDate = item.startdate.substring(0, 10)
+            setPlayDate(playDate)
+        }
+        setStartTime(item.starttime)
+        setEndTime(item.endtime)
+        setLevel(item.level)
+        setNumber(item.number)
+        setCost(item.cost)
+        setDescribe(item.content)
     }
 
     // 轉租編輯彈窗控制
-    const [subtoggle, setSubToggle] = useState(false);
-    var showSubModal = subtoggle ? 'flex' : 'none';
     const editSublet = (item) => {
-        setSubToggle(!zerodatoggle)
+        console.log(item)
+        setArticleToggle(!articleToggle)
+        setsidename(item.fieldname)
+        setsideaddress(item.address)
+        if (item.startdate) {
+            let playDate = item.startdate.substring(0, 10)
+            setPlayDate(playDate)
+        }
+        setStartTime(item.starttime)
+        setEndTime(item.endtime)
+        setLevel(item.level)
+        setNumber(item.amount)
+        setCost(item.cost)
+        setDescribe(item.content)
     }
 
     return (
@@ -229,44 +262,52 @@ const Selfactive = () => {
                         </div>
                     </div>
                 </div>
-                {/* style={{display: 'none'}} */}
                 {/* 零打編輯 */}
                 <div className="zeroda_modal" style={{ display: showZerodaModal }}>
                     <div className="zeroda_modal_content">
                         <div >
-                            <label htmlFor="place" >場館</label><br />
-                            <input type="text" name="place" value={sidename} onChange={setsidename}/>
+                            <label htmlFor="zplace" >場館</label><br />
+                            <input type="text" id="zplace" value={sidename} onChange={(e) => { setsidename(e.target.value) }} />
                         </div>
                         <div >
-                            <label htmlFor="addresss">地址</label><br />
-                            <input type="text" name="addresss" value={sideaddress} onChange={setsideaddress} />
+                            <label htmlFor="zaddress">地址</label><br />
+                            <input type="text" id="zaddress" value={sideaddress} onChange={(e) => { setsideaddress(e.target.value) }} />
                         </div>
                         <div >
-                            <label htmlFor="dateee" >日期</label><br />
-                            <input type="text" name="dateee" value={playDate} onChange={setPlayDate} />
+                            <label htmlFor="zdate" >日期</label><br />
+                            <input type="text" id="zdate" value={playDate} onChange={(e) => { setPlayDate(e.target.value) }} />
                         </div>
                         <div >
-                            <label htmlFor="timeee" >時段</label><br />
-                            <input type="text" name="timeee" value="09:00-12:00" />
+                            <label >時段</label><br />
+                            <select  onChange={(e) => setStartTime(e.target.value)}>
+                                {[6, 7, 8, 9, 10, 11, 12].map(item => {
+                                    return <option value={item} selected={item===starttime}>{item}:00</option>
+                                })}
+                            </select>至
+                            <select  onChange={(e) => setEndTime(e.target.value)}>
+                                {[11,12,13,14,15,16,17,18,19,20,21,22].map(item => {
+                                    return <option value={item} selected={item===endtime}>{item}:00</option>
+                                })}
+                            </select>
                         </div>
                         <div >
-                            <label htmlFor="levelll" >程度</label><br />
-                            <input type="text" name="levelll" value="新手" />
+                            <label htmlFor="zlevel" >程度</label><br />
+                            <input type="text" id="zlevel" value={level} onChange={(e) => { setLevel(e.target.value) }} />
                         </div>
                         <div>
-                            <label htmlFor="numberrr" >人數</label><br />
-                            <input type="text" name="numberrr" value="2" />
+                            <label htmlFor="znumber" >人數</label><br />
+                            <input type="text" id="znumber" value={number} onChange={(e) => { setNumber(e.target.value) }} />
                         </div>
                         <div>
-                            <label htmlFor="costtt" >費用</label><br />
-                            <input type="text" name="costtt" value="200" />
+                            <label htmlFor="zcost" >費用</label><br />
+                            <input type="text" id="zcost" value={cost} onChange={(e) => { setCost(e.target.value) }} />
                         </div>
                         <div>
-                            <label htmlFor="describeee" >描述</label><br />
-                            <textarea type="text" name="describeee" value="來打球哦" />
+                            <label htmlFor="zdescribe" >描述</label><br />
+                            <textarea type="text" id="zdescribe" value={describe} onChange={(e) => { setDescribe(e.target.value) }} />
                         </div>
                         <div className="zeroda_modal_yesOrNot">
-                            <span onClick={()=>{setZerodaToggle(!zerodatoggle)}}>取消</span>
+                            <span onClick={() => { setArticleToggle(!articleToggle) }}>取消</span>
                             <input type="submit" value="儲存" />
                         </div>
                     </div>
