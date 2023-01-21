@@ -236,17 +236,6 @@ app.post("/rentside", (req, res) => {
   const park = `${req.body.park}`;
   const bath = `${req.body.bath}`;
   const baulk = `${req.body.baulk}`;
-        console.log(type);
-        console.log(starttime);
-        console.log(endtime);
-        console.log(startdate);
-        console.log(enddate);
-        console.log(county);
-        console.log(area);
-        console.log(bath);
-        console.log(park);
-        console.log(baulk);
-        console.log(text);
   db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
   weekstarttime BETWEEN  ? AND ? AND county =? AND area =? AND (sidename LIKE ? OR adress LIKE ?)`
   // AND bath = ? AND park=? AND baulk=?`
@@ -289,7 +278,7 @@ app.post("/zeroda", (req, res) => {
   const ball1 = req.body.ball1;
   const zerodainput = req.body.zerodainput;
   if (zerodainput === '') {
-    db.query("SELECT * FROM userarticle_zeroda where date BETWEEN ? AND ? AND ballgames = ?"
+    db.query("SELECT * FROM userarticle_zeroda where startdate BETWEEN ? AND ? AND ballgames = ?"
       , [starttime1, endtime1, ball1], (err, result) => {
         if (err) {
           console.log(err);
@@ -298,7 +287,7 @@ app.post("/zeroda", (req, res) => {
         }
       });
   } else {
-    db.query("SELECT * FROM userarticle_zeroda where date BETWEEN ? AND ? AND ballgames = ? AND content LIKE ?"
+    db.query("SELECT * FROM userarticle_zeroda where startdate BETWEEN ? AND ? AND ballgames = ? AND content LIKE ?"
       , [starttime1, endtime1, ball1, zerodainput], (err, result) => {
         if (err) {
           console.log(err);
@@ -334,7 +323,7 @@ app.post("/zerodaupdate", (req, res) => {
   const zerodacontent = req.body.zerodacontent;
   const articleid_zeroda = req.body.articleid_zeroda;
   const number1 = req.body.number1;
-  db.query("UPDATE userarticle_zeroda SET content=?,starttime=?,endtime=?,date=?,county=?,area=?,fieldname=?,address=?,cost=?,level=?,number = ? where articleid_zeroda = ?"
+  db.query("UPDATE userarticle_zeroda SET content=?,starttime=?,endtime=?,startdate=?,county=?,area=?,fieldname=?,address=?,cost=?,level=?,number = ? where articleid_zeroda = ?"
     , [zerodacontent, zerodastarttime, zerodaendtime, zerodadate, zerodacounty, zerodaarea, zerodafieldname, zerodaaddress, zerodacost, zerodalevel, number1, articleid_zeroda], (err, result) => {
       if (err) {
         console.log(err);
@@ -484,7 +473,7 @@ app.post("/team", (req, res) => {
       const rentselectarea = req.body.rentselectarea;
       const fieldname = req.body.fieldname;
       if(fieldname=='' && renttime && renttime1 ){
-        db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =?"
+        db.query("SELECT * FROM userarticle_sublet where startdate BETWEEN ? AND ? AND area = ? AND county =?"
         ,[renttime,renttime1,rentselectarea,rentselectcounty], (err, result) => {
           if (err) {
             console.log(err);
@@ -493,7 +482,7 @@ app.post("/team", (req, res) => {
           }
         });
       }else if(fieldname && renttime && renttime1 ){
-        db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =? AND fieldname LIKE ?"
+        db.query("SELECT * FROM userarticle_sublet where startdate BETWEEN ? AND ? AND area = ? AND county =? AND fieldname LIKE ?"
         ,[renttime,renttime1,rentselectarea,rentselectcounty,fieldname], (err, result) => {
           if (err) {
             console.log(err);
@@ -538,7 +527,7 @@ app.post("/rentupdate", (req, res) => {
   const rentcost = req.body.rentcost;
   const number2 = req.body.number2;
   console.log(`後端${number2}`);
-  db.query("UPDATE userarticle_sublet SET content=?,starttime=?,endtime=?,date=?,county=?,area=?,fieldname=?,address=?,cost=?,amount=?  where articleid_sublet=?"
+  db.query("UPDATE userarticle_sublet SET content=?,starttime=?,endtime=?,startdate=?,county=?,area=?,fieldname=?,address=?,cost=?,amount=?  where articleid_sublet=?"
     , [rentcontent, rentstarttime, rentendtime, rentdate, rentcounty, rentarea, rentfieldname, rentaddress, rentcost, number2, articleid_sublet]
     , (err, result) => {
       if (err) {
@@ -746,7 +735,7 @@ app.post("/selfalter", upload.single('image'), (req, res) => {
       });
 });
 //更新個人資料 沒改照片
-app.post("/selfalterwithoutpic", (req, res) => {
+app.post("/selfalterwithoutpic",upload.array(), (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const username = req.body.username;
@@ -756,9 +745,10 @@ app.post("/selfalterwithoutpic", (req, res) => {
   const badminton = req.body.badminton
   const tabletennis = req.body.tabletennis;
   const volleyball = req.body.volleyball;
+  const usebadge = req.body.usebadge;
   const userId = req.body.userid;
-  db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? WHERE `userid`= ?",
-      [email, password, username,  tel, userdescribe, badminton, tabletennis, volleyball, userId], (err, result) => {
+  db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? ,`usebadge`= ? WHERE `userid`= ?",
+      [email, password, username,  tel, userdescribe, badminton, tabletennis, volleyball,usebadge, userId], (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -843,7 +833,7 @@ app.post("/findzoro", (req, res) => {
   const userid = req.body.userid;
   const starttime = req.body.stratDate;
   const endtime = req.body.endDate;
-  db.query("SELECT * FROM `userarticle_zeroda` WHERE userid = ? AND date BETWEEN ? AND ?", [userid, starttime, endtime], (err, result) => {
+  db.query("SELECT * FROM `userarticle_zeroda` WHERE userid = ? AND startdate BETWEEN ? AND ?", [userid, starttime, endtime], (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -880,7 +870,7 @@ app.post("/findsub", (req, res) => {
   const userid = req.body.userid;
   const starttime = req.body.stratDate;
   const endtime = req.body.endDate;
-  db.query("SELECT * FROM `userarticle_sublet` WHERE userid = ? AND date BETWEEN ? AND ?", [userid, starttime, endtime], (err, result) => {
+  db.query("SELECT * FROM `userarticle_sublet` WHERE userid = ? AND startdate BETWEEN ? AND ?", [userid, starttime, endtime], (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -941,7 +931,7 @@ app.post("/delezeroda", (req, res) => {
 // 新增零打已刪除文章
 app.post("/insertdelezeroda", (req, res) => {
   const articleid = req.body.articleid_zeroda;
-  db.query("INSERT INTO `delete_zeroda`(`articleid_zeroda`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `date`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `number`) SELECT * from userarticle_zeroda WHERE articleid_zeroda = ? ", 
+  db.query("INSERT INTO `delete_zeroda`(`articleid_zeroda`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `number`) SELECT * from userarticle_zeroda WHERE articleid_zeroda = ? ", 
   [articleid], (err, result) => {
     if (err) {
       console.log(err);
@@ -954,7 +944,7 @@ app.post("/insertdelezeroda", (req, res) => {
 // 新增轉租已刪除文章
 app.post("/insertdelesublet", (req, res) => {
   const articleid = req.body.articleid_sublet;
-  db.query("INSERT INTO `delete_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `date`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `amount`) SELECT * from userarticle_sublet WHERE articleid_sublet = ? ", 
+  db.query("INSERT INTO `delete_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `amount`) SELECT * from userarticle_sublet WHERE articleid_sublet = ? ", 
   [articleid], (err, result) => {
     if (err) {
       console.log(err);
@@ -969,7 +959,7 @@ app.post("/finddelesub", (req, res) => {
   const userid = req.body.userid;
   const starttime = req.body.stratDate;
   const endtime = req.body.endDate;
-  db.query("SELECT * FROM `delete_sublet` WHERE userid = ? AND date BETWEEN ? AND ?", [userid, starttime, endtime], (err, result) => {
+  db.query("SELECT * FROM `delete_sublet` WHERE userid = ? AND startdate BETWEEN ? AND ?", [userid, starttime, endtime], (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -982,7 +972,7 @@ app.post("/finddelezoro", (req, res) => {
   const userid = req.body.userid;
   const starttime = req.body.stratDate;
   const endtime = req.body.endDate;
-  db.query("SELECT * FROM `delete_zeroda` WHERE userid = ? AND date BETWEEN ? AND ?", [userid, starttime, endtime], (err, result) => {
+  db.query("SELECT * FROM `delete_zeroda` WHERE userid = ? AND startdate BETWEEN ? AND ?", [userid, starttime, endtime], (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -993,7 +983,7 @@ app.post("/finddelezoro", (req, res) => {
 // 重建零打已新增文章
 app.post("/insertzeroda", (req, res) => { 
   const articleid = req.body.articleid_zeroda;
-  db.query("INSERT INTO `userarticle_zeroda`(`articleid_zeroda`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `date`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `number`) SELECT * from delete_zeroda WHERE articleid_zeroda = ? ", 
+  db.query("INSERT INTO `userarticle_zeroda`(`articleid_zeroda`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `number`) SELECT * from delete_zeroda WHERE articleid_zeroda = ? ", 
   [articleid], (err, result) => {
     if (err) {
       console.log(err);
@@ -1006,7 +996,7 @@ app.post("/insertzeroda", (req, res) => {
 // 重建轉租以新增文章
 app.post("/insertsub", (req, res) => { 
   const articleid = req.body.articleid_sublet;
-  db.query("INSERT INTO `userarticle_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `date`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `amount`) SELECT * from delete_sublet WHERE articleid_sublet = ? ", 
+  db.query("INSERT INTO `userarticle_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `amount`) SELECT * from delete_sublet WHERE articleid_sublet = ? ", 
   [articleid], (err, result) => {
     if (err) {
       console.log(err);

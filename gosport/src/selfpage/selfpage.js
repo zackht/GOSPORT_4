@@ -9,6 +9,11 @@ import './selfpage.css'
 
 
 const Selfpage = () => {
+    // 讀取個人資料
+    const userid = Cookies.get('id');
+    if(!userid){
+        window.location = '/gosport/home';
+    }
     const [selfInfo, setSelf] = useState([{
         activeTime: '預備中',
         username: '預備中',
@@ -21,8 +26,6 @@ const Selfpage = () => {
     }]);
     const [selfteam, setSelfTeam] = useState([{ tname: '' }]);
     const [selfBadge, setSelfBadge] = useState([{ badgeid: '', badgeurl: '#' }]);
-    // 讀取個人資料
-    const userid = Cookies.get('id');
     useEffect(() => {
 
         Axios.post("http://localhost:3001/self", {
@@ -73,7 +76,7 @@ const Selfpage = () => {
             <div className='self_'>
                 <div className="self_cover">
                     <div style={{ display: 'flex', width: '90%', height: '481px' }}>
-                        <div className="self_discribe" style={{ flex: "1.1" }}>
+                        <div className="self_discribe">
                             <div>姓名</div>
                             <div>{selfInfo[0].username}</div>
                             <div>程度</div>
@@ -93,9 +96,11 @@ const Selfpage = () => {
                                 {selfInfo[0].userdescribe}
                             </article>
                         </div>
-                        <div style={{ flex: 1, position: "relative" }}>
-                            <div id="tt" style={{ height: "50%", width: "100%", position: "relative", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                <img className='self_img' src={userurl} alt="" />
+                        <div className="self_right" >
+                            <div className='self_imgbox'>
+                                <span>
+                                    <img className='self_img' src={userurl} alt="" />
+                                </span>
                                 <div className="show_star">
                                     {selfBadge.map(item => <embed key={item.badgeid} src={item.badgeurl}></embed>)}
                                     {/* <embed src={star}></embed> */}

@@ -128,13 +128,13 @@ const Rentside = () => {
                                 <p className={cc.d11}>結束時間</p>
                             </div>
 
-                            <input className={cc.d12} type="date" id="start"
+                            <input className={`${cc.d12} ${cc.date}`} type="date" id="start"
                                 name="trip-start" min="2022-12-19" max="2033-12-31" onChange={(e)=>{setstartdate(e.target.value)}}/>
                             <img className={`${cc.d13} ${cc.selectedDate}`} src={arr} />
 
                             <span className={cc.d14}>~</span>
 
-                            <input className={cc.d15} type="date" id="start"
+                            <input className={`${cc.d15} ${cc.date}`} type="date" id="start"
                                 name="trip-start" min="2022-12-19" max="2033-12-31" onChange={(e)=>{setenddate(e.target.value)}}/>
                             <img className={`${cc.d16} ${cc.selectedDate}`} src={arr} />
 

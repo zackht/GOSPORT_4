@@ -1,6 +1,7 @@
 // import React, { Component } from 'react';
 import React, { useEffect, useState } from 'react';
 import Axios from "axios";
+import Cookies from 'js-cookie';
 import Ordering from './components/ordering';
 import OrderFutrue from './components/orderfutrue'
 import OrderEnd from './components/orderEnd'
@@ -10,9 +11,13 @@ import Artdel from './components/artdel'
 
 import './selfactive.css'
 
-import star from './icon/star1.svg'
-import pic from './icon/20130917_171106.jpg'
+// import star from './icon/star1.svg'
+// import pic from './icon/20130917_171106.jpg'
 const Selfactive = () => {
+    const userid = Cookies.get('id');
+    if (!userid) {
+        window.location = '/gosport/home';
+    }
     const tabList = [
         { tabName: "我的訂單", id: 1 },
         { tabName: "我的文章", id: 2 },
@@ -26,7 +31,7 @@ const Selfactive = () => {
     var isArticleShow = tabIndex === 2 ? 'flex' : 'none';
 
     const activeList = [
-        { tabName: "進行活動", id: 1 }, 
+        { tabName: "進行活動", id: 1 },
         { tabName: "未來活動", id: 2 },
         { tabName: "結束活動", id: 3 },
         { tabName: "不成立", id: 4 },
@@ -101,6 +106,55 @@ const Selfactive = () => {
         // clearTimeout(time);
     }
 
+    // 零打編輯彈窗控制
+    const [sidename, setsidename] = useState('');
+    const [sideaddress, setsideaddress] = useState('');
+    const [playDate, setPlayDate] = useState('');
+    const [starttime, setStartTime] = useState('');
+    const [endtime, setEndTime] = useState('');
+
+    const [level, setLevel] = useState('');
+    const [number, setNumber] = useState('');
+    const [cost, setCost] = useState('');
+    const [describe, setDescribe] = useState('');
+
+    const [articleToggle, setArticleToggle] = useState(false);
+    var showZerodaModal = articleToggle ? 'flex' : 'none';
+    const editZeroda = (item) => {
+        setArticleToggle(!articleToggle)
+        console.log(item)
+        setsidename(item.fieldname)
+        setsideaddress(item.address)
+        if (item.startdate) {
+            let playDate = item.startdate.substring(0, 10)
+            setPlayDate(playDate)
+        }
+        setStartTime(item.starttime)
+        setEndTime(item.endtime)
+        setLevel(item.level)
+        setNumber(item.number)
+        setCost(item.cost)
+        setDescribe(item.content)
+    }
+
+    // 轉租編輯彈窗控制
+    const editSublet = (item) => {
+        console.log(item)
+        setArticleToggle(!articleToggle)
+        setsidename(item.fieldname)
+        setsideaddress(item.address)
+        if (item.startdate) {
+            let playDate = item.startdate.substring(0, 10)
+            setPlayDate(playDate)
+        }
+        setStartTime(item.starttime)
+        setEndTime(item.endtime)
+        setLevel(item.level)
+        setNumber(item.amount)
+        setCost(item.cost)
+        setDescribe(item.content)
+    }
+
     return (
         <React.Fragment>
             <div className='active_'>
@@ -146,7 +200,7 @@ const Selfactive = () => {
                         <div id="artclein" style={{ display: isArticleShow }}>
                             {/* <!-- 以新增 --> */}
                             <div id="tein" style={{ display: isAddShow }}>
-                                <Artadd control={controlModal} />
+                                <Artadd control={controlModal} editSublet={editSublet} editZeroda={editZeroda} />
                             </div>
                             {/* <!-- 已刪除 --> */}
                             <div id="teout" style={{ display: isDelShow }}>
@@ -155,6 +209,7 @@ const Selfactive = () => {
                         </div>
                     </div>
                 </div>
+                {/* follow視窗 */}
                 <div className="active_modal" style={{ display: showModal }}>
                     <div className="modal-content">
                         <span className="active_close" onClick={() => { closeModal() }}>&times;</span>
@@ -171,10 +226,12 @@ const Selfactive = () => {
                                     <div key={index}>
                                         <div className="clientPic">
                                             <img src={userimglist[index]} alt="" className="clientImg" />
-                                            <div>
-                                                {JSON.parse(item.usebadge).map((item,index)=>{return(
-                                                    <img key={index} src={item.badgeurl} alt="badge" />
-                                                )})}
+                                            <div className='clientBadge'>
+                                                {JSON.parse(item.usebadge).map((item, index) => {
+                                                    return (
+                                                        <img key={index} src={item.badgeurl} alt="badge" />
+                                                    )
+                                                })}
                                                 {/* <img src={JSON.parse(item.usebadge)[0].badgeurl} alt="aa" /> */}
                                                 {/* <img src={star} alt="" /> */}
                                                 {/* <img src={star} alt="" /> */}
@@ -185,9 +242,9 @@ const Selfactive = () => {
                                             <div>{item.username}</div>
                                             <div >
                                                 <span>程度</span>
-                                                <span style={{display:degree==="羽球"?"inline":"none"}}>{item.badminton}</span>
-                                                <span style={{display:degree==="排球"?"inline":"none"}}>{item.volleyball}</span>
-                                                <span style={{display:degree==="桌球"?"inline":"none"}}>{item.tabletennis}</span>
+                                                <span style={{ display: degree === "羽球" ? "inline" : "none" }}>{item.badminton}</span>
+                                                <span style={{ display: degree === "排球" ? "inline" : "none" }}>{item.volleyball}</span>
+                                                <span style={{ display: degree === "桌球" ? "inline" : "none" }}>{item.tabletennis}</span>
                                             </div>
                                         </div>
                                         <div className="clientYesNo">
@@ -202,31 +259,56 @@ const Selfactive = () => {
                                     </div>
                                 )
                             })}
-                            {/* <div>
-                                <div className="clientPic">
-                                    <img className="clientImg" src={pic} alt="" />
-                                    <div>
-                                        <img src={star} alt="" />
-                                        <img src={star} alt="" />
-                                        <img src={star} alt="" />
-                                    </div>
-                                </div>
-                                <div className="clientIntro">
-                                    <div>南區金城武</div>
-                                    <div><span>程度</span><span>高手</span></div>
-                                </div>
-                                <div className="clientYesNo">
-                                    <div>
-                                        2022/12/22 9:05
-                                    </div>
-                                    <div>
-                                        <button>拒絕</button>
-                                        <button>接受</button>
-                                    </div>
-                                </div>
-                            </div> */}
-                            {/* <div></div> */}
-                            {/* <div></div> */}
+                        </div>
+                    </div>
+                </div>
+                {/* 零打編輯 */}
+                <div className="zeroda_modal" style={{ display: showZerodaModal }}>
+                    <div className="zeroda_modal_content">
+                        <div >
+                            <label htmlFor="zplace" >場館</label><br />
+                            <input type="text" id="zplace" value={sidename} onChange={(e) => { setsidename(e.target.value) }} />
+                        </div>
+                        <div >
+                            <label htmlFor="zaddress">地址</label><br />
+                            <input type="text" id="zaddress" value={sideaddress} onChange={(e) => { setsideaddress(e.target.value) }} />
+                        </div>
+                        <div >
+                            <label htmlFor="zdate" >日期</label><br />
+                            <input type="text" id="zdate" value={playDate} onChange={(e) => { setPlayDate(e.target.value) }} />
+                        </div>
+                        <div >
+                            <label >時段</label><br />
+                            <select  onChange={(e) => setStartTime(e.target.value)}>
+                                {[6, 7, 8, 9, 10, 11, 12].map(item => {
+                                    return <option value={item} selected={item===starttime}>{item}:00</option>
+                                })}
+                            </select>至
+                            <select  onChange={(e) => setEndTime(e.target.value)}>
+                                {[11,12,13,14,15,16,17,18,19,20,21,22].map(item => {
+                                    return <option value={item} selected={item===endtime}>{item}:00</option>
+                                })}
+                            </select>
+                        </div>
+                        <div >
+                            <label htmlFor="zlevel" >程度</label><br />
+                            <input type="text" id="zlevel" value={level} onChange={(e) => { setLevel(e.target.value) }} />
+                        </div>
+                        <div>
+                            <label htmlFor="znumber" >人數</label><br />
+                            <input type="text" id="znumber" value={number} onChange={(e) => { setNumber(e.target.value) }} />
+                        </div>
+                        <div>
+                            <label htmlFor="zcost" >費用</label><br />
+                            <input type="text" id="zcost" value={cost} onChange={(e) => { setCost(e.target.value) }} />
+                        </div>
+                        <div>
+                            <label htmlFor="zdescribe" >描述</label><br />
+                            <textarea type="text" id="zdescribe" value={describe} onChange={(e) => { setDescribe(e.target.value) }} />
+                        </div>
+                        <div className="zeroda_modal_yesOrNot">
+                            <span onClick={() => { setArticleToggle(!articleToggle) }}>取消</span>
+                            <input type="submit" value="儲存" />
                         </div>
                     </div>
                 </div>
