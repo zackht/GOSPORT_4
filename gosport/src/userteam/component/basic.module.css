@@ -84,10 +84,12 @@
     margin-top: 40px;
     margin-left: 40px;
     clip-path: circle(50%);
+    display: flex;
+    justify-content: center;
 }
 /* 照片 */
 .mBimg {
     height: 100%;
     position: relative;
-    left:-50%;
+    /* left:-50%; */
 }

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import basic from './basic.module.css';
 import Axios from "axios";
 import Cookies from 'js-cookie';
+import img from '../img.module';
 
 export default function Basic(props) {
     
@@ -17,12 +18,13 @@ export default function Basic(props) {
     const [basicResult,setBasicResult] = useState(null); // all
     const [teamimg, setTeamimg] = useState('');          // 球隊img
 
-    // 抓 隊長id
-    const handleLeaderImg = async () => {
-        let res = await Axios.post("http://localhost:3001/teamleader",{
+    // 抓 隊長id -> 編輯權限
+    const handleLeaderImg =  () => {
+        let res =  Axios.post("http://localhost:3001/teamleader",{
             teamid: teamid
-        });
-        setLeaderId(res.data[0].userid);
+        }).then((response)=>{
+            setLeaderId(response.data[0].userid);
+        })
     };
 
     // 抓資料
@@ -50,14 +52,14 @@ export default function Basic(props) {
         handleBasicResult();
         handleLeaderImg();
     },[]);
-    useEffect(()=>{
-        handleBasicResult();
-        handleLeaderImg();
-    },[basicResult]);
+    // useEffect(()=>{
+    //     handleBasicResult();
+    //     handleLeaderImg();
+    // },[basicResult]);
 
     return(
         <>
-            <div className={basic.mBimgBox}><img src={teamimg} className={basic.mBimg} alt='團隊的照片'/></div>
+            <div className={basic.mBimgBox}><img src={teamimg? teamimg:img.team_none} className={basic.mBimg} alt='團隊的照片'/></div>
             <div className={basic.basic}>
                 {/* 只有隊長可編輯 */}
                 { userid===`${leaderId}`? <Link to={`/gosport/user/myteam/basic/edit`}>編輯</Link>:'' }

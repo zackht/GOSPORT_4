@@ -1048,7 +1048,7 @@ app.post('/basicsearch', (req, res) => {
   const userid = req.body.userid; // 會員
   const teamid = req.body.teamid; // 球隊
   db.query(
-    `SELECT tname,sidename, week,type,level,teamimg,fee,text,starttime,endtime,county,area,teamimgpath,teamimg
+    `SELECT tname,sidename, week,type,level,teamimg,fee,text,starttime,endtime,county,area,teamimg
     FROM userteam, team 
     where userteam.teamid=team.teamid and userteam.userid=? and userteam.teamid=?`,
     [userid, teamid],
@@ -1135,7 +1135,7 @@ app.post('/teamleader', (req,res)=>{
   app.post('/teammember', (req,res)=>{
     const teamid = req.body.teamid;
     db.query(
-        `SELECT user.userid,userimg
+        `SELECT user.userid,userimg,leader,userimg,username,type as 'teamtype',badminton,tabletennis,volleyball
         FROM teamuser,user
         where user.userid = teamuser.userid and teamid=?;`,
         [teamid],
@@ -1152,10 +1152,9 @@ app.post('/teamleader', (req,res)=>{
     app.post('/teampendingimg', (req,res)=>{
       const teamid = req.body.teamid;
       db.query(
-          `SELECT teampendinguser.userid,userimg,username,type as 'teamtype',badminton,tabletennis,volleyball,addtime
+          `SELECT teampendinguser.userid, user.userimg, user.username, team.type as 'teamtype', user.badminton, user.tabletennis, user.volleyball, teampendinguser.addtime
           FROM teampendinguser,user,team
-          where teampendinguser.userid = user.userid and teampendinguser.teamid=?
-          ORDER BY teampendinguser.userid;`,
+          where teampendinguser.userid = user.userid and teampendinguser.teamid=team.teamid and teampendinguser.teamid=?`,
           [teamid],
           (err, result) => {
             if (err) {

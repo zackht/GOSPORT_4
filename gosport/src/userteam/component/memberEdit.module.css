@@ -19,15 +19,21 @@
 .mForm input[type=radio] {
     display: none;
 }
-.mForm label img {
+/* 頭貼容器 */
+.mForm label{
     width: 100px;
     height: 100px;
+    overflow: hidden;
     clip-path: circle(50% at 50% 50%);
     margin-bottom: 35px;
     margin-right: 15px;
+}
+/* 頭貼 */
+.mForm label img {
+    height: 100px;
     opacity: 30%;
 }
-.mForm input[name='teamL']:checked+label img {
+.mForm input[name='teammember']:checked+label img {
     opacity: 100%;
 }
 /* 成員 */
