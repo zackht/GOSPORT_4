@@ -16,7 +16,7 @@ export default function Member(params) {
     // input值
     const [leaderImg, setLeaderImg] = useState('');         // 隊長img
     const [leaderId, setLeaderId] = useState('');           // 隊長id
-    const [members, setmembers] = useState([]);       // 成員imgs 資料庫二進位檔
+    const [members, setmembers] = useState([]);             // 成員imgs 資料庫二進位檔
     const [memberImgUrls, setMemberImgUrls] = useState({}); // 成員urls 已讀取
     const [pendingmember, setpendingmember] = useState([]);   // 未審核成員
     const [pendingImgUrls, setPendingImgUrls] = useState({}); // 未審核成員urls 已讀取
@@ -27,11 +27,6 @@ export default function Member(params) {
         handlemembers(); // 成員
         handlePending(); // 未審核成員
     },[]);
-    // useEffect(()=>{
-    //     handleLeaderImg();  // 隊長
-    //     handlemembers(); // 成員
-    //     handlePending(); // 未審核成員
-    // },[leaderImg,leaderId,members,memberImgUrls,pendingmember,pendingImgUrls]);
 
     // 抓 隊長資料
     const handleLeaderImg = async () => {
@@ -54,6 +49,7 @@ export default function Member(params) {
             teamid: teamid
         }).then((response)=>{
             setmembers(response.data); // 成員資料
+            console.log(response.data);
         })
     }
 
@@ -79,10 +75,10 @@ export default function Member(params) {
         // 會員有頭像
         if(val.userimg !== null){
             // 排除隊長
-            return val.userid === leaderId? '':( <img key={key} className={member.mImg} src={memberImgUrls[key]} />);    
+            return val.userid === leaderId? '':( <div className={member.mImgbox}><img key={key} className={member.mImg} src={memberImgUrls[key]} /></div>);    
         }else{
         // 會員無頭像
-            return <img key={key} className={member.mImg} src={img.m} />; 
+            return <div className={member.mImgbox}><img key={key} className={member.mImg} src={img.m} /></div>; 
         }
     });
 
@@ -91,7 +87,6 @@ export default function Member(params) {
         Axios.post("http://localhost:3001/teampendingimg",{
             teamid: teamid
         }).then((response)=>{
-            console.log(response.data);
             setpendingmember(response.data); // 未審核成員
         })
     }
@@ -180,7 +175,7 @@ export default function Member(params) {
                     { userid===`${leaderId}`? (<Link to={"/gosport/user/myteam/member/edit"} className={member.mbtn}>編輯</Link>):'' }
                     {/* 隊長 */}
                     <div className={member.mTitle}>隊長</div>
-                        <img className={member.mImg} src={leaderImg} alt=""/>
+                    <div className={member.mImgbox}><img className={member.mImg} src={leaderImg} alt=""/></div>
                     {/* 成員 */}
                     <div className={member.mTitle}>成員</div>
                     { memberList }  
