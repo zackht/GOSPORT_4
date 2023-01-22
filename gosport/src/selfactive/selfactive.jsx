@@ -1,5 +1,5 @@
 // import React, { Component } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Axios from "axios";
 import Cookies from 'js-cookie';
 import Ordering from './components/ordering';
@@ -8,6 +8,8 @@ import OrderEnd from './components/orderEnd'
 import OrderNo from './components/orderNo'
 import Artadd from './components/artadd';
 import Artdel from './components/artdel'
+
+import SelectDown from './icon/Group 41.png'
 
 import './selfactive.css'
 
@@ -107,6 +109,7 @@ const Selfactive = () => {
     }
 
     // 零打編輯彈窗控制
+    const [zerodaid, setZerodaid] = useState('');
     const [sidename, setsidename] = useState('');
     const [sideaddress, setsideaddress] = useState('');
     const [playDate, setPlayDate] = useState('');
@@ -122,7 +125,8 @@ const Selfactive = () => {
     var showZerodaModal = articleToggle ? 'flex' : 'none';
     const editZeroda = (item) => {
         setArticleToggle(!articleToggle)
-        console.log(item)
+        // console.log(item)
+        setZerodaid(item.articleid_zeroda)
         setsidename(item.fieldname)
         setsideaddress(item.address)
         if (item.startdate) {
@@ -138,9 +142,11 @@ const Selfactive = () => {
     }
 
     // 轉租編輯彈窗控制
+    const [subid, setSubid] = useState('');
     const editSublet = (item) => {
         console.log(item)
         setArticleToggle(!articleToggle)
+        setSubid(item.articleid_sublet)
         setsidename(item.fieldname)
         setsideaddress(item.address)
         if (item.startdate) {
@@ -154,7 +160,52 @@ const Selfactive = () => {
         setCost(item.cost)
         setDescribe(item.content)
     }
+    // 取消編輯按鍵
+    const closeEdit = () => {
+        setZerodaid('')
+        setArticleToggle(!articleToggle)
+    }
 
+    // 父傳子搜尋按鍵識別
+    const find = useRef();
+    // 零打文章更新
+    const updateZeroda = () => {
+        Axios.post("http://localhost:3001/updatezeroda", {
+            articleid_zeroda: zerodaid,
+            sidename: sidename,
+            sideaddress: sideaddress,
+            playDate: playDate,
+            starttime: starttime,
+            endtime: endtime,
+            level: level,
+            number: number,
+            cost: cost,
+            describe: describe
+        }).then((response) => {
+            // console.log(response.data);
+            setZerodaid('')
+            setArticleToggle(!articleToggle)
+            find.current.click();
+        })
+    }
+    // 轉租文章更新
+    const updateSublet = () => {
+        Axios.post("http://localhost:3001/updatesub", {
+            articleid_sublet: subid,
+            sidename: sidename,
+            sideaddress: sideaddress,
+            playDate: playDate,
+            starttime: starttime,
+            endtime: endtime,
+            number: number,
+            cost: cost,
+            describe: describe
+        }).then((response) => {
+            // console.log(response.data);
+            setArticleToggle(!articleToggle)
+            find.current.click();
+        })
+    }
     return (
         <React.Fragment>
             <div className='active_'>
@@ -200,7 +251,7 @@ const Selfactive = () => {
                         <div id="artclein" style={{ display: isArticleShow }}>
                             {/* <!-- 以新增 --> */}
                             <div id="tein" style={{ display: isAddShow }}>
-                                <Artadd control={controlModal} editSublet={editSublet} editZeroda={editZeroda} />
+                                <Artadd control={controlModal} editSublet={editSublet} editZeroda={editZeroda} find={find} />
                             </div>
                             {/* <!-- 已刪除 --> */}
                             <div id="teout" style={{ display: isDelShow }}>
@@ -277,20 +328,23 @@ const Selfactive = () => {
                             <label htmlFor="zdate" >日期</label><br />
                             <input type="text" id="zdate" value={playDate} onChange={(e) => { setPlayDate(e.target.value) }} />
                         </div>
-                        <div >
+                        <div style={{position: 'relative'}}>
                             <label >時段</label><br />
-                            <select  onChange={(e) => setStartTime(e.target.value)}>
+                            <select onChange={(e) => setStartTime(e.target.value)}>
                                 {[6, 7, 8, 9, 10, 11, 12].map(item => {
-                                    return <option value={item} selected={item===starttime}>{item}:00</option>
-                                })}
-                            </select>至
-                            <select  onChange={(e) => setEndTime(e.target.value)}>
-                                {[11,12,13,14,15,16,17,18,19,20,21,22].map(item => {
-                                    return <option value={item} selected={item===endtime}>{item}:00</option>
+                                    return <option value={item} selected={item === starttime}>{item}:00</option>
                                 })}
                             </select>
+                            <img style={{left:'63px'}} src={SelectDown} alt="" />
+                            至
+                            <select onChange={(e) => setEndTime(e.target.value)}>
+                                {[11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22].map(item => {
+                                    return <option value={item} selected={item === endtime}>{item}:00</option>
+                                })}
+                            </select>
+                            <img style={{left:'172px'}} src={SelectDown} alt="" />
                         </div>
-                        <div >
+                        <div style={{ display: zerodaid === '' ? 'none' : 'block' }}>
                             <label htmlFor="zlevel" >程度</label><br />
                             <input type="text" id="zlevel" value={level} onChange={(e) => { setLevel(e.target.value) }} />
                         </div>
@@ -307,8 +361,8 @@ const Selfactive = () => {
                             <textarea type="text" id="zdescribe" value={describe} onChange={(e) => { setDescribe(e.target.value) }} />
                         </div>
                         <div className="zeroda_modal_yesOrNot">
-                            <span onClick={() => { setArticleToggle(!articleToggle) }}>取消</span>
-                            <input type="submit" value="儲存" />
+                            <span onClick={() => { closeEdit() }}>取消</span>
+                            <input type="submit" onClick={() => { if (zerodaid !== '') { updateZeroda() } else { updateSublet() } }} value="儲存" />
                         </div>
                     </div>
                 </div>
