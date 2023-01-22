@@ -1168,13 +1168,15 @@ app.post('/teamleader', (req,res)=>{
       }
     );
   });
-  // 芝｜Member 抓成員img
+  // 芝｜Member 抓成員img｜未完成
   app.post('/teammember', (req,res)=>{
     const teamid = req.body.teamid;
     db.query(
-        `SELECT user.userid,userimg,leader,userimg,username,type as 'teamtype',badminton,tabletennis,volleyball
-        FROM teamuser,user
-        where user.userid = teamuser.userid and teamid=?;`,
+        `SELECT teamuser.userid,teamuser.leader,team.type as 'teamtype',user.username,user.userimg,user.badminton,user.tabletennis,user.volleyball
+        FROM teamuser
+        INNER JOIN team on teamuser.teamid = team.teamid
+        INNER JOIN user ON teamuser.userid = user.userid
+        WHERE teamuser.teamid=?;`,
         [teamid],
         (err, result) => {
           if (err) {
@@ -1225,8 +1227,6 @@ app.post('/teamleader', (req,res)=>{
     app.post('/teampendingaccept', (req,res)=>{
       const teamid = req.body.teamid;
       const userid = req.body.userid;
-      console.log(teamid);
-      console.log(userid);
       db.query(
           `INSERT into teamuser(teamid,userid,leader)
           VALUES(?,?,0);
@@ -1243,7 +1243,43 @@ app.post('/teamleader', (req,res)=>{
         );
     });
 
-    // 芝｜Pay 依日期區間 搜尋文章
+    // 芝｜Member 刪除 球隊成員
+    app.post('/deletemember', (req,res)=>{
+      const teamid = req.body.teamid;
+      const userid = req.body.userid;
+      db.query(
+          `DELETE from teamuser
+          WHERE teamid=? and userid=?;`,
+          [teamid,userid],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+    });
+
+    // 芝｜Member 更新 隊長
+    app.post('/deletemember', (req,res)=>{
+      const teamid = req.body.teamid;
+      const userid = req.body.userid;
+      db.query(
+          `DELETE from teamuser
+          WHERE teamid=? and userid=?;`,
+          [teamid,userid],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+    });
+
+    // 芝｜Pay 依日期區間 搜尋文章｜未完成
     app.post('/teamdate', (req,res)=>{
       const pathend = req.body.pathend;
       const userid = req.body.userid;

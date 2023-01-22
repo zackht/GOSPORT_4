@@ -17,10 +17,12 @@ export default function MemberEdit(params) {
     const [members, setmembers] = useState([]);             // 成員imgs 資料庫二進位檔
     const [memberImgUrls, setMemberImgUrls] = useState({}); // 成員urls 已讀取
 
+    // button state
+    const [btnDelete, setBtnDelete] = useState(`${memberEdit.isNotDelete}`);
+
     // 畫面載入即抓資料
     useEffect(()=>{
         handlemembers(); // 成員
-        
     },[]);
 
     // 抓 成員資料
@@ -29,6 +31,7 @@ export default function MemberEdit(params) {
             teamid: teamid
         }).then((response)=>{
             setmembers(response.data);     // 成員資料 
+            console.log(response.data);
             response.data.forEach((val)=>{ // 隊長id
                 if(val.leader===1){
                     setLeaderId(val.userid);
@@ -37,10 +40,9 @@ export default function MemberEdit(params) {
         })
     };
     
-    // 抓到成員資料後
+    // 抓到成員資料後 照片轉檔
     useEffect(() => {
         members.forEach((val, key) => {
-            // 讀取 成員img
             if (val.userimg !== null) {
                 let u8Arr = new Uint8Array(val.userimg.data);
                 let blob = new Blob([u8Arr], {type: "image/jpeg"});
@@ -55,16 +57,15 @@ export default function MemberEdit(params) {
         });
     }, [members]);
 
-    // 設定隊長清單 -> 所有成員
+    // 隊長清單
     const setLeaderList = members.map((val, key) => {
         // 會員有頭像時
         if(val.userimg !== null){
-            // 現任隊長 checked
             return (
                 <>
                     <input type="radio" key={key} id={`o${key}`} name='teammember' value={val.userid}
-                           checked={val.userid==leaderId} 
-                           onClick={e=>{setLeaderId(e.target.value)}}/>
+                           checked={val.userid==leaderId} // 現任隊長 checked
+                           onClick={e=>{ setLeaderId(e.target.value)} }/>
                     <label for={`o${key}`}>
                         <img src={memberImgUrls[key]} />
                     </label>
@@ -85,30 +86,65 @@ export default function MemberEdit(params) {
         }
     });
 
-    // 設定成員清單
+    // 成員球類程度
+    const handleteamtype =(val)=>{
+        if(val.teamtype==='羽球'){ 
+            return <div>{val.badminton}</div>;
+        }else if(val.teamtype==='桌球'){
+            return <div>{val.tabletennis}</div>;
+        }else{
+            return <div>{val.volleyball}</div>;
+        }
+    };
+
+    // 刪除成員
+    const handleDeleteMember =(val,key)=>{
+        console.log('delete');
+        setBtnDelete(`${memberEdit.isDelete}`);
+
+
+        // Axios.post("http://localhost:3001/deletemember",{
+        //     teamid:teamid,
+        //     userid:val.userid
+        // }).then((response)=>{
+        //     handlemembers(); // 重抓成員資料
+        // })
+    }
+
+    // 成員清單
     const memberList =members.map((val, key) => {
-        console.log(val);
+        // console.log(val);
         return (
             <div className={memberEdit.checkMember}>
-                <img src={img.m1} alt=""/>
-                <div>豐原大哥</div>
+                <img src={ memberImgUrls[key]? memberImgUrls[key]:img.m } alt=""/>
+                <div>{val.username}</div>
                 <div>程度</div>
-                <div>普通</div>
+                <div>{ handleteamtype(val) }</div>
                 <div className={memberEdit.badge}>
                     <img src={img.star} alt=""/>
                     <img src={img.star} alt=""/>
                 </div>
                 <div className={memberEdit.checkbtn}>
-                    <button>刪除</button>
+                    <button onClick={ handleDeleteMember }
+                            className={ btnDelete } >刪除</button>
                 </div>
             </div>
         )
     })
 
+    // 成員資料更新 
+    const handleMemberUpdate=()=>{
+        Axios.post("http://localhost:3001/updatemember",{
+            teamid:teamid,
+            leaderid:leaderId
+        }).then((response)=>{
+            console.log('update');
+        })
+    }
 
     return(
         <>
-            <form action="" className={memberEdit.mForm}>
+            <div className={memberEdit.mForm}>
 
                 {/* 隊長 */}
                 <div className={memberEdit.mTitle}>隊長</div>
@@ -117,58 +153,14 @@ export default function MemberEdit(params) {
                 {/* 成員 */}
                 <div className={memberEdit.mTitle}>成員</div>
                 { memberList }
-                
-                {/* <div className={memberEdit.checkMember}>
-                    <img src={img.m1} alt=""/>
-                    <div>豐原大哥</div>
-                    <div>程度</div>
-                    <div>普通</div>
-                    <div className={memberEdit.badge}>
-                        <img src={img.star} alt=""/>
-                        <img src={img.star} alt=""/>
-                    </div>
-                    <div className={memberEdit.checkbtn}>
-                        <button>刪除</button>
-                    </div>
-                </div>
-                
-                <div className={memberEdit.checkMember}>
-                    <img src={img.m2} alt=""/>
-                    <div>南區金城武</div>
-                    <div>程度</div>
-                    <div>高手</div>
-                    <div className={memberEdit.badge}>
-                        <img src={img.star} alt=""/>
-                        <img src={img.star} alt=""/>
-                        <img src={img.star} alt=""/>
-                    </div>
-                    <div className={memberEdit.checkbtn}>
-                        <button>刪除</button>
-                    </div>
-                </div>
-                
-                <div className={memberEdit.checkMember}>
-                    <img src={img.m3} alt=""/>
-                    <div>南區謝震武</div>
-                    <div>程度</div>
-                    <div>新手</div>
-                    <div className={memberEdit.badge}>
-                        <img src={img.star} alt=""/>
-                        <img src={img.star} alt=""/>
-                        <img src={img.star} alt=""/>
-                    </div>
-                    <div className={memberEdit.checkbtn}>
-                        <button>刪除</button>
-                    </div>
-                </div> */}
 
                 {/* 取消｜儲存 */}
                 <div className={memberEdit.formbtn}>
                     <Link to={`/gosport/user/myteam/member`}>取消</Link>
-                    <input type="submit" value="儲存" id="formSubmit"/>
+                    <Link to={`/gosport/user/myteam/member`} onClick={ handleMemberUpdate }>儲存</Link>
                 </div>
 
-            </form>
+            </div>
         </>
     )
 };
