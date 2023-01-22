@@ -49,7 +49,7 @@ export default function Member(params) {
             teamid: teamid
         }).then((response)=>{
             setmembers(response.data); // 成員資料
-            console.log(response.data);
+            // console.log(response.data);
         })
     }
 
@@ -88,6 +88,7 @@ export default function Member(params) {
             teamid: teamid
         }).then((response)=>{
             setpendingmember(response.data); // 未審核成員
+            // console.log(response.data);
         })
     }
 
@@ -143,7 +144,7 @@ export default function Member(params) {
 
     // 未審核成員清單
     const pendingMemberList = pendingmember.map((val, key) => {
-        if(key%3===0){ // 篩出重複資料
+        // if(key%3===0){ // 篩出重複資料
             return (
                 <div className={member.checkMember}>
                     <img className={member.mImg} src={pendingImgUrls[key]? pendingImgUrls[key]:img.mp} alt="使用者頭貼"/>
@@ -162,9 +163,9 @@ export default function Member(params) {
                     </div>
                 </div>
             )
-        }else{
-            return '';
-        }
+        // }else{
+        //     return '';
+        // }
     });
 
     return(

@@ -1125,7 +1125,7 @@ app.post('/teamleader', (req,res)=>{
   app.post('/teammember', (req,res)=>{
     const teamid = req.body.teamid;
     db.query(
-        `SELECT teamuser.userid,teamuser.leader,team.type as 'teamtype',user.userimg,user.badminton,user.tabletennis,user.volleyball
+        `SELECT teamuser.userid,teamuser.leader,team.type as 'teamtype',user.username,user.userimg,user.badminton,user.tabletennis,user.volleyball
         FROM teamuser
         INNER JOIN team on teamuser.teamid = team.teamid
         INNER JOIN user ON teamuser.userid = user.userid
@@ -1180,14 +1180,48 @@ app.post('/teamleader', (req,res)=>{
     app.post('/teampendingaccept', (req,res)=>{
       const teamid = req.body.teamid;
       const userid = req.body.userid;
-      console.log(teamid);
-      console.log(userid);
       db.query(
           `INSERT into teamuser(teamid,userid,leader)
           VALUES(?,?,0);
           DELETE from teampendinguser
           WHERE userid=? and teamid=?;`,
           [teamid,userid,userid,teamid],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+    });
+
+    // 芝｜Member 刪除 球隊成員
+    app.post('/deletemember', (req,res)=>{
+      const teamid = req.body.teamid;
+      const userid = req.body.userid;
+      db.query(
+          `DELETE from teamuser
+          WHERE teamid=? and userid=?;`,
+          [teamid,userid],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+    });
+
+    // 芝｜Member 更新 隊長
+    app.post('/deletemember', (req,res)=>{
+      const teamid = req.body.teamid;
+      const userid = req.body.userid;
+      db.query(
+          `DELETE from teamuser
+          WHERE teamid=? and userid=?;`,
+          [teamid,userid],
           (err, result) => {
             if (err) {
               console.log(err);
