@@ -271,6 +271,53 @@ app.post("/rentsidemore", (req, res) => {
       }
     });
 });
+//租場地訂單確認日租
+app.post("/rentsideconfirm", (req, res) => {
+  const rentday = req.body.rentday;
+  const date = req.body.date;
+  const max = req.body.max;
+  const min = req.body.min;
+  const awaitfee = req.body.awaitfee;
+  const num = req.body.num;
+  const today = req.body.today;
+  const sidename = req.body.sidename;
+  const address = req.body.address;
+  const libaichi = req.body.libaichi;
+  const userid = req.body.userid;
+  db.query(`INSERT INTO userorder (orderdate,startdate,enddate,week,starttime,endtime,ordercount,duringtype,sidename,sideaddr,flag,userid,fee) 
+  VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ,'成立' , ? ,?)`
+    , [today,date,date,libaichi,min,max,num,rentday,sidename,address,userid,awaitfee], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+//租場地訂單確認月季租
+app.post("/rentsideconfirm2", (req, res) => {
+  const rentday = req.body.rentday;
+  const date = req.body.date;
+  const monthdate = req.body.monthdate;
+  const max = req.body.max;
+  const min = req.body.min;
+  const awaitfee = req.body.awaitfee;
+  const num = req.body.num;
+  const today = req.body.today;
+  const sidename = req.body.sidename;
+  const address = req.body.address;
+  const libaichi = req.body.libaichi;
+  const userid = req.body.userid;
+  db.query(`INSERT INTO userorder (orderdate,startdate,enddate,week,starttime,endtime,ordercount,duringtype,sidename,sideaddr,flag,userid,fee) 
+  VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ,'成立' , ? ,?)`
+    , [today,date,monthdate,libaichi,min,max,num,rentday,sidename,address,userid,awaitfee], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
 // 後台零打搜尋
 app.post("/zeroda", (req, res) => {
   const starttime1 = req.body.starttime1;
