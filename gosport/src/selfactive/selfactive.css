@@ -94,7 +94,7 @@
     color: gray;
     font-size: 1.2rem;
     line-height: 5vh;
-    cursor:default;
+    cursor: default;
 }
 
 /* 場地 */
@@ -194,12 +194,12 @@
     align-items: center;
 }
 
-#notalready span{
+#notalready span {
     color: rgba(172, 172, 172, 0.547);
     font-weight: 500;
     font-size: 2.5rem;
     margin-bottom: 10px;
-    cursor:default;
+    cursor: default;
 }
 
 /* 再次預約 取消預約 */
@@ -260,7 +260,7 @@
     color: gray;
     font-size: 1.2rem;
     line-height: 5vh;
-    cursor:default;
+    cursor: default;
 }
 
 #artclein table {
@@ -272,7 +272,7 @@
     color: gray;
     font-size: 1.2rem;
     height: 10vh;
-    cursor:default;
+    cursor: default;
 }
 
 
@@ -280,6 +280,15 @@
     border-bottom: 1px rgb(233, 233, 233) solid;
     height: 60px;
     /* height: 8vh; */
+}
+
+.articlecontent {
+    display: inline-block;
+    width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    line-height: 60px;
 }
 
 /* 文章搜尋 */
@@ -508,6 +517,22 @@
     margin-bottom: 27px;
     padding: 10px 23px;
     font-size: 24px;
+}
+
+.zeroda_modal select {
+    margin-bottom: 27px;
+    margin-left: 7px;
+    margin-right: 7px;
+    width: 80px;
+    appearance: none;
+    z-index: 2;
+    position: relative;
+    background-color: transparent;
+}
+
+.zeroda_modal select+img {
+    position: absolute;
+    top: 43px
 }
 
 .zeroda_modal_yesOrNot {
