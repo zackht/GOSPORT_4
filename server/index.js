@@ -1286,57 +1286,57 @@ app.post('/teampendingaccept', (req, res) => {
   );
 });
 
-    // 芝｜Member 新隊長
-    app.post('/newleader', (req,res)=>{
-      const teamid = req.body.teamid;
-      const leaderid = req.body.leaderid;
-      db.query(
-          `UPDATE teamuser SET leader=1 where userid=? and teamid=?;`,
-          [leaderid,teamid],
-          (err, result) => {
-            if (err) {
-              console.log(err);
-            } else {
-              res.send(result);
-            }
+  // 芝｜Member 新隊長
+  app.post('/newleader', (req,res)=>{
+    const teamid = req.body.teamid;
+    const leaderid = req.body.leaderid;
+    db.query(
+        `UPDATE teamuser SET leader=1 where userid=? and teamid=?;`,
+        [leaderid,teamid],
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
           }
-        );
-    });
+        }
+      );
+  });
 
-    // 芝｜Member 舊隊長
-    app.post('/oldleader', (req,res)=>{
-      const teamid = req.body.teamid;
-      const sqlleaderid = req.body.sqlleaderid;
-      db.query(
-          `UPDATE teamuser SET leader=0 where userid=? and teamid=?;`,
-          [sqlleaderid,teamid],
-          (err, result) => {
-            if (err) {
-              console.log(err);
-            } else {
-              res.send(result);
-            }
+  // 芝｜Member 舊隊長
+  app.post('/oldleader', (req,res)=>{
+    const teamid = req.body.teamid;
+    const sqlleaderid = req.body.sqlleaderid;
+    db.query(
+        `UPDATE teamuser SET leader=0 where userid=? and teamid=?;`,
+        [sqlleaderid,teamid],
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
           }
-        );
-    });
+        }
+      );
+  });
 
-    // 芝｜Member 刪除成員
-    app.post('/deletemember', (req,res)=>{
-      const teamid = req.body.teamid;
-      const userid = req.body.userid;
-      db.query(
-          `DELETE from teamuser
-          WHERE teamid=? and userid=?;`,
-    [teamid, userid],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
+  // 芝｜Member 刪除成員
+  app.post('/deletemember', (req,res)=>{
+    const teamid = req.body.teamid;
+    const userid = req.body.userid;
+    db.query(
+      `DELETE from teamuser
+      WHERE teamid=? and userid=?;`,
+      [teamid, userid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
       }
-    }
-  );
-});
+    );
+  });
 
 // 芝｜Pay 依日期區間 搜尋文章｜未完成
 app.post('/teamdate', (req, res) => {

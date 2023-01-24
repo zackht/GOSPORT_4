@@ -142,7 +142,7 @@ export default function MemberEdit(params) {
             teamid:      teamid,
             sqlleaderid: sqlLeaderId
         }).then((response)=>{
-            console.log('updateOldLeader');
+            console.log('updateOldLeader',sqlLeaderId);
         })
 
         // 新隊長
@@ -150,10 +150,8 @@ export default function MemberEdit(params) {
             teamid:      teamid,
             leaderid:    leaderId
         }).then((response)=>{
-            console.log('updateNewLeader');
+            console.log('updateNewLeader',leaderId);
         })
-        
-        
 
         // 刪除成員
         for (const key in btnDelete) {
@@ -163,9 +161,8 @@ export default function MemberEdit(params) {
                     teamid:teamid,
                     userid:members[key].userid
                 }).then((response)=>{
-                    console.log('delete');
+                    console.log('deleteMember',members[key].userid);
                 })
-
             }
         }
     }
