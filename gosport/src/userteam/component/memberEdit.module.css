@@ -116,9 +116,9 @@
 .isDelete{
     width: 90px;
     height: 50px;
-    color:  rgb(170, 170, 170);
+    color:  white;
     border: none;
-    background-color:rgb(230, 230, 230);
+    background-color:rgb(230, 70, 55);
     border-radius: 40px;
     float: right;
     font-size: 1.2rem;

@@ -4,21 +4,22 @@ import memberEdit from './memberEdit.module.css';
 import img from '../img.module.js';
 import Axios from "axios";
 import Cookies from 'js-cookie';
+import { parse } from 'url';
 
 export default function MemberEdit(params) {
 
     // SQL參數
     const [userid, setUserid] = useState( Cookies.get('id') ); // 登入者id
-    const [teamid, setTeamid] = useState('1');                 // 球隊id
+    const [teamid, setTeamid] = useState(1);                   // 球隊id
 
     // input值
-    const [leaderImg, setLeaderImg] = useState('');         // 隊長img
-    const [leaderId, setLeaderId] = useState('');           // 隊長id
-    const [members, setmembers] = useState([]);             // 成員imgs 資料庫二進位檔
+    const [sqlLeaderId, setSqlLeaderId] = useState();     // 資料庫 隊長id
+    const [leaderId, setLeaderId] = useState();           // 隊長id
+    const [members, setmembers] = useState([]);             // 成員資料
     const [memberImgUrls, setMemberImgUrls] = useState({}); // 成員urls 已讀取
 
-    // button state
-    const [btnDelete, setBtnDelete] = useState(`${memberEdit.isNotDelete}`);
+    // 成員的刪除 button 預設未刪除｜已刪除 
+    const [btnDelete, setBtnDelete] = useState('');
 
     // 畫面載入即抓資料
     useEffect(()=>{
@@ -30,19 +31,21 @@ export default function MemberEdit(params) {
         Axios.post("http://localhost:3001/teammember",{
             teamid: teamid
         }).then((response)=>{
-            setmembers(response.data);     // 成員資料 
-            console.log(response.data);
-            response.data.forEach((val)=>{ // 隊長id
+            setmembers(response.data);          // 成員資料 
+            response.data.forEach((val)=>{
                 if(val.leader===1){
-                    setLeaderId(val.userid);
+                    setSqlLeaderId(val.userid); // 資料庫隊長id
+                    setLeaderId(val.userid);    // 隊長id
                 }
             })
         })
     };
     
-    // 抓到成員資料後 照片轉檔
+    // 抓到成員資料後 
     useEffect(() => {
+
         members.forEach((val, key) => {
+            // 1. 照片轉檔
             if (val.userimg !== null) {
                 let u8Arr = new Uint8Array(val.userimg.data);
                 let blob = new Blob([u8Arr], {type: "image/jpeg"});
@@ -50,11 +53,16 @@ export default function MemberEdit(params) {
                 fr.readAsDataURL(blob);
                 fr.onload = function () {
                     setMemberImgUrls(e => {
-                        return { ...e, [key]: fr.result }
+                        return { ...e, [key]: fr.result };
                     });
                 }
-            }
+            };
+            // 2. 成員的刪除btn
+            setBtnDelete((e)=>{
+                return {...e, [key]: true}; // 預設true -> css:isNotDelete
+            })
         });
+
     }, [members]);
 
     // 隊長清單
@@ -77,7 +85,7 @@ export default function MemberEdit(params) {
                 <>
                     <input type="radio" key={key} id={`o${key}`} name='teammember' value={val.userid}
                            checked={val.userid==leaderId} 
-                           onClick={e=>{setLeaderId(e.target.value)}}/>
+                           onClick={e=>{ setLeaderId(e.target.value) }}/>
                     <label for={`o${key}`}>
                         <img src={img.m} />
                     </label>
@@ -97,36 +105,30 @@ export default function MemberEdit(params) {
         }
     };
 
-    // 刪除成員
-    const handleDeleteMember =(val,key)=>{
-        console.log('delete');
-        setBtnDelete(`${memberEdit.isDelete}`);
-
-
-        // Axios.post("http://localhost:3001/deletemember",{
-        //     teamid:teamid,
-        //     userid:val.userid
-        // }).then((response)=>{
-        //     handlemembers(); // 重抓成員資料
-        // })
+    // 刪除btn
+    const handleDeleteMember =(e,val,key)=>{
+        const newBtnDelete = {...btnDelete};
+        newBtnDelete[key] = !btnDelete[key]; // 切換false
+        setBtnDelete(newBtnDelete);
     }
 
     // 成員清單
     const memberList =members.map((val, key) => {
-        // console.log(val);
         return (
             <div className={memberEdit.checkMember}>
-                <img src={ memberImgUrls[key]? memberImgUrls[key]:img.m } alt=""/>
+                <img src={ memberImgUrls[key]? memberImgUrls[key]:img.m }/>
                 <div>{val.username}</div>
                 <div>程度</div>
                 <div>{ handleteamtype(val) }</div>
                 <div className={memberEdit.badge}>
-                    <img src={img.star} alt=""/>
-                    <img src={img.star} alt=""/>
+                    <img src={img.star}/>
+                    <img src={img.star}/>
                 </div>
                 <div className={memberEdit.checkbtn}>
-                    <button onClick={ handleDeleteMember }
-                            className={ btnDelete } >刪除</button>
+                    {/* 刪除btn */}
+                    <button onClick={ (e) =>{ handleDeleteMember(e,val,key) } } 
+                            // 預設true -> isNotDelete ｜ 刪除false -> isDelete
+                            className={ btnDelete[key]? `${memberEdit.isNotDelete}`:`${memberEdit.isDelete}`} >刪除</button>
                 </div>
             </div>
         )
@@ -134,12 +136,38 @@ export default function MemberEdit(params) {
 
     // 成員資料更新 
     const handleMemberUpdate=()=>{
-        Axios.post("http://localhost:3001/updatemember",{
-            teamid:teamid,
-            leaderid:leaderId
+
+        // 舊隊長
+        Axios.post("http://localhost:3001/oldleader",{
+            teamid:      teamid,
+            sqlleaderid: sqlLeaderId
         }).then((response)=>{
-            console.log('update');
+            console.log('updateOldLeader');
         })
+
+        // 新隊長
+        Axios.post("http://localhost:3001/newleader",{
+            teamid:      teamid,
+            leaderid:    leaderId
+        }).then((response)=>{
+            console.log('updateNewLeader');
+        })
+        
+        
+
+        // 刪除成員
+        for (const key in btnDelete) {
+            // 刪除按鈕亮燈的成員
+            if(btnDelete[key]===false){
+                Axios.post("http://localhost:3001/deletemember",{
+                    teamid:teamid,
+                    userid:members[key].userid
+                }).then((response)=>{
+                    console.log('delete');
+                })
+
+            }
+        }
     }
 
     return(
