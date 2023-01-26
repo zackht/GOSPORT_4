@@ -52,11 +52,7 @@ export default function Basic(props) {
         handleBasicResult();
         handleLeaderImg();
     },[]);
-    // useEffect(()=>{
-    //     handleBasicResult();
-    //     handleLeaderImg();
-    // },[basicResult]);
-
+    
     return(
         <>
             <div className={basic.mBimgBox}><img src={teamimg? teamimg:img.team_none} className={basic.mBimg} alt='團隊的照片'/></div>

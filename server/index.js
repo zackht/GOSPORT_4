@@ -1338,18 +1338,59 @@ app.post('/teampendingaccept', (req, res) => {
     );
   });
 
-// 芝｜Pay 依日期區間 搜尋文章｜未完成
-app.post('/teamdate', (req, res) => {
-  const pathend = req.body.pathend;
-  const userid = req.body.userid;
+// 芝｜date 抓 基金文章
+app.post('/teamfunddate', (req, res) => {
   const teamid = req.body.teamid;
   const startdate = req.body.startdate;
   const enddate = req.body.enddate;
   db.query(
-    `SELECT date 
-          FROM ?
-          WHERE date BETWEEN ? AND ? AND userid=? and teamid=?`,
-    [pathend, startdate, enddate, userid, teamid],
+    `SELECT date,userid,fee,text
+    FROM teamfund
+    WHERE date BETWEEN ? AND ? AND teamid=?
+    ORDER by date;`,
+    [startdate, enddate, teamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+// 芝｜date 抓 支出文章
+app.post('/teampaydate', (req, res) => {
+  const teamid = req.body.teamid;
+  const startdate = req.body.startdate;
+  const enddate = req.body.enddate;
+  db.query(
+    `SELECT date,item,fee,text
+    FROM teampay
+    WHERE date BETWEEN ? AND ? AND teamid=?
+    ORDER by date;`,
+    [startdate, enddate, teamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+// 芝｜date 抓 活動文章
+app.post('/teamactivitydate', (req, res) => {
+  const teamid = req.body.teamid;
+  const startdate = req.body.startdate;
+  const enddate = req.body.enddate;
+  db.query(
+    `SELECT startdate,starttime,endtime,type,title,location,pay,text
+    FROM teamactivity
+    WHERE startdate BETWEEN ? AND ? AND teamid=?
+    ORDER by startdate;`,
+    [startdate, enddate, teamid],
     (err, result) => {
       if (err) {
         console.log(err);
