@@ -1123,7 +1123,7 @@ app.post("/updatesub", (req, res) => {
     });
 });
 
-// 芝｜Basic 查
+// 芝｜Basic 查找球隊資料
 app.post('/basicsearch', (req, res) => {
   const userid = req.body.userid; // 會員
   const teamid = req.body.teamid; // 球隊
@@ -1142,7 +1142,7 @@ app.post('/basicsearch', (req, res) => {
   );
 });
 
-// 芝｜Basic 更新 有圖
+// 芝｜Basic 設定球隊資料-1 有圖
 app.post("/basicupdate", upload.single('teamfile'), (req, res) => {
   const tname = req.body.tname;
   const sidename = req.body.sidename;
@@ -1168,7 +1168,7 @@ app.post("/basicupdate", upload.single('teamfile'), (req, res) => {
       }
     });
 });
-// 芝｜Basic 更新 無圖
+// 芝｜Basic 設定球隊資料-2 無圖
 app.post("/basicupdate2", upload.array(), (req, res) => {
   const tname = req.body.tname;
   const sidename = req.body.sidename;
@@ -1194,7 +1194,7 @@ app.post("/basicupdate2", upload.array(), (req, res) => {
     });
 });
 
-// 芝｜Member 抓隊長img
+// 芝｜Member 查找球隊隊長
 app.post('/teamleader', (req, res) => {
   const teamid = req.body.teamid;
   db.query(
@@ -1211,15 +1211,15 @@ app.post('/teamleader', (req, res) => {
     }
   );
 });
-// 芝｜Member 抓成員img｜未完成
+// 芝｜Member 查找球隊成員
 app.post('/teammember', (req, res) => {
   const teamid = req.body.teamid;
   db.query(
     `SELECT teamuser.userid,teamuser.leader,team.type as 'teamtype',user.username,user.userimg,user.badminton,user.tabletennis,user.volleyball
-        FROM teamuser
-        INNER JOIN team on teamuser.teamid = team.teamid
-        INNER JOIN user ON teamuser.userid = user.userid
-        WHERE teamuser.teamid=?;`,
+    FROM teamuser
+    INNER JOIN team on teamuser.teamid = team.teamid
+    INNER JOIN user ON teamuser.userid = user.userid
+    WHERE teamuser.teamid=?;`,
     [teamid],
     (err, result) => {
       if (err) {
@@ -1230,13 +1230,14 @@ app.post('/teammember', (req, res) => {
     }
   );
 });
-// 芝｜Member 抓 未審核成員img
-app.post('/teampendingimg', (req, res) => {
+// 芝｜Member 查找未審核成員
+app.post('/teampending', (req, res) => {
   const teamid = req.body.teamid;
   db.query(
     `SELECT teampendinguser.userid, user.userimg, user.username, team.type as 'teamtype', user.badminton, user.tabletennis, user.volleyball, teampendinguser.addtime
-          FROM teampendinguser,user,team
-          where teampendinguser.userid = user.userid and teampendinguser.teamid=team.teamid and teampendinguser.teamid=?`,
+    FROM teampendinguser,user,team
+    where teampendinguser.userid = user.userid and teampendinguser.teamid=team.teamid and teampendinguser.teamid=?
+    order by addtime;`,
     [teamid],
     (err, result) => {
       if (err) {
@@ -1248,7 +1249,7 @@ app.post('/teampendingimg', (req, res) => {
   );
 });
 
-// 芝｜Member 拒絕 未審核成員
+// 芝｜Member 拒絕未審核成員
 app.post('/teampendingreject', (req, res) => {
   const teamid = req.body.teamid;
   const userid = req.body.userid;
@@ -1266,16 +1267,14 @@ app.post('/teampendingreject', (req, res) => {
   );
 });
 
-// 芝｜Member 接受 未審核成員
+// 芝｜Member 接受未審核成員-1 球隊新增成員
 app.post('/teampendingaccept', (req, res) => {
   const teamid = req.body.teamid;
   const userid = req.body.userid;
   db.query(
     `INSERT into teamuser(teamid,userid,leader)
-          VALUES(?,?,0);
-          DELETE from teampendinguser
-          WHERE userid=? and teamid=?;`,
-    [teamid, userid, userid, teamid],
+    VALUES(?,?,0);`,
+    [teamid, userid],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -1286,7 +1285,25 @@ app.post('/teampendingaccept', (req, res) => {
   );
 });
 
-  // 芝｜Member 新隊長
+// 芝｜Member 接受未審核成員-2 刪除未審核資料
+app.post('/teampendingdelete', (req, res) => {
+  const teamid = req.body.teamid;
+  const userid = req.body.userid;
+  db.query(
+    `DELETE from teampendinguser
+    WHERE userid=? and teamid=?;`,
+    [userid, teamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+  // 芝｜Member 設定新隊長
   app.post('/newleader', (req,res)=>{
     const teamid = req.body.teamid;
     const leaderid = req.body.leaderid;
@@ -1303,7 +1320,7 @@ app.post('/teampendingaccept', (req, res) => {
       );
   });
 
-  // 芝｜Member 舊隊長
+  // 芝｜Member 設定舊隊長
   app.post('/oldleader', (req,res)=>{
     const teamid = req.body.teamid;
     const sqlleaderid = req.body.sqlleaderid;
@@ -1320,7 +1337,7 @@ app.post('/teampendingaccept', (req, res) => {
       );
   });
 
-  // 芝｜Member 刪除成員
+  // 芝｜Member 刪除球隊成員
   app.post('/deletemember', (req,res)=>{
     const teamid = req.body.teamid;
     const userid = req.body.userid;
@@ -1338,68 +1355,125 @@ app.post('/teampendingaccept', (req, res) => {
     );
   });
 
-// 芝｜date 抓 基金文章
-app.post('/teamfunddate', (req, res) => {
-  const teamid = req.body.teamid;
-  const startdate = req.body.startdate;
-  const enddate = req.body.enddate;
-  db.query(
-    `SELECT date,userid,fee,text
-    FROM teamfund
-    WHERE date BETWEEN ? AND ? AND teamid=?
-    ORDER by date;`,
-    [startdate, enddate, teamid],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
+  // 芝｜date 查找基金文章-1 all
+  app.post('/teamfundall', (req, res) => {
+    const teamid = req.body.teamid;
+    db.query(
+      `SELECT date,userid,fee,text
+      FROM teamfund
+      WHERE teamid=?
+      ORDER by date;`,
+      [teamid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
       }
-    }
-  );
-});
+    );
+  });
 
-// 芝｜date 抓 支出文章
-app.post('/teampaydate', (req, res) => {
-  const teamid = req.body.teamid;
-  const startdate = req.body.startdate;
-  const enddate = req.body.enddate;
-  db.query(
-    `SELECT date,item,fee,text
-    FROM teampay
-    WHERE date BETWEEN ? AND ? AND teamid=?
-    ORDER by date;`,
-    [startdate, enddate, teamid],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
+  // 芝｜date 查找基金文章-2 時間條件
+  app.post('/teamfunddate', (req, res) => {
+    const teamid = req.body.teamid;
+    const startdate = req.body.startdate;
+    const enddate = req.body.enddate;
+    db.query(
+      `SELECT date,userid,fee,text
+      FROM teamfund
+      WHERE date BETWEEN ? AND ? AND teamid=?
+      ORDER by date;`,
+      [startdate, enddate, teamid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
       }
-    }
-  );
-});
+    );
+  });
 
-// 芝｜date 抓 活動文章
-app.post('/teamactivitydate', (req, res) => {
-  const teamid = req.body.teamid;
-  const startdate = req.body.startdate;
-  const enddate = req.body.enddate;
-  db.query(
-    `SELECT startdate,starttime,endtime,type,title,location,pay,text
-    FROM teamactivity
-    WHERE startdate BETWEEN ? AND ? AND teamid=?
-    ORDER by startdate;`,
-    [startdate, enddate, teamid],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
+  // 芝｜date 查找支出文章-1 all
+  app.post('/teampayall', (req, res) => {
+    const teamid = req.body.teamid;
+    db.query(
+      `SELECT date,item,fee,text
+      FROM teampay
+      WHERE teamid=?
+      ORDER by date;`,
+      [teamid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
       }
-    }
-  );
-});
+    );
+  });
+
+  // 芝｜date 查找支出文章-2 時間條件
+  app.post('/teampaydate', (req, res) => {
+    const teamid = req.body.teamid;
+    const startdate = req.body.startdate;
+    const enddate = req.body.enddate;
+    db.query(
+      `SELECT date,item,fee,text
+      FROM teampay
+      WHERE date BETWEEN ? AND ? AND teamid=?
+      ORDER by date;`,
+      [startdate, enddate, teamid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+
+  // 芝｜date 查找活動文章-1 all
+  app.post('/teamactivityall', (req, res) => {
+    const teamid = req.body.teamid;
+    db.query(
+      `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text
+      FROM teamactivity
+      WHERE teamid=?
+      ORDER by date;`,
+      [teamid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+
+  // 芝｜date 查找活動文章-2 時間條件
+  app.post('/teamactivitydate', (req, res) => {
+    const teamid = req.body.teamid;
+    const startdate = req.body.startdate;
+    const enddate = req.body.enddate;
+    db.query(
+      `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text
+      FROM teamactivity
+      WHERE startdate BETWEEN ? AND ? AND teamid=?
+      ORDER by date;`,
+      [startdate, enddate, teamid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
 
 //------------------
 // 交流零打搜尋
