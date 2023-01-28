@@ -208,6 +208,18 @@ app.post("/employee", (req, res) => {
     }
   });
 });
+// google註冊
+app.post("/userlogintest", (req, res) => {
+  const ac =req.body.ac;
+  const pw =req.body.pw;
+  db.query("SELECT * FROM user where password=? AND email=?",[pw,ac], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+        res.send(result);
+    }
+  });
+});
 // user頭像更改
 app.post("/userupdate", upload.single('image'), (req, res) => {
   const name = req.body.name;
@@ -222,7 +234,43 @@ app.post("/userupdate", upload.single('image'), (req, res) => {
       }
     });
 });
-
+// 後臺會員查詢
+app.post("/backusersearch", (req, res) => {
+  const startdate = req.body.startdate;
+  const enddate = req.body.enddate;
+  const username = req.body.username;
+if(username===''){
+  db.query(`SELECT * FROM user WHERE adddate BETWEEN ? AND ?`
+  ,[startdate,enddate], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+}else{
+  db.query(`SELECT * FROM user WHERE adddate BETWEEN ? AND ? AND username LIKE ?`
+  ,[startdate,enddate,username], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+}
+});
+// 後臺會員編輯
+app.post("/backuseredit", (req, res) => {
+  const userid = req.body.userid;
+  db.query(`SELECT * FROM user WHERE userid = ?`
+  ,[userid], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
 // 租場地搜尋
 app.post("/rentside", (req, res) => {
   const type = req.body.type;
@@ -611,12 +659,9 @@ app.post("/backsidesearch", (req, res) => {
   }
 });
 // 後臺場地編輯畫面
-app.post("/backsideedit ", (req, res) => {
+app.post("/backsideedit", (req, res) => {
   const sideid =req.body.sideid;
-  db.query(`SELECT * FROM (side inner join sidedevice 
-    on side.sideid = sidedevice.sideid AND side.sideid=?) inner JOIN
-    sidetime 
-    on side.sideid = sidetime.sideid AND side.sideid=?`
+  db.query(`SELECT * FROM side where sideid = ?`
     , [sideid,sideid]
     , (err, result) => {
       if (err) {
@@ -625,6 +670,44 @@ app.post("/backsideedit ", (req, res) => {
         res.send(result);
       }
     });
+});
+// 後臺新增場地
+app.post("/backnewside",upload.single('image'), (req, res) => {
+  const usidename = req.body.usidename;
+  const utype = req.body.utype;
+  const upark = req.body.upark;
+  const ubath = req.body.ubath;
+  const ubaulk = req.body.ubaulk;
+  const uweekstarttime = req.body.uweekstarttime;
+  const uweekendtime = req.body.uweekendtime;
+  const uholidaystarttime = req.body.uholidaystarttime;
+  const uholidayendtime = req.body.uholidayendtime;
+  const upeakstarttime = req.body.upeakstarttime;
+  const upeakendtime = req.body.upeakendtime;
+  const upeakfee = req.body.upeakfee;
+  const uoffpeakstarttime = req.body.uoffpeakstarttime;
+  const uoffpeakendtime = req.body.uoffpeakendtime;
+  const uoffpeakfee = req.body.uoffpeakfee;
+  const ureservedate = req.body.ureservedate;
+  const utext = req.body.utext;
+  const uamount = req.body.uamount;
+  const utel = req.body.utel;
+  const uaddress = req.body.uaddress;
+  const ugoolemapurl = req.body.ugoolemapurl;
+  const today = req.body.today;
+  db.query(`INSERT INTO side
+  (adress, sideimg,sidetype,amount,sidename,tel,goolemapurl,peakfee,offpeakfee,addday,park,bath,baulk,weekstarttime,weekendtime,holidaystarttime,holidayendtime,peakstarttime
+   ,peakendtime,offpeakstarttime,offpeakendtime,ho_peakstarttime,ho_peakendtime,ho_offpeakstarttime,ho_offpeakendtime,reservedate,county,area,text) 
+  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"台中市","西屯區",?);`
+  ,[uaddress,req.file.buffer,utype,uamount,usidename,utel,ugoolemapurl,upeakfee,uoffpeakfee,today,upark,ubath,ubaulk,
+    uweekstarttime,uweekendtime,uholidaystarttime,uholidayendtime,upeakstarttime,upeakendtime,uoffpeakstarttime,
+    uoffpeakendtime,upeakstarttime,upeakendtime,uoffpeakstarttime,uoffpeakendtime,ureservedate,utext], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
 });
 
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef,useLayoutEffect} from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import Rectangle from "./icon/Rectangle 639.png";
 import a1 from "./icon/停車場.svg";
 import a2 from "./icon/淋浴間.svg";
@@ -49,31 +49,31 @@ const Side2 = () => {
       setsidelist(response.data[0]);
       setcheckbox(
         new Array(response.data[0].weekendtime - response.data[0].weekstarttime).fill(false)
-        )
-        sethocheckbox(
-          new Array(response.data[0].holidayendtime - response.data[0].holidaystarttime).fill(false)
-          )
-          var u8Arr = new Uint8Array(response.data[0].sideimg.data);
-          var blob = new Blob([u8Arr], { type: "image/jpeg" });
-          var fr = new FileReader;
-          fr.readAsDataURL(blob);
-          fr.onload = function () {
-            setimg(fr.result);
-          };
-          setre(true);
-          // 尖峰時間陣列
-            for (let i = response.data[0].peakstarttime; i <= response.data[0].peakendtime; i++) {
-              peaktimelist.push(`${i}`);
-            }
-            // 離峰時間陣列
-            for (let i = response.data[0].offpeakstarttime; i <= response.data[0].offpeakendtime; i++) {
-              offpeaktimelist.push(`${i}`);
-          }
-        });
+      )
+      sethocheckbox(
+        new Array(response.data[0].holidayendtime - response.data[0].holidaystarttime).fill(false)
+      )
+      var u8Arr = new Uint8Array(response.data[0].sideimg.data);
+      var blob = new Blob([u8Arr], { type: "image/jpeg" });
+      var fr = new FileReader;
+      fr.readAsDataURL(blob);
+      fr.onload = function () {
+        setimg(fr.result);
+      };
+      setre(true);
+      // 尖峰時間陣列
+      for (let i = response.data[0].peakstarttime; i <= response.data[0].peakendtime; i++) {
+        peaktimelist.push(`${i}`);
+      }
+      // 離峰時間陣列
+      for (let i = response.data[0].offpeakstarttime; i <= response.data[0].offpeakendtime; i++) {
+        offpeaktimelist.push(`${i}`);
+      }
+    });
   }
-  const [max,setmax]=useState(0);
-  const [min,setmin]=useState(0);
-  const [awaitfee,setawaitfee]=useState(0);
+  const [max, setmax] = useState(0);
+  const [min, setmin] = useState(0);
+  const [awaitfee, setawaitfee] = useState(0);
   const aaa = async () => {
     setdiv2(!div2);
     document.body.style.overflow = 'hidden';
@@ -90,23 +90,23 @@ const Side2 = () => {
     const offpeaktimenum = await Promisefn2();
     console.log(peaktimenum);//尖峰時段數量
     console.log(offpeaktimenum);// 離峰時段數量
-    setawaitfee(await feeee(peaktimenum,offpeaktimenum));
+    setawaitfee(await feeee(peaktimenum, offpeaktimenum));
     console.log(peaktimelist);//查詢到的尖峰時段
     console.log(offpeaktimelist);//查詢到的離峰時段
     console.log(`費用${awaitfee}`);//費用
     console.log(monthdate);//月季租日期
-    if(rentday==='月租'){
+    if (rentday === '月租') {
       getmonthdate();
-    }else{
+    } else {
       getmonthdate2();
     }
   }
   const Promisefn = () => {
     return new Promise((resolve, reject) => {
       let a = 0;
-      checkboxselect.map(val=>{
+      checkboxselect.map(val => {
         if (peaktimelist.includes(val)) {
-          a+=1;
+          a += 1;
         }
       })
       resolve(a);
@@ -115,25 +115,25 @@ const Side2 = () => {
   const Promisefn2 = () => {
     return new Promise((resolve, reject) => {
       let b = 0;
-      checkboxselect.map(val=>{
+      checkboxselect.map(val => {
         if (offpeaktimelist.includes(val)) {
-          b+=1;
+          b += 1;
         }
       })
       resolve(b);
     })
   }
-  const feeee = (peaktimenum,offpeaktimenum) => {
+  const feeee = (peaktimenum, offpeaktimenum) => {
     return new Promise((resolve, reject) => {
       let fee = 0;
-      if (rentday==='日租') {
-        fee = (peaktimenum*sidelist.peakfee+offpeaktimenum*sidelist.offpeakfee)*num;
-      }else if(rentday==='月租'){
-        fee = (peaktimenum*sidelist.peakfee+offpeaktimenum*sidelist.offpeakfee)*num*0.9;
-      }else if(rentday==='季租'){
-        fee = (peaktimenum*sidelist.peakfee+offpeaktimenum*sidelist.offpeakfee)*num*0.8;
+      if (rentday === '日租') {
+        fee = (peaktimenum * sidelist.peakfee + offpeaktimenum * sidelist.offpeakfee) * num;
+      } else if (rentday === '月租') {
+        fee = (peaktimenum * sidelist.peakfee + offpeaktimenum * sidelist.offpeakfee) * num * 0.9;
+      } else if (rentday === '季租') {
+        fee = (peaktimenum * sidelist.peakfee + offpeaktimenum * sidelist.offpeakfee) * num * 0.8;
       }
-    
+
       resolve(fee);
     })
   }
@@ -225,95 +225,102 @@ const Side2 = () => {
   const b = () => {
     return howeekday;
   }
-  const check =()=>{
+  const check = () => {
     console.log(sidelist.park);
   }
-  const[libaichi,setlibaichi]=useState('禮拜一');
-  const ll=(e)=>{
+  const [libaichi, setlibaichi] = useState('禮拜一');
+  const ll = (e) => {
     setlibaichi(e);
   }
-  const select =<div>
-  <select name="" id="" className={side2.div14} onChange={(e)=>{ll(e.target.value)}}>
-    <option value="禮拜一">禮拜一</option>
-    <option value="禮拜二">禮拜二</option>
-    <option value="禮拜三">禮拜三</option>
-    <option value="禮拜四">禮拜四</option>
-    <option value="禮拜五">禮拜五</option>
-    <option value="禮拜六">禮拜六</option>
-    <option value="禮拜日">禮拜日 </option>
-  </select>
-  <img className={`${side2.selectedDate2}`} src={group41} alt="" />
-</div>
-const [div2,setdiv2]=useState(false);
-const aaa2 =()=>{
-  setdiv2(!div2);
-  document.body.style.overflow = 'auto';
-}
-const userid = (Cookies.get('id'));
-const confirm =()=>{
-  if(rentday === '日租'){
-    Axios.post("http://localhost:3001/rentsideconfirm", {
-      rentday: rentday,//日租
-      date: date,//日期
-      max: max,//最大時段
-      min: min,//最小時段
-      awaitfee: awaitfee,//價錢
-      num: num,//數量
-      today: today,
-      sidename: sidelist.sidename,
-      address: sidelist.adress,
-      libaichi: libaichi,
-      userid,userid,
-      }).then((response) => {
-        alert('成功');
-        setdiv2(!div2);
-        gopath.push('/gosport/rent/side');
-          })
-  }else{
-    Axios.post("http://localhost:3001/rentsideconfirm2", {
-      rentday: rentday,//月租季租
-      date: date,//開始日期
-      monthdate: monthdate,//結束日期
-      max: max,//最大時段
-      min: min,//最小時段
-      awaitfee: awaitfee,//價錢
-      num: num,//數量
-      today: today,
-      sidename: sidelist.sidename,
-      address: sidelist.adress,
-      libaichi: libaichi,
-      userid:userid,
-      }).then((response) => {
-        alert('成功');
-        setdiv2(!div2);
-        gopath.push('/gosport/rent/side');
-          })
+  const select = <div>
+    <select name="" id="" className={side2.div14} onChange={(e) => { ll(e.target.value) }}>
+      <option value="禮拜一">禮拜一</option>
+      <option value="禮拜二">禮拜二</option>
+      <option value="禮拜三">禮拜三</option>
+      <option value="禮拜四">禮拜四</option>
+      <option value="禮拜五">禮拜五</option>
+      <option value="禮拜六">禮拜六</option>
+      <option value="禮拜日">禮拜日 </option>
+    </select>
+    <img className={`${side2.selectedDate2}`} src={group41} alt="" />
+  </div>
+  const [div2, setdiv2] = useState(false);
+  const aaa2 = () => {
+    setdiv2(!div2);
+    document.body.style.overflow = 'auto';
   }
-}
-const gopath = useHistory();
-// 設定月租與季租日期
-const [monthdate,setmonthdate]=useState('');
-const getmonthdate =()=>{
-  let c = new Date(date);
-  let y = c.getFullYear();
-  let m = c.getMonth() + 2;
-  let d = c.getDate();
-  setmonthdate(`${y}-${m = (m < 10 ? '0' : '') + m}-${d = (d < 10 ? '0' : '') + d}`);
-}
-const getmonthdate2 =()=>{
-  let c = new Date(date);
-  let y = c.getFullYear();
-  let m = c.getMonth() + 4;
-  let d = c.getDate();
-  setmonthdate(`${y}-${m = (m < 10 ? '0' : '') + m}-${d = (d < 10 ? '0' : '') + d}`);
-}
+  const userid = (Cookies.get('id'));
+  const confirm = () => {
+    if (rentday === '日租') {
+      Axios.post("http://localhost:3001/rentsideconfirm", {
+        rentday: rentday,//日租
+        date: date,//日期
+        max: max,//最大時段
+        min: min,//最小時段
+        awaitfee: awaitfee,//價錢
+        num: num,//數量
+        today: today,
+        sidename: sidelist.sidename,
+        address: sidelist.adress,
+        libaichi: libaichi,
+        userid, userid,
+      }).then((response) => {
+        alert('成功');
+        setdiv2(!div2);
+        gopath.push('/gosport/rent/side');
+      })
+    } else {
+      Axios.post("http://localhost:3001/rentsideconfirm2", {
+        rentday: rentday,//月租季租
+        date: date,//開始日期
+        monthdate: monthdate,//結束日期
+        max: max,//最大時段
+        min: min,//最小時段
+        awaitfee: awaitfee,//價錢
+        num: num,//數量
+        today: today,
+        sidename: sidelist.sidename,
+        address: sidelist.adress,
+        libaichi: libaichi,
+        userid: userid,
+      }).then((response) => {
+        alert('成功');
+        setdiv2(!div2);
+        gopath.push('/gosport/rent/side');
+      })
+    }
+  }
+  const gopath = useHistory();
+  // 設定月租與季租日期
+  const [monthdate, setmonthdate] = useState('');
+  const getmonthdate = () => {
+    let c = new Date(date);
+    let y = c.getFullYear();
+    let m = c.getMonth() + 2;
+    let d = c.getDate();
+    setmonthdate(`${y}-${m = (m < 10 ? '0' : '') + m}-${d = (d < 10 ? '0' : '') + d}`);
+  }
+  const getmonthdate2 = () => {
+    let c = new Date(date);
+    let y = c.getFullYear();
+    let m = c.getMonth() + 4;
+    let d = c.getDate();
+    setmonthdate(`${y}-${m = (m < 10 ? '0' : '') + m}-${d = (d < 10 ? '0' : '') + d}`);
+  }
   return (
     <React.Fragment>
       {(re) ?
         <div className={`container-fluid ${side2.div1}`}>
           <div className={`row ${side2.boxshadow} d-flex ${side2.div2}`}>
             <div className={side2.thecover}>
-              <img src={img} alt="" />
+              {/* <img src={img} alt="" /> */}
+              <iframe
+                width="100%"
+                height="450"
+                frameborder="0"
+                className={side2.googlemap}
+                src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyDgvC5VjHVolnPPSTUAmsgOs6xoWgTWO7o&location=24.14895151487666,120.63172009774597&heading=-10&pitch=20&fov=35">
+              </iframe>
             </div>
             <div className={`col-xl-4 d-flex flex-column ${side2.div3x}`}>
               <div>
@@ -380,7 +387,7 @@ const getmonthdate2 =()=>{
                   <div className={`${side2.div8} d-flex`}>
                     <input type="date" name="inputdate" defaultValue={today} className={side2.date} onChange={(e) => { getweekend(e.target.value) }} />
                     <img className={`${side2.selectedDate}`} src={group41} alt="" />
-                    {rentday==='日租'?'':select}
+                    {rentday === '日租' ? '' : select}
                   </div>
                 </div>
                 <div>
@@ -416,8 +423,8 @@ const getmonthdate2 =()=>{
           </div>
         </div>
         : ''}
-        {(re)?
-        (rentday==='日租')?
+      {(re) ?
+        (rentday === '日租') ?
           <div className={`${side2.div55}`} style={{ display: (div2) ? 'block' : 'none' }}>
             <div className={`${side2.div56} d-flex flex-column`}>
               <div className={side2.div56span}>訂單詳情</div>
@@ -436,7 +443,7 @@ const getmonthdate2 =()=>{
               </div>
               <div className={side2.div60}>
                 <span className={side2.div57}>時段</span>
-                <div className={side2.div58}>{`${max}:00~${min+1}:00`}</div>
+                <div className={side2.div58}>{`${max}:00~${min + 1}:00`}</div>
               </div>
               <div className={side2.div60}>
                 <span className={side2.div57}>數量</span>
@@ -452,8 +459,8 @@ const getmonthdate2 =()=>{
               </div>
             </div>
           </div>
-        :(rentday==='月租'||rentday==='季租')?
-          <div className={`${side2.div55}`} style={{ display: (div2) ? 'block' : 'none' }}>
+          : (rentday === '月租' || rentday === '季租') ?
+            <div className={`${side2.div55}`} style={{ display: (div2) ? 'block' : 'none' }}>
               <div className={`${side2.div56} d-flex flex-column`}>
                 <div className={side2.div56span}>訂單詳情</div>
                 <div className={side2.div56line}></div>
@@ -481,7 +488,7 @@ const getmonthdate2 =()=>{
                 </div>
                 <div className={side2.div60}>
                   <span className={side2.div57}>時段</span>
-                  <div className={side2.div58}>{`${max}:00~${min+1}:00`}</div>
+                  <div className={side2.div58}>{`${max}:00~${min + 1}:00`}</div>
                 </div>
                 <div className={side2.div60}>
                   <span className={side2.div57}>數量</span>
@@ -496,9 +503,9 @@ const getmonthdate2 =()=>{
                   <button className={side2.button3} onClick={confirm}>確認</button>
                 </div>
               </div>
-          </div>
-        :''
-        :''}
+            </div>
+            : ''
+        : ''}
 
     </React.Fragment>
   );
