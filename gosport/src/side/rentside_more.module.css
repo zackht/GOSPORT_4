@@ -94,6 +94,9 @@ input[type=number]::-webkit-inner-spin-button{
     width: 29px;
     height: 33px;
 }
+.googlemap{
+    border:0;
+}
 .date{
     position: relative;
     border: none;

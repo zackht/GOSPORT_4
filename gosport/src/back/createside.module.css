@@ -12,18 +12,29 @@
     font-size: 20px;
     color: #383838;
 }
+.inputfile{
+    position: absolute;
+    top: -50PX;
+    z-index: 0;
+}
+.filebig{
+    width: 100%;
+    height: 100%;
+}
 .div0{
     width: 1060px;
     height: 80vh;
     margin-top: 45px;
     padding: 40px;
     background-color: white;
-    overflow: scroll;
+    overflow-y  : scroll;
 }
 .div1{
     margin: 0;
 }
 .div2{
+    position: relative;
+    z-index: 99;
     width: 250px;
     height: 250px;
     background-color: rgb(245, 245, 245);
@@ -31,6 +42,8 @@
     justify-content: center;
     align-items: center;
     margin-right: 40px;
+    /* object-fit: cover; */
+    overflow: hidden;
 }
 .div3{
     width: 100%;
@@ -109,6 +122,7 @@
     font-size: 20px;
     border-radius: 30px;
     border: none;
+    padding-left: 20px;
 }
 .div16{
     width: 100%;
@@ -127,6 +141,7 @@
     font-size: 20px;
     border-radius: 30px;
     border: none;
+    padding-left: 20px;
 }
 .div18{
     width: 170px;
@@ -189,12 +204,19 @@
 .div27{
     width: 100%;
 }
+.div28{
+    margin-bottom: 10px;
+    margin-left: 215px;
+}
 .number{
     border: none;
     border-bottom: 1px solid black;
     width: 122px;
     height: 42px;
-    margin-right: 50px;
+    font-size: 20px;
+    color: #383838;
+    margin-left: 40px;
+    text-align: center;
 }
 .einputnumber {
     appearance: textfield;
@@ -212,23 +234,33 @@ input::-webkit-inner-spin-button {
     text-align: center;
     color: #e64637;
     font-size: 16px;
+    border-bottom: 1px solid black;
 }
 .add{
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+    text-align: center;
     position: absolute;
-    top: -22px;
-    right: 10px;
+    top: -9px;
 }
 .minus{
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+    text-align: center;
     position: absolute;
-    top: -22px;
-    right: 3px;
+    top: -9px;
 }
-.minus{
+.divnn{
+    align-items: center;
+}
+/* .minus{
     position: absolute;
-}
+} */
 .numbutton1{
-    width: 42px;
-    height: 42px;
+    width: 32px;
+    height: 32px;
     background-color: #f5f5f5;
     border-radius: 30px;
     color: #aaaaaa;
@@ -239,8 +271,8 @@ input::-webkit-inner-spin-button {
     user-select: none;
 }
 .numbutton2{
-    width: 42px;
-    height: 42px;
+    width: 32px;
+    height: 32px;
     background-color: #f5f5f5;
     border-radius: 30px;
     color: #aaaaaa;
@@ -265,7 +297,13 @@ input::-webkit-inner-spin-button {
 .checkbox{
     display: none;
 }
-input[type="checkbox"]:checked+label{
+/* input[type="checkbox"]:checked+label{
+    background-color: #ffffff;
+    color: #e64637;
+    border: 1px solid #e64637;
+    border-color: #e64637;
+} */
+.checkbox:checked+label{
     background-color: #ffffff;
     color: #e64637;
     border: 1px solid #e64637;
