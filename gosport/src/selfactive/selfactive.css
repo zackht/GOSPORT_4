@@ -236,8 +236,30 @@
     font-weight: 300;
     padding-top: 7px;
     color: gray;
-    font-size: 1rem;
-    line-height: 5vh;
+    font-size: 1.2rem;
+    line-height: 6vh;
+}
+
+@media(max-width: 1440px) {
+
+    #ordering>:nth-child(1),
+    #ordering>:nth-child(3),
+    #ordering>:nth-child(4),
+    #ordering>:nth-child(7),
+    #ordering>:nth-child(9),
+    #ordering>:nth-child(11),
+    #ordering>:nth-child(13) {
+        font-weight: 300;
+        padding-top: 7px;
+        color: gray;
+        font-size: 1rem;
+        line-height: 5vh;
+    }
+
+    #ordering>:nth-child(1) {
+        line-height: 2vh;
+        margin-bottom: 10px;
+    }
 }
 
 #ordering>:nth-child(5) {
@@ -275,15 +297,17 @@
     cursor: default;
 }
 
+#artclein tr {
+    border-bottom: 1px rgb(206, 206, 206) solid;
+}
 
 #artclein td {
-    border-bottom: 1px rgb(233, 233, 233) solid;
     height: 60px;
     /* height: 8vh; */
 }
 
 .articlecontent {
-    display: inline-block;
+    display: block;
     width: 250px;
     overflow: hidden;
     white-space: nowrap;
@@ -294,7 +318,7 @@
 /* 文章搜尋 */
 .active_articlefind {
     cursor: pointer;
-    border: #aaaaaa 1px solid;
+    border: gray 1px solid;
     display: inline-block;
     width: 4.2rem;
     /* height: 2rem; */
@@ -517,6 +541,15 @@
     margin-bottom: 27px;
     padding: 10px 23px;
     font-size: 24px;
+    justify-content: space-between;
+}
+
+#zlevel,
+#znumber,
+#zcost {
+    width: 90px;
+    text-align: center;
+    margin-right: 25px;
 }
 
 .zeroda_modal select {
@@ -532,7 +565,20 @@
 
 .zeroda_modal select+img {
     position: absolute;
-    top: 43px
+    top: 53px
+}
+
+.zeroda_modal textarea {
+    resize: none;
+    /* background-color: rgb(245, 245, 245); */
+    background-color: rgb(230, 230, 230);
+    border-radius: 20px;
+    border: none;
+    width: 100%;
+    height: 100px;
+    font-size: 1.5rem;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .zeroda_modal_yesOrNot {

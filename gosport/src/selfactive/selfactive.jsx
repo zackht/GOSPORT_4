@@ -328,33 +328,35 @@ const Selfactive = () => {
                             <label htmlFor="zdate" >日期</label><br />
                             <input type="text" id="zdate" value={playDate} onChange={(e) => { setPlayDate(e.target.value) }} />
                         </div>
-                        <div style={{position: 'relative'}}>
+                        <div style={{ position: 'relative' }}>
                             <label >時段</label><br />
                             <select onChange={(e) => setStartTime(e.target.value)}>
                                 {[6, 7, 8, 9, 10, 11, 12].map(item => {
                                     return <option value={item} selected={item === starttime}>{item}:00</option>
                                 })}
                             </select>
-                            <img style={{left:'63px'}} src={SelectDown} alt="" />
+                            <img style={{ left: '63px' }} src={SelectDown} alt="" />
                             至
                             <select onChange={(e) => setEndTime(e.target.value)}>
                                 {[11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22].map(item => {
                                     return <option value={item} selected={item === endtime}>{item}:00</option>
                                 })}
                             </select>
-                            <img style={{left:'172px'}} src={SelectDown} alt="" />
+                            <img style={{ left: '172px' }} src={SelectDown} alt="" />
                         </div>
-                        <div style={{ display: zerodaid === '' ? 'none' : 'block' }}>
-                            <label htmlFor="zlevel" >程度</label><br />
-                            <input type="text" id="zlevel" value={level} onChange={(e) => { setLevel(e.target.value) }} />
-                        </div>
-                        <div>
-                            <label htmlFor="znumber" >人數</label><br />
-                            <input type="text" id="znumber" value={number} onChange={(e) => { setNumber(e.target.value) }} />
-                        </div>
-                        <div>
-                            <label htmlFor="zcost" >費用</label><br />
-                            <input type="text" id="zcost" value={cost} onChange={(e) => { setCost(e.target.value) }} />
+                        <div style={{ display: "flex" }}>
+                            <div style={{ display: zerodaid === '' ? 'none' : 'block' }}>
+                                <label htmlFor="zlevel" >程度</label><br />
+                                <input type="text" id="zlevel" value={level} onChange={(e) => { setLevel(e.target.value) }} />
+                            </div>
+                            <div>
+                                <label htmlFor="znumber" >人數</label><br />
+                                <input type="text" id="znumber" value={number} onChange={(e) => { setNumber(e.target.value) }} />
+                            </div>
+                            <div>
+                                <label htmlFor="zcost" >費用</label><br />
+                                <input type="text" id="zcost" value={cost} onChange={(e) => { setCost(e.target.value) }} />
+                            </div>
                         </div>
                         <div>
                             <label htmlFor="zdescribe" >描述</label><br />
