@@ -35,26 +35,13 @@ const io = new Server(server, {
   }
 })
 //建立連線
-var owndata = [{message:"1"}]
+var owndata = [
+
+]
 var datas = [
-  { message: "2" },{username:[0].username}
+
 ]
 io.on("connection", (socket) => {
-  
-  // onlineCount++;
-  //   // 發送人數給網頁
-  //   io.emit("online", onlineCount);
- 
-  //   socket.on("greet", () => {
-  //       socket.emit("greet", onlineCount);
-  //   });
- 
-  //   socket.on('disconnect', () => {
-  //       // 有人離線了，扣人
-  //       onlineCount = (onlineCount < 0) ? 0 : onlineCount-=1;
-  //       io.emit("online", onlineCount);
-  //   });
-
 
   console.log(`User Connected:${socket.id}`);
   //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
@@ -84,18 +71,25 @@ io.on("connection", (socket) => {
   //   // io.sockets.socket(socket.id).emit([data]);
   // })
 
+//   socket.on("send_mesg1", (data) => {
+// owndata.push(data);
+// console.log(owndata);
+// socket.emit('ownmsg',owndata)
+//   })
+  
   socket.on("send_mesg", (data) => {
   //   //       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
 
-    // console.log(data);
-    console.log(data);
+    console.log(datas);
+    // console.log(datas.length);
+    // datas=[];
     datas.push(data)
-    // io.emit("receive_message",datas);
-    socket.emit('receive_message', datas)
-
-
+    owndata = [];
     owndata.push(data)
-    socket.broadcast('receive_message1', owndata)
+    // io.emit("receive_message",datas);
+    // console.log(datas);
+    io.emit('receive_message',datas)
+    io.emit('receive_message1',owndata)
 
     // socket.broadcast.emit("receive_message",datas);
     // io.emit("receive_message",datas);
@@ -1411,4 +1405,16 @@ app.post('/rentcreate',(req, res) => {
     }
   );
 })
+app.post("/teaminfo", (req, res) => {
+  const id = req.body.userid;
+  // console.log(userid)
+  db.query("SELECT team.tname FROM team,user,userteam WHERE user.userid=? AND userteam.userid=user.userid AND userteam.teamid=team.teamid", [id], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+
+    }
+  });
+});
 

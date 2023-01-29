@@ -24,7 +24,11 @@ export default function Navbar(props) {
     const [sighbtn, sighbtnchange] = useState(true);
     const [loginbtn, loginbtnchange] = useState(false);
     const [logsigdiv, logsigchange] = useState('none');
+    const [loginfo1,setloginfo] = useState("none");
     // var[logsigdiv,close] = useState()
+    const loginfo = () =>{
+        loginfo1 === "none" ? setloginfo("block") : setloginfo("none")
+    }
     const close = () => {
         logsigchange('none')
     }
@@ -56,7 +60,7 @@ export default function Navbar(props) {
     }]);
     const [userurl, setUserurl] = useState();
     const [userimg, setuserimg] = useState([{}]);
-    const[token1,settoken] = useState();
+    const [token1, settoken] = useState();
     const ccc = () => {
         Axios.post("http://localhost:3001/userinfo", {
             account: account,
@@ -89,12 +93,21 @@ export default function Navbar(props) {
             // token = (Cookies.get('token'))
             // settoken(Cookies.get('token'))
             // const id = ((Cookies.get('id')))
+        });
+        Axios.post("http://localhost:3001/teaminfo", {
+            userid: id,
+        }).then((response) => {
+            // console.log('team', response.data);
+            // console.log(response.data);
+            setteaminfo(response.data);
+            // console.log(teaminfo)
+            
         }).catch(() => {
             alert('87');
         });
     }
     // token = (Cookies.get('token'))
-    const[token3,settoken3] = useState(Cookies.get('token'))
+    const [token3, settoken3] = useState(Cookies.get('token'))
     // const token3=(Cookies.get('token'))
     const id = ((Cookies.get('id')))
 
@@ -117,68 +130,78 @@ export default function Navbar(props) {
             setUserurl(fr.result);
         };
     }
+    const [teaminfo,setteaminfo] = useState([{}]);
     useEffect(() => {
+        Axios.post("http://localhost:3001/teaminfo", {
+            userid: id,
+        }).then((response) => {
+            // console.log('team', response.data);
+            // console.log(response.data);
+            setteaminfo(response.data);
+            // console.log(teaminfo)
+            
+        });
         getimg()
-        
+
     }, []);
 
-//註冊輸入
-// const[sighemail,emailput]=useState('');
-const[sighput,pasput]=useState('');
-const[sighput2,passput2]=useState('');
-const[email,setemail] = useState('');
-//存在的email
-const[realmail,setrealmail] = useState();
-const [emailhint, setemailhint] = useState();
-const [username, setusername] = useState();
-const [userimg1, setuserimg1] = useState();
-const [tel, settel] = useState();
-const sighsend = () =>{
-    Axios.post("http://localhost:3001/create1",{
-        email:email,
-        password:password,
-    }).then(() => {
-        console.log("success");
-    });
+    //註冊輸入
+    // const[sighemail,emailput]=useState('');
+    const [sighput, pasput] = useState('');
+    const [sighput2, passput2] = useState('');
+    const [email, setemail] = useState('');
+    //存在的email
+    const [realmail, setrealmail] = useState();
+    const [emailhint, setemailhint] = useState();
+    const [username, setusername] = useState();
+    const [userimg1, setuserimg1] = useState();
+    const [tel, settel] = useState();
+    const sighsend = () => {
+        Axios.post("http://localhost:3001/create1", {
+            email: email,
+            password: password,
+        }).then(() => {
+            console.log("success");
+        });
 
-}
-const emailcheck = (Event) => {
-    const text = Event.target.value;
-    const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-    // 任意字元開頭@gmail.com結尾
-    if (text.match(reg)) {
-        setemailhint("可以註冊");
-        setemail(text);
-    } else {
-        setemailhint("信箱已重複或格式不正確");
     }
-}
+    const emailcheck = (Event) => {
+        const text = Event.target.value;
+        const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+        // 任意字元開頭@gmail.com結尾
+        if (text.match(reg)) {
+            setemailhint("可以註冊");
+            setemail(text);
+        } else {
+            setemailhint("信箱已重複或格式不正確");
+        }
+    }
 
-const handleLogout = (e) => {
-    e.preventDefault();
-    settoken3(null)
+    const handleLogout = (e) => {
+        e.preventDefault();
+        settoken3(null)
 
-    Cookies.remove('token', {
-        path: '/'
-    })
+        Cookies.remove('token', {
+            path: '/'
+        })
 
-console.log("33")
-    // settoken=(null);
+        console.log("33")
+        // settoken=(null);
 
-    Cookies.remove('id', {
-        path: '/'
-    })
-    Cookies.remove('id87', {
-        path: '/'
-    })
+        Cookies.remove('id', {
+            path: '/'
+        })
+        Cookies.remove('id87', {
+            path: '/'
+        })
 
-}
+    }
 
-// 滾到qa的位置
-const scrollToQa =()=>{
-    let qatext = document.getElementById('qateaxt');
-    qatext.scrollIntoView();
-}
+    // 滾到qa的位置
+    const scrollToQa = () => {
+        let qatext = document.getElementById('qateaxt');
+        qatext.scrollIntoView();
+    }
 
 
     if (!token3) {
@@ -195,11 +218,11 @@ const scrollToQa =()=>{
                             <img className={cc.d131} src={google} alt="" />
                             <p className={cc.d132}>註冊信箱</p>
                             <form action="">
-<div className={cc.d152}>
-                               
-                                <p>{emailhint}</p>
-</div>
-                                <input onChange={emailcheck} className={`${emailhint === "可以註冊"? cc.d133:cc.d151}`} type="text" />
+                                <div className={cc.d152}>
+
+                                    <p>{emailhint}</p>
+                                </div>
+                                <input onChange={emailcheck} className={`${emailhint === "可以註冊" ? cc.d133 : cc.d151}`} type="text" />
                                 <p className={cc.d134}>密碼</p>
                                 <input onChange={e => setPassword(e.target.value)} className={cc.d135} type="text" />
                                 <p className={cc.d136}>至少8個字,含至少1個數字及1個英文字母</p>
@@ -255,11 +278,21 @@ const scrollToQa =()=>{
         );
     }
 
-     return (
+    return (
         <React.Fragment>
-            {/* <div className={cc.d154}>
-                <button>2222</button>
-            </div> */}
+            <div style={{ display: loginfo1 }} className={cc.d154}>
+                <button className={cc.d155}>個人頁面</button>
+                <button className={cc.d155}>帳號設定</button>
+                <button className={cc.d155}>活動歷程</button>
+                <button className={cc.d155}>我的球隊</button>
+                {teaminfo.map((v,k)=>{
+                    // console.log(v.tname)
+                    return(
+<React.Fragment> <button className={cc.d156}>{v.tname}</button>   </React.Fragment>
+)
+                })}
+                {/* <button className={cc.d156}>鐵血軍團</button> */}
+            </div>
             <div className="navbar">
                 <div className="nContent">
                     <div className="nLeft">
@@ -267,34 +300,35 @@ const scrollToQa =()=>{
                     </div>
                     <div className="nRight">
                         <div id={splitPathname[2] === "gosport" ? "tabline" : ""}>
-                            {userInfo[0].email==="root" ? <Link to='/gosport'>後台首頁</Link>  : <Link to='/gosport/home'>首頁</Link> }
+                            {userInfo[0].email === "root" ? <Link to='/gosport'>後台首頁</Link> : <Link to='/gosport/home'>首頁</Link>}
                             {/* <Link to='/gosport'>首頁</Link> */}
 
-                        
+
                         </div>
                         <div id={splitPathname[2] === "rent" ? "tabline" : ""}>
-                        {userInfo[0].email==="root" ? <Link to='/gosport'>後台租場地</Link>  :<Link to='/gosport/rent'>租場地</Link>
- }
+                            {userInfo[0].email === "root" ? <Link to='/gosport'>後台租場地</Link> : <Link to='/gosport/rent'>租場地</Link>
+                            }
                             {/* <Link to='/gosport/rent'>租場地</Link> */}
                         </div>
                         <div id={splitPathname[2] === "communicate" ? "tabline" : ""}>
-                        {userInfo[0].email==="root" ? <Link to='/gosport'>後台交流區</Link>  : <Link to='/gosport/communicate/search'>交流區</Link> }
+                            {userInfo[0].email === "root" ? <Link to='/gosport'>後台交流區</Link> : <Link to='/gosport/communicate/search'>交流區</Link>}
                             {/* <Link to='/gosport/communicate'>交流區</Link> */}
                         </div>
                         <div id={splitPathname[2] === "qa" ? "tabline" : ""}>
-                        {userInfo[0].email==="root" ? <Link to='/gosport'>後台Q&A</Link>  : <Link to='/gosport/qa'>Q&A</Link> }
+                            {userInfo[0].email === "root" ? <Link to='/gosport'>後台Q&A</Link> : <Link to='/gosport/qa'>Q&A</Link>}
                             {/* <Link to='/gosport/qa'>Q&A</Link> */}
                         </div>
                         <img className="notice" src={notice} />
                         {/* <div className="username"><p>Hi: {token3}</p></div> */}
                         {userInfo.map((v, k) => {
 
-                            
-                            if (v.userimg === null) { return(
-                            <React.Fragment> <img className="userimg1" onClick={logsig} src={noimg}></img> <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p> 
-                            </React.Fragment>
-                            );                            
-                        }
+
+                            if (v.userimg === null) {
+                                return (
+                                    <React.Fragment> <img className="userimg1" onClick={logsig} src={noimg}></img> <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
+                                    </React.Fragment>
+                                );
+                            }
                             else {
                                 let u8Arr = new Uint8Array(v.userimg.data);
                                 let blob = new Blob([u8Arr], { type: "image/jpeg" });
@@ -303,11 +337,11 @@ const scrollToQa =()=>{
                                 fr.onload = function () {
                                     setUserurl(fr.result);
                                 }
-                                return(
-                                <React.Fragment><img className="userimg" onClick={logsig} src={userurl} /> 
-                                 <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>  
-                                 </React.Fragment>
-                                 );
+                                return (
+                                    <React.Fragment><img className="userimg" onClick={loginfo} src={userurl} />
+                                        <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
+                                    </React.Fragment>
+                                );
                             }
                         })}
 
@@ -315,6 +349,6 @@ const scrollToQa =()=>{
                 </div>
             </div>
         </React.Fragment>
-       );
-    
+    );
+
 };
