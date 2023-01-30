@@ -121,34 +121,34 @@ const Backuser = () => {
                                             </div>
                                         </div>
                                         <div className={U.div5}>
-                                            <label for="alter_name">姓名</label><br />
+                                            <label for="alter_name" className={U.label}>姓名</label><br />
                                             <input type="text" id="alter_name" className={`${U.input22}`} defaultValue={val.username}/><br />
-                                            <label for="alter_email">註冊信箱</label><br />
+                                            <label for="alter_email" className={U.label}>註冊信箱</label><br />
                                             <input type="email" id="alter_email" className={`${U.input22}`} defaultValue={val.email}/><br />
-                                            <label for="alter_psw">密碼</label><br />
+                                            <label for="alter_psw" className={U.label}>密碼</label><br />
                                             <input type="password" id="alter_psw" className={`${U.input22}`} defaultValue={val.password}/><br />
-                                            <label for="alter_tel">電話</label><br />
+                                            <label for="alter_tel" className={U.label}>電話</label><br />
                                             <input type="tel" id="alter_tel" className={`${U.input22}`} defaultValue={val.tel}/><br />
-                                            <label>我的程度</label><br />
+                                            <label className={U.label}>我的程度</label><br />
                                             <div class={U.degree}>
                                                 <div>羽球</div>
-                                                <input type="radio" name="Badmin" id="newB" className={`${U.input2}`} checked={val.badminton==='新手'?'checked': ''}/><label for="newB">新手</label>
-                                                <input type="radio" name="Badmin" id="nomalB" className={`${U.input2}`} checked={val.badminton==='初階'?'checked': ''}/><label for="nomalB">初階</label>
-                                                <input type="radio" name="Badmin" id="highB" className={`${U.input2}`} checked={val.badminton==='高手'?'checked': ''}/><label for="highB">高手</label>
+                                                <input type="radio" name="Badmin" id="newB" className={`${U.input2}`} checked={val.badminton==='新手'?'checked': ''}/><label for="newB" className={U.label}>新手</label>
+                                                <input type="radio" name="Badmin" id="nomalB" className={`${U.input2}`} checked={val.badminton==='初階'?'checked': ''}/><label for="nomalB" className={U.label}>初階</label>
+                                                <input type="radio" name="Badmin" id="highB" className={`${U.input2}`} checked={val.badminton==='高手'?'checked': ''}/><label for="highB" className={U.label}>高手</label>
                                             </div>
                                             <div class={U.degree}>
                                                 <div>桌球</div>
-                                                <input type="radio" name="Ttennis" id="newT" className={`${U.input2}`} checked={val.tabletennis==='新手'?'checked': ''}/><label for="newT">新手</label>
-                                                <input type="radio" name="Ttennis" id="nomalT" className={`${U.input2}`} checked={val.tabletennis==='初階'?'checked': ''}/><label for="nomalT">初階</label>
-                                                <input type="radio" name="Ttennis" id="highT" className={`${U.input2}`} checked={val.tabletennis==='高手'?'checked': ''}/><label for="highT">高手</label>
+                                                <input type="radio" name="Ttennis" id="newT" className={`${U.input2}`} checked={val.tabletennis==='新手'?'checked': ''}/><label for="newT" className={U.label}>新手</label>
+                                                <input type="radio" name="Ttennis" id="nomalT" className={`${U.input2}`} checked={val.tabletennis==='初階'?'checked': ''}/><label for="nomalT" className={U.label}>初階</label>
+                                                <input type="radio" name="Ttennis" id="highT" className={`${U.input2}`} checked={val.tabletennis==='高手'?'checked': ''}/><label for="highT" className={U.label}>高手</label>
                                             </div>
                                             <div class={U.degree}>
                                                 <div>排球</div>
-                                                <input type="radio" name="Vodi" id="newV" className={`${U.input2}`} checked={val.volleyball==='新手'?'checked': ''}/><label for="newV">新手</label>
-                                                <input type="radio" name="Vodi" id="nomalV" className={`${U.input2}`} checked={val.volleyball==='初階'?'checked': ''}/><label for="nomalV">初階</label>
-                                                <input type="radio" name="Vodi" id="highV" className={`${U.input2}`} checked={val.volleyball==='高手'?'checked': ''}/><label for="highV">高手</label>
+                                                <input type="radio" name="Vodi" id="newV" className={`${U.input2}`} checked={val.volleyball==='新手'?'checked': ''}/><label for="newV" className={U.label}>新手</label>
+                                                <input type="radio" name="Vodi" id="nomalV" className={`${U.input2}`} checked={val.volleyball==='初階'?'checked': ''}/><label for="nomalV" className={U.label}>初階</label>
+                                                <input type="radio" name="Vodi" id="highV" className={`${U.input2}`} checked={val.volleyball==='高手'?'checked': ''}/><label for="highV" className={U.label}>高手</label>
                                             </div>
-                                            <label>我的徽章</label>
+                                            <label className={U.label}>我的徽章</label>
                                             <div class={U.mark}>
                                                 {/* <embed src="./icon/star1.svg" type="" />
                                                 <embed src="./icon/star1.svg" type="" />
@@ -160,20 +160,20 @@ const Backuser = () => {
                                                 <embed src="./icon/star2.svg" type="" />
                                                 <embed src="./icon/star2.svg" type="" /> */}
                                             </div>
-                                            <label for="account_describe">描述</label><br />
-                                            <textarea id="account_describe" defaultValue={val.userdiscribe}></textarea><br />
+                                            <label for="account_describe" className={U.label}>描述</label><br />
+                                            <textarea className={U.textarea} id="account_describe" defaultValue={val.userdiscribe}></textarea><br />
                                             <div className={`row`}>
                                                 <div className={`col-3 `}>
-                                                    <label htmlFor="">零打次數</label> <br />
-                                                    <label htmlFor="">場地預約次數</label>
+                                                    <label htmlFor="" className={U.label}>零打次數</label> <br />
+                                                    <label htmlFor="" className={U.label}>場地預約次數</label>
                                                 </div>
                                                 <div className={`col-2`}>
                                                 <input type="number" className={`${U.input4}`} defaultValue='20'/>
                                                 <input type="number" className={`${U.input4}`} defaultValue='5'/>
                                                 </div>
                                                 <div className={`col-3 `}>
-                                                    <label htmlFor="">轉租成功次數</label> <br />
-                                                    <label htmlFor="">餐羽球隊聚餐次數</label>
+                                                    <label htmlFor="" className={U.label}>轉租成功次數</label> <br />
+                                                    <label htmlFor="" className={U.label}>餐羽球隊聚餐次數</label>
                                                 </div>
                                                 <div className={`col-2`}>
                                                 <input type="number" className={`${U.input4}`} defaultValue='3'/>
