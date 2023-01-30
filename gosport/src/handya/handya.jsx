@@ -1,4 +1,5 @@
 import React, { useState,useEffect,useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import cc from './cc.module.css';
 import Axios from "axios";
 import Cookies from 'js-cookie';
@@ -11,8 +12,11 @@ import arr from './icon/arrowup2.svg';
 import ball from './icon/球類別.png';
 import io from 'socket.io-client';
 import chat from './icon/Group 33.svg';
-import send from './icon/按鈕.svg'
+import send from './icon/按鈕.svg';
 import sun1 from './icon/Vector.svg';
+import fram from './icon/Frame.svg';
+import bask from './icon/bask.svg';
+import tennis from './icon/Group 2.svg';
 //建立連線
 const  socket = io.connect("http://localhost:3002");
 
@@ -76,7 +80,16 @@ const Handya = () =>{
     const [rain,setrain] = useState('');
     const [name,setname] = useState('');
     const [sun,setsun] =  useState('');
+
     const changeweather = (e) => {
+        const index = e.target.selectedIndex;
+        const optionElement = e.target.childNodes[index];
+        const optionElementId = optionElement.getAttribute('id');
+        Cookies.remove('town');
+        Cookies.set(
+            'town',//key
+            optionElementId)//value
+      
         Axios.get('https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-073?Authorization=CWB-CD60C32C-4797-4EA9-A3B6-E5837A37F9C1')
         .then(function (response) {
             setsun(response.data.records.locations[0].location[0].weatherElement[1].time[2].elementValue[0].value)
@@ -231,6 +244,7 @@ const Handya = () =>{
             }
             console.log(e.target.value);
         })
+
       };
       const [chatdiv,setchat] =useState("none")
       const[chatimg,setchatimg] =useState("block")
@@ -244,6 +258,7 @@ const Handya = () =>{
       const [userInfo, setuser] = useState([{}]);
       const[usern,setusern] = useState("")
       const[idd,setidd] = useState();
+      const [type,settype] =useState('0');
       const chatbtn = () =>{
         setchat('none');
         setchatimg('block');
@@ -252,6 +267,10 @@ const Handya = () =>{
         setchat('block');
         setchatimg('none');
       }
+      Cookies.remove('ball');
+      Cookies.set(
+          'ball',//key
+         type)//value
       const startdate = (e)=>{
         Cookies.remove('startdate');
         Cookies.set(
@@ -314,7 +333,13 @@ const Handya = () =>{
         setmessage('')
       }
 useEffect(()=>{
-    changeweather()
+    Axios.get('https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-073?Authorization=CWB-CD60C32C-4797-4EA9-A3B6-E5837A37F9C1')
+    .then(function (response) {
+        setsun(response.data.records.locations[0].location[0].weatherElement[1].time[2].elementValue[0].value)
+        settemp(response.data.records.locations[0].location[0].weatherElement[2].time[0].elementValue[0].value)
+        setrain(response.data.records.locations[0].location[0].weatherElement[0].time[1].elementValue[0].value)
+        setname(response.data.records.locations[0].location[0].locationName) })
+    // changeweather()
     setidd((Cookies.get('id')))
 },[])
       useEffect(()=>{
@@ -401,7 +426,13 @@ useEffect(()=>{
                     <form action="">
                         <div id="local" className={cc.d2}>
                             <p className={cc.d3}>類別</p>
-                            <img className={cc.d4} src={ball} alt=""/>
+                            {/* <img className={cc.d4} src={ball} alt=""/> */}
+                            <img className={cc.d4} src={`${type=='0'?fram:type=='1'?tennis:bask}`} alt="" /><br />
+                                    <select name="" id="aaa" className={cc.d4s} onChange={(e)=>{settype(e.target.value)}}>
+                                        <option value="0">羽球</option>
+                                        <option value="1">桌球</option>
+                                        <option value="2">籃球</option>
+                                    </select>
                             <p className={cc.d5}>地區</p>
                             <img className={`${cc.d6} ${cc.selectedDate}`} src={arr}/>
                             <img className={`${cc.d7} ${cc.selectedDate}`} src={arr}/>
@@ -410,7 +441,7 @@ useEffect(()=>{
                             </select>
                             <select name="town" onChange={changeweather} className={cc.district}>
                             {Taichung.map((val, key) => {
-                                                    return (<option key={key} value={val}>{val}</option>);
+                                                    return (<option key={key} id={key} value={val}>{val}</option>);
                                                 })}
                             </select>
 
@@ -429,7 +460,7 @@ useEffect(()=>{
                         <span className={cc.d14}>~</span>
 
                         <input className={cc.d15} onChange={enddate} type="date" id="start"
-                            name="trip-start" value="2018-07-22" min="2022-12-19" max="2033-12-31"/>
+                            name="trip-start"/>
                         <img className={`${cc.d16} ${cc.selectedDate}`} src={arr}/>
 
                         {/* <input className={cc.d17} type="time" value="13:14"
@@ -475,7 +506,7 @@ useEffect(()=>{
                             <input className={cc.d34} onChange={nohand} type="checkbox" value="身障友善" />
                             <span className={cc.d35}>身障友善</span>
                         </label>
-                        <button type="submit" className={cc.serch}>快速搜尋</button>
+                        <button className={cc.serch}><Link style={{color:"white"}} to='/gosport/rent'>快速搜尋</Link></button>
                     </form>
                 </div>
                 <div id="Paris" style={{display: zerodadiv}} className={cc.tabcontent}>
