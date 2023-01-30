@@ -71,10 +71,10 @@ const Handya = () =>{
         setturnbtn(true);
     }
     const [Taichung, setTaichung] = useState([
-        "外埔區", "東區", "西區", "南區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "清水區", "沙鹿區", "大甲區", "東勢區", "梧棲區", "烏日區", "神岡區", "大肚區", "大雅區", "后里區", "霧峰區", "潭子區", "龍井區", "中區", "和平區", "石岡區", "大安區", "新社區"
+        "不限","外埔區", "東區", "西區", "南區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "清水區", "沙鹿區", "大甲區", "東勢區", "梧棲區", "烏日區", "神岡區", "大肚區", "大雅區", "后里區", "霧峰區", "潭子區", "龍井區", "中區", "和平區", "石岡區", "大安區", "新社區"
     ]);
     const [time, settime] = useState([
-        '0:00', '1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '0:00'
+         '1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '0:00'
     ])
     const [temp,settemp] = useState('');
     const [rain,setrain] = useState('');
@@ -260,12 +260,18 @@ const Handya = () =>{
       const[idd,setidd] = useState();
       const [type,settype] =useState('0');
       const chatbtn = () =>{
+        
         setchat('none');
         setchatimg('block');
       }
       const chatbtn1 = () =>{
-        setchat('block');
-        setchatimg('none');
+        if(idd != undefined)
+        {setchat('block');
+        setchatimg('none');}
+        else{
+            alert('請先登入會員')
+        }
+        
       }
       Cookies.remove('ball');
       Cookies.set(
@@ -318,6 +324,13 @@ const Handya = () =>{
         Cookies.set(
             'nohand',//key
             e.target.checked)//value
+      }
+      const ezsurch = () =>{
+        Cookies.remove('ezsurch');
+        Cookies.set(
+            'ezsurch',
+            true
+        )
       }
       const sendmsg = () => {
 
@@ -506,7 +519,7 @@ useEffect(()=>{
                             <input className={cc.d34} onChange={nohand} type="checkbox" value="身障友善" />
                             <span className={cc.d35}>身障友善</span>
                         </label>
-                        <button className={cc.serch}><Link style={{color:"white"}} to='/gosport/rent'>快速搜尋</Link></button>
+                        <button onClick={ezsurch} className={cc.serch}><Link style={{color:"white"}} to='/gosport/rent'>快速搜尋</Link></button>
                     </form>
                 </div>
                 <div id="Paris" style={{display: zerodadiv}} className={cc.tabcontent}>
