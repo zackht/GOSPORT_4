@@ -144,6 +144,7 @@ export default function Navbar(props) {
         getimg()
 
     }, []);
+const [mouse,setmouse] = useState(false)
 
     //註冊輸入
     // const[sighemail,emailput]=useState('');
@@ -281,14 +282,14 @@ export default function Navbar(props) {
     return (
         <React.Fragment>
             <div style={{ display: loginfo1 }} className={cc.d154}>
-                <button className={cc.d155}>個人頁面</button>
-                <button className={cc.d155}>帳號設定</button>
-                <button className={cc.d155}>活動歷程</button>
-                <button className={cc.d155}>我的球隊</button>
+                <button className={cc.d155}><Link style={{color:"black",hover:"color: white"}} to='/gosport/user'>個人頁面</Link></button>
+                <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/settings'>帳號設定</Link></button>
+                <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>活動歷程</Link></button>
+                <button className={mouse==true?cc.d160:cc.d155}>我的球隊</button>
                 {teaminfo.map((v,k)=>{
                     // console.log(v.tname)
                     return(
-<React.Fragment> <button className={cc.d156}>{v.tname}</button>   </React.Fragment>
+<React.Fragment> <button onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}>{v.tname}</button>   </React.Fragment>
 )
                 })}
                 {/* <button className={cc.d156}>鐵血軍團</button> */}
