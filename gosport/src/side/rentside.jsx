@@ -13,7 +13,7 @@ import Axios from "axios";
 
 const Rentside = () => {
     const Taichung = [
-        "中區", "東區", "西區", "南區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "清水區", "沙鹿區", "大甲區", "東勢區", "梧棲區", "烏日區", "神岡區", "大肚區", "大雅區", "后里區", "霧峰區", "潭子區", "龍井區", "外埔區", "和平區", "石岡區", "大安區", "新社區"
+        "不限","中區", "東區", "西區", "南區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "清水區", "沙鹿區", "大甲區", "東勢區", "梧棲區", "烏日區", "神岡區", "大肚區", "大雅區", "后里區", "霧峰區", "潭子區", "龍井區", "外埔區", "和平區", "石岡區", "大安區", "新社區"
     ];
     const time = [
         '1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '0:00'
@@ -29,7 +29,7 @@ const Rentside = () => {
     const [peakstarttime,setpeakstarttime] =useState('');
     const [peakendtime,setpeakendtime] =useState('');
     const [county,setcounty] =useState('台中市');
-    const [area,setarea] =useState('');
+    const [area,setarea] =useState('不限');
     const [park,setpark] =useState(false);
     const [bath,setbath] =useState(false);
     const [baulk,setbaulk] =useState(false);
