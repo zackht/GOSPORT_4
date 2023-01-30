@@ -313,14 +313,14 @@ const Side2 = () => {
         <div className={`container-fluid ${side2.div1}`}>
           <div className={`row ${side2.boxshadow} d-flex ${side2.div2}`}>
             <div className={side2.thecover}>
-              {/* <img src={img} alt="" /> */}
-              <iframe
+              <img src={img} alt="" />
+              {/* <iframe
                 width="100%"
                 height="450"
                 frameborder="0"
                 className={side2.googlemap}
                 src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyDgvC5VjHVolnPPSTUAmsgOs6xoWgTWO7o&location=24.14895151487666,120.63172009774597&heading=-10&pitch=20&fov=35">
-              </iframe>
+              </iframe> */}
             </div>
             <div className={`col-xl-4 d-flex flex-column ${side2.div3x}`}>
               <div>

@@ -293,16 +293,29 @@ app.post("/rentside", (req, res) => {
   const park = `${req.body.park}`;
   const bath = `${req.body.bath}`;
   const baulk = `${req.body.baulk}`;
-  db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
-  weekstarttime BETWEEN  ? AND ? AND county =? AND area =? AND (sidename LIKE ? OR adress LIKE ?)`
-    // AND bath = ? AND park=? AND baulk=?`
-    , [startdate, enddate, type, starttime, endtime, county, area, text, text], (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
+  if(area==='不限'){
+    db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
+    weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?)`
+      // AND bath = ? AND park=? AND baulk=?`
+      , [startdate, enddate, type, starttime, endtime, county, area, text, text], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+  }{
+    db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
+    weekstarttime BETWEEN  ? AND ? AND county =? AND area =? AND (sidename LIKE ? OR adress LIKE ?)`
+      // AND bath = ? AND park=? AND baulk=?`
+      , [startdate, enddate, type, starttime, endtime, county, area, text, text], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+  }
 });
 // 租場地查看更多
 app.post("/rentsideedit", (req, res) => {
