@@ -254,7 +254,7 @@ const Handya = () =>{
       const[message1,setmessage1] =useState([{}]);
       const[message2,setmessage2] =useState("");
       const[mes,setmes] = useState([{}]);
-      const userid = (Cookies.get('id'));
+      const userid = Cookies.get('id')
       const [userInfo, setuser] = useState([{}]);
       const[usern,setusern] = useState("")
       const[idd,setidd] = useState();
@@ -265,7 +265,8 @@ const Handya = () =>{
         setchatimg('block');
       }
       const chatbtn1 = () =>{
-        if(idd != undefined)
+        console.log(Cookies.get('id'))
+        if((Cookies.get('id')) != undefined)
         {setchat('block');
         setchatimg('none');}
         else{
@@ -353,7 +354,8 @@ useEffect(()=>{
         setrain(response.data.records.locations[0].location[0].weatherElement[0].time[1].elementValue[0].value)
         setname(response.data.records.locations[0].location[0].locationName) })
     // changeweather()
-    setidd((Cookies.get('id')))
+    // (Cookies.get('id'))
+    // console.log('apple')
 },[])
       useEffect(()=>{
         Axios.post("http://localhost:3001/self", {

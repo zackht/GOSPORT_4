@@ -61,6 +61,7 @@ export default function Navbar(props) {
     const [userurl, setUserurl] = useState();
     const [userimg, setuserimg] = useState([{}]);
     const [token1, settoken] = useState();
+    const [iddd,setiddd] = useState('');
     const ccc = () => {
         Axios.post("http://localhost:3001/userinfo", {
             account: account,
@@ -68,9 +69,9 @@ export default function Navbar(props) {
         }).then((response) => {
             // console.log(emaillist)
             // console.log(realmail)
-
+setiddd(response.data[0].userid);
             setuser(response.data);
-            console.log(userInfo)
+            // console.log(response.data[0].userid)
             settoken3(account)
             Cookies.set(
                 'token',//key
@@ -91,20 +92,14 @@ export default function Navbar(props) {
                 }
             )
             // token = (Cookies.get('token'))
-            // settoken(Cookies.get('token'))
-            // const id = ((Cookies.get('id')))
-        });
-        Axios.post("http://localhost:3001/teaminfo", {
-            userid: id,
-        }).then((response) => {
-            // console.log('team', response.data);
-            // console.log(response.data);
-            setteaminfo(response.data);
-            // console.log(teaminfo)
-            
+  
+console.log(iddd)      
+           
+       
         }).catch(() => {
             alert('87');
         });
+        
     }
     // token = (Cookies.get('token'))
     const [token3, settoken3] = useState(Cookies.get('token'))
@@ -136,14 +131,14 @@ export default function Navbar(props) {
             userid: id,
         }).then((response) => {
             // console.log('team', response.data);
-            // console.log(response.data);
+            console.log(response.data);
             setteaminfo(response.data);
             // console.log(teaminfo)
             
         });
         getimg()
 
-    }, []);
+    }, [id]);
 const [mouse,setmouse] = useState(false)
 
     //註冊輸入
@@ -282,16 +277,16 @@ const [mouse,setmouse] = useState(false)
     return (
         <React.Fragment>
             <div style={{ display: loginfo1 }} className={cc.d154}>
-                <button className={cc.d155}><Link style={{color:"black",hover:"color: white"}} to='/gosport/user'>個人頁面</Link></button>
+                <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user'>個人頁面</Link></button>
                 <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/settings'>帳號設定</Link></button>
                 <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>活動歷程</Link></button>
-                <button className={mouse==true?cc.d160:cc.d155}>我的球隊</button>
-                {teaminfo.map((v,k)=>{
-                    // console.log(v.tname)
+                <button className={mouse==true?cc.d160:cc.d161}>我的球隊</button>
+                {teaminfo.map((v,k)=>{                   
                     return(
 <React.Fragment> <button onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}>{v.tname}</button>   </React.Fragment>
 )
-                })}
+                }
+                )}
                 {/* <button className={cc.d156}>鐵血軍團</button> */}
             </div>
             <div className="navbar">
@@ -326,7 +321,7 @@ const [mouse,setmouse] = useState(false)
 
                             if (v.userimg === null) {
                                 return (
-                                    <React.Fragment> <img className="userimg1" onClick={logsig} src={noimg}></img> <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
+                                    <React.Fragment> <img className="userimg1" onClick={loginfo} src={noimg}></img> <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
                                     </React.Fragment>
                                 );
                             }
