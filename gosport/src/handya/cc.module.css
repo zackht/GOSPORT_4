@@ -768,6 +768,7 @@ margin-right: 30px;}
     /* height: 666px; */
     margin-top: 135px;
     z-index: 99999999999999999999;
+    top: 0;
 }
 .d155{
     width: 100%;
@@ -778,9 +779,21 @@ margin-right: 30px;}
     text-align: center;
     
 }
+.d161{
+    width: 100%;
+    height: 55px;
+    background-color: white;
+    border: none;
+    font-size: 20px;
+    text-align: center;
+    
+}
 .d155:hover{
     background-color:#e64637;
-color: white;
+color: white!important;
+}
+.d161:hover{
+    background-color:rgb(254, 227, 224);color:#e64637;
 }
 .d156{
     width: 100%;

@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import arrowup from '../icon/arrowup2.svg'
 // import star from '../icon/star1.svg'
 // import pic from '../icon/20130917_171106.jpg'
-const Artadd = ({ control, editZeroda, editSublet, find }) => {
+const Artadd = ({ control, editZeroda, editSublet, find, follow }) => {
     // 查詢date
     const [stratDate, setStartDate] = useState('');
     const [endDate, setEndtDate] = useState('');
@@ -53,8 +53,10 @@ const Artadd = ({ control, editZeroda, editSublet, find }) => {
                     setcountcountzero(pre => { return [...pre, count] })
                 })
             }
-            if (response.data[0].startdate) {
+            if (response.data[0].startdate && chuseZ === true) {
                 setzeroShow('table-row')
+            }else{
+                setzeroShow('none')
             }
         });
         Axios.post("http://localhost:3001/findsub", {
@@ -77,8 +79,10 @@ const Artadd = ({ control, editZeroda, editSublet, find }) => {
                     setcountsublist(pre => { return [...pre, count] })
                 })
             }
-            if (response.data[0].startdate) {
+            if (response.data[0].startdate && chuseS === true) {
                 setsubShow('table-row')
+            }else{
+                setsubShow('none')
             }
         });
     }
@@ -114,10 +118,21 @@ const Artadd = ({ control, editZeroda, editSublet, find }) => {
         if (time !== undefined)
             return time.substring(0, 10)
     }
+    //過濾搜尋
+    const [chuseS,setChuseS]=useState(true);
+    const [chuseZ,setChuseZ]=useState(true);
+
     return (
         <React.Fragment>
             <div>
-                活動日期區間<br />
+                文章類別選擇：
+                <input type="checkbox" id='chfinds' style={{opacity:"0"}} checked={chuseS}/>
+                <label htmlFor="chfinds" onClick={()=>{setChuseS(!chuseS)}} className={chuseS?'chfind article_chusefind':'notchfind article_chusefind'}>轉租</label>
+                <input type="checkbox" id='chfindz' style={{opacity:"0"}} checked={chuseZ}/>
+                <label htmlFor="chfindz" onClick={()=>{setChuseZ(!chuseZ)}} className={chuseZ?'chfind article_chusefind':'notchfind article_chusefind'}>零打</label>
+                <br/>
+                活動日期區間：&nbsp;&nbsp;&nbsp;  
+                {/* <br /> */}
                 <input type="date" onChange={(e) => { setStartDate(e.target.value) }} /><img className="selectedDate selectedfromart" src={arrowup} alt='' />至&emsp;&thinsp;
                 <input type="date" onChange={(e) => { setEndtDate(e.target.value) }} /><img className="selectedDate selectedfromart" src={arrowup} alt='' />
                 <span onClick={findArticle} ref={find} className="active_articlefind">搜尋</span>
@@ -128,17 +143,17 @@ const Artadd = ({ control, editZeroda, editSublet, find }) => {
                         <td>活動日期</td>
                         <td>類別</td>
                         <td>標題</td>
-                        <td>報名/承租</td>
-                        <td>留言數</td>
+                        <td style={{ textAlign: "center" }}>需求人數</td>
+                        <td style={{ textAlign: "center" }}>留言數</td>
                         <td></td>
                     </tr>
                     {zerolist.map((item, index) => {
                         return (
-                            <tr key={index} style={{ display: showzero }}>
+                            <tr key={index} style={{ display: showzero , cursor: "default"}}>
                                 <td>{getStartDate(item.startdate)}</td>
                                 <td>零打</td>
                                 <td className='articlecontent' >{item.content}</td>
-                                <td style={{ textAlign: "center", cursor: "pointer" }} onClick={() => { control(item) }}>{item.number}</td>
+                                <td className='articlefollow'  ref={follow} onClick={() => { control(item) }}>{item.number}</td>
                                 <td style={{ textAlign: "center" }}>{countzero[index]}</td>
                                 <td style={{ position: "relative" }}>
                                     <button onClick={() => { editZeroda(item) }}>編輯</button>
@@ -150,7 +165,7 @@ const Artadd = ({ control, editZeroda, editSublet, find }) => {
                     {/* .substring(0, 10) */}
                     {sublist.map((item, index) => {
                         return (
-                            <tr style={{ display: showsub }}>
+                            <tr style={{ display: showsub ,cursor: "default"}}>
                                 <td>{getStartDate(item.startdate)}</td>
                                 {/* <td>{item.startdate}</td> */}
                                 <td>轉租</td>

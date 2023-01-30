@@ -1,5 +1,5 @@
 // import React, { Component } from 'react';
-import React, { useState , useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Axios from "axios";
 import Cookies from 'js-cookie';
 
@@ -35,8 +35,10 @@ const Artdel = () => {
         }).then((response) => {
             console.log(response.data);
             setZeroList(response.data);
-            if (response.data[0].startdate) {
+            if (response.data[0].startdate && chuseZ === true) {
                 setzeroShow('table-row')
+            } else {
+                setzeroShow('none')
             }
         });
         Axios.post("http://localhost:3001/finddelesub", {
@@ -46,13 +48,18 @@ const Artdel = () => {
         }).then((response) => {
             console.log(response.data);
             setSubList(response.data);
-            if (response.data[0].startdate) {
+            if (response.data[0].startdate && chuseS === true) {
                 setsubShow('table-row')
+            } else {
+                setsubShow('none')
             }
         });
     }
+    //過濾搜尋
+    const [chuseS, setChuseS] = useState(true);
+    const [chuseZ, setChuseZ] = useState(true);
     // 復原按鈕
-    const  find = useRef();
+    const find = useRef();
     const zeroReBuild = (trdata) => {
         Axios.post("http://localhost:3001/insertzeroda", {
             articleid_zeroda: trdata.articleid_zeroda
@@ -83,7 +90,14 @@ const Artdel = () => {
     return (
         <React.Fragment>
             <div>
-                活動日期區間<br />
+                文章類別選擇：
+                <input type="checkbox" id='chfinds' style={{ opacity: "0" }} checked={chuseS} />
+                <label htmlFor="chfinds" onClick={() => { setChuseS(!chuseS) }} className={chuseS ? 'chfind article_chusefind' : 'notchfind article_chusefind'}>轉租</label>
+                <input type="checkbox" id='chfindz' style={{ opacity: "0" }} checked={chuseZ} />
+                <label htmlFor="chfindz" onClick={() => { setChuseZ(!chuseZ) }} className={chuseZ ? 'chfind article_chusefind' : 'notchfind article_chusefind'}>零打</label>
+                <br />
+                活動日期區間：&nbsp;&nbsp;&nbsp;
+                {/* <br /> */}
                 <input type="date" onChange={(e) => { setStartDate(e.target.value) }} /><img className="selectedDate selectedfromart" src={arrowup} alt="" />至&emsp;&thinsp;
                 <input type="date" onChange={(e) => { setEndtDate(e.target.value) }} /><img className="selectedDate selectedfromart" src={arrowup} alt="" />
                 <span onClick={findArticle} ref={find} className="active_articlefind">搜尋</span>
@@ -94,7 +108,7 @@ const Artdel = () => {
                         <td>活動日期</td>
                         <td>類別</td>
                         <td>標題</td>
-                        <td>報名/承租</td>
+                        <td style={{ textAlign: "center" }}>報名/承租 需求人數</td>
                         {/* <td>留言數</td> */}
                         <td></td>
                     </tr>
@@ -126,7 +140,7 @@ const Artdel = () => {
                                 <td>{item.content}</td>
                                 <td style={{ textAlign: "center" }} >{item.number}</td>
                                 <td>
-                                        <button onClick={() => { zeroReBuild(item) }}>復原</button>
+                                    <button onClick={() => { zeroReBuild(item) }}>復原</button>
                                 </td>
                             </tr>
                         )
@@ -139,7 +153,7 @@ const Artdel = () => {
                                 <td>{item.content}</td>
                                 <td style={{ textAlign: "center" }}>{item.amount}</td>
                                 <td>
-                                        <button onClick={() => { subReBuild(item) }}>復原</button>
+                                    <button onClick={() => { subReBuild(item) }}>復原</button>
                                 </td>
                             </tr>
                         )
