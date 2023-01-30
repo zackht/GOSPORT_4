@@ -145,10 +145,26 @@
 }
 .adiv16{
     height: 100%;
+    overflow: scroll;
 }
 .adiv17{
-    border-bottom: 1px solid #aaaaaa; padding: 20px 0px;
+    border-bottom: 1px solid #aaaaaa; padding: 20px 0px;margin-bottom: 20px;
 }
 .adiv18{
     margin-right: 15px;
+}
+.adiv19{
+
+}
+.adiv55{
+    position: fixed;
+    z-index: 500001;
+    background-color: rgba(0, 0, 0,0.5);
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
 }

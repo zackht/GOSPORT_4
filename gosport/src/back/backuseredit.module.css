@@ -1,34 +1,26 @@
-       
-.alter_{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    position: relative;
-    top: 8vh;
-    height: 1600px;
-}
-/* 主體 */
 .selfalter {
-    height: 1350px;
+    height:720px;
     width: 1060px;
     background: #FFFFFF;
-    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
+    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: 500;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: scroll;
+    margin-top: 50px;
 }
 
-.alter_form {
+.form {
     width: 90%;
-    height: 92%;
+    height: 94%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.alter_form>div:first-child {
+.form>div:first-child {
     display: flex;
 }
 
@@ -39,7 +31,7 @@
     align-items: center;
 }
 
-#oploadPic {
+.file {
     display: none;
 }
 
@@ -61,35 +53,66 @@
     font-size: 20px;
 }
 
-#picFile figure{
-    filter: drop-shadow(15px 1px 3px 50px rgba(212, 212, 212, 0.5));
-}
-
-.alter_showStar img{
+.alter_PicPla embed {
     width: 20px;
     height: 20px;
-    margin: 15px 3px 0px 3px;
+    margin-top: 10px;
 }
 
 /* 主要輸入內容 */
-.alter_input,
-.alter_textarea {
+textarea {
     border: none;
-    background-color: rgb(230, 230, 230);
+    background-color: #F5F5F5;
     border-radius: 50px;
     height: 45px;
     margin-bottom: 27px;
     padding: 10px 23px;
     font-size: 24px;
 }
+.input2{
+    border: none;
+    background-color: #F5F5F5;
+    border-radius: 50px;
+    height: 45px;
+    font-size: 24px;
+}
+.input22{
+    border: none;
+    background-color: #F5F5F5;
+    border-radius: 50px;
+    height: 45px;
+    font-size: 24px;
+    padding-left: 10px;
+}
+.input3{
+    border: none;
+    background-color: #F5F5F5;
+    border-radius: 50px;
+    width: 100px;
+    height: 45px;
+    font-size: 24px;
+    margin-left: 10px;
+    text-align: center;
+}
+.input4{
+    border: none;
+    background-color: #F5F5F5;
+    border-radius: 50px;
+    width: 100px;
+    height: 45px;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 8px;
+    padding: 0;
+}
 
-.alter_label {
+label {
     color: #AAAAAA;
     font-size: 20px;
     line-height: 43px;
 }
 
-.alter_sex {
+.sex {
     display: inline-block;
     text-align: center;
     border-radius: 50px;
@@ -102,41 +125,40 @@
     margin-bottom: 27px;
 }
 
-.alter_sex:hover {
+.sex:hover {
     color: black;
     background-color: #F5F5F5;
 }
 
-.alter_degree {
-    background-color: rgb(230, 230, 230);
+.degree {
+    background-color: rgb(245, 245, 245);
     border-radius: 50px;
     width: 450px;
     height: 55px;
     margin: 7px 0px 8px 0px;
-    padding-top: 10px;
 }
 
-.alter_degree div {
+.degree div {
     display: inline-block;
     text-align: center;
     position: relative;
     font-size: 24px;
+    bottom: 15px;
     width: 108px;
 }
 
-.alter_degree label {
+.degree label {
     display: inline-block;
     color: black;
     font-size: 20px;
     position: relative;
+    bottom: 15px;
     padding: 0px 25px 0px 12px;
-    cursor: pointer;
 }
 
-
 /* 徽章 */
-.alter_mark {
-    background-color: rgb(230, 230, 230);
+.mark {
+    background-color: #F5F5F5;
     height: 64px;
     width: 640px;
     border-radius: 50px;
@@ -146,27 +168,10 @@
     padding: 0px 30px;
 }
 
-.alter_mark_img {
-    width: 30px;
-    height: 30px;
-    padding: 5px;
-    margin: 0px 8px;
-    border-radius: 50px;
-    cursor: pointer;
-    background-color: #d2d2d2;
-    opacity: 0.7;
-}
-.selectedstars{
-    width: 30px;
-    height: 30px;
-    padding: 5px;
-    margin: 0px 8px;
-    border-radius: 50px;
-    cursor: pointer;
-    background-color: #b6b6b4;
-    
-    background-color: white;
-    box-shadow: #b6b6b4 0px 4px 5px 1px;
+.mark embed {
+    width: 20px;
+    height: 20px;
+    padding-right: 7px;
 }
 
 /* 描述 */
@@ -179,20 +184,16 @@
 /* 取消 確認 */
 .alter_yesOrNot {
     display: flex;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
-.alter_yesOrNot input[type="submit"] {
-    border: none;
-    border-radius: 50px;
+.input{
     background-color: rgb(230, 70, 55);
     color: white;
     padding: 0px 0px;
-    width: 370px;
+    width: 414px;
     height: 63px;
-    transition: all ease-out 0.2s;
-    margin-left: 10px;
-    font-size: 1.5rem;
+    margin-left: 20px;
 }
 
 .alter_backself {
@@ -201,21 +202,26 @@
     padding: 0px;
     display: inline-block;
     border-radius: 50px;
-    width: 370px;
-    margin-right: 10px;
+    width: 414px;
     height: 63px;
     line-height: 63px;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-right: 20px;
 }
-
-.alter_backself:hover{
-    color:rgb(254, 96, 82) ;
-    border:rgb(254, 96, 82) 1px solid;
-    box-shadow: -1px 2px 2px 0px rgba(255, 138, 138, 0.7);
+.div2{
+    text-align: center;color:#AAAAAA;
 }
-
-.alter_yesOrNot input:hover {
-    background-color: rgb(254, 96, 82);
-    box-shadow: 2px 2px 2px 0px rgba(141, 7, 7, 0.7);
+.div3{
+    font-size: 40px;
+}
+.div4{
+    display: none;
+}
+.div5{
+    padding-left:40px;
+}
+.div6{
+    align-items: center;
 }

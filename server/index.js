@@ -42,19 +42,34 @@ var datas = [
 
 ]
 io.on("connection", (socket) => {
+  
+  // onlineCount++;
+  //   // 發送人數給網頁
+  //   io.emit("online", onlineCount);
+ 
+  //   socket.on("greet", () => {
+  //       socket.emit("greet", onlineCount);
+  //   });
+ 
+  //   socket.on('disconnect', () => {
+  //       // 有人離線了，扣人
+  //       onlineCount = (onlineCount < 0) ? 0 : onlineCount-=1;
+  //       io.emit("online", onlineCount);
+  //   });
+
 
   console.log(`User Connected:${socket.id}`);
   //socket.on(“監聽來自client 的send_mesg事件名稱”, callback)
   // io.emit("receive_message",datas);
-// socket.on("send_mesg1", (data) => {
-//   owndata.push(data);
-//   socket.emit('gobackMessage', data)})
-//   console.log(owndata);
+  // socket.on("send_mesg1", (data) => {
+  //   owndata.push(data);
+  //   socket.emit('gobackMessage', data)})
+  //   console.log(owndata);
 
-// socket.on("send_mesg", (data) => {
-//   datas.push(data);
-//   console.log(datas);
-//   socket.broadcast('gobackMessageall', datas)});
+  // socket.on("send_mesg", (data) => {
+  //   datas.push(data);
+  //   console.log(datas);
+  //   socket.broadcast('gobackMessageall', datas)});
   // socket.on("send_mesg", (data1) => {
   // //   //       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
 
@@ -78,7 +93,7 @@ io.on("connection", (socket) => {
 //   })
   
   socket.on("send_mesg", (data) => {
-  //   //       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
+    //   //       //socket.emit(“對當前連線的所有 Client 發送的事件名稱”, data)
 
     console.log(datas);
     // console.log(datas.length);
@@ -202,6 +217,18 @@ app.post("/employee", (req, res) => {
     }
   });
 });
+// google註冊
+app.post("/userlogintest", (req, res) => {
+  const ac =req.body.ac;
+  const pw =req.body.pw;
+  db.query("SELECT * FROM user where password=? AND email=?",[pw,ac], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+        res.send(result);
+    }
+  });
+});
 // user頭像更改
 app.post("/userupdate", upload.single('image'), (req, res) => {
   const name = req.body.name;
@@ -216,7 +243,43 @@ app.post("/userupdate", upload.single('image'), (req, res) => {
       }
     });
 });
-
+// 後臺會員查詢
+app.post("/backusersearch", (req, res) => {
+  const startdate = req.body.startdate;
+  const enddate = req.body.enddate;
+  const username = req.body.username;
+if(username===''){
+  db.query(`SELECT * FROM user WHERE adddate BETWEEN ? AND ?`
+  ,[startdate,enddate], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+}else{
+  db.query(`SELECT * FROM user WHERE adddate BETWEEN ? AND ? AND username LIKE ?`
+  ,[startdate,enddate,username], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+}
+});
+// 後臺會員編輯
+app.post("/backuseredit", (req, res) => {
+  const userid = req.body.userid;
+  db.query(`SELECT * FROM user WHERE userid = ?`
+  ,[userid], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
 // 租場地搜尋
 app.post("/rentside", (req, res) => {
   const type = req.body.type;
@@ -232,14 +295,14 @@ app.post("/rentside", (req, res) => {
   const baulk = `${req.body.baulk}`;
   db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
   weekstarttime BETWEEN  ? AND ? AND county =? AND area =? AND (sidename LIKE ? OR adress LIKE ?)`
-  // AND bath = ? AND park=? AND baulk=?`
-  ,[startdate,enddate,type,starttime,endtime,county,area,text,text], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
-  });
+    // AND bath = ? AND park=? AND baulk=?`
+    , [startdate, enddate, type, starttime, endtime, county, area, text, text], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
 });
 // 租場地查看更多
 app.post("/rentsideedit", (req, res) => {
@@ -258,6 +321,53 @@ app.post("/rentsidemore", (req, res) => {
   const sideid = req.body.sideid;
   db.query("SELECT * FROM side where sideid = ?"
     , [sideid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+//租場地訂單確認日租
+app.post("/rentsideconfirm", (req, res) => {
+  const rentday = req.body.rentday;
+  const date = req.body.date;
+  const max = req.body.max;
+  const min = req.body.min;
+  const awaitfee = req.body.awaitfee;
+  const num = req.body.num;
+  const today = req.body.today;
+  const sidename = req.body.sidename;
+  const address = req.body.address;
+  const libaichi = req.body.libaichi;
+  const userid = req.body.userid;
+  db.query(`INSERT INTO userorder (orderdate,startdate,enddate,week,starttime,endtime,ordercount,duringtype,sidename,sideaddr,flag,userid,fee) 
+  VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ,'成立' , ? ,?)`
+    , [today,date,date,libaichi,min,max,num,rentday,sidename,address,userid,awaitfee], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+//租場地訂單確認月季租
+app.post("/rentsideconfirm2", (req, res) => {
+  const rentday = req.body.rentday;
+  const date = req.body.date;
+  const monthdate = req.body.monthdate;
+  const max = req.body.max;
+  const min = req.body.min;
+  const awaitfee = req.body.awaitfee;
+  const num = req.body.num;
+  const today = req.body.today;
+  const sidename = req.body.sidename;
+  const address = req.body.address;
+  const libaichi = req.body.libaichi;
+  const userid = req.body.userid;
+  db.query(`INSERT INTO userorder (orderdate,startdate,enddate,week,starttime,endtime,ordercount,duringtype,sidename,sideaddr,flag,userid,fee) 
+  VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ,'成立' , ? ,?)`
+    , [today,date,monthdate,libaichi,min,max,num,rentday,sidename,address,userid,awaitfee], (err, result) => {
       if (err) {
         console.log(err);
       } else {
@@ -362,151 +472,151 @@ app.post("/team", (req, res) => {
           res.send(result);
         }
       });
+  }
+
+});
+// 後台球隊編輯
+app.post("/teamedit", (req, res) => {
+  const teameventid = req.body.teameventid;
+  db.query("SELECT * FROM teamevent where teameventid = ?"
+    , [teameventid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
       }
-      
     });
-    // 後台球隊編輯
-    app.post("/teamedit", (req, res) => {
-      const teameventid = req.body.teameventid;
-      db.query("SELECT * FROM teamevent where teameventid = ?"
-      ,[teameventid], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      });
-    });
-    // 後臺球隊顯示會員頭像
-    app.post("/teameventuser", (req, res) => {
-      const teameventid = req.body.teameventid;
-      db.query(`SELECT * FROM (teamevent inner join teameventuser 
+});
+// 後臺球隊顯示會員頭像
+app.post("/teameventuser", (req, res) => {
+  const teameventid = req.body.teameventid;
+  db.query(`SELECT * FROM (teamevent inner join teameventuser 
         on teamevent.teameventid = teameventuser.teameventid AND teamevent.teameventid=?) inner JOIN
         user 
         on teameventuser.userid = user.userid`
-      ,[teameventid], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      });
-    });
-    // 後臺球隊編輯儲存   有圖片
-    app.post("/teamupdate",upload.single('teamfile'), (req, res) => {
-      const teamstartdate = req.body.teamstartdate;
-      const teamenddate = req.body.teamenddate;
-      const teamstarttime = req.body.teamstarttime;
-      const teamendtime = req.body.teamendtime;
-      const teamtype2 = req.body.teamtype2;
-      const teamtitle = req.body.teamtitle;
-      const teamlocation = req.body.teamlocation;
-      const teampay = req.body.teampay;
-      const teamtext = req.body.teamtext;
-      const teameventid = req.body.teameventid;
-      console.log(`${teamtitle}`);
-      db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,pay=?,text=?,teameventimg=?  where teameventid=?"
-      ,[teamstartdate,teamenddate,teamstarttime,teamendtime,teamtype2,teamtitle,teamlocation,teampay,teamtext,req.file.buffer,teameventid], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      });
-    });
-    // 後臺球隊編輯儲存   沒圖片
-    app.post("/teamupdate2",upload.array(), (req, res) => {
-      const teamstartdate = req.body.teamstartdate;
-      const teamenddate = req.body.teamenddate;
-      const teamstarttime = req.body.teamstarttime;
-      const teamendtime = req.body.teamendtime;
-      const teamtype2 = req.body.teamtype2;
-      const teamtitle = req.body.teamtitle;
-      const teamlocation = req.body.teamlocation;
-      const teampay = req.body.teampay;
-      const teamtext = req.body.teamtext;
-      const teameventid = req.body.teameventid;
-      db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,pay=?,text=? where teameventid=?"
-      ,[teamstartdate,teamenddate,teamstarttime,teamendtime,teamtype2,teamtitle,teamlocation,teampay,teamtext,teameventid], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      });
-    });
-    // 後台球隊刪除
-    app.post("/teamdelete", (req, res) => {
-      const teameventid = req.body.teameventid;
-      db.query("DELETE from teamevent where teameventid = ?"
-      ,[teameventid], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      });
-    });
-    // 後台轉租刪除
-    app.post("/rentdelete", (req, res) => {
-      const articleid_sublet = req.body.articleid_sublet;
-      db.query("DELETE from userarticle_sublet where articleid_sublet = ?"
-      ,[articleid_sublet], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      });
-    });
-    //搜尋轉租 
-    app.post("/rent", (req, res) => {
-      const renttime = req.body.renttime;
-      const renttime1 = req.body.renttime1;
-      const rentselectcounty = req.body.rentselectcounty;
-      const rentselectarea = req.body.rentselectarea;
-      const fieldname = req.body.fieldname;
-      if(fieldname=='' && renttime && renttime1 ){
-        db.query("SELECT * FROM userarticle_sublet where startdate BETWEEN ? AND ? AND area = ? AND county =?"
-        ,[renttime,renttime1,rentselectarea,rentselectcounty], (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.send(result);
-          }
-        });
-      }else if(fieldname && renttime && renttime1 ){
-        db.query("SELECT * FROM userarticle_sublet where startdate BETWEEN ? AND ? AND area = ? AND county =? AND fieldname LIKE ?"
-        ,[renttime,renttime1,rentselectarea,rentselectcounty,fieldname], (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.send(result);
-          }
-        });
-      }else if(fieldname=='' && !renttime ){
-        db.query("SELECT * FROM userarticle_sublet where area = ? AND county =? "
-        ,[rentselectarea,rentselectcounty], (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.send(result);
-          }
-        });
+    , [teameventid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
       }
     });
-    // 轉租編輯
-    app.post("/rentedit", (req, res) => {
-      const articleid_sublet = req.body.articleid_sublet;
-      db.query("SELECT * FROM userarticle_sublet where articleid_sublet = ?"
-      ,[articleid_sublet], (err, result) => {
+});
+// 後臺球隊編輯儲存   有圖片
+app.post("/teamupdate", upload.single('teamfile'), (req, res) => {
+  const teamstartdate = req.body.teamstartdate;
+  const teamenddate = req.body.teamenddate;
+  const teamstarttime = req.body.teamstarttime;
+  const teamendtime = req.body.teamendtime;
+  const teamtype2 = req.body.teamtype2;
+  const teamtitle = req.body.teamtitle;
+  const teamlocation = req.body.teamlocation;
+  const teampay = req.body.teampay;
+  const teamtext = req.body.teamtext;
+  const teameventid = req.body.teameventid;
+  console.log(`${teamtitle}`);
+  db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,pay=?,text=?,teameventimg=?  where teameventid=?"
+    , [teamstartdate, teamenddate, teamstarttime, teamendtime, teamtype2, teamtitle, teamlocation, teampay, teamtext, req.file.buffer, teameventid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+// 後臺球隊編輯儲存   沒圖片
+app.post("/teamupdate2", upload.array(), (req, res) => {
+  const teamstartdate = req.body.teamstartdate;
+  const teamenddate = req.body.teamenddate;
+  const teamstarttime = req.body.teamstarttime;
+  const teamendtime = req.body.teamendtime;
+  const teamtype2 = req.body.teamtype2;
+  const teamtitle = req.body.teamtitle;
+  const teamlocation = req.body.teamlocation;
+  const teampay = req.body.teampay;
+  const teamtext = req.body.teamtext;
+  const teameventid = req.body.teameventid;
+  db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,pay=?,text=? where teameventid=?"
+    , [teamstartdate, teamenddate, teamstarttime, teamendtime, teamtype2, teamtitle, teamlocation, teampay, teamtext, teameventid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+// 後台球隊刪除
+app.post("/teamdelete", (req, res) => {
+  const teameventid = req.body.teameventid;
+  db.query("DELETE from teamevent where teameventid = ?"
+    , [teameventid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+// 後台轉租刪除
+app.post("/rentdelete", (req, res) => {
+  const articleid_sublet = req.body.articleid_sublet;
+  db.query("DELETE from userarticle_sublet where articleid_sublet = ?"
+    , [articleid_sublet], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+//搜尋轉租 
+app.post("/rent", (req, res) => {
+  const renttime = req.body.renttime;
+  const renttime1 = req.body.renttime1;
+  const rentselectcounty = req.body.rentselectcounty;
+  const rentselectarea = req.body.rentselectarea;
+  const fieldname = req.body.fieldname;
+  if (fieldname == '' && renttime && renttime1) {
+    db.query("SELECT * FROM userarticle_sublet where startdate BETWEEN ? AND ? AND area = ? AND county =?"
+      , [renttime, renttime1, rentselectarea, rentselectcounty], (err, result) => {
         if (err) {
           console.log(err);
         } else {
           res.send(result);
         }
       });
+  } else if (fieldname && renttime && renttime1) {
+    db.query("SELECT * FROM userarticle_sublet where startdate BETWEEN ? AND ? AND area = ? AND county =? AND fieldname LIKE ?"
+      , [renttime, renttime1, rentselectarea, rentselectcounty, fieldname], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+  } else if (fieldname == '' && !renttime) {
+    db.query("SELECT * FROM userarticle_sublet where area = ? AND county =? "
+      , [rentselectarea, rentselectcounty], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+  }
+});
+// 轉租編輯
+app.post("/rentedit", (req, res) => {
+  const articleid_sublet = req.body.articleid_sublet;
+  db.query("SELECT * FROM userarticle_sublet where articleid_sublet = ?"
+    , [articleid_sublet], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
     });
+});
 // 轉租儲存
 app.post("/rentupdate", (req, res) => {
   const articleid_sublet = req.body.articleid_sublet;
@@ -537,33 +647,30 @@ app.post("/backsidesearch", (req, res) => {
   const enddate = req.body.enddate;
   const type = req.body.type;
   const text = req.body.text;
-  if(text === ''){
+  if (text === '') {
     db.query("SELECT * FROM `side` WHERE addday BETWEEN ? AND ? AND sidetype = ?"
-    ,[startdate,enddate,type], (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
-  }else{
+      , [startdate, enddate, type], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+  } else {
     db.query("SELECT * FROM `side` WHERE addday BETWEEN ? AND ? AND sidetype = ? AND sidename LIKE ?"
-    ,[startdate,enddate,type,text], (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
+      , [startdate, enddate, type, text], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
   }
 });
 // 後臺場地編輯畫面
-app.post("/backsideedit ", (req, res) => {
+app.post("/backsideedit", (req, res) => {
   const sideid =req.body.sideid;
-  db.query(`SELECT * FROM (side inner join sidedevice 
-    on side.sideid = sidedevice.sideid AND side.sideid=?) inner JOIN
-    sidetime 
-    on side.sideid = sidetime.sideid AND side.sideid=?`
+  db.query(`SELECT * FROM side where sideid = ?`
     , [sideid,sideid]
     , (err, result) => {
       if (err) {
@@ -572,6 +679,44 @@ app.post("/backsideedit ", (req, res) => {
         res.send(result);
       }
     });
+});
+// 後臺新增場地
+app.post("/backnewside",upload.single('image'), (req, res) => {
+  const usidename = req.body.usidename;
+  const utype = req.body.utype;
+  const upark = req.body.upark;
+  const ubath = req.body.ubath;
+  const ubaulk = req.body.ubaulk;
+  const uweekstarttime = req.body.uweekstarttime;
+  const uweekendtime = req.body.uweekendtime;
+  const uholidaystarttime = req.body.uholidaystarttime;
+  const uholidayendtime = req.body.uholidayendtime;
+  const upeakstarttime = req.body.upeakstarttime;
+  const upeakendtime = req.body.upeakendtime;
+  const upeakfee = req.body.upeakfee;
+  const uoffpeakstarttime = req.body.uoffpeakstarttime;
+  const uoffpeakendtime = req.body.uoffpeakendtime;
+  const uoffpeakfee = req.body.uoffpeakfee;
+  const ureservedate = req.body.ureservedate;
+  const utext = req.body.utext;
+  const uamount = req.body.uamount;
+  const utel = req.body.utel;
+  const uaddress = req.body.uaddress;
+  const ugoolemapurl = req.body.ugoolemapurl;
+  const today = req.body.today;
+  db.query(`INSERT INTO side
+  (adress, sideimg,sidetype,amount,sidename,tel,goolemapurl,peakfee,offpeakfee,addday,park,bath,baulk,weekstarttime,weekendtime,holidaystarttime,holidayendtime,peakstarttime
+   ,peakendtime,offpeakstarttime,offpeakendtime,ho_peakstarttime,ho_peakendtime,ho_offpeakstarttime,ho_offpeakendtime,reservedate,county,area,text) 
+  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"台中市","西屯區",?);`
+  ,[uaddress,req.file.buffer,utype,uamount,usidename,utel,ugoolemapurl,upeakfee,uoffpeakfee,today,upark,ubath,ubaulk,
+    uweekstarttime,uweekendtime,uholidaystarttime,uholidayendtime,upeakstarttime,upeakendtime,uoffpeakstarttime,
+    uoffpeakendtime,upeakstarttime,upeakendtime,uoffpeakstarttime,uoffpeakendtime,ureservedate,utext], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
 });
 
 
@@ -651,14 +796,14 @@ app.post("/selfbuildinfo", upload.single('image'), (req, res) => {
   const userId = req.body.userid;
   const usebadge = req.body.usebadge;
   console.log(req.file.buffer)
-    db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? ,`activeTime`='0hr',`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? ,`usebadge`= ?  WHERE `userid`= ?",
-      [email, password, username, req.file.buffer, tel, userdescribe, badminton, tabletennis, volleyball, usebadge ,userId], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      });
+  db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? ,`activeTime`='0hr',`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? ,`usebadge`= ?  WHERE `userid`= ?",
+    [email, password, username, req.file.buffer, tel, userdescribe, badminton, tabletennis, volleyball, usebadge, userId], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
 });
 //觀看個人資料
 app.post("/selfinfo", (req, res) => {
@@ -719,17 +864,17 @@ app.post("/selfalter", upload.single('image'), (req, res) => {
   const userId = req.body.userid;
   const usebadge = req.body.usebadge;
   console.log(req.file.buffer)
-    db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? ,`usebadge`= ?  WHERE `userid`= ?",
-      [email, password, username, req.file.buffer, tel, userdescribe, badminton, tabletennis, volleyball, usebadge ,userId], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      });
+  db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? ,`usebadge`= ?  WHERE `userid`= ?",
+    [email, password, username, req.file.buffer, tel, userdescribe, badminton, tabletennis, volleyball, usebadge, userId], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
 });
 //更新個人資料 沒改照片
-app.post("/selfalterwithoutpic",upload.array(), (req, res) => {
+app.post("/selfalterwithoutpic", upload.array(), (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const username = req.body.username;
@@ -742,13 +887,13 @@ app.post("/selfalterwithoutpic",upload.array(), (req, res) => {
   const usebadge = req.body.usebadge;
   const userId = req.body.userid;
   db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? ,`usebadge`= ? WHERE `userid`= ?",
-      [email, password, username,  tel, userdescribe, badminton, tabletennis, volleyball,usebadge, userId], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      });
+    [email, password, username, tel, userdescribe, badminton, tabletennis, volleyball, usebadge, userId], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
 });
 
 //會員訂單搜尋 進行中
@@ -839,25 +984,25 @@ app.post("/findzoro", (req, res) => {
 app.post("/followsublet", (req, res) => {
   const articleid_sublet = req.body.articleid_sublet;
   db.query(" SELECT * FROM `follow_sublet`,`user` WHERE follow_sublet.articleid_sublet = ? AND follow_sublet.userid = user.userid",
-   [articleid_sublet], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
-  });
+    [articleid_sublet], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
 });
 //取得零打報名人
 app.post("/followzeroda", (req, res) => {
   const articleid_zeroda = req.body.articleid_zeroda;
   db.query(" SELECT * FROM `follow_zeroda`,`user` WHERE follow_zeroda.articleid_zeroda = ? AND follow_zeroda.userid = user.userid",
-   [articleid_zeroda], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
-  });
+    [articleid_zeroda], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
 });
 //會員轉租文章搜尋
 app.post("/findsub", (req, res) => {
@@ -899,54 +1044,54 @@ app.post("/countzero", (req, res) => {
 // 刪除轉租已新增文章
 app.post("/delesublet", (req, res) => {
   const articleid = req.body.articleid_sublet;
-  db.query("DELETE FROM `userarticle_sublet` WHERE articleid_sublet = ? ", 
-  [articleid], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
+  db.query("DELETE FROM `userarticle_sublet` WHERE articleid_sublet = ? ",
+    [articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
 
-  });
+    });
 });
 // 刪除零打已新增文章
 app.post("/delezeroda", (req, res) => {
   const articleid = req.body.articleid_zeroda;
-  db.query("DELETE FROM `userarticle_zeroda` WHERE articleid_zeroda = ? ", 
-  [articleid], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
+  db.query("DELETE FROM `userarticle_zeroda` WHERE articleid_zeroda = ? ",
+    [articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
 
-  });
+    });
 });
 // 新增零打已刪除文章
 app.post("/insertdelezeroda", (req, res) => {
   const articleid = req.body.articleid_zeroda;
-  db.query("INSERT INTO `delete_zeroda`(`articleid_zeroda`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `number`) SELECT * from userarticle_zeroda WHERE articleid_zeroda = ? ", 
-  [articleid], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
+  db.query("INSERT INTO `delete_zeroda`(`articleid_zeroda`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `number`) SELECT * from userarticle_zeroda WHERE articleid_zeroda = ? ",
+    [articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
 
-  });
+    });
 });
 // 新增轉租已刪除文章
 app.post("/insertdelesublet", (req, res) => {
   const articleid = req.body.articleid_sublet;
-  db.query("INSERT INTO `delete_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `amount`) SELECT * from userarticle_sublet WHERE articleid_sublet = ? ", 
-  [articleid], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
+  db.query("INSERT INTO `delete_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `amount`) SELECT * from userarticle_sublet WHERE articleid_sublet = ? ",
+    [articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
 
-  });
+    });
 });
 //會員轉租已刪除文章搜尋
 app.post("/finddelesub", (req, res) => {
@@ -975,64 +1120,107 @@ app.post("/finddelezoro", (req, res) => {
   });
 });
 // 重建零打已新增文章
-app.post("/insertzeroda", (req, res) => { 
+app.post("/insertzeroda", (req, res) => {
   const articleid = req.body.articleid_zeroda;
-  db.query("INSERT INTO `userarticle_zeroda`(`articleid_zeroda`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `number`) SELECT * from delete_zeroda WHERE articleid_zeroda = ? ", 
-  [articleid], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
+  db.query("INSERT INTO `userarticle_zeroda`(`articleid_zeroda`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `number`) SELECT * from delete_zeroda WHERE articleid_zeroda = ? ",
+    [articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
 
-  });
+    });
 });
 // 重建轉租以新增文章
-app.post("/insertsub", (req, res) => { 
+app.post("/insertsub", (req, res) => {
   const articleid = req.body.articleid_sublet;
-  db.query("INSERT INTO `userarticle_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `amount`) SELECT * from delete_sublet WHERE articleid_sublet = ? ", 
-  [articleid], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
+  db.query("INSERT INTO `userarticle_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `amount`) SELECT * from delete_sublet WHERE articleid_sublet = ? ",
+    [articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
 
-  });
+    });
 });
 // 刪除轉租已刪除文章
 app.post("/deledelesublet", (req, res) => {
   const articleid = req.body.articleid_sublet;
-  db.query("DELETE FROM `delete_sublet` WHERE articleid_sublet = ? ", 
-  [articleid], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
+  db.query("DELETE FROM `delete_sublet` WHERE articleid_sublet = ? ",
+    [articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
 
-  });
+    });
 });
 // 刪除零打已刪除文章
 app.post("/deledelezeroda", (req, res) => {
   const articleid = req.body.articleid_zeroda;
-  db.query("DELETE FROM `delete_zeroda` WHERE articleid_zeroda = ? ", 
-  [articleid], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
+  db.query("DELETE FROM `delete_zeroda` WHERE articleid_zeroda = ? ",
+    [articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
 
-  });
+    });
+});
+// 更新零打文章
+app.post("/updatezeroda", (req, res) => {
+  const articleid = req.body.articleid_zeroda;
+  const sidename = req.body.sidename;
+  const sideaddress = req.body.sideaddress;
+  const playDate = req.body.playDate;
+  const starttime = req.body.starttime;
+  const endtime = req.body.endtime;
+  const level = req.body.level;
+  const number = req.body.number;
+  const cost = req.body.cost;
+  const describe = req.body.describe;
+  db.query("UPDATE `userarticle_zeroda` SET `content`= ? ,`starttime`= ? ,`endtime`= ? ,`startdate`= ? ,`fieldname`= ? ,`address`= ? ,`cost`= ? ,`level`= ? ,`number`= ? WHERE `articleid_zeroda`= ? ",
+    [describe,starttime,endtime,playDate,sidename,sideaddress,cost,level,number,articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+
+    });
+});
+// 更新轉租文章
+app.post("/updatesub", (req, res) => {
+  const articleid = req.body.articleid_sublet;
+  const sidename = req.body.sidename;
+  const sideaddress = req.body.sideaddress;
+  const playDate = req.body.playDate;
+  const starttime = req.body.starttime;
+  const endtime = req.body.endtime;
+  const number = req.body.number;
+  const cost = req.body.cost;
+  const describe = req.body.describe;
+  db.query("UPDATE `userarticle_sublet` SET `content`= ? ,`starttime`= ? ,`endtime`= ? ,`startdate`= ? ,`fieldname`= ? ,`address`= ? ,`cost`= ? ,`amount`= ? WHERE `articleid_sublet`= ? ",
+    [describe,starttime,endtime,playDate,sidename,sideaddress,cost,number,articleid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+
+    });
 });
 
-// 芝｜Basic 查
+// 芝｜Basic 查找球隊資料
 app.post('/basicsearch', (req, res) => {
   const userid = req.body.userid; // 會員
   const teamid = req.body.teamid; // 球隊
   db.query(
-    `SELECT tname,sidename, week,type,level,teamimg,fee,text,starttime,endtime,county,area,teamimgpath,teamimg
+    `SELECT tname,sidename, week,type,level,teamimg,fee,text,starttime,endtime,county,area,teamimg
     FROM userteam, team 
     where userteam.teamid=team.teamid and userteam.userid=? and userteam.teamid=?`,
     [userid, teamid],
@@ -1046,8 +1234,8 @@ app.post('/basicsearch', (req, res) => {
   );
 });
 
-// 芝｜Basic 更新 有圖
-app.post("/basicupdate",upload.single('teamfile'), (req, res) => {
+// 芝｜Basic 設定球隊資料-1 有圖
+app.post("/basicupdate", upload.single('teamfile'), (req, res) => {
   const tname = req.body.tname;
   const sidename = req.body.sidename;
   const week = req.body.week;
@@ -1072,8 +1260,8 @@ app.post("/basicupdate",upload.single('teamfile'), (req, res) => {
       }
     });
 });
-// 芝｜Basic 更新 無圖
-app.post("/basicupdate2",upload.array(), (req, res) => {
+// 芝｜Basic 設定球隊資料-2 無圖
+app.post("/basicupdate2", upload.array(), (req, res) => {
   const tname = req.body.tname;
   const sidename = req.body.sidename;
   const week = req.body.week;
@@ -1098,13 +1286,175 @@ app.post("/basicupdate2",upload.array(), (req, res) => {
     });
 });
 
-// 芝｜Member 抓隊長img
-app.post('/teamleader', (req,res)=>{
+// 芝｜Member 查找球隊隊長
+app.post('/teamleader', (req, res) => {
   const teamid = req.body.teamid;
   db.query(
-      `SELECT userimg ,user.userid
+    `SELECT userimg ,user.userid
       FROM teamuser,user
       where user.userid = teamuser.userid and teamid=? and leader=1;`,
+    [teamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+// 芝｜Member 查找球隊成員
+app.post('/teammember', (req, res) => {
+  const teamid = req.body.teamid;
+  db.query(
+    `SELECT teamuser.userid,teamuser.leader,team.type as 'teamtype',user.username,user.userimg,user.badminton,user.tabletennis,user.volleyball
+    FROM teamuser
+    INNER JOIN team on teamuser.teamid = team.teamid
+    INNER JOIN user ON teamuser.userid = user.userid
+    WHERE teamuser.teamid=?;`,
+    [teamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+// 芝｜Member 查找未審核成員
+app.post('/teampending', (req, res) => {
+  const teamid = req.body.teamid;
+  db.query(
+    `SELECT teampendinguser.userid, user.userimg, user.username, team.type as 'teamtype', user.badminton, user.tabletennis, user.volleyball, teampendinguser.addtime
+    FROM teampendinguser,user,team
+    where teampendinguser.userid = user.userid and teampendinguser.teamid=team.teamid and teampendinguser.teamid=?
+    order by addtime;`,
+    [teamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+// 芝｜Member 拒絕未審核成員
+app.post('/teampendingreject', (req, res) => {
+  const teamid = req.body.teamid;
+  const userid = req.body.userid;
+  db.query(
+    `DELETE from teampendinguser
+          WHERE userid=? and teamid=?;`,
+    [userid, teamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+// 芝｜Member 接受未審核成員-1 球隊新增成員
+app.post('/teampendingaccept', (req, res) => {
+  const teamid = req.body.teamid;
+  const userid = req.body.userid;
+  db.query(
+    `INSERT into teamuser(teamid,userid,leader)
+    VALUES(?,?,0);`,
+    [teamid, userid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+// 芝｜Member 接受未審核成員-2 刪除未審核資料
+app.post('/teampendingdelete', (req, res) => {
+  const teamid = req.body.teamid;
+  const userid = req.body.userid;
+  db.query(
+    `DELETE from teampendinguser
+    WHERE userid=? and teamid=?;`,
+    [userid, teamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+  // 芝｜Member 設定新隊長
+  app.post('/newleader', (req,res)=>{
+    const teamid = req.body.teamid;
+    const leaderid = req.body.leaderid;
+    db.query(
+        `UPDATE teamuser SET leader=1 where userid=? and teamid=?;`,
+        [leaderid,teamid],
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        }
+      );
+  });
+
+  // 芝｜Member 設定舊隊長
+  app.post('/oldleader', (req,res)=>{
+    const teamid = req.body.teamid;
+    const sqlleaderid = req.body.sqlleaderid;
+    db.query(
+        `UPDATE teamuser SET leader=0 where userid=? and teamid=?;`,
+        [sqlleaderid,teamid],
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        }
+      );
+  });
+
+  // 芝｜Member 刪除球隊成員
+  app.post('/deletemember', (req,res)=>{
+    const teamid = req.body.teamid;
+    const userid = req.body.userid;
+    db.query(
+      `DELETE from teamuser
+      WHERE teamid=? and userid=?;`,
+      [teamid, userid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+
+  // 芝｜date 查找基金文章-1 all
+  app.post('/teamfundall', (req, res) => {
+    const teamid = req.body.teamid;
+    db.query(
+      `SELECT date,userid,fee,text
+      FROM teamfund
+      WHERE teamid=?
+      ORDER by date;`,
       [teamid],
       (err, result) => {
         if (err) {
@@ -1115,103 +1465,107 @@ app.post('/teamleader', (req,res)=>{
       }
     );
   });
-  // 芝｜Member 抓成員img
-  app.post('/teammember', (req,res)=>{
+
+  // 芝｜date 查找基金文章-2 時間條件
+  app.post('/teamfunddate', (req, res) => {
+    const teamid = req.body.teamid;
+    const startdate = req.body.startdate;
+    const enddate = req.body.enddate;
+    db.query(
+      `SELECT date,userid,fee,text
+      FROM teamfund
+      WHERE date BETWEEN ? AND ? AND teamid=?
+      ORDER by date;`,
+      [startdate, enddate, teamid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+
+  // 芝｜date 查找支出文章-1 all
+  app.post('/teampayall', (req, res) => {
     const teamid = req.body.teamid;
     db.query(
-        `SELECT user.userid,userimg
-        FROM teamuser,user
-        where user.userid = teamuser.userid and teamid=?;`,
-        [teamid],
-        (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.send(result);
-          }
+      `SELECT date,item,fee,text
+      FROM teampay
+      WHERE teamid=?
+      ORDER by date;`,
+      [teamid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
         }
-      );
+      }
+    );
   });
-    // 芝｜Member 抓 未審核成員img
-    app.post('/teampendingimg', (req,res)=>{
-      const teamid = req.body.teamid;
-      db.query(
-          `SELECT teampendinguser.userid,userimg,username,type as 'teamtype',badminton,tabletennis,volleyball,addtime
-          FROM teampendinguser,user,team
-          where teampendinguser.userid = user.userid and teampendinguser.teamid=?
-          ORDER BY teampendinguser.userid;`,
-          [teamid],
-          (err, result) => {
-            if (err) {
-              console.log(err);
-            } else {
-              res.send(result);
-            }
-          }
-        );
-    });
 
-    // 芝｜Member 拒絕 未審核成員
-    app.post('/teampendingreject', (req,res)=>{
-      const teamid = req.body.teamid;
-      const userid = req.body.userid;
-      db.query(
-          `DELETE from teampendinguser
-          WHERE userid=? and teamid=?;`,
-          [userid,teamid],
-          (err, result) => {
-            if (err) {
-              console.log(err);
-            } else {
-              res.send(result);
-            }
-          }
-        );
-    });
+  // 芝｜date 查找支出文章-2 時間條件
+  app.post('/teampaydate', (req, res) => {
+    const teamid = req.body.teamid;
+    const startdate = req.body.startdate;
+    const enddate = req.body.enddate;
+    db.query(
+      `SELECT date,item,fee,text
+      FROM teampay
+      WHERE date BETWEEN ? AND ? AND teamid=?
+      ORDER by date;`,
+      [startdate, enddate, teamid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
 
-    // 芝｜Member 接受 未審核成員
-    app.post('/teampendingaccept', (req,res)=>{
-      const teamid = req.body.teamid;
-      const userid = req.body.userid;
-      console.log(teamid);
-      console.log(userid);
-      db.query(
-          `INSERT into teamuser(teamid,userid,leader)
-          VALUES(?,?,0);
-          DELETE from teampendinguser
-          WHERE userid=? and teamid=?;`,
-          [teamid,userid,userid,teamid],
-          (err, result) => {
-            if (err) {
-              console.log(err);
-            } else {
-              res.send(result);
-            }
-          }
-        );
-    });
+  // 芝｜date 查找活動文章-1 all
+  app.post('/teamactivityall', (req, res) => {
+    const teamid = req.body.teamid;
+    db.query(
+      `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text
+      FROM teamactivity
+      WHERE teamid=?
+      ORDER by date;`,
+      [teamid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
 
-    // 芝｜Pay 依日期區間 搜尋文章
-    app.post('/teamdate', (req,res)=>{
-      const pathend = req.body.pathend;
-      const userid = req.body.userid;
-      const teamid = req.body.teamid;
-      const startdate = req.body.startdate;
-      const enddate = req.body.enddate;
-      db.query(
-          `SELECT date 
-          FROM ?
-          WHERE date BETWEEN ? AND ? AND userid=? and teamid=?`,
-          [pathend,startdate,enddate,userid,teamid],
-          (err, result) => {
-            if (err) {
-              console.log(err);
-            } else {
-              res.send(result);
-            }
-          }
-        );
-    });
+  // 芝｜date 查找活動文章-2 時間條件
+  app.post('/teamactivitydate', (req, res) => {
+    const teamid = req.body.teamid;
+    const startdate = req.body.startdate;
+    const enddate = req.body.enddate;
+    db.query(
+      `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text
+      FROM teamactivity
+      WHERE startdate BETWEEN ? AND ? AND teamid=?
+      ORDER by date;`,
+      [startdate, enddate, teamid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
 
 //------------------
 // 交流零打搜尋
@@ -1320,7 +1674,7 @@ app.post('/teamsearch', (req, res) => {
         }
       }
     );
-  }else {
+  } else {
     db.query(
       `SELECT * FROM team
     WHERE type = ? AND county = ? AND area = ? AND week = ?
@@ -1355,12 +1709,12 @@ app.post('/zerocreate', (req, res) => {
   const costczero = req.body.costczero;
   const contentczero = req.body.contentczero;
 
-  console.log(useridczero,fieldnameczero,ballgamesczero,countyczero,areaczero,addressczero,startdateczero,enddateczero,starttimeczero
-    ,endtimeczero,levelczero,numberczero,costczero,contentczero)
+  console.log(useridczero, fieldnameczero, ballgamesczero, countyczero, areaczero, addressczero, startdateczero, enddateczero, starttimeczero
+    , endtimeczero, levelczero, numberczero, costczero, contentczero)
   db.query(
     `INSERT INTO userarticle_zeroda (fieldname, userid, ballgames, county, area, address, startdate, enddate, starttime, endtime, level, number, cost, content) 
     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
-    [fieldnameczero,useridczero,ballgamesczero,countyczero,areaczero,addressczero,startdateczero,enddateczero,starttimeczero,endtimeczero,levelczero,numberczero,costczero,contentczero],
+    [fieldnameczero, useridczero, ballgamesczero, countyczero, areaczero, addressczero, startdateczero, enddateczero, starttimeczero, endtimeczero, levelczero, numberczero, costczero, contentczero],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -1372,7 +1726,7 @@ app.post('/zerocreate', (req, res) => {
 })
 
 //交流轉租新增
-app.post('/rentcreate',(req, res) => {
+app.post('/rentcreate', (req, res) => {
   const useridcrent = req.body.useridcrent;
   const fieldnamecrent = req.body.fieldnamecrent;
   const ballgamescrent = req.body.ballgamescrent;
@@ -1387,15 +1741,15 @@ app.post('/rentcreate',(req, res) => {
   const costcrent = req.body.costcrent;
   const contentcrent = req.body.contentcrent;
 
-  console.log(useridcrent,fieldnamecrent,ballgamescrent,countycrent,areacrent,addresscrent,startdatecrent,
-    enddatecrent,starttimecrent,endtimecrent,numbercrent,costcrent,contentcrent)
+  console.log(useridcrent, fieldnamecrent, ballgamescrent, countycrent, areacrent, addresscrent, startdatecrent,
+    enddatecrent, starttimecrent, endtimecrent, numbercrent, costcrent, contentcrent)
 
   db.query(
     `INSERT INTO userarticle_sublet (articleid_sublet, userid, fieldname, ballgames, county, area, address, startdate, 
     enddate, starttime, endtime, amount, cost ,content)
     VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [useridcrent,fieldnamecrent,ballgamescrent,countycrent,areacrent,addresscrent,startdatecrent,
-      enddatecrent,starttimecrent,endtimecrent,numbercrent,costcrent,contentcrent],
+    [useridcrent, fieldnamecrent, ballgamescrent, countycrent, areacrent, addresscrent, startdatecrent,
+      enddatecrent, starttimecrent, endtimecrent, numbercrent, costcrent, contentcrent],
     (err, result) => {
       if (err) {
         console.log(err);

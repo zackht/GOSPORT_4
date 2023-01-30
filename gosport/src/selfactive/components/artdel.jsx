@@ -58,13 +58,13 @@ const Artdel = () => {
             articleid_zeroda: trdata.articleid_zeroda
         }).then((response) => {
             console.log(response.data);
+            Axios.post("http://localhost:3001/deledelezeroda", {
+                articleid_zeroda: trdata.articleid_zeroda
+            }).then((response) => {
+                console.log(response.data);
+                find.current.click();
+            });
         });
-        Axios.post("http://localhost:3001/deledelezeroda", {
-            articleid_zeroda: trdata.articleid_zeroda
-        }).then((response) => {
-            console.log(response.data);
-        });
-        find.current.click();
     }
     // 
     const subReBuild = (trdata) => {
@@ -72,13 +72,13 @@ const Artdel = () => {
             articleid_sublet: trdata.articleid_sublet
         }).then((response) => {
             console.log(response.data);
+            Axios.post("http://localhost:3001/deledelesublet", {
+                articleid_sublet: trdata.articleid_sublet
+            }).then((response) => {
+                console.log(response.data);
+                find.current.click();
+            });
         });
-        Axios.post("http://localhost:3001/deledelesublet", {
-            articleid_sublet: trdata.articleid_sublet
-        }).then((response) => {
-            console.log(response.data);
-        });
-        find.current.click();
     }
     return (
         <React.Fragment>
@@ -91,7 +91,7 @@ const Artdel = () => {
             <table>
                 <tbody>
                     <tr>
-                        <td>新增日期</td>
+                        <td>活動日期</td>
                         <td>類別</td>
                         <td>標題</td>
                         <td>報名/承租</td>

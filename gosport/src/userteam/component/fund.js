@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import fund from './fund.module.css';
 import img from '../img.module.js';
 import { Link } from 'react-router-dom';
 import DateSearch from './dateSearch';
+import Axios from 'axios';
+
+export const handleArticle=()=>{
+    console.log('here');
+}
 
 export default function Fund(params) {
     return(

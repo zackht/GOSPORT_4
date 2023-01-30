@@ -3,15 +3,16 @@
     justify-content: center;
     align-items: center;
     width: 100vw;
+    height: 800px;
     position: relative;
-    top: 17vh;
+    top: 8vh;
 }
 
 .self_cover {
     font-family: 'Noto Sans';
     font-style: normal;
     font-weight: 500;
-    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+    box-shadow: 0px 10px 40px rgba(170, 170, 170, 0.7);
     display: flex;
     width: 988px;
     height: 551px;
@@ -19,14 +20,33 @@
     align-items: center;
 }
 
+/* 左半 */
+.self_discribe {
+    flex: 1.5;
+    /* background-color: #dedede5e; */
+    padding: 30px 30px 0px 30px;
+    border-radius: 40px;
+    overflow: auto;
+    background: linear-gradient(165deg, #ffffff, #f6f6f6, #f4f4f4, #f0f0f0, #dcdcdcd0);
+}
+
 .self_discribe div:nth-child(1),
 .self_discribe div:nth-child(3),
 .self_discribe div:nth-child(5),
 .self_discribe div:nth-child(7),
 .self_discribe div:nth-child(9) {
-    font-size: 1.5em;
-    line-height: 26px;
+    font-size: 1.2rem;
+    line-height: 1.2;
     color: #828282;
+    padding-bottom: 2px;
+    border-bottom : rgb(196, 196, 196) dotted 2px;
+    /* border-radius: 0px 20px 30px 0px; */
+    width: 70px;
+    margin-bottom: 4px;
+}
+
+.self_discribe div:nth-child(7) {
+    width: 100px;
 }
 
 .self_discribe div:nth-child(2),
@@ -34,9 +54,11 @@
 .self_discribe div:nth-child(6),
 .self_discribe div:nth-child(8),
 .self_discribe div:nth-child(10) {
-    font-size: 1.5em;
-    line-height: 55px;
+    font-size: 1.5rem;
+    line-height: 1.5;
     color: #383838;
+    margin-bottom: 15px;
+    /* text-indent: 8px; */
 }
 
 .self_discribe div:nth-child(10) {
@@ -44,9 +66,16 @@
 }
 
 .self_discribe .describe {
-    background-color: aqua;
-    margin-top: 20px;
     border-radius: 20px;
+    font-size: 1.5rem;
+    /* text-indent: 10px; */
+}
+
+/* 右半 */
+.self_right {
+    flex: 1;
+    position: "relative";
+    /* background-color: aqua; */
 }
 
 .self_edit {
@@ -58,11 +87,15 @@
     color: #FFFFFF;
     box-sizing: border-box;
     border: none;
+    transition: all 0.2s ease-out;
+}
+
+.self_edit:hover {
+    background-color: rgb(254, 96, 82);
+    box-shadow: 2px 2px 2px 0px rgba(141, 7, 7, 0.7);
 }
 
 .self_img {
-    position: absolute;
-    right: 0px;
     height: 180px;
     width: 180px;
     clip-path: circle(50%);
@@ -71,15 +104,32 @@
     object-fit: cover;
 }
 
+.self_imgbox {
+    height: 50%;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.self_imgbox>span:first-child {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    filter: drop-shadow(0px 6px 3px rgba(131, 131, 131, 0.5));
+}
+
 .show_star {
     display: flex;
     justify-content: space-around;
     position: absolute;
-    bottom: 22px;
-    right: 40px;
+    bottom: 0px;
+    right: 50px;
     width: 100px;
+    /* background-color: aqua; */
 }
 
 .show_star embed {
-    width: 30px;
+    width: 25px;
 }

@@ -46,26 +46,26 @@
 /* 區域 */
 .mR1{
     position:absolute;
-    left:450px;
-    top:212px;
+    left:400px;
+    top:118px;
 }
 /* 區域內容 */
 .mR2{
     position:absolute;
-    left:450px;
-    top:246px;
+    left:400px;
+    top:152px;
 }
 /* 時段 */
 .mR3{
     position:absolute;
-    left:450px;
-    top:307px;
+    left:400px;
+    top:213px;
 }
 /* 時段內容 */
 .mR4{
     position:absolute;
-    left:450px;
-    top:341px;
+    left:400px;
+    top:244px;
 }
 /* 內容 */
 .mText {
@@ -84,10 +84,12 @@
     margin-top: 40px;
     margin-left: 40px;
     clip-path: circle(50%);
+    display: flex;
+    justify-content: center;
 }
 /* 照片 */
 .mBimg {
     height: 100%;
     position: relative;
-    left:-50%;
+    /* left:-50%; */
 }
