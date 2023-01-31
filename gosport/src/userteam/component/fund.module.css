@@ -55,6 +55,9 @@
     align-items: center;
     justify-content: center;
 }
+.order>a:hover{
+    text-decoration: none;
+}
 /* 刪除 */
 .order>button:nth-of-type(1){
     color: white;

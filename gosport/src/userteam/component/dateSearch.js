@@ -3,6 +3,7 @@ import dateSearch from './dateSearch.module.css';
 import Axios from 'axios';
 import { useLocation, Link, useParams } from "react-router-dom";
 
+
 export default function DateSearch(params) {
 
     // 目前網址
@@ -30,8 +31,8 @@ export default function DateSearch(params) {
     const [teamid, setTeamid] = useState('1'); // 球隊id
 
     // input值
-    const [startdate, setStartdate] = useState(''); // 開始時間
-    const [enddate, setEnddate] = useState('');     // 結束時間
+    const [startdate, setStartdate] = useState(null); // 開始時間
+    const [enddate, setEnddate] = useState(null);     // 結束時間
 
     // 資料庫抓回來的值
     const [result, setResult] = useState(null);
@@ -47,7 +48,7 @@ export default function DateSearch(params) {
             Axios.post('http://localhost:3001/teamfundall',{
                 teamid:teamid
             }).then((response)=>{
-                console.log(`基金文章`);
+                // console.log(`基金文章`);
                 setResult(response.data);
             });
 
@@ -56,7 +57,7 @@ export default function DateSearch(params) {
             Axios.post('http://localhost:3001/teampayall',{
                 teamid:teamid
             }).then((response)=>{
-                console.log(`支出文章`);
+                // console.log(`支出文章`);
                 setResult(response.data);
             });
 
@@ -65,7 +66,7 @@ export default function DateSearch(params) {
             Axios.post('http://localhost:3001/teamactivityall',{
                 teamid:teamid
             }).then((response)=>{
-                console.log(`活動文章`);
+                // console.log(`活動文章`);
                 setResult(response.data);
             });
         };
@@ -116,7 +117,7 @@ export default function DateSearch(params) {
                 startdate:startdate,
                 enddate:enddate
             }).then((response)=>{
-                console.log(`基金文章(${startdate}-${enddate})`);
+                // console.log(`基金文章(${startdate}-${enddate})`);
                 setResult(response.data);
             });
 
@@ -144,13 +145,22 @@ export default function DateSearch(params) {
         };
     };
 
+    // 當startdate, enddate改變時查找文章清單
+    useEffect(()=>{
+        // console.log('change');
+        if(startdate&&enddate){
+            handleDateSearch();
+        }
+    },[startdate&&enddate])
+
     return(
         <>
             {/* 日期搜索 */}
             <div className={dateSearch.search}>
+                <div className={dateSearch.sTitle}>日期搜尋</div>
                 <input type="date" onChange={ (e)=>{ setStartdate(e.target.value) } } />
                 <input type="date" onChange={ (e)=>{ setEnddate(e.target.value) } } />
-                <button onClick={ handleDateSearch }>搜尋</button>
+                {/* <button onClick={ handleDateSearch }>搜尋</button> */}
                 <div className={dateSearch.sTitle}>訂單日期</div>
                 <div className={dateSearch.sDate}>{ resultList }</div>
             </div>
