@@ -193,6 +193,15 @@ app.post('/create1', (req, res) => {
     }
   );
 })
+app.post("/create2", (req, res) => {
+  db.query("SELECT email FROM user", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
 app.post('/sigh', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;

@@ -17,7 +17,8 @@ import notice from './img/icon_notice.svg';
 import user from './img/icon_user.svg';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
-
+import sighno from '../icon/快速搜尋＿註冊 (1).svg';
+import gi from './img/會員icon＿有登入＿通知框.svg';
 export default function Navbar(props) {
     const { pathname } = useLocation();
     const splitPathname = pathname.split("/");
@@ -52,6 +53,8 @@ export default function Navbar(props) {
     // 登入輸入
     const [account, setAccount] = useState();
     const [password, setPassword] = useState();
+    // const [password2, setPassword2] = useState();
+
     //實際
     const [userInfo, setuser] = useState([{
         username: '',
@@ -154,21 +157,47 @@ const [mouse,setmouse] = useState(false)
     const [username, setusername] = useState();
     const [userimg1, setuserimg1] = useState();
     const [tel, settel] = useState();
+    const [chack,setchack] =useState([{}]);
+    const [chack1,setchack1] =useState([]);
     const sighsend = () => {
         Axios.post("http://localhost:3001/create1", {
             email: email,
             password: password,
         }).then(() => {
+            alert('註冊成功')
             console.log("success");
         });
 
+    }
+    const setPassword2 = (e) =>{
+        const text1 = e.target.value;
+        if(text1!=password){
+            setemailhint("確認密碼有誤");
+        }
+        else if (text1=="") {
+            setemailhint("請輸入密碼");
+        }
+        else if (password ==""){
+            setemailhint("請輸入密碼");
+        }
+        else{
+            setemailhint("可以註冊");
+        }
     }
     const emailcheck = (Event) => {
         const text = Event.target.value;
         const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
         // 任意字元開頭@gmail.com結尾
+        Axios.post("http://localhost:3001/create2", {
+        }).then((resq) => {
+            setchack(resq.data)
+            console.log(chack);
+            chack.map((v,k)=>{
+                text == v.email ? setemailhint("信箱已重複或格式不正確"):console.log("2")
+            })
+        });
         if (text.match(reg)) {
-            setemailhint("可以註冊");
+            setemailhint("請輸入密碼");
             setemail(text);
         } else {
             setemailhint("信箱已重複或格式不正確");
@@ -246,7 +275,15 @@ const [mouse,setmouse] = useState(false)
     const onFailure = (err) => {
         console.log('failed:', err);
     };
-    console.log(setuser11)
+
+   const [loginfo2,setloginfo2] = useState("none")
+// const notic = ()=>{
+//     loginfo2 === "none" ? setloginfo2("block"):setloginfo2("none")
+//     // loginfo1 === "none" ? setloginfo("block") : setloginfo("none")
+// }
+const notic = () =>{
+    loginfo2 === "none" ? setloginfo2("block") : setloginfo2("none");
+}
 // // //google login
 // const [googleuser,setgoogle] = useState()
 // function handleCallbackResponse(response){
@@ -279,14 +316,14 @@ const [mouse,setmouse] = useState(false)
                         <button className={` ${sighbtn === true ? cc.focus1 : cc.tablink1}`} onClick={sigh}  >註冊</button>
                         <button className={` ${loginbtn === true ? cc.focus1 : cc.tablink1}`} onClick={login} >登入</button>
                         <div id="Londo" style={{ display: sighdiv }} className={cc.tabcontent}>
-                        <GoogleLogin className={cc.d162}
+                        {/* <GoogleLogin className={cc.d162}
           clientId={clientId}
           buttonText="Sign in with Google"
           onSuccess={onSuccess}
           onFailure={onFailure}
           cookiePolicy={'single_host_origin'}
           isSignedIn={true}
-      />
+      /> */}
                             {/* <img className={cc.d131} src={google} alt="" /> */}
                             <p className={cc.d132}>註冊信箱</p>
 
@@ -300,10 +337,13 @@ const [mouse,setmouse] = useState(false)
                                 <input onChange={e => setPassword(e.target.value)} className={cc.d135} type="text" />
                                 <p className={cc.d136}>至少8個字,含至少1個數字及1個英文字母</p>
                                 <p className={cc.d137}>確認密碼</p>
-                                <input onChange={passput2} className={cc.d138} type="text" />
+                                <input onChange={setPassword2} className={cc.d138} type="text" />
                                 <div className={cc.d139}>
                                     <img src={cancel} onClick={close} alt="" />
-                                    <img onClick={sighsend} type="submit" src={sighimg} alt="" />
+                                    {emailhint==="信箱已重複或格式不正確"?<img onClick={()=>{alert("信箱已重複或格式不正確")}} type="submit" src={sighno} alt="" />
+:emailhint==="確認密碼有誤"?<img onClick={()=>{alert("確認密碼有誤")}} type="submit" src={sighno} alt="" />:emailhint==="請輸入密碼"?<img onClick={()=>{alert("確認密碼有誤")}} type="submit" src={sighno} alt="" />:<img onClick={sighsend} type="submit" src={sighimg} alt="" />
+}
+                                    {/* <img onClick={sighsend} type="submit" src={sighimg} alt="" /> */}
                                 </div>
 
                             </form>
@@ -342,7 +382,7 @@ const [mouse,setmouse] = useState(false)
                             <div id={splitPathname[2] === "qa" ? "tabline" : ""}>
                                 <Link to='/gosport/home' onClick={scrollToQa}>Q&A</Link>
                             </div>
-                            <img className="notice" src={notice} />
+                            <img onClick={notic} className="notice" src={notice} />
                             <img className="nouserimg" onClick={logsig} src={user} />
                         </div>
                     </div>
@@ -350,80 +390,81 @@ const [mouse,setmouse] = useState(false)
             </React.Fragment>
         );
     }
-else if (token33){
-return(
-    <React.Fragment>
-    <div style={{ display: loginfo1 }} className={cc.d154}>
-        <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user'>個人頁面</Link></button>
-        <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/settings'>帳號設定</Link></button>
-        <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>活動歷程</Link></button>
-        <button className={mouse==true?cc.d160:cc.d161}>我的球隊</button>
-        {/* {teaminfo.map((v,k)=>{                   
-            return(
-<React.Fragment> <button onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}>{v.tname}</button>   </React.Fragment>
-)
-        }
-        )} */}
-        <button className={cc.d156}>鐵血軍團</button>
-    </div>
-    <div className="navbar">
-        <div className="nContent">
-            <div className="nLeft">
-                <div>GOsport</div>
-            </div>
-            <div className="nRight">
-                <div id={splitPathname[2] === "gosport" ? "tabline" : ""}>
-                    <Link to='/gosport/home'>首頁</Link>
-                    {/* <Link to='/gosport'>首頁</Link> */}
-                </div>
-                <div id={splitPathname[2] === "rent" ? "tabline" : ""}>
-                    <Link to='/gosport/rent'>租場地</Link>
-                    {/* <Link to='/gosport/rent'>租場地</Link> */}
-                </div>
-                <div id={splitPathname[2] === "communicate" ? "tabline" : ""}>
-                    <Link to='/gosport/communicate/search'>交流區</Link>
-                    {/* <Link to='/gosport/communicate'>交流區</Link> */}
-                </div>
-                <div id={splitPathname[2] === "qa" ? "tabline" : ""}>
-                    <Link to='/gosport/qa'>Q&A</Link>
-                    {/* <Link to='/gosport/qa'>Q&A</Link> */}
-                </div>
-                <img className="notice" src={notice} />
-                <img className="userimg1" onClick={loginfo} src={noimg}></img> <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
-                {/* {userInfo.map((v, k) => {
+// else if (token33){
+// return(
+//     <React.Fragment>
+//     <div style={{ display: loginfo1 }} className={cc.d154}>
+//         <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user'>個人頁面</Link></button>
+//         <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/settings'>帳號設定</Link></button>
+//         <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>活動歷程</Link></button>
+//         <button className={mouse==true?cc.d160:cc.d161}>我的球隊</button>
+//         {/* {teaminfo.map((v,k)=>{                   
+//             return(
+// <React.Fragment> <button onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}>{v.tname}</button>   </React.Fragment>
+// )
+//         }
+//         )} */}
+//         <button className={cc.d156}>鐵血軍團</button>
+//     </div>
+//     <div className="navbar">
+//         <div className="nContent">
+//             <div className="nLeft">
+//                 <div>GOsport</div>
+//             </div>
+//             <div className="nRight">
+//                 <div id={splitPathname[2] === "gosport" ? "tabline" : ""}>
+//                     <Link to='/gosport/home'>首頁</Link>
+//                     {/* <Link to='/gosport'>首頁</Link> */}
+//                 </div>
+//                 <div id={splitPathname[2] === "rent" ? "tabline" : ""}>
+//                     <Link to='/gosport/rent'>租場地</Link>
+//                     {/* <Link to='/gosport/rent'>租場地</Link> */}
+//                 </div>
+//                 <div id={splitPathname[2] === "communicate" ? "tabline" : ""}>
+//                     <Link to='/gosport/communicate/search'>交流區</Link>
+//                     {/* <Link to='/gosport/communicate'>交流區</Link> */}
+//                 </div>
+//                 <div id={splitPathname[2] === "qa" ? "tabline" : ""}>
+//                     <Link to='/gosport/qa'>Q&A</Link>
+//                     {/* <Link to='/gosport/qa'>Q&A</Link> */}
+//                 </div>
+//                 <img className="notice" src={notice} />
+//                 <img className="userimg1" onClick={loginfo} src={noimg}></img> <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
+//                 {/* {userInfo.map((v, k) => {
 
 
-                    if (v.userimg === null) {
-                        return (
-                            <React.Fragment> <img className="userimg1" onClick={loginfo} src={noimg}></img> <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
-                            </React.Fragment>
-                        );
-                    }
-                    else {
-                        let u8Arr = new Uint8Array(v.userimg.data);
-                        let blob = new Blob([u8Arr], { type: "image/jpeg" });
-                        let fr = new FileReader;
-                        fr.readAsDataURL(blob);
-                        fr.onload = function () {
-                            setUserurl(fr.result);
-                        }
-                        return (
-                            <React.Fragment><img className="userimg" onClick={loginfo} src={userurl} />
-                                <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
-                                <GoogleLogout buttonText="Log out" />
-                            </React.Fragment>
-                        );
-                    }
-                })} */}
+//                     if (v.userimg === null) {
+//                         return (
+//                             <React.Fragment> <img className="userimg1" onClick={loginfo} src={noimg}></img> <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
+//                             </React.Fragment>
+//                         );
+//                     }
+//                     else {
+//                         let u8Arr = new Uint8Array(v.userimg.data);
+//                         let blob = new Blob([u8Arr], { type: "image/jpeg" });
+//                         let fr = new FileReader;
+//                         fr.readAsDataURL(blob);
+//                         fr.onload = function () {
+//                             setUserurl(fr.result);
+//                         }
+//                         return (
+//                             <React.Fragment><img className="userimg" onClick={loginfo} src={userurl} />
+//                                 <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
+//                                 <GoogleLogout buttonText="Log out" />
+//                             </React.Fragment>
+//                         );
+//                     }
+//                 })} */}
 
-            </div>
-        </div>
-    </div>
-</React.Fragment>
-);
-}
+//             </div>
+//         </div>
+//     </div>
+// </React.Fragment>
+// );
+// }
     return (
         <React.Fragment>
+<img style={{ display: loginfo2 }} className={cc.d163} src={gi}></img>
             <div style={{ display: loginfo1 }} className={cc.d154}>
                 <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user'>個人頁面</Link></button>
                 <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/settings'>帳號設定</Link></button>
@@ -431,7 +472,7 @@ return(
                 <button className={mouse==true?cc.d160:cc.d161}>我的球隊</button>
                 {teaminfo.map((v,k)=>{                   
                     return(
-<React.Fragment> <button onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}>{v.tname}</button>   </React.Fragment>
+<React.Fragment> <button onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}><Link style={{color:"black"}} to='/gosport/user/activity'>{v.tname}</Link></button>   </React.Fragment>
 )
                 }
                 )}
