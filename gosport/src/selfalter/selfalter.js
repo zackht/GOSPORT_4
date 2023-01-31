@@ -4,6 +4,7 @@ import Axios from "axios";
 
 // import star from "./icon/star1.svg";
 import alterImgbackIcon from './icon/Vector.svg';
+import userWithOutimg from './icon/teams_m.png'
 // import notice from './icon/notice.svg'
 // import user from './icon/user.svg'
 import "./selfalter.css"
@@ -82,17 +83,19 @@ const Selfalter = () => {
 
     useEffect(() => {
         // console.log(selfInfo)
-        var u8Arr = new Uint8Array(selfInfo.userimg.data);
-        var blob = new Blob([u8Arr], { type: "image/jpeg" });
-        var fr = new FileReader;
-        fr.onload = function () {
-            setImageSrc(fr.result);
-            if (imageSrc) {
-                setBack('none')
-                setPhoto('block')
-            }
-        };
-        fr.readAsDataURL(blob);
+        if(selfInfo.userimg !== null){
+            var u8Arr = new Uint8Array(selfInfo.userimg.data);
+            var blob = new Blob([u8Arr], { type: "image/jpeg" });
+            var fr = new FileReader;
+            fr.onload = function () {
+                setImageSrc(fr.result);
+                if (imageSrc) {
+                    setBack('none')
+                    setPhoto('block')
+                }
+            };
+            fr.readAsDataURL(blob);
+        }
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selfInfo])
 
@@ -261,7 +264,7 @@ const Selfalter = () => {
                             </div>
                         </div>
                         <div className="alter_yesOrNot">
-                            <a href="/selfpage">
+                            <a href="/gosport/user">
                                 <span className="alter_backself">取消</span>
                             </a>
                             <input type="submit" value="儲存" />

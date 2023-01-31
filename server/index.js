@@ -293,7 +293,7 @@ app.post("/rentside", (req, res) => {
   const park = `${req.body.park}`;
   const bath = `${req.body.bath}`;
   const baulk = `${req.body.baulk}`;
-  if(area==='不限'){
+  if (area === '不限') {
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?)`
       // AND bath = ? AND park=? AND baulk=?`
@@ -304,7 +304,7 @@ app.post("/rentside", (req, res) => {
           res.send(result);
         }
       });
-  }{
+  } {
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =? AND area =? AND (sidename LIKE ? OR adress LIKE ?)`
       // AND bath = ? AND park=? AND baulk=?`
@@ -329,7 +329,7 @@ app.post("/rentside2", (req, res) => {
   const park = `${req.body.park}`;
   const bath = `${req.body.bath}`;
   const baulk = `${req.body.baulk}`;
-  if(area==='不限'){
+  if (area === '不限') {
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?)`
       // AND bath = ? AND park=? AND baulk=?`
@@ -340,7 +340,7 @@ app.post("/rentside2", (req, res) => {
           res.send(result);
         }
       });
-  }{
+  } {
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =? AND area =? AND (sidename LIKE ? OR adress LIKE ?)`
       // AND bath = ? AND park=? AND baulk=?`
@@ -844,9 +844,14 @@ app.post("/selfbuildinfo", upload.single('image'), (req, res) => {
   const volleyball = req.body.volleyball;
   const userId = req.body.userid;
   const usebadge = req.body.usebadge;
-  console.log(req.file.buffer)
+  let userimg ;
+  if (req.file !== undefined) {
+    userimg = req.file.buffer
+  } else {
+    userimg = null
+  }
   db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? ,`activeTime`='0hr',`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? ,`usebadge`= ?  WHERE `userid`= ?",
-    [email, password, username, req.file.buffer, tel, userdescribe, badminton, tabletennis, volleyball, usebadge, userId], (err, result) => {
+    [email, password, username, userimg, tel, userdescribe, badminton, tabletennis, volleyball, usebadge, userId], (err, result) => {
       if (err) {
         console.log(err);
       } else {
@@ -949,9 +954,9 @@ app.post("/selfalterwithoutpic", upload.array(), (req, res) => {
 app.post("/ordering", (req, res) => {
   const userid = req.body.userid;
   let starttime = req.body.stratFind;
-  if(starttime === '') starttime = '1999-01-01'
+  if (starttime === '') starttime = '1999-01-01'
   let endtime = req.body.endFind;
-  if(endtime === '') endtime = '2999-12-31'
+  if (endtime === '') endtime = '2999-12-31'
   db.query("SELECT * FROM `userorder` WHERE now() BETWEEN startdate AND enddate AND orderdate BETWEEN ? AND ? AND userid = ? AND flag = '成立'",
     [starttime, endtime, userid], (err, result) => {
       if (err) {
@@ -966,9 +971,9 @@ app.post("/ordering", (req, res) => {
 app.post("/orderfutrue", (req, res) => {
   const userid = req.body.userid;
   let starttime = req.body.stratFind;
-  if(starttime === '') starttime = '1999-01-01'
+  if (starttime === '') starttime = '1999-01-01'
   let endtime = req.body.endFind;
-  if(endtime === '') endtime = '2999-12-31'
+  if (endtime === '') endtime = '2999-12-31'
   db.query("SELECT * FROM `userorder` WHERE now() < startdate AND orderdate BETWEEN ? AND ? AND userid = ? AND flag = '成立'",
     [starttime, endtime, userid], (err, result) => {
       if (err) {
@@ -994,9 +999,9 @@ app.post("/cancelOrder", (req, res) => {
 app.post("/orderend", (req, res) => {
   const userid = req.body.userid;
   let starttime = req.body.stratFind;
-  if(starttime === '') starttime = '1999-01-01'
+  if (starttime === '') starttime = '1999-01-01'
   let endtime = req.body.endFind;
-  if(endtime === '') endtime = '2999-12-31'
+  if (endtime === '') endtime = '2999-12-31'
   db.query("SELECT * FROM `userorder` WHERE now() > enddate AND orderdate BETWEEN ? AND ? AND userid = ? AND flag = '成立'",
     [starttime, endtime, userid], (err, result) => {
       if (err) {
@@ -1011,9 +1016,9 @@ app.post("/orderend", (req, res) => {
 app.post("/orderfalse", (req, res) => {
   const userid = req.body.userid;
   let starttime = req.body.stratFind;
-  if(starttime === '') starttime = '1999-01-01'
+  if (starttime === '') starttime = '1999-01-01'
   let endtime = req.body.endFind;
-  if(endtime === '') endtime = '2999-12-31'
+  if (endtime === '') endtime = '2999-12-31'
   db.query("SELECT * FROM `userorder` WHERE orderdate BETWEEN ? AND ? AND userid = ? AND flag = '不成立'",
     [starttime, endtime, userid], (err, result) => {
       if (err) {
