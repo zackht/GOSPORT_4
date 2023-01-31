@@ -1442,7 +1442,7 @@ app.post('/teampendingdelete', (req, res) => {
   app.post('/teamfundall', (req, res) => {
     const teamid = req.body.teamid;
     db.query(
-      `SELECT date,userid,fee,text
+      `SELECT date,userid,fee,text,teamfundid as 'articleid'
       FROM teamfund
       WHERE teamid=?
       ORDER by date;`,
@@ -1463,7 +1463,7 @@ app.post('/teampendingdelete', (req, res) => {
     const startdate = req.body.startdate;
     const enddate = req.body.enddate;
     db.query(
-      `SELECT date,userid,fee,text
+      `SELECT date,userid,fee,text,teamfundid as 'articleid'
       FROM teamfund
       WHERE date BETWEEN ? AND ? AND teamid=?
       ORDER by date;`,
@@ -1482,7 +1482,7 @@ app.post('/teampendingdelete', (req, res) => {
   app.post('/teampayall', (req, res) => {
     const teamid = req.body.teamid;
     db.query(
-      `SELECT date,item,fee,text
+      `SELECT date,item,fee,text,teampayid as 'articleid'
       FROM teampay
       WHERE teamid=?
       ORDER by date;`,
@@ -1503,7 +1503,7 @@ app.post('/teampendingdelete', (req, res) => {
     const startdate = req.body.startdate;
     const enddate = req.body.enddate;
     db.query(
-      `SELECT date,item,fee,text
+      `SELECT date,item,fee,text,teampayid as 'articleid'
       FROM teampay
       WHERE date BETWEEN ? AND ? AND teamid=?
       ORDER by date;`,
@@ -1522,7 +1522,7 @@ app.post('/teampendingdelete', (req, res) => {
   app.post('/teamactivityall', (req, res) => {
     const teamid = req.body.teamid;
     db.query(
-      `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text
+      `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
       FROM teamactivity
       WHERE teamid=?
       ORDER by date;`,
@@ -1543,7 +1543,7 @@ app.post('/teampendingdelete', (req, res) => {
     const startdate = req.body.startdate;
     const enddate = req.body.enddate;
     db.query(
-      `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text
+      `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
       FROM teamactivity
       WHERE startdate BETWEEN ? AND ? AND teamid=?
       ORDER by date;`,

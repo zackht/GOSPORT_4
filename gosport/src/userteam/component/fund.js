@@ -5,10 +5,6 @@ import { Link } from 'react-router-dom';
 import DateSearch from './dateSearch';
 import Axios from 'axios';
 
-export const handleArticle=()=>{
-    console.log('here');
-}
-
 export default function Fund(params) {
     return(
         <>
