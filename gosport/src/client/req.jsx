@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import Axios from "axios";
 import './req.css';
 import Cookies from 'js-cookie';
-import GoogleLogin from "react-google-login";
+// import GoogleLogin from "react-google-login";
 const Client = () => {
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
@@ -200,13 +200,13 @@ const Client = () => {
                     <h3>{bb}</h3>
                     <button onClick={change}>取消</button>
                     <button onClick={login}>登入</button>
-                    <GoogleLogin
+                    {/* <GoogleLogin
                         clientId="242513557303-7c0flfi7ljjmkdvqef4ivfc7ge0qfuho.apps.googleusercontent.com"
                         buttonText="使用 GOOGLE 登入"
                         onSuccess={responseGoogle}
                         onFailure={responseGoogle}
                         cookiePolicy={'single_host_origin'}
-                    />
+                    /> */}
                 </div>
             </div>
 

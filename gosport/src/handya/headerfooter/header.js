@@ -15,6 +15,8 @@ import noimg from './img/teams_m.png'
 
 import notice from './img/icon_notice.svg';
 import user from './img/icon_user.svg';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { gapi } from 'gapi-script';
 
 export default function Navbar(props) {
     const { pathname } = useLocation();
@@ -105,7 +107,7 @@ console.log(iddd)
     const [token3, settoken3] = useState(Cookies.get('token'))
     // const token3=(Cookies.get('token'))
     const id = ((Cookies.get('id')))
-
+// console.log(token3)
     const getimg = async () => {
         // settoken(Cookies.get('token'))
         // const token = (Cookies.get('token'))
@@ -176,7 +178,7 @@ const [mouse,setmouse] = useState(false)
     const handleLogout = (e) => {
         e.preventDefault();
         settoken3(null)
-
+        setuser(null)
         Cookies.remove('token', {
             path: '/'
         })
@@ -199,6 +201,72 @@ const [mouse,setmouse] = useState(false)
         qatext.scrollIntoView();
     }
 
+    const clientId = '389136465212-vjbt5rgdcn38272tcpe5f6hnk41s8sbs.apps.googleusercontent.com';
+    const [setiddd11, setiddd1] = useState();
+    const [setuser11, setuser1] = useState();
+    const [settoken311, settoken31] = useState();
+    const [setUserurl11, setUserurl1] = useState();
+    const [token33, settoken33] = useState(Cookies.get('token'))
+
+    useEffect(() => {
+        const initClient = () => {
+              gapi.client.init({
+              clientId: clientId,
+              scope: ''
+            });
+         };
+         gapi.load('client:auth2', initClient);
+     });
+     const onSuccess = (res) => {
+        console.log('success:', res);
+        setiddd1(res.profileObj.googleId);
+            setuser1(res.profileObj);
+            // console.log(response.data[0].userid)
+            settoken33(res.profileObj.email)
+            Cookies.set(
+                'token',//key
+                res.profileObj.email,//value
+                {
+                    path: '/',
+                    expires: 7,//有效7天
+                    sameSite: 'strict'//只有當前url與請求目標一致才會帶上cookie
+                }
+            )
+            Cookies.set(
+                'id',//key
+                res.profileObj.googleId,//value
+                {
+                    path: '/',
+                    expires: 7,//有效7天
+                    sameSite: 'strict'//只有當前url與請求目標一致才會帶上cookie
+                }
+            )
+            setUserurl1(res.profileObj.imageUrl)
+    };
+    const onFailure = (err) => {
+        console.log('failed:', err);
+    };
+    console.log(setuser11)
+// // //google login
+// const [googleuser,setgoogle] = useState()
+// function handleCallbackResponse(response){
+// console.log("Encoded JWT ID token:" + response.credential);
+// var userobj = jwt_decode(response.credential);
+// console.log(userobj);
+// setgoogle(userobj);
+// }
+// useEffect(()=>{
+// // /*global google */
+// // // google.accounts.id.initialize({
+// // //     client_id:"389136465212-vjbt5rgdcn38272tcpe5f6hnk41s8sbs.apps.googleusercontent.com",
+// // //     callback: handleCallbackResponse
+// // // });
+// google.accounts.id.renderButton(
+//     document.getElementById("signindiv"),
+//     {theme:"outline",size:"large"}
+// )
+// },[]);
+
 
     if (!token3) {
         return (
@@ -211,8 +279,17 @@ const [mouse,setmouse] = useState(false)
                         <button className={` ${sighbtn === true ? cc.focus1 : cc.tablink1}`} onClick={sigh}  >註冊</button>
                         <button className={` ${loginbtn === true ? cc.focus1 : cc.tablink1}`} onClick={login} >登入</button>
                         <div id="Londo" style={{ display: sighdiv }} className={cc.tabcontent}>
-                            <img className={cc.d131} src={google} alt="" />
+                        <GoogleLogin className={cc.d162}
+          clientId={clientId}
+          buttonText="Sign in with Google"
+          onSuccess={onSuccess}
+          onFailure={onFailure}
+          cookiePolicy={'single_host_origin'}
+          isSignedIn={true}
+      />
+                            {/* <img className={cc.d131} src={google} alt="" /> */}
                             <p className={cc.d132}>註冊信箱</p>
+
                             <form action="">
                                 <div className={cc.d152}>
 
@@ -273,7 +350,78 @@ const [mouse,setmouse] = useState(false)
             </React.Fragment>
         );
     }
+else if (token33){
+return(
+    <React.Fragment>
+    <div style={{ display: loginfo1 }} className={cc.d154}>
+        <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user'>個人頁面</Link></button>
+        <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/settings'>帳號設定</Link></button>
+        <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>活動歷程</Link></button>
+        <button className={mouse==true?cc.d160:cc.d161}>我的球隊</button>
+        {/* {teaminfo.map((v,k)=>{                   
+            return(
+<React.Fragment> <button onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}>{v.tname}</button>   </React.Fragment>
+)
+        }
+        )} */}
+        <button className={cc.d156}>鐵血軍團</button>
+    </div>
+    <div className="navbar">
+        <div className="nContent">
+            <div className="nLeft">
+                <div>GOsport</div>
+            </div>
+            <div className="nRight">
+                <div id={splitPathname[2] === "gosport" ? "tabline" : ""}>
+                    <Link to='/gosport/home'>首頁</Link>
+                    {/* <Link to='/gosport'>首頁</Link> */}
+                </div>
+                <div id={splitPathname[2] === "rent" ? "tabline" : ""}>
+                    <Link to='/gosport/rent'>租場地</Link>
+                    {/* <Link to='/gosport/rent'>租場地</Link> */}
+                </div>
+                <div id={splitPathname[2] === "communicate" ? "tabline" : ""}>
+                    <Link to='/gosport/communicate/search'>交流區</Link>
+                    {/* <Link to='/gosport/communicate'>交流區</Link> */}
+                </div>
+                <div id={splitPathname[2] === "qa" ? "tabline" : ""}>
+                    <Link to='/gosport/qa'>Q&A</Link>
+                    {/* <Link to='/gosport/qa'>Q&A</Link> */}
+                </div>
+                <img className="notice" src={notice} />
+                <img className="userimg1" onClick={loginfo} src={noimg}></img> <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
+                {/* {userInfo.map((v, k) => {
 
+
+                    if (v.userimg === null) {
+                        return (
+                            <React.Fragment> <img className="userimg1" onClick={loginfo} src={noimg}></img> <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
+                            </React.Fragment>
+                        );
+                    }
+                    else {
+                        let u8Arr = new Uint8Array(v.userimg.data);
+                        let blob = new Blob([u8Arr], { type: "image/jpeg" });
+                        let fr = new FileReader;
+                        fr.readAsDataURL(blob);
+                        fr.onload = function () {
+                            setUserurl(fr.result);
+                        }
+                        return (
+                            <React.Fragment><img className="userimg" onClick={loginfo} src={userurl} />
+                                <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
+                                <GoogleLogout buttonText="Log out" />
+                            </React.Fragment>
+                        );
+                    }
+                })} */}
+
+            </div>
+        </div>
+    </div>
+</React.Fragment>
+);
+}
     return (
         <React.Fragment>
             <div style={{ display: loginfo1 }} className={cc.d154}>
@@ -298,12 +446,9 @@ const [mouse,setmouse] = useState(false)
                         <div id={splitPathname[2] === "gosport" ? "tabline" : ""}>
                             {userInfo[0].email === "root" ? <Link to='/gosport'>後台首頁</Link> : <Link to='/gosport/home'>首頁</Link>}
                             {/* <Link to='/gosport'>首頁</Link> */}
-
-
                         </div>
                         <div id={splitPathname[2] === "rent" ? "tabline" : ""}>
-                            {userInfo[0].email === "root" ? <Link to='/gosport'>後台租場地</Link> : <Link to='/gosport/rent'>租場地</Link>
-                            }
+                            {userInfo[0].email === "root" ? <Link to='/gosport'>後台租場地</Link> : <Link to='/gosport/rent'>租場地</Link>}
                             {/* <Link to='/gosport/rent'>租場地</Link> */}
                         </div>
                         <div id={splitPathname[2] === "communicate" ? "tabline" : ""}>
@@ -336,6 +481,7 @@ const [mouse,setmouse] = useState(false)
                                 return (
                                     <React.Fragment><img className="userimg" onClick={loginfo} src={userurl} />
                                         <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
+  
                                     </React.Fragment>
                                 );
                             }

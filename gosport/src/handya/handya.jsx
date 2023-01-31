@@ -338,7 +338,7 @@ const Handya = () =>{
         // bottomref.current?.scrollIntoView({behavior: 'smooth'});
         // setmes([]);
         	// socket.emit(“要對 server 發送的事件名稱”,data)
-        socket.emit("send_mesg",{message,name:usern,id:idd});
+        socket.emit("send_mesg",{message,name:usern,id:userid});
         // socket.emit("send_mesg1",{message});
         bottomref.current?.scrollIntoView({behavior: 'smooth'});
 
@@ -813,7 +813,7 @@ useEffect(()=>{
             // console.log(v.message);
         })} */}
         {mes.map((v,k)=>{
-            if(v.id===idd)
+            if(v.id===userid)
             // return(<div className='dwwe'><p className='www'>{v.message}</p></div>)
             return(
                 <React.Fragment>
