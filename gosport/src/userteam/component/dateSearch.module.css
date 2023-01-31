@@ -13,19 +13,28 @@
     font-size: 1.2rem;
     font-weight: 400;
     color: rgb(170, 170, 170);
-    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 12px;
 }
 /* 文字 */
-.sDate div,.oText{
+.sDate div,.oText,.sDate a{
     font-family: 'Noto Sans TC';
     font-size: 1.2rem;
     font-weight: 400;
     color: rgb(56, 56, 56);
     margin-bottom: 10px;
 }
+.sDate a{
+    display: inline-block;
+}
+.linkvisited{
+    color: rgb(230, 70, 55) !important;
+    text-decoration: none;
+}
 /* 顯示訂單日期清單的框 */
 .sDate{
-    height: 120px;
+    /* height: 120px; */
+    height: 100%;
     overflow: scroll;
 }
 /* 開始日期｜結束日期 */
@@ -64,6 +73,6 @@
     color: rgb(255, 255, 255);
     font-weight: 400;
     font-size: 1.2rem;
-    position: absolute;
-    bottom: 0;
+    /* position: absolute; */
+    /* bottom: 0; */
 }

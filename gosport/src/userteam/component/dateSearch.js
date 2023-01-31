@@ -1,7 +1,7 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import dateSearch from './dateSearch.module.css';
 import Axios from 'axios';
-import { useLocation } from "react-router-dom";
+import { useLocation, Link, useParams } from "react-router-dom";
 
 export default function DateSearch(params) {
 
@@ -20,6 +20,10 @@ export default function DateSearch(params) {
             setPathEnd('activity');
         };
     },[])
+
+    // 抓網址id = 文章id
+    const {id} = useParams();
+    // console.log(id);
 
     // SQL參數
     const [userid, setUserid] = useState('1'); // 登入者id
@@ -68,23 +72,39 @@ export default function DateSearch(params) {
 
     },[pathend]);
 
-
-    const handleArticle=(val)=>{
-        console.log(val);
-    }
-
     // result改變時 列出文章的日期清單
     useEffect(()=>{
         if(result){
-            const newList = result.map((val,key)=>{
-                let vv = val.date.substr(0,10);
-                let vvReplace = vv.replaceAll('-','/');
-                console.log(val.articleid);
-                return <div key={key} onClick={ (val)=>{ handleArticle(val) } }>{ vvReplace }</div>;
-            })
-            setResultList(newList);
+            if(pathend==='fund'){
+                const newList = result.map((val,key)=>{
+                    let vv = val.date.substr(0,10);
+                    let vvReplace = vv.replaceAll('-','/');
+                    return <Link to={`/gosport/user/myteam/fund/${val.articleid}`} 
+                                 key={key}
+                                 className = {id==val.articleid? dateSearch.linkvisited:''}>{ vvReplace }</Link>
+                })
+                setResultList(newList);
+            }else if(pathend==='pay'){
+                const newList = result.map((val,key)=>{
+                    let vv = val.date.substr(0,10);
+                    let vvReplace = vv.replaceAll('-','/');
+                    return <Link to={`/gosport/user/myteam/pay/${val.articleid}`} 
+                                 key={key}
+                                 className = {id==val.articleid? dateSearch.linkvisited:''}>{ vvReplace }</Link>    
+                })
+                setResultList(newList);
+            }else if(pathend==='activity'){
+                const newList = result.map((val,key)=>{
+                    let vv = val.date.substr(0,10);
+                    let vvReplace = vv.replaceAll('-','/');
+                    return <Link to={`/gosport/user/myteam/activity/${val.articleid}`} 
+                                 key={key}
+                                 className = {id==val.articleid? dateSearch.linkvisited:''}>{ vvReplace }</Link>    
+                })
+                setResultList(newList);
+            }
         }
-    },[result]);
+    },[result,id]);
 
     // 點擊搜尋按鈕時 依網址判定查找的類型文章-2 時間條件
     const handleDateSearch =()=>{
@@ -130,9 +150,9 @@ export default function DateSearch(params) {
             <div className={dateSearch.search}>
                 <input type="date" onChange={ (e)=>{ setStartdate(e.target.value) } } />
                 <input type="date" onChange={ (e)=>{ setEnddate(e.target.value) } } />
+                <button onClick={ handleDateSearch }>搜尋</button>
                 <div className={dateSearch.sTitle}>訂單日期</div>
                 <div className={dateSearch.sDate}>{ resultList }</div>
-                <button onClick={ handleDateSearch }>搜尋</button>
             </div>
         </>
     )
