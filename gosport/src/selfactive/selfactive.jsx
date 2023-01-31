@@ -85,6 +85,19 @@ const Selfactive = () => {
             setFollowData(response.data)
         })
     }
+    //拒絕follow人
+    const deleFollow = (data) =>{
+        console.log(data)
+        // DELETE FROM `follow_zeroda` WHERE `articleid_zeroda`="1" AND `userid`="2"
+        Axios.post("http://localhost:3001/delefollowzeroda", {
+            articleid_zeroda: data.articleid_zeroda,
+            userid:data.userid
+        }).then(() => {
+            follow.current.click();
+        }).then(() => {
+            follow.current.click();
+        })
+    }
     const [userimglist, setuserimglist] = useState({});
     useEffect(() => {
         // follow人的照片
@@ -168,6 +181,7 @@ const Selfactive = () => {
 
     // 父傳子搜尋按鍵識別
     const find = useRef();
+    const follow = useRef();
     // 零打文章更新
     const updateZeroda = () => {
         Axios.post("http://localhost:3001/updatezeroda", {
@@ -251,7 +265,7 @@ const Selfactive = () => {
                         <div id="artclein" style={{ display: isArticleShow }}>
                             {/* <!-- 以新增 --> */}
                             <div id="tein" style={{ display: isAddShow }}>
-                                <Artadd control={controlModal} editSublet={editSublet} editZeroda={editZeroda} find={find} />
+                                <Artadd control={controlModal} editSublet={editSublet} editZeroda={editZeroda} find={find} follow={follow}/>
                             </div>
                             {/* <!-- 已刪除 --> */}
                             <div id="teout" style={{ display: isDelShow }}>
@@ -261,20 +275,14 @@ const Selfactive = () => {
                     </div>
                 </div>
                 {/* follow視窗 */}
-                <div className="active_modal" style={{ display: showModal }}>
+                <div className="active_modal" style={{ display: showModal , cursor:"default"}}>
                     <div className="modal-content">
                         <span className="active_close" onClick={() => { closeModal() }}>&times;</span>
                         <div>
                             {followdata.map((item, index) => {
-                                // var u8Arr = new Uint8Array(item.userimg.data);
-                                // var blob = new Blob([u8Arr], { type: "image/jpeg" });
-                                // var fr = new FileReader;
-                                // fr.readAsDataURL(blob);
-                                // fr.onload = function (e) {
-                                //     userimglist.push(e.target.result);
-                                // };
+
                                 return (
-                                    <div key={index}>
+                                    <div className='eachfollow' key={index}>
                                         <div className="clientPic">
                                             <img src={userimglist[index]} alt="" className="clientImg" />
                                             <div className='clientBadge'>
@@ -303,7 +311,7 @@ const Selfactive = () => {
                                                 2022/12/22 9:05
                                             </div>
                                             <div>
-                                                <button>拒絕</button>
+                                                <button onClick={()=>{deleFollow(item)}}>拒絕</button>
                                                 <button>接受</button>
                                             </div>
                                         </div>
@@ -328,33 +336,35 @@ const Selfactive = () => {
                             <label htmlFor="zdate" >日期</label><br />
                             <input type="text" id="zdate" value={playDate} onChange={(e) => { setPlayDate(e.target.value) }} />
                         </div>
-                        <div style={{position: 'relative'}}>
+                        <div style={{ position: 'relative' }}>
                             <label >時段</label><br />
                             <select onChange={(e) => setStartTime(e.target.value)}>
                                 {[6, 7, 8, 9, 10, 11, 12].map(item => {
                                     return <option value={item} selected={item === starttime}>{item}:00</option>
                                 })}
                             </select>
-                            <img style={{left:'63px'}} src={SelectDown} alt="" />
+                            <img style={{ left: '63px' }} src={SelectDown} alt="" />
                             至
                             <select onChange={(e) => setEndTime(e.target.value)}>
                                 {[11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22].map(item => {
                                     return <option value={item} selected={item === endtime}>{item}:00</option>
                                 })}
                             </select>
-                            <img style={{left:'172px'}} src={SelectDown} alt="" />
+                            <img style={{ left: '172px' }} src={SelectDown} alt="" />
                         </div>
-                        <div style={{ display: zerodaid === '' ? 'none' : 'block' }}>
-                            <label htmlFor="zlevel" >程度</label><br />
-                            <input type="text" id="zlevel" value={level} onChange={(e) => { setLevel(e.target.value) }} />
-                        </div>
-                        <div>
-                            <label htmlFor="znumber" >人數</label><br />
-                            <input type="text" id="znumber" value={number} onChange={(e) => { setNumber(e.target.value) }} />
-                        </div>
-                        <div>
-                            <label htmlFor="zcost" >費用</label><br />
-                            <input type="text" id="zcost" value={cost} onChange={(e) => { setCost(e.target.value) }} />
+                        <div style={{ display: "flex" }}>
+                            <div style={{ display: zerodaid === '' ? 'none' : 'block' }}>
+                                <label htmlFor="zlevel" >程度</label><br />
+                                <input type="text" id="zlevel" value={level} onChange={(e) => { setLevel(e.target.value) }} />
+                            </div>
+                            <div>
+                                <label htmlFor="znumber" >人數</label><br />
+                                <input type="text" id="znumber" value={number} onChange={(e) => { setNumber(e.target.value) }} />
+                            </div>
+                            <div>
+                                <label htmlFor="zcost" >費用</label><br />
+                                <input type="text" id="zcost" value={cost} onChange={(e) => { setCost(e.target.value) }} />
+                            </div>
                         </div>
                         <div>
                             <label htmlFor="zdescribe" >描述</label><br />

@@ -60,7 +60,7 @@
 }
 
 /* 主要輸入內容 */
-textarea {
+.textarea {
     border: none;
     background-color: #F5F5F5;
     border-radius: 50px;
@@ -106,7 +106,7 @@ textarea {
     padding: 0;
 }
 
-label {
+.label {
     color: #AAAAAA;
     font-size: 20px;
     line-height: 43px;
