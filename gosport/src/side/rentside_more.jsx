@@ -1,18 +1,14 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import Rectangle from "./icon/Rectangle 639.png";
 import a1 from "./icon/停車場.svg";
 import a2 from "./icon/淋浴間.svg";
 import a3 from "./icon/無障礙.svg";
 import group41 from "./icon/Group 41.png";
-import notice from "./icon/notice.svg";
-import user from "./icon/user.svg";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import side2 from './rentside_more.module.css';
-import team from './icon/team.jpg';
-import map from './icon/map.png'
 import { useHistory, useParams } from 'react-router-dom';
 import Axios from "axios";
 import Cookies from 'js-cookie';
+import QRCodeSVG from "qrcode.react";
 const Side2 = () => {
   const [num, setnum] = useState(1);
   const add = () => {
@@ -267,6 +263,7 @@ const Side2 = () => {
       }).then((response) => {
         alert('成功');
         setdiv2(!div2);
+        sendemail();
         gopath.push('/gosport/rent/side');
       })
     } else {
@@ -286,6 +283,7 @@ const Side2 = () => {
       }).then((response) => {
         alert('成功');
         setdiv2(!div2);
+        sendemail();
         gopath.push('/gosport/rent/side');
       })
     }
@@ -307,6 +305,34 @@ const Side2 = () => {
     let d = c.getDate();
     setmonthdate(`${y}-${m = (m < 10 ? '0' : '') + m}-${d = (d < 10 ? '0' : '') + d}`);
   }
+  const sendemail = () => {
+    const canvasImg = document.getElementById('qrCode'); // 获取canvas类型的二维码
+    const img = new Image();
+    img.src = canvasImg.toDataURL('image/png'); // 将canvas对象转换为图片的data url
+    const id112 = Cookies.get('id');
+    console.log(id112);
+    Axios.post("http://localhost:3001/backuseredit", {
+      userid: id112,
+    }).then((response) => {
+      console.log(response.data);
+      Axios.post("http://localhost:3001/sendemail", {
+        username: response.data[0].username,
+        email: response.data[0].email,
+        src:img.src,
+      }).then((response) => {
+        console.log('成功寄送email');
+      })
+    })
+  }
+  const changeCanvasToPic = () => {
+    const canvasImg = document.getElementById('qrCode'); // 获取canvas类型的二维码
+    console.log(canvasImg);
+    const img = new Image();
+    img.src = canvasImg.toDataURL('image/png'); // 将canvas对象转换为图片的data url
+    // const downLink = document.getElementById('down_link');
+    // downLink.href = img.src;
+    // downLink.download = '二维码'; // 图片name
+  };
   return (
     <React.Fragment>
       {(re) ?
@@ -457,6 +483,27 @@ const Side2 = () => {
                 <button className={side2.button2} onClick={aaa2}>取消</button>
                 <button className={side2.button3} onClick={confirm}>確認</button>
               </div>
+              <div style={{visibility:'hidden'}}>
+                <a id="down_link" onClick={changeCanvasToPic}>
+                  点击下载
+                </a>
+                <div>
+                  <QRCodeSVG
+                    id="qrCode"
+                    value="https://github.com/zackht/GOSPORT_4"
+                    size={200}
+                    bgColor='#fff'
+                    level="H"
+                    // style={{ margin: 'auto' }}
+                    // imageSettings={{ // 二维码中间的logo图片
+                    //   src:{GOsport},
+                    //   height: 100,
+                    //   width: 100,
+                    //   excavate: true, // 中间图片所在的位置是否镂空
+                    // }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
           : (rentday === '月租' || rentday === '季租') ?
@@ -502,6 +549,27 @@ const Side2 = () => {
                   <button className={side2.button2} onClick={aaa2}>取消</button>
                   <button className={side2.button3} onClick={confirm}>確認</button>
                 </div>
+                <div style={{visibility:'hidden'}}>
+                <a id="down_link" onClick={changeCanvasToPic}>
+                  点击下载
+                </a>
+                <div>
+                  <QRCodeSVG
+                    id="qrCode"
+                    value="https://github.com/zackht/GOSPORT_4"
+                    size={200}
+                    bgColor='#fff'
+                    level="H"
+                    // style={{ margin: 'auto' }}
+                    // imageSettings={{ // 二维码中间的logo图片
+                    //   src:{GOsport},
+                    //   height: 100,
+                    //   width: 100,
+                    //   excavate: true, // 中间图片所在的位置是否镂空
+                    // }}
+                  />
+                </div>
+              </div>
               </div>
             </div>
             : ''
