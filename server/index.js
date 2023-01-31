@@ -334,7 +334,7 @@ app.post("/rentside", (req, res) => {
   const park = `${req.body.park}`;
   const bath = `${req.body.bath}`;
   const baulk = `${req.body.baulk}`;
-  if(area==='不限'){
+  if (area === '不限') {
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?)`
       // AND bath = ? AND park=? AND baulk=?`
@@ -345,7 +345,7 @@ app.post("/rentside", (req, res) => {
           res.send(result);
         }
       });
-  }{
+  } {
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =? AND area =? AND (sidename LIKE ? OR adress LIKE ?)`
       // AND bath = ? AND park=? AND baulk=?`
@@ -370,7 +370,7 @@ app.post("/rentside2", (req, res) => {
   const park = `${req.body.park}`;
   const bath = `${req.body.bath}`;
   const baulk = `${req.body.baulk}`;
-  if(area==='不限'){
+  if (area === '不限') {
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?)`
       // AND bath = ? AND park=? AND baulk=?`
@@ -381,7 +381,7 @@ app.post("/rentside2", (req, res) => {
           res.send(result);
         }
       });
-  }{
+  } {
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =? AND area =? AND (sidename LIKE ? OR adress LIKE ?)`
       // AND bath = ? AND park=? AND baulk=?`
@@ -885,9 +885,14 @@ app.post("/selfbuildinfo", upload.single('image'), (req, res) => {
   const volleyball = req.body.volleyball;
   const userId = req.body.userid;
   const usebadge = req.body.usebadge;
-  console.log(req.file.buffer)
+  let userimg ;
+  if (req.file !== undefined) {
+    userimg = req.file.buffer
+  } else {
+    userimg = null
+  }
   db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`userimg`= ? ,`tel`= ? ,`userdescribe`= ? ,`activeTime`='0hr',`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? ,`usebadge`= ?  WHERE `userid`= ?",
-    [email, password, username, req.file.buffer, tel, userdescribe, badminton, tabletennis, volleyball, usebadge, userId], (err, result) => {
+    [email, password, username, userimg, tel, userdescribe, badminton, tabletennis, volleyball, usebadge, userId], (err, result) => {
       if (err) {
         console.log(err);
       } else {
@@ -990,9 +995,9 @@ app.post("/selfalterwithoutpic", upload.array(), (req, res) => {
 app.post("/ordering", (req, res) => {
   const userid = req.body.userid;
   let starttime = req.body.stratFind;
-  if(starttime === '') starttime = '1999-01-01'
+  if (starttime === '') starttime = '1999-01-01'
   let endtime = req.body.endFind;
-  if(endtime === '') endtime = '2999-12-31'
+  if (endtime === '') endtime = '2999-12-31'
   db.query("SELECT * FROM `userorder` WHERE now() BETWEEN startdate AND enddate AND orderdate BETWEEN ? AND ? AND userid = ? AND flag = '成立'",
     [starttime, endtime, userid], (err, result) => {
       if (err) {
@@ -1007,9 +1012,9 @@ app.post("/ordering", (req, res) => {
 app.post("/orderfutrue", (req, res) => {
   const userid = req.body.userid;
   let starttime = req.body.stratFind;
-  if(starttime === '') starttime = '1999-01-01'
+  if (starttime === '') starttime = '1999-01-01'
   let endtime = req.body.endFind;
-  if(endtime === '') endtime = '2999-12-31'
+  if (endtime === '') endtime = '2999-12-31'
   db.query("SELECT * FROM `userorder` WHERE now() < startdate AND orderdate BETWEEN ? AND ? AND userid = ? AND flag = '成立'",
     [starttime, endtime, userid], (err, result) => {
       if (err) {
@@ -1035,9 +1040,9 @@ app.post("/cancelOrder", (req, res) => {
 app.post("/orderend", (req, res) => {
   const userid = req.body.userid;
   let starttime = req.body.stratFind;
-  if(starttime === '') starttime = '1999-01-01'
+  if (starttime === '') starttime = '1999-01-01'
   let endtime = req.body.endFind;
-  if(endtime === '') endtime = '2999-12-31'
+  if (endtime === '') endtime = '2999-12-31'
   db.query("SELECT * FROM `userorder` WHERE now() > enddate AND orderdate BETWEEN ? AND ? AND userid = ? AND flag = '成立'",
     [starttime, endtime, userid], (err, result) => {
       if (err) {
@@ -1052,9 +1057,9 @@ app.post("/orderend", (req, res) => {
 app.post("/orderfalse", (req, res) => {
   const userid = req.body.userid;
   let starttime = req.body.stratFind;
-  if(starttime === '') starttime = '1999-01-01'
+  if (starttime === '') starttime = '1999-01-01'
   let endtime = req.body.endFind;
-  if(endtime === '') endtime = '2999-12-31'
+  if (endtime === '') endtime = '2999-12-31'
   db.query("SELECT * FROM `userorder` WHERE orderdate BETWEEN ? AND ? AND userid = ? AND flag = '不成立'",
     [starttime, endtime, userid], (err, result) => {
       if (err) {
@@ -1566,11 +1571,11 @@ app.post('/deletemember', (req, res) => {
   );
 });
 
-// 芝｜date 查找基金文章-1 all
-app.post('/teamfundall', (req, res) => {
-  const teamid = req.body.teamid;
-  db.query(
-    `SELECT date,userid,fee,text
+  // 芝｜date 查找基金文章-1 all
+  app.post('/teamfundall', (req, res) => {
+    const teamid = req.body.teamid;
+    db.query(
+      `SELECT date,userid,fee,text,teamfundid as 'articleid'
       FROM teamfund
       WHERE teamid=?
       ORDER by date;`,
@@ -1585,13 +1590,13 @@ app.post('/teamfundall', (req, res) => {
   );
 });
 
-// 芝｜date 查找基金文章-2 時間條件
-app.post('/teamfunddate', (req, res) => {
-  const teamid = req.body.teamid;
-  const startdate = req.body.startdate;
-  const enddate = req.body.enddate;
-  db.query(
-    `SELECT date,userid,fee,text
+  // 芝｜date 查找基金文章-2 時間條件
+  app.post('/teamfunddate', (req, res) => {
+    const teamid = req.body.teamid;
+    const startdate = req.body.startdate;
+    const enddate = req.body.enddate;
+    db.query(
+      `SELECT date,userid,fee,text,teamfundid as 'articleid'
       FROM teamfund
       WHERE date BETWEEN ? AND ? AND teamid=?
       ORDER by date;`,
@@ -1606,11 +1611,11 @@ app.post('/teamfunddate', (req, res) => {
   );
 });
 
-// 芝｜date 查找支出文章-1 all
-app.post('/teampayall', (req, res) => {
-  const teamid = req.body.teamid;
-  db.query(
-    `SELECT date,item,fee,text
+  // 芝｜date 查找支出文章-1 all
+  app.post('/teampayall', (req, res) => {
+    const teamid = req.body.teamid;
+    db.query(
+      `SELECT date,item,fee,text,teampayid as 'articleid'
       FROM teampay
       WHERE teamid=?
       ORDER by date;`,
@@ -1625,13 +1630,13 @@ app.post('/teampayall', (req, res) => {
   );
 });
 
-// 芝｜date 查找支出文章-2 時間條件
-app.post('/teampaydate', (req, res) => {
-  const teamid = req.body.teamid;
-  const startdate = req.body.startdate;
-  const enddate = req.body.enddate;
-  db.query(
-    `SELECT date,item,fee,text
+  // 芝｜date 查找支出文章-2 時間條件
+  app.post('/teampaydate', (req, res) => {
+    const teamid = req.body.teamid;
+    const startdate = req.body.startdate;
+    const enddate = req.body.enddate;
+    db.query(
+      `SELECT date,item,fee,text,teampayid as 'articleid'
       FROM teampay
       WHERE date BETWEEN ? AND ? AND teamid=?
       ORDER by date;`,
@@ -1646,11 +1651,11 @@ app.post('/teampaydate', (req, res) => {
   );
 });
 
-// 芝｜date 查找活動文章-1 all
-app.post('/teamactivityall', (req, res) => {
-  const teamid = req.body.teamid;
-  db.query(
-    `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text
+  // 芝｜date 查找活動文章-1 all
+  app.post('/teamactivityall', (req, res) => {
+    const teamid = req.body.teamid;
+    db.query(
+      `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
       FROM teamactivity
       WHERE teamid=?
       ORDER by date;`,
@@ -1665,13 +1670,13 @@ app.post('/teamactivityall', (req, res) => {
   );
 });
 
-// 芝｜date 查找活動文章-2 時間條件
-app.post('/teamactivitydate', (req, res) => {
-  const teamid = req.body.teamid;
-  const startdate = req.body.startdate;
-  const enddate = req.body.enddate;
-  db.query(
-    `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text
+  // 芝｜date 查找活動文章-2 時間條件
+  app.post('/teamactivitydate', (req, res) => {
+    const teamid = req.body.teamid;
+    const startdate = req.body.startdate;
+    const enddate = req.body.enddate;
+    db.query(
+      `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
       FROM teamactivity
       WHERE startdate BETWEEN ? AND ? AND teamid=?
       ORDER by date;`,

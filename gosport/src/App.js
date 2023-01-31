@@ -20,6 +20,7 @@ import rentside_more from "./side/rentside_more";
 import rentside from "./side/rentside";
 // import Backteam from "./back/backarticleteam";
 import Selfactive from "./selfactive/selfactive";
+import Selfsettings from "./selfalter/selfsettings";
 import Selfalter from "./selfalter/selfalter";
 import Selfbuild from "./selfalter/selfbuild";
 import Selfpage from "./selfpage/selfpage";
@@ -64,8 +65,9 @@ class App extends Component {
 
             {/* 會員  */}
             <Route path="/gosport/user" 		     component={Selfpage} exact />
-            <Route path="/gosport/user/build" 		     component={Selfbuild} exact />
-            <Route path="/gosport/user/settings" component={Selfalter} />
+            <Route path="/gosport/user/settings" component={Selfsettings}/>
+            <Route path="/gosport/user/build" 	 component={Selfbuild}/> {/*settings子組件*/}
+            <Route path="/gosport/user/alter"    component={Selfalter} />{/*settings子組件*/}
             <Route path="/gosport/user/activity" component={Selfactive} />
 
             {/* 球隊 */}

@@ -13,6 +13,7 @@
     height: 1350px;
     width: 1060px;
     background: #FFFFFF;
+    background: linear-gradient(165deg, #ffffff, #ffffff, #ffffff, rgba(250, 230, 230, 0.37));
     box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
     display: flex;
     justify-content: center;
@@ -218,4 +219,38 @@
 .alter_yesOrNot input:hover {
     background-color: rgb(254, 96, 82);
     box-shadow: 2px 2px 2px 0px rgba(141, 7, 7, 0.7);
+}
+
+/* build */
+.build_{
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    position: relative;
+    top: 8vh; */
+    height: 1300px;
+}
+.selfbuild {
+    height: 1050px;
+    /* width: 1060px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500; */
+}
+.build_form{
+    padding-top: 20px;
+    /* width: 90%;
+    height: 92%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; */
+}
+#build_showStar img{
+    width: 20px;
+    height: 20px;
+    margin: 20px 3px 0px 3px;
 }

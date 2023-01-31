@@ -114,14 +114,6 @@ const Selfbuild = () => {
     // 上傳更新
     let update = (e) => {
         e.preventDefault();
-
-        Axios.post("http://localhost:3001/selfbuildbadge", {
-            userid: userid,
-        }).then((response) => {
-            console.log('baddge', response.data);
-        });
-
-
         const data = new FormData();
         data.append('usebadge', badge);
         data.append('image', picSourse);
@@ -138,7 +130,12 @@ const Selfbuild = () => {
             headers: { 'Content-Type': 'multipart/form-data' },
         }).then((response) => {
             // console.log(response.data);
-            window.location = '/gosport/user';
+            Axios.post("http://localhost:3001/selfbuildbadge", {
+                userid: userid,
+            }).then((response) => {
+                console.log('baddge', response.data);
+                window.location = '/gosport/user';
+            });
         });
 
     }
@@ -184,22 +181,22 @@ const Selfbuild = () => {
     return (
         <React.Fragment>
             {/* 主體 */}
-            <div className='alter_'>
-                <div className="selfalter">
-                    <form className='alter_form' onSubmit={update}>
+            <div className='alter_ build_'>
+                <div className="selfalter selfbuild">
+                    <form className='alter_form build_form' onSubmit={update}>
                         <div>
                             <div className="alter_PicPla">
                                 <div id="picFile" onClick={upLoadpic}>
                                     <div id="picFile_backT" style={{ textAlign: "center", color: "#AAAAAA", display: photoBack }}>
                                         <embed src={alterImgbackIcon} /> <br />上傳相片
                                     </div>
-                                    <input id="oploadPic" type="file" required="required" targetid="preview_img" onChange={handleOnPreview} ref={inputFile}
+                                    <input id="oploadPic" type="file"  targetid="preview_img" onChange={handleOnPreview} ref={inputFile}
                                         accept="image/gif, image/jpeg, image/png" />
                                     <img id="preview_img" src={imageSrc} alt="" style={{ display: showPhoto }} />
 
                                 </div>
-                                <div id="alter_showStar">
-                                    {selectedImages.map((item, index) => <embed src={item.badgeurl} key={index} type="" />)}
+                                <div id="build_showStar">
+                                    {selectedImages.map((item, index) => <img src={item.badgeurl} key={index} type="" />)}
                                     {/* <embed src={star} type="" />
                                     <embed src={star} type="" />
                                     <embed src={star} type="" /> */}
@@ -207,13 +204,13 @@ const Selfbuild = () => {
                             </div>
                             <div style={{ paddingLeft: "40px" }}>
                                 <label className='alter_label' htmlFor="alter_name">姓名</label><br />
-                                <input type="text" className='alter_input' id="alter_name" value={username} onChange={nameChange} placeholder="請填寫姓名" required="required" /><br />
+                                <input type="text" className='alter_input' id="alter_name" value={username} onChange={nameChange} placeholder="請填寫姓名 必填" required="required" /><br />
                                 {/* <label className='alter_label' htmlFor="alter_email">註冊信箱</label><br /> */}
                                 {/* <input type="text" className='alter_input' id="alter_email" value={email} onChange={emailChange} /><br /> */}
                                 {/* <label className='alter_label' htmlFor="alter_psw">密碼</label><br /> */}
                                 {/* <input type="password" className='alter_input' id="alter_psw" value={password} onChange={passChange} /><br /> */}
                                 <label className='alter_label' htmlFor="alter_tel">電話</label><br />
-                                <input type="tel" className='alter_input' id="alter_tel" value={tel} onChange={telChange} placeholder="請填寫電話" required="required" /><br />
+                                <input type="tel" className='alter_input' id="alter_tel" value={tel} onChange={telChange} placeholder="請填寫電話 必填" required="required" /><br />
                                 <label className='alter_label'>我的程度</label><br />
                                 <div className="alter_degree">
                                     <div>羽球</div>
@@ -242,7 +239,7 @@ const Selfbuild = () => {
                             </div>
                         </div>
                         <div className="alter_yesOrNot">
-                            <a href="/selfpage">
+                            <a href="/gosport/user">
                                 <span className="alter_backself">取消</span>
                             </a>
                             <input type="submit" value="儲存" />

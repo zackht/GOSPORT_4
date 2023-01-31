@@ -2,7 +2,6 @@ import React, { useState,useEffect } from 'react';
 import dateSearch from './dateSearch.module.css';
 import Axios from 'axios';
 import { useLocation } from "react-router-dom";
-import handleArticle from './fund.js';
 
 export default function DateSearch(params) {
 
@@ -69,13 +68,19 @@ export default function DateSearch(params) {
 
     },[pathend]);
 
+
+    const handleArticle=(val)=>{
+        console.log(val);
+    }
+
     // result改變時 列出文章的日期清單
     useEffect(()=>{
         if(result){
             const newList = result.map((val,key)=>{
                 let vv = val.date.substr(0,10);
                 let vvReplace = vv.replaceAll('-','/');
-                return <div key={key} onClick={ handleArticle }>{ vvReplace }</div>;
+                console.log(val.articleid);
+                return <div key={key} onClick={ (val)=>{ handleArticle(val) } }>{ vvReplace }</div>;
             })
             setResultList(newList);
         }
