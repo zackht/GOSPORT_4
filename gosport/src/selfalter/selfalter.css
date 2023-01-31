@@ -13,6 +13,7 @@
     height: 1350px;
     width: 1060px;
     background: #FFFFFF;
+    background: linear-gradient(165deg, #ffffff, #ffffff, #ffffff, rgba(250, 230, 230, 0.37));
     box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
     display: flex;
     justify-content: center;

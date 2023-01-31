@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+var nodemailer = require('nodemailer');
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -279,6 +280,46 @@ app.post("/backuseredit", (req, res) => {
         res.send(result);
       }
     });
+});
+//寄送email
+let transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true, // true for 465, false for other ports
+  auth: {
+      user: 'jeff50000123@gmail.com', // generated ethereal user
+      pass: 'igyauxwqvdszywlf'  // generated ethereal password
+  }
+});
+app.post("/sendemail", (req, res) => {
+  const username = req.body.username;
+  const email = req.body.email;
+  const src = req.body.src;
+  var options = {
+    //寄件者
+    from: email,
+    //收件者
+    to: email, 
+    //主旨
+    subject: '測試測試', // Subject line
+    //嵌入 html 的內文
+    html: `Hello ${username} <h1>場地預定成功 </h1>
+    <img src='qqrrcode' alt="" />`
+    ,
+    attachments: [{
+      filename: 'gosport.png',
+      path: './gosport.png',
+      cid: 'qqrrcode' //same cid value as in the html img src
+  }] 
+  };
+  transporter.sendMail(options, function(error, info){
+    if(error){
+        console.log(error);
+    }else{
+        console.log('訊息發送: ' + info.response);
+    }
+  });
+  
 });
 // 租場地搜尋
 app.post("/rentside", (req, res) => {
@@ -1530,11 +1571,11 @@ app.post('/deletemember', (req, res) => {
   );
 });
 
-// 芝｜date 查找基金文章-1 all
-app.post('/teamfundall', (req, res) => {
-  const teamid = req.body.teamid;
-  db.query(
-    `SELECT date,userid,fee,text
+  // 芝｜date 查找基金文章-1 all
+  app.post('/teamfundall', (req, res) => {
+    const teamid = req.body.teamid;
+    db.query(
+      `SELECT date,userid,fee,text,teamfundid as 'articleid'
       FROM teamfund
       WHERE teamid=?
       ORDER by date;`,
@@ -1549,13 +1590,13 @@ app.post('/teamfundall', (req, res) => {
   );
 });
 
-// 芝｜date 查找基金文章-2 時間條件
-app.post('/teamfunddate', (req, res) => {
-  const teamid = req.body.teamid;
-  const startdate = req.body.startdate;
-  const enddate = req.body.enddate;
-  db.query(
-    `SELECT date,userid,fee,text
+  // 芝｜date 查找基金文章-2 時間條件
+  app.post('/teamfunddate', (req, res) => {
+    const teamid = req.body.teamid;
+    const startdate = req.body.startdate;
+    const enddate = req.body.enddate;
+    db.query(
+      `SELECT date,userid,fee,text,teamfundid as 'articleid'
       FROM teamfund
       WHERE date BETWEEN ? AND ? AND teamid=?
       ORDER by date;`,
@@ -1570,11 +1611,11 @@ app.post('/teamfunddate', (req, res) => {
   );
 });
 
-// 芝｜date 查找支出文章-1 all
-app.post('/teampayall', (req, res) => {
-  const teamid = req.body.teamid;
-  db.query(
-    `SELECT date,item,fee,text
+  // 芝｜date 查找支出文章-1 all
+  app.post('/teampayall', (req, res) => {
+    const teamid = req.body.teamid;
+    db.query(
+      `SELECT date,item,fee,text,teampayid as 'articleid'
       FROM teampay
       WHERE teamid=?
       ORDER by date;`,
@@ -1589,13 +1630,13 @@ app.post('/teampayall', (req, res) => {
   );
 });
 
-// 芝｜date 查找支出文章-2 時間條件
-app.post('/teampaydate', (req, res) => {
-  const teamid = req.body.teamid;
-  const startdate = req.body.startdate;
-  const enddate = req.body.enddate;
-  db.query(
-    `SELECT date,item,fee,text
+  // 芝｜date 查找支出文章-2 時間條件
+  app.post('/teampaydate', (req, res) => {
+    const teamid = req.body.teamid;
+    const startdate = req.body.startdate;
+    const enddate = req.body.enddate;
+    db.query(
+      `SELECT date,item,fee,text,teampayid as 'articleid'
       FROM teampay
       WHERE date BETWEEN ? AND ? AND teamid=?
       ORDER by date;`,
@@ -1610,11 +1651,11 @@ app.post('/teampaydate', (req, res) => {
   );
 });
 
-// 芝｜date 查找活動文章-1 all
-app.post('/teamactivityall', (req, res) => {
-  const teamid = req.body.teamid;
-  db.query(
-    `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text
+  // 芝｜date 查找活動文章-1 all
+  app.post('/teamactivityall', (req, res) => {
+    const teamid = req.body.teamid;
+    db.query(
+      `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
       FROM teamactivity
       WHERE teamid=?
       ORDER by date;`,
@@ -1629,13 +1670,13 @@ app.post('/teamactivityall', (req, res) => {
   );
 });
 
-// 芝｜date 查找活動文章-2 時間條件
-app.post('/teamactivitydate', (req, res) => {
-  const teamid = req.body.teamid;
-  const startdate = req.body.startdate;
-  const enddate = req.body.enddate;
-  db.query(
-    `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text
+  // 芝｜date 查找活動文章-2 時間條件
+  app.post('/teamactivitydate', (req, res) => {
+    const teamid = req.body.teamid;
+    const startdate = req.body.startdate;
+    const enddate = req.body.enddate;
+    db.query(
+      `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
       FROM teamactivity
       WHERE startdate BETWEEN ? AND ? AND teamid=?
       ORDER by date;`,

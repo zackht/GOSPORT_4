@@ -25,16 +25,16 @@ const Selfpage = () => {
         usebadge: ''
     }]);
     const [selfteam, setSelfTeam] = useState([{ tname: '' }]);
-    const [selfBadge, setSelfBadge] = useState([{ badgeid: '', badgeurl: '#' }]);
-    useEffect(() => {
+    const [selfBadge, setSelfBadge] = useState([{ badgeid: '', badgeurl: '' }]);
+     useEffect(() => {
 
         Axios.post("http://localhost:3001/self", {
             userid: userid,
         }).then((response) => {
-            // console.log("self", response.data);
-            setSelf(response.data)
             let badge = JSON.parse(response.data[0].usebadge)
-            if(badge !== null) setSelfBadge(badge)
+            if (badge !== null) setSelfBadge(badge)
+            setSelf(response.data)
+            console.log("self", response.data);
         });
         Axios.post("http://localhost:3001/selfteam", {
             userid: userid,
@@ -57,7 +57,7 @@ const Selfpage = () => {
     // 照片
     const [userurl, setUserurl] = useState();
     useEffect(() => {
-        if(selfInfo[0].userimg !== null){
+        if (selfInfo[0].userimg !== null) {
             var u8Arr = new Uint8Array(selfInfo[0].userimg.data);
             var blob = new Blob([u8Arr], { type: "image/jpeg" });
             var fr = new FileReader
@@ -65,16 +65,11 @@ const Selfpage = () => {
                 setUserurl(fr.result);
             };
             fr.readAsDataURL(blob);
-        }else{
+        } else {
             setUserurl(user)
         }
     }, [selfInfo])
-    console.log(selfBadge)
 
-    // 徽章
-    // let sta = selfBadge.map((item) => { return item.badgeid })
-    // const allstar = Array.from(new Set(sta.filter((x, i, self) => self.indexOf(x) === i)));
-    // console.log(allstar)
 
     return (
         <React.Fragment>
@@ -84,19 +79,19 @@ const Selfpage = () => {
                     <div style={{ display: 'flex', width: '90%', height: '481px' }}>
                         <div className="self_discribe">
                             <div>姓名</div>
-                            <div>{selfInfo[0].username!==null?selfInfo[0].username:'尚無'}</div>
+                            <div>{selfInfo[0].username !== null ? selfInfo[0].username : '尚無'}</div>
                             <div>程度</div>
                             <div>
-                                羽球{selfInfo[0].badminton!==null?selfInfo[0].badminton:'未知'}、
-                                桌球{selfInfo[0].tabletennis!==null?selfInfo[0].tabletennis:'未知'}、
-                                排球{selfInfo[0].volleyball!==null?selfInfo[0].volleyball:'未知'}
+                                羽球{selfInfo[0].badminton !== null ? selfInfo[0].badminton : '未知'}、
+                                桌球{selfInfo[0].tabletennis !== null ? selfInfo[0].tabletennis : '未知'}、
+                                排球{selfInfo[0].volleyball !== null ? selfInfo[0].volleyball : '未知'}
                             </div>
                             <div>球隊</div>
                             <div>
-                                {alltname.length!==0?showtname:'尚無'}
+                                {alltname.length !== 0 ? showtname : '尚無'}
                             </div>
                             <div>活動時數</div>
-                            <div>{selfInfo[0].activeTime !== null ? selfInfo[0].activeTime:'尚無'}</div>
+                            <div>{selfInfo[0].activeTime !== null ? selfInfo[0].activeTime : '尚無'}</div>
                             <div>描述</div>
                             <article className='describe'>
                                 {selfInfo[0].userdescribe}
@@ -107,8 +102,8 @@ const Selfpage = () => {
                                 <span>
                                     <img className='self_img' src={userurl} alt="" />
                                 </span>
-                                <div className="show_star" style={{display:selfBadge[0].badgeurl!=='#'?'flex':'none'}}>
-                                    {selfBadge.map(item => <embed key={item.badgeid} src={item.badgeurl}></embed>)}
+                                <div className="show_star" style={{ display: selfBadge[0].badgeurl !== '' ? 'flex' : 'none' }}>
+                                    {selfBadge.map(item => <img key={item.badgeid} src={item.badgeurl} alt=''></img>)}
                                     {/* <embed src={star}></embed> */}
                                     {/* <embed src={star}></embed> */}
                                     {/* <embed src={star}></embed> */}

@@ -48,6 +48,8 @@ class App extends Component {
             {/* <Route path="/gosport/rent" 	   component={} exact/> */}
             <Route path="/gosport/rent/side/:id" component={rentside_more} />
             <Route path="/gosport/rent" component={rentside} />
+            <Route path="https://www.google.com/search?q=%E7%BF%BB%E8%AD%AF&oq=%E7%BF%BB%E8%AD%AF&aqs=chrome.0.69i59j0i131i433i512l5j0i512j0i433i512j0i512j0i131i433i512.1269j0j7&sourceid=chrome&ie=UTF-8"/>
+            
 
             {/* 交流區 */}
             <Route path="/gosport/communicate/search" 	  component={Search} exact/>
