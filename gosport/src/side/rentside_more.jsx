@@ -193,7 +193,7 @@ const Side2 = () => {
     let d = c.getDate();
     settoday(`${y}-${m = (m < 10 ? '0' : '') + m}-${d = (d < 10 ? '0' : '') + d}`);
     //                ex: 2= 2<10?0:''+2 => 02
-    setdate(`${y}-${m = (m < 10 ? '' : '') + m}-${d = (d < 10 ? '0' : '') + d}`);
+    setdate(`${y}-${m = (m < 10 ? '' : '') + m}-${d = (d < 10 ? '' : '') + d}`);
     // 不知道為甚麼m多一個0
   }
   const weekday =
@@ -264,7 +264,7 @@ const Side2 = () => {
         alert('成功');
         setdiv2(!div2);
         sendemail();
-        gopath.push('/gosport/rent/side');
+        gopath.push('/gosport/rent');
       })
     } else {
       Axios.post("http://localhost:3001/rentsideconfirm2", {
@@ -284,7 +284,7 @@ const Side2 = () => {
         alert('成功');
         setdiv2(!div2);
         sendemail();
-        gopath.push('/gosport/rent/side');
+        gopath.push('/gosport/rent');
       })
     }
   }
@@ -487,7 +487,7 @@ const Side2 = () => {
                 <a id="down_link" onClick={changeCanvasToPic}>
                   点击下载
                 </a>
-                <div>
+                <div >
                   <QRCodeSVG
                     id="qrCode"
                     value="https://github.com/zackht/GOSPORT_4"
@@ -560,6 +560,7 @@ const Side2 = () => {
                     size={200}
                     bgColor='#fff'
                     level="H"
+                    
                     // style={{ margin: 'auto' }}
                     // imageSettings={{ // 二维码中间的logo图片
                     //   src:{GOsport},
