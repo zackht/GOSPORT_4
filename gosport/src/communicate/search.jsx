@@ -8,11 +8,14 @@ import Axios from "axios";
 import TeamInfo from "./teaminfo";
 import RentInfo from "./rentinfo";
 import ZeroInfo from "./zeroinfo";
+import { useHistory } from 'react-router-dom';
 
 
 
 
 const Search = () => {
+
+    const aaaa = useHistory();
 
     const tabList = [
         { tabName: "零打", id: 1 },
@@ -451,7 +454,7 @@ const Search = () => {
                 <div style={{ display: isZeroShow }} className={comm.zeroInfo}>
                     {/* <!-- 新增文章 --> */}
                     <div className={comm.addarticle}>
-                        <input type="button" value="新建文章" className={comm.article} />
+                        <input type="button" value="新建文章" className={comm.article} onClick={()=> {aaaa.push('/gosport/communicate/create')}}/>
                     </div>
                     {/* <!-- 標籤按鈕 --> */}
                     {zeroarticle.map((val, key) => {
@@ -549,7 +552,7 @@ const Search = () => {
                 <div style={{ display: isRentShow }} className={comm.rentInfo}>
                     {/* <!-- 新增文章 --> */}
                     <div className={comm.addarticle}>
-                        <input type="button" value="新建文章" className={comm.article} />
+                        <input type="button" value="新建文章" className={comm.article}  onClick={()=>{aaaa.push('/gosport/communicate/createrent')}}/>
                     </div>
                     {/* <!-- 標籤按鈕 --> */}
                     {rentarticle.map((val, key) => {

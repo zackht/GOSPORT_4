@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import com from "./createzero.module.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from "axios";
+import Cookies from 'js-cookie';
 
 
 
 const CreatRent = () => {
 
     //交流零打新增
-    const [useridcrent, setUseridcrent] = useState('');
+    // const [useridcrent, setUseridcrent] = useState('');
     const [fieldnamecrent, setFieldnamecrent] = useState('');
     const [ballgamescrent, setBallgamescrent] = useState('')
     const [countycrent, setCountycrent] = useState('台中')
@@ -24,7 +25,7 @@ const CreatRent = () => {
 
     const rentcreate = () => {
         Axios.post("http://localhost:3001/rentcreate", {
-            useridcrent: useridcrent,
+            useridcrent: Cookies.get('id'),
             fieldnamecrent: fieldnamecrent,
             ballgamescrent: ballgamescrent,
             countycrent: countycrent,
@@ -58,7 +59,7 @@ const CreatRent = () => {
                     <div className={com.addplace}>
                         <label for="add-place" className={com.contenttitle}>場館</label><br />
                         <input type="text" id="add-place" className={com.contentdescribe} onChange={(e) => setFieldnamecrent(e.target.value)} />
-                        <input type="text" onChange={(e) => setUseridcrent(e.target.value)}/>
+                        {/* <input type="text" onChange={(e) => setUseridcrent(e.target.value)}/> */}
                     </div>
                     {/* 球類 */}
                     <div className={com}>
@@ -90,7 +91,7 @@ const CreatRent = () => {
                     {/* <!-- 地址 --> */}
                     <div className={com.addaddress}>
                         <label for="add-address" className={com.contenttitle}>地址</label><br />
-                        <input type="text" id="add-address" className={com.contentdescribe} onChange={(e) => setAddresscrent(e.target.value)} />
+                        <input type="text" id="add-address" className={com.contentdescribe1} onChange={(e) => setAddresscrent(e.target.value)} />
                     </div>
                     {/* <!-- 日期 --> */}
                     <div className={com.adddate}>

@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import com from "./createzero.module.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from "axios";
+import Cookies from 'js-cookie';
 
 const Create = () => {
 
     //交流零打新增
-    const [useridczero, setUseridczero] = useState('');
+    // const [useridczero, setUseridczero] = useState('');
     const [fieldnameczero, setFieldnameczero] = useState('');
     const [ballgamesczero, setBallgamesczero] = useState('')
     const [countyczero, setCountyczero] = useState('台中')
@@ -23,7 +24,7 @@ const Create = () => {
 
     const zerocreate = () => {
         Axios.post("http://localhost:3001/zerocreate", {
-            useridczero: useridczero,
+            useridczero: Cookies.get('id'),
             fieldnameczero: fieldnameczero,
             ballgamesczero: ballgamesczero,
             countyczero: countyczero,
@@ -91,7 +92,7 @@ const Create = () => {
                     {/* <!-- 地址 --> */}
                     <div className={com.addaddress}>
                         <label for="add-address" className={com.contenttitle}>地址</label><br />
-                        <input type="text" id="add-address" className={com.contentdescribe} onChange={(e) => setAddressczero(e.target.value)} />
+                        <input type="text" id="add-address" className={com.contentdescribe1} onChange={(e) => setAddressczero(e.target.value)} />
                     </div>
                     {/* <!-- 日期 --> */}
                     <div className={com.adddate}>
