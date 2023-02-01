@@ -41,6 +41,7 @@ const CreatRent = () => {
         }).then((response) => {
             console.log(response);
             // setZeroarticle(response.data);
+            alert("新增成功");
         })
     }
 
