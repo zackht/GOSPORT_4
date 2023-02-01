@@ -287,8 +287,8 @@ let transporter = nodemailer.createTransport({
   port: 465,
   secure: true, // true for 465, false for other ports
   auth: {
-      user: 'jeff50000123@gmail.com', // generated ethereal user
-      pass: 'igyauxwqvdszywlf'  // generated ethereal password
+      user: 'jeff50000123@gmail.com', // gmail
+      pass: 'igyauxwqvdszywlf'  // gmail 的SMTP授權碼
   }
 });
 app.post("/sendemail", (req, res) => {
@@ -304,13 +304,14 @@ app.post("/sendemail", (req, res) => {
     subject: '測試測試', // Subject line
     //嵌入 html 的內文
     html: `Hello ${username} <h1>場地預定成功 </h1>
-    <img src='qqrrcode' alt="" />`
+    <img src=':cid:qqrrcode' alt="" />`
     ,
-    attachments: [{
-      filename: 'gosport.png',
-      path: './gosport.png',
-      cid: 'qqrrcode' //same cid value as in the html img src
-  }] 
+    //復健檔案
+  //   attachments: [{
+  //     filename: 'gosport.png',//檔案名稱
+  //     path: './gosport.png',//檔案路徑
+  //     cid: 'qqrrcode' //same cid value as in the html img src
+  // }] 
   };
   transporter.sendMail(options, function(error, info){
     if(error){
