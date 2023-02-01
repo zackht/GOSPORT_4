@@ -139,6 +139,70 @@ const Rentside = () => {
             return userlist1[key];
         }
     }
+    const [tt,settt]=useState(false);
+    const change =()=>{
+        settt(!tt);
+        if(xyz==='離峰'){
+            console.log(tt);
+                Axios.post("http://localhost:3001/rentside2", {
+                type: type,
+                starttime: starttime,
+                endtime: endtime,
+                startdate: startdate,
+                enddate: enddate,
+                county: county,
+                area: area,
+                text: text,
+                park: park,
+                bath: bath,
+                baulk: baulk,
+                tt:tt,
+            }).then((response) => {
+                console.log(response);
+                setsidelist(response.data);
+                for (let i = 0; i < response.data.length; i++) {
+                    var u8Arr = new Uint8Array(response.data[i].sideimg.data);
+                    var blob = new Blob([u8Arr], { type: "image/jpeg" });
+                    var fr = new FileReader;
+                    fr.readAsDataURL(blob);
+                    fr.onload = function (e) {
+                        userlist1.push(e.target.result);
+                    };
+                }
+            });
+            setuserlist(userlist1);
+        }else{
+                Axios.post("http://localhost:3001/rentside3", {
+                type: type,
+                starttime: starttime,
+                endtime: endtime,
+                startdate: startdate,
+                enddate: enddate,
+                county: county,
+                area: area,
+                text: text,
+                park: park,
+                bath: bath,
+                baulk: baulk,
+                tt:tt,
+            }).then((response) => {
+                console.log(response);
+                setsidelist(response.data);
+                for (let i = 0; i < response.data.length; i++) {
+                    var u8Arr = new Uint8Array(response.data[i].sideimg.data);
+                    var blob = new Blob([u8Arr], { type: "image/jpeg" });
+                    var fr = new FileReader;
+                    fr.readAsDataURL(blob);
+                    fr.onload = function (e) {
+                        userlist1.push(e.target.result);
+                    };
+                }
+            });
+            setuserlist(userlist1);
+        }
+        
+    }
+    const [xyz,setxyz]=useState('');
     return (
         <React.Fragment>
             <div className={side.div7}>
@@ -166,7 +230,6 @@ const Rentside = () => {
                                     {Taichung.map((val, key) => {
                                         return (<option key={key} value={val}>{val}</option>);
                                     })}
-
                                 </select>
 
                             </div>
@@ -266,8 +329,19 @@ const Rentside = () => {
 
                     </div>
                     <div class="d-flex ml-auto">
-                        <div class={side.typecol}>價格由低到高
-                            <img src={a5} alt="" />
+                        <div className={side.div16}>
+                            <img src={arr} alt="" className={side.div15}/>
+                            <select name="" id="" className={side.div14} onChange={(e)=>{setxyz(e.target.value)}}>
+                                <option value="離峰">離峰</option>
+                                <option value="尖峰">尖峰</option>
+                            </select>
+                        </div>
+                        <div onClick={change}>
+                            {tt?<div class={side.typecol}>價格由低到高
+                            <img src={arr} alt=""  className={side.typecolimg}/>
+                        </div>:<div class={side.typecol}>價格由高到低
+                            <img src={arr} alt="" className={side.typecolimg}/>
+                        </div>}
                         </div>
                     </div>
                 </div>
