@@ -36,17 +36,11 @@ const io = new Server(server, {
   }
 })
 //建立連線
-<<<<<<< HEAD
-var owndata = [{ message: "1" }]
-var datas = [
-  { message: "2" }, { username: [0].username }
-=======
 var owndata = [
 
 ]
 var datas = [
 
->>>>>>> d45fbb8dbad514f3ce3e604239ac4aaeb6ccafd2
 ]
 io.on("connection", (socket) => {
 
@@ -366,29 +360,6 @@ app.post("/rentside", (req, res) => {
   const park = `${req.body.park}`;
   const bath = `${req.body.bath}`;
   const baulk = `${req.body.baulk}`;
-<<<<<<< HEAD
-  console.log(type);
-  console.log(starttime);
-  console.log(endtime);
-  console.log(startdate);
-  console.log(enddate);
-  console.log(county);
-  console.log(area);
-  console.log(bath);
-  console.log(park);
-  console.log(baulk);
-  console.log(text);
-  db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
-  weekstarttime BETWEEN  ? AND ? AND county =? AND area =? AND (sidename LIKE ? OR adress LIKE ?)`
-    // AND bath = ? AND park=? AND baulk=?`
-    , [startdate, enddate, type, starttime, endtime, county, area, text, text], (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
-=======
   if (area === '不限') {
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?)`
@@ -448,7 +419,6 @@ app.post("/rentside2", (req, res) => {
         }
       });
   }
->>>>>>> d45fbb8dbad514f3ce3e604239ac4aaeb6ccafd2
 });
 // 租場地查看更多
 app.post("/rentsideedit", (req, res) => {
@@ -660,10 +630,7 @@ app.post("/teamupdate", upload.single('teamfile'), (req, res) => {
   const teampay = req.body.teampay;
   const teamtext = req.body.teamtext;
   const teameventid = req.body.teameventid;
-<<<<<<< HEAD
-=======
   console.log(`${teamtitle}`);
->>>>>>> d45fbb8dbad514f3ce3e604239ac4aaeb6ccafd2
   db.query("UPDATE teamevent SET startdate =?,enddate=?,starttime =?,endtime=?,type=?, title =?,location=?,pay=?,text=?,teameventimg=?  where teameventid=?"
     , [teamstartdate, teamenddate, teamstarttime, teamendtime, teamtype2, teamtitle, teamlocation, teampay, teamtext, req.file.buffer, teameventid], (err, result) => {
       if (err) {
@@ -674,11 +641,7 @@ app.post("/teamupdate", upload.single('teamfile'), (req, res) => {
     });
 });
 // 後臺球隊編輯儲存   沒圖片
-<<<<<<< HEAD
-app.post("/teamupdate2", (req, res) => {
-=======
 app.post("/teamupdate2", upload.array(), (req, res) => {
->>>>>>> d45fbb8dbad514f3ce3e604239ac4aaeb6ccafd2
   const teamstartdate = req.body.teamstartdate;
   const teamenddate = req.body.teamenddate;
   const teamstarttime = req.body.teamstarttime;
@@ -730,11 +693,7 @@ app.post("/rent", (req, res) => {
   const rentselectarea = req.body.rentselectarea;
   const fieldname = req.body.fieldname;
   if (fieldname == '' && renttime && renttime1) {
-<<<<<<< HEAD
-    db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =?"
-=======
     db.query("SELECT * FROM userarticle_sublet where startdate BETWEEN ? AND ? AND area = ? AND county =?"
->>>>>>> d45fbb8dbad514f3ce3e604239ac4aaeb6ccafd2
       , [renttime, renttime1, rentselectarea, rentselectcounty], (err, result) => {
         if (err) {
           console.log(err);
@@ -743,11 +702,7 @@ app.post("/rent", (req, res) => {
         }
       });
   } else if (fieldname && renttime && renttime1) {
-<<<<<<< HEAD
-    db.query("SELECT * FROM userarticle_sublet where date BETWEEN ? AND ? AND area = ? AND county =? AND fieldname LIKE ?"
-=======
     db.query("SELECT * FROM userarticle_sublet where startdate BETWEEN ? AND ? AND area = ? AND county =? AND fieldname LIKE ?"
->>>>>>> d45fbb8dbad514f3ce3e604239ac4aaeb6ccafd2
       , [renttime, renttime1, rentselectarea, rentselectcounty, fieldname], (err, result) => {
         if (err) {
           console.log(err);
@@ -829,18 +784,9 @@ app.post("/backsidesearch", (req, res) => {
   }
 });
 // 後臺場地編輯畫面
-<<<<<<< HEAD
-app.post("/backsideedit ", (req, res) => {
-  const sideid = req.body.sideid;
-  db.query(`SELECT * FROM (side inner join sidedevice 
-    on side.sideid = sidedevice.sideid AND side.sideid=?) inner JOIN
-    sidetime 
-    on side.sideid = sidetime.sideid AND side.sideid=?`
-=======
 app.post("/backsideedit", (req, res) => {
   const sideid = req.body.sideid;
   db.query(`SELECT * FROM side where sideid = ?`
->>>>>>> d45fbb8dbad514f3ce3e604239ac4aaeb6ccafd2
     , [sideid, sideid]
     , (err, result) => {
       if (err) {
@@ -1061,13 +1007,8 @@ app.post("/selfalterwithoutpic", upload.array(), (req, res) => {
   const volleyball = req.body.volleyball;
   const usebadge = req.body.usebadge;
   const userId = req.body.userid;
-<<<<<<< HEAD
-  db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? WHERE `userid`= ?",
-    [email, password, username, tel, userdescribe, badminton, tabletennis, volleyball, userId], (err, result) => {
-=======
   db.query(" UPDATE `user` SET `email`= ? ,`password`= ? ,`username`= ? ,`tel`= ? ,`userdescribe`= ? ,`badminton`= ? ,`tabletennis`= ? ,`volleyball`= ? ,`usebadge`= ? WHERE `userid`= ?",
     [email, password, username, tel, userdescribe, badminton, tabletennis, volleyball, usebadge, userId], (err, result) => {
->>>>>>> d45fbb8dbad514f3ce3e604239ac4aaeb6ccafd2
       if (err) {
         console.log(err);
       } else {
@@ -1193,8 +1134,6 @@ app.post("/followzeroda", (req, res) => {
         res.send(result);
       }
     });
-<<<<<<< HEAD
-=======
 });
 //拒絕零打報名人
 app.post("/delefollowzeroda", (req, res) => {
@@ -1208,7 +1147,6 @@ app.post("/delefollowzeroda", (req, res) => {
         res.send(result);
       }
     });
->>>>>>> d45fbb8dbad514f3ce3e604239ac4aaeb6ccafd2
 });
 //會員轉租文章搜尋
 app.post("/findsub", (req, res) => {
@@ -1446,11 +1384,7 @@ app.post('/basicsearch', (req, res) => {
   );
 });
 
-<<<<<<< HEAD
-// 芝｜Basic 更新 有圖
-=======
 // 芝｜Basic 設定球隊資料-1 有圖
->>>>>>> d45fbb8dbad514f3ce3e604239ac4aaeb6ccafd2
 app.post("/basicupdate", upload.single('teamfile'), (req, res) => {
   const tname = req.body.tname;
   const sidename = req.body.sidename;
@@ -1502,11 +1436,7 @@ app.post("/basicupdate2", upload.array(), (req, res) => {
     });
 });
 
-<<<<<<< HEAD
-// 芝｜Member 抓隊長img
-=======
 // 芝｜Member 查找球隊隊長
->>>>>>> d45fbb8dbad514f3ce3e604239ac4aaeb6ccafd2
 app.post('/teamleader', (req, res) => {
   const teamid = req.body.teamid;
   db.query(
@@ -1519,19 +1449,6 @@ app.post('/teamleader', (req, res) => {
         console.log(err);
       } else {
         res.send(result);
-<<<<<<< HEAD
-      }
-    }
-  );
-});
-// 芝｜Member 抓成員img
-app.post('/teammember', (req, res) => {
-  const teamid = req.body.teamid;
-  db.query(
-    `SELECT user.userid,userimg
-        FROM teamuser,user
-        where user.userid = teamuser.userid and teamid=?;`,
-=======
       }
     }
   );
@@ -1563,7 +1480,6 @@ app.post('/teammember', (req, res) => {
     FROM teampendinguser,user,team
     where teampendinguser.userid = user.userid and teampendinguser.teamid=team.teamid and teampendinguser.teamid=?
     order by addtime;`,
->>>>>>> d45fbb8dbad514f3ce3e604239ac4aaeb6ccafd2
     [teamid],
     (err, result) => {
       if (err) {
@@ -1573,69 +1489,6 @@ app.post('/teammember', (req, res) => {
       }
     }
   );
-<<<<<<< HEAD
-});
-// 芝｜Member 抓 未審核成員img
-app.post('/teampendingimg', (req, res) => {
-  const teamid = req.body.teamid;
-  db.query(
-    `SELECT teampendinguser.userid,userimg,username,type as 'teamtype',badminton,tabletennis,volleyball
-          FROM teampendinguser,user,team
-          where teampendinguser.userid = user.userid and teampendinguser.teamid=1
-          ORDER BY teampendinguser.userid;`,
-    [teamid],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    }
-  );
-});
-
-// 芝｜Member 拒絕 未審核成員
-app.post('/teampendingreject', (req, res) => {
-  const teamid = req.body.teamid;
-  const userid = req.body.userid;
-  db.query(
-    `SELECT teampendinguser.userid,userimg,username,type as 'teamtype',badminton,tabletennis,volleyball
-          FROM teampendinguser,user,team
-          where teampendinguser.userid = user.userid and teampendinguser.teamid=1
-          ORDER BY teampendinguser.userid;`,
-    [teamid],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    }
-  );
-});
-
-// 芝｜Pay 依日期區間 搜尋文章
-app.post('/teamdate', (req, res) => {
-  const pathend = req.body.pathend;
-  const userid = req.body.userid;
-  const teamid = req.body.teamid;
-  const startdate = req.body.startdate;
-  const enddate = req.body.enddate;
-  db.query(
-    `SELECT date 
-          FROM ?
-          WHERE date BETWEEN ? AND ? AND userid=? and teamid=?`,
-    [pathend, startdate, enddate, userid, teamid],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    }
-  );
-});
-=======
   });
 
   // 芝｜Member 拒絕未審核成員
@@ -1918,7 +1771,6 @@ app.post('/deletemember', (req, res) => {
     );
   });
     
->>>>>>> d45fbb8dbad514f3ce3e604239ac4aaeb6ccafd2
 
 //------------------
 // 交流零打搜尋
