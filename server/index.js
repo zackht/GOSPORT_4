@@ -310,17 +310,33 @@ app.post("/sendemail", (req, res) => {
     //收件者
     to: email, 
     //主旨
-    subject: '測試測試', // Subject line
+    subject: 'GOsport', // Subject line
     //嵌入 html 的內文
-    html: `Hello ${username} <h1>場地預定成功 </h1>
-    <img src=':cid:qqrrcode' alt="" />`
+    html: `<img src="cid:img2" alt="" /><p>Hello ${username}</p> <h1>場地預定成功 </h1>
+    <img src="cid:img3" alt="" />`
+    // <img src="cid:qqrrcode" alt="" />
     ,
-    //復健檔案
-  //   attachments: [{
-  //     filename: 'gosport.png',//檔案名稱
-  //     path: './gosport.png',//檔案路徑
-  //     cid: 'qqrrcode' //same cid value as in the html img src
-  // }] 
+  //   復健檔案
+    attachments: [
+      // {
+      // //固定的qrcode 
+      // filename: 'gosport.png',//檔案名稱
+      // path: './gosport.png',//檔案路徑
+      // cid: 'qqrrcode' //same cid value as in the html img src
+      // },
+      {
+        // 動態qrcode
+      filename: 'qrcode.png',//檔案名稱
+      path: src,//檔案路徑
+      cid: 'img3' //same cid value as in the html img src
+      },
+      {
+      // logo圖案
+      filename: 'GOsport2.png',//檔案名稱
+      path: './GOsport2.png',//檔案路徑
+      cid: 'img2' //same cid value as in the html img src
+  }
+] 
   };
   transporter.sendMail(options, function(error, info){
     if(error){
