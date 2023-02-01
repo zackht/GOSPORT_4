@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import Axios from "axios";
-import './req.css';
+import vv from './req.module.css';
 import Cookies from 'js-cookie';
-// import GoogleLogin from "react-google-login";
+import GoogleLogin from "react-google-login";
 const Client = () => {
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
@@ -155,8 +155,12 @@ const Client = () => {
     const responseGoogle = (response) => {
         console.log(response);
         }
+        const [iid,setiid]=useState(false);
+        const ooo=()=>{
+            setiid(!iid);
+        }
     return (
-        <div className='aaaaa'>
+        <div className={vv.aaaaa}>
             <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com"></meta>
 
             {/* 會員註冊 */}
@@ -193,23 +197,26 @@ const Client = () => {
             {logout ? <div onClick={logout2}>登出</div> : <div onClick={change}>登入</div>}
             <button onClick={test}>測試</button>
             {/* 彈出視窗 */}
-            <div className='aadiv1' style={{ display: (logindiv) ? 'block' : 'none' }}>
+            <div className={vv.aadiv1} style={{ display: (logindiv) ? 'block' : 'none' }}>
                 <div className='aadiv2'>
                     帳號<input type="text" onChange={(e) => { setac(e.target.value) }} ref={acinput} /> <br />
                     密碼<input type="text" onChange={(e) => { setpw(e.target.value) }} ref={pwinput} /> <br />
                     <h3>{bb}</h3>
                     <button onClick={change}>取消</button>
                     <button onClick={login}>登入</button>
-                    {/* <GoogleLogin
+                    <GoogleLogin
                         clientId="242513557303-7c0flfi7ljjmkdvqef4ivfc7ge0qfuho.apps.googleusercontent.com"
                         buttonText="使用 GOOGLE 登入"
                         onSuccess={responseGoogle}
                         onFailure={responseGoogle}
                         cookiePolicy={'single_host_origin'}
-                    /> */}
+                    />
                 </div>
             </div>
+            <button onClick={ooo}>換</button>
+            <div className={iid?vv.a:vv.b}>
 
+            </div>
         </div>
     );
 }
