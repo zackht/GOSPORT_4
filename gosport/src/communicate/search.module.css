@@ -9,9 +9,10 @@ body {
 
 .searchbox {
     background-color: white;
-    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
     display: block;
-    width: 1060px;
+    width: 1350px;
+    height: 450px;
     /* border: #777 1px solid; */
     position: relative;
     margin: 220px auto 1% auto; 
@@ -48,11 +49,11 @@ body {
     justify-content: center;
 }
 
-.tablink {
+/* .tablink {
     color: black;
     float: left;
     outline: none;
-}
+} */
 
 /* 
 .tablink:hover {
@@ -65,11 +66,51 @@ body {
     text-align: center;
 } */
 
+.type1 {
+    font-size: 1.2rem;
+    color: #aaaaaa;
+    margin-top: 20px;
+}
+
+.ballimg {
+    width: 80px;
+}
+
+.teamteamimgimg {
+    width: 60px;
+    margin-top: 15px;
+    margin-left: 40px;
+}
+
+.img {
+    margin-left: 50px;
+    margin-top: 30px;
+}
+
+.ballselect {
+    font-size: 1.5rem;
+    margin-left: 40px;
+    margin-top: 20px;
+}
+
+.teamselect {
+    margin-top: 15px;
+    margin-left: 35px;
+}
+
+.labeltitle {
+    font-size: 1.2rem;
+    color: #888888;
+}
+
+.inputcontent {
+    font-size: 1.5rem;
+}
+
 .type {
     width: 200px;
     left: 50px;
     display: block;
-    /* float: left; */
 }
 
 .data {
@@ -79,7 +120,7 @@ body {
 .time {
     display: flex;
     flex-direction: row;
-    /* margin-left: 200px; */
+    margin-top: 30px;
 }
 
 .time>div {
@@ -89,7 +130,7 @@ body {
 .place {
     display: flex;
     flex-direction: row;
-    margin-top: 50px;
+    margin-top: 40px;
 }
 
 .place>div {
@@ -110,7 +151,7 @@ body {
 .addarticle {
     position: absolute;
     left: 190px;
-    top: 420px;
+    top: 470px;
 }
 
 .article {
@@ -126,7 +167,7 @@ body {
 .addrelated {
     position: absolute;
     left: 190px;
-    top: 500px;
+    top: 550px;
 }
 
 .related {
@@ -148,7 +189,7 @@ body {
 
 .articlelist {
     position: absolute;
-    top: 535px;
+    top: 595px;
 }
 
 .articlecontent {
@@ -158,7 +199,7 @@ body {
     margin-top: 20px;
     overflow: scroll;
     background-color: white;
-    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
     padding: auto 10px;
 }
 
@@ -168,12 +209,20 @@ body {
 }
 
 .areacity {
-    display: flex;
+    display: block;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+
+.countyarea {
+    display: block;
+    margin-top: 20px;
+    margin-left: 30px;
 }
 
 .searchtext {
     margin-left: 50px;
-    margin-top: 10px;
+    margin-top: 40px;
 }
 
 .textsearch {
@@ -249,14 +298,27 @@ body {
     /* text-decoration: underline; */
 }
 
-.imggg {
+.imgimgimg {
     overflow: hidden;
     width: 325px;
     height: 145px;
 }
 
+.zerodiv {
+    position: absolute;
+    top: 1000px;
+}
 
+.rentdiv {
+    position: absolute;
+    top:1050px;
+}
 
+.teamteaminfo {
+    position: absolute;
+    top: 1050px;
+    left: 160px;
+}
 
 
 

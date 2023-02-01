@@ -193,6 +193,15 @@ app.post('/create1', (req, res) => {
     }
   );
 })
+app.post("/create2", (req, res) => {
+  db.query("SELECT email FROM user", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
 app.post('/sigh', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -287,8 +296,8 @@ let transporter = nodemailer.createTransport({
   port: 465,
   secure: true, // true for 465, false for other ports
   auth: {
-      user: 'jeff50000123@gmail.com', // generated ethereal user
-      pass: 'igyauxwqvdszywlf'  // generated ethereal password
+      user: 'jeff50000123@gmail.com', // gmail
+      pass: 'igyauxwqvdszywlf'  // gmail 的SMTP授權碼
   }
 });
 app.post("/sendemail", (req, res) => {
@@ -301,16 +310,33 @@ app.post("/sendemail", (req, res) => {
     //收件者
     to: email, 
     //主旨
-    subject: '測試測試', // Subject line
+    subject: 'GOsport', // Subject line
     //嵌入 html 的內文
-    html: `Hello ${username} <h1>場地預定成功 </h1>
-    <img src='qqrrcode' alt="" />`
+    html: `<img src="cid:img2" alt="" /><p>Hello ${username}</p> <h1>場地預定成功 </h1>
+    <img src="cid:img3" alt="" />`
+    // <img src="cid:qqrrcode" alt="" />
     ,
-    attachments: [{
-      filename: 'gosport.png',
-      path: './gosport.png',
-      cid: 'qqrrcode' //same cid value as in the html img src
-  }] 
+  //   復健檔案
+    attachments: [
+      // {
+      // //固定的qrcode 
+      // filename: 'gosport.png',//檔案名稱
+      // path: './gosport.png',//檔案路徑
+      // cid: 'qqrrcode' //same cid value as in the html img src
+      // },
+      {
+        // 動態qrcode
+      filename: 'qrcode.png',//檔案名稱
+      path: src,//檔案路徑
+      cid: 'img3' //same cid value as in the html img src
+      },
+      {
+      // logo圖案
+      filename: 'GOsport2.png',//檔案名稱
+      path: './GOsport2.png',//檔案路徑
+      cid: 'img2' //same cid value as in the html img src
+  }
+] 
   };
   transporter.sendMail(options, function(error, info){
     if(error){
@@ -1842,8 +1868,8 @@ app.post('/teamsearch', (req, res) => {
   if (tnameteam == "") {
     db.query(
       `SELECT * FROM team
-    WHERE type = ? AND county = ? AND area = ? AND week = ?
-    AND starttime >= ? AND endtime <= ? AND fee < ? AND level = ?`,
+      WHERE type = ? AND county = ? AND area = ? AND week = ?
+      AND starttime >= ? AND endtime <= ? AND fee < ? AND level = ?`,
       [ballgamesteam, countyteam, areateam, weekteam, starttimeteam, endtimeteam, costteam, levelteam],
       (err, result) => {
         if (err) {
@@ -1951,3 +1977,19 @@ app.post("/teaminfo", (req, res) => {
   });
 });
 
+//球隊活動
+app.post('/teamactivity', (req, res) => {
+  const teamactivityteamid = req.body.teamactivityteamid;
+  db.query(
+    `SELECT * FROM teamevent 
+  WHERE teamid = ?`,
+    [teamactivityteamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+})
