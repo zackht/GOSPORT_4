@@ -1,21 +1,22 @@
-import React,{useEffect, useState} from 'react';
+import React from 'react';
 import zzz from './zeroinfo.module.css'
 import star from './icon/star.svg';
 import leader from './icon/Ellipse.svg';
-import axios from 'axios';
+// import axios from 'axios';
 // import { response } from 'express';
 
-const Rentinfo = () => {
+const Rentinfo = ({datarent}) => {
+    console.log(datarent);
 
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
 
-    useEffect(() => {
-        axios.get("http://localhost:3001/rentsearch")
-        .then(response => {
-            setData(data);
-            console.log(response.data)
-        })
-    },[])
+    // useEffect(() => {
+    //     axios.get("http://localhost:3001/rentsearch")
+    //     .then(response => {
+    //         setData(data);
+    //         console.log(response.data)
+    //     })
+    // },[])
 
 
     return (
@@ -27,23 +28,24 @@ const Rentinfo = () => {
                         <button className={zzz.jjoinbutton}>承租</button>
                     </div>
                     <div className={zzz.zerouser}>
-                        <h3>鐵血軍團</h3>
+                        <h3>{datarent.username}</h3>
                     </div>
                     <div className={zzz.fieldname}>
                         <label htmlFor="place" className={zzz.title}>場館</label><br />
-                        <input type="text" name="place" value="群月羽球館" className={zzz.iiinput} />
+                        <input type="text" name="place" value={datarent.fieldname} className={zzz.iiinput} />
                     </div>
                     <div className={zzz.address}>
                         <label htmlFor="addresss" className={zzz.title}>地址</label><br />
-                        <input type="text" name="addresss" value="台中市南屯區" className={zzz.iiinput} />
+                        <input type="text" name="addresss" value={datarent.address} className={zzz.iiinput} />
                     </div>
                     <div className={zzz.date}>
                         <label htmlFor="dateee" className={zzz.title}>日期</label><br />
-                        <input type="text" name="dateee" value="2022-12-25" className={zzz.iiinput} />
+                        <input type="text" name="dateee" value={datarent.startdate} className={zzz.iiinput} />
                     </div>
                     <div className={zzz.time}>
                         <label htmlFor="timeee" className={zzz.title}>時段</label><br />
-                        <input type="text" name="timeee" value="09:00-12:00" className={zzz.iiinput} />
+                        {/* <input type="text" name="timeee" value="09:00-12:00" className={zzz.iiinput} /> */}
+                        <span className={zzz.iiinput}>{datarent.starttime}:00-{datarent.endtime}:00</span>
                     </div>
                     {/* <div className={zzz.levell}>
                         <label htmlFor="levelll" className={zzz.title}>程度</label><br />
@@ -51,15 +53,15 @@ const Rentinfo = () => {
                     </div> */}
                     <div className={zzz.number}>
                         <label htmlFor="numberrr" className={zzz.title}>數量</label><br />
-                        <input type="text" name="numberrr" value="2" className={zzz.iiinput} />
+                        <input type="text" name="numberrr" value={datarent.amount} className={zzz.iiinput} />
                     </div>
                     <div className={zzz.cost}>
                         <label htmlFor="costtt" className={zzz.title}>費用</label><br />
-                        <input type="text" name="costtt" value="200" className={zzz.iiinput} />
+                        <input type="text" name="costtt" value={datarent.cost} className={zzz.iiinput} />
                     </div>
                     <div className={zzz.describe}>
                         <label htmlFor="describeee" className={zzz.title}>描述</label><br />
-                        <input type="text" name="describeee" value="來打球哦" className={zzz.iiinput} />
+                        <input type="text" name="describeee" value={datarent.content} className={zzz.iiinput} />
                     </div>
                 </div>
                 <div className={zzz.message}>

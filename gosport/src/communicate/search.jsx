@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-// import "./nav.css";
 import comm from "./search.module.css";
-// import notice from './icon/notice.svg';
-// import user from './icon/user.svg';
-// import cc from './icon/Rect.svg';
 import badminton from './icon/badminton.svg';
+// import basketball from './icon/basketball.svg';
+// import table from './icon/table.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from "axios";
+import TeamInfo from "./teaminfo";
+import RentInfo from "./rentinfo";
+import ZeroInfo from "./zeroinfo";
 
 
 
@@ -34,8 +35,6 @@ const Search = () => {
     // var showModal = modaltoggle ? 'flex' : 'none';
 
     //零打搜尋
-    // let dt = new Date();
-    // console.log(typeof dt.getMonth());
     const [ballgameszero, setBallgameszero] = useState('');
     const [startdatezero, setStartdatezero] = useState('');
     const [enddatezero, setEnddatezero] = useState('');
@@ -130,7 +129,7 @@ const Search = () => {
             for (let i = 0; i < response.data.length; i++) {
                 var u8Arr = new Uint8Array(response.data[i].teamimg.data);
                 var blob = new Blob([u8Arr], { type: "image/jpeg" });
-                var fr = new FileReader;
+                var fr = new FileReader();
                 fr.readAsDataURL(blob);
                 fr.onload = function (e) {
                     userlist1.push(e.target.result);
@@ -150,6 +149,47 @@ const Search = () => {
         }
     }
 
+    const [datateam, setDateteam] = useState({});
+    const [teamactivityteamid, setTeamactivityteamid] = useState();
+    const [activityinfo, setActivity] = useState([])
+    const [articleteamdiv, setArticleteamdiv] = useState(false);
+    const opendatateam = (index) => {
+        setDateteam(teaminfo[index]);
+        // console.log(datateam)
+        setTeamactivityteamid(teaminfo[index].teamid);
+        console.log(teamactivityteamid)
+        Axios.post("http://localhost:3001/teamactivity", {
+            teamactivityteamid: teamactivityteamid,
+            // activityinfo: activityinfo,
+        }).then((response) => {
+            console.log(response);
+            // setTeamactivityteamid(teaminfo[index].teamid);
+            // console.log(teaminfo[index])
+            setActivity(response.data);
+            console.log(response.data);
+        })
+        setArticleteamdiv(!false);
+    }
+    const Teamarticlediv = articleteamdiv === true ? 'block' : 'none';
+
+
+    const [datazero, setDatazero] = useState({});
+    const [articlediv, setArticlediv] = useState(false);
+    const opendatazero = (index) => {
+        setDatazero(zeroarticle[index]);
+        setArticlediv(!false);
+    }
+    const Zeroarticlediv = articlediv === true ? 'block' : 'none';
+
+    const [datarent, setDatarent] = useState({});
+    const [articlerentdiv, setArticlerentdiv] = useState(false);
+    const opendatarent = (index) => {
+        setDatarent(rentarticle[index]);
+        setArticlerentdiv(!false);
+    }
+    const Rentarticlediv = articlerentdiv === true ? 'block' : 'none';
+
+
     // console.log(val.teamimg);
     const time = [
         '0:00', '1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '0:00'
@@ -158,9 +198,10 @@ const Search = () => {
         "中區", "東區", "西區", "南區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "清水區", "沙鹿區", "大甲區", "東勢區", "梧棲區", "烏日區", "神岡區", "大肚區", "大雅區", "后里區", "霧峰區", "潭子區", "龍井區", "外埔區", "和平區", "石岡區", "大安區", "新社區"
     ];
 
+
     return (
         <React.Fragment>
-            <div className={comm.contentcontent}>
+            <div className={comm.contentcontent}  >
                 {/* 搜尋匡 */}
                 <div className={comm.searchbox}>
                     <div className={comm.active_type} >
@@ -175,10 +216,12 @@ const Search = () => {
                             {/* <!-- 運動類別 --> */}
                             <div className={`col-3 row ${comm.type}`}>
                                 <div className={comm.type1}>類別</div> <br />
-                                <div className={comm.img}><img src={badminton} alt="" /></div> <br />
+                                <div className={comm.img}><img src={badminton} alt=""  className={comm.ballimg}/></div> <br />
                                 <div>
-                                    <select onChange={(e) => setBallgameszero(e.target.value)}>
-                                        <option value="羽球">羽球</option>
+                                    <select onChange={(e) => setBallgameszero(e.target.value)} className={comm.ballselect}>
+                                        <option value="羽球">
+                                            羽球
+                                        </option>
                                         <option value="籃球">籃球</option>
                                     </select>
                                 </div>
@@ -188,48 +231,48 @@ const Search = () => {
                                 {/* <!-- 上層 --> */}
                                 <div className={comm.time}>
                                     <div className={comm.date}>
-                                        <label htmlFor="start_d_input">時間</label><br />
-                                        <input name="start_d_input" type="date" onChange={(e) => setStartdatezero(e.target.value)} /><img className={comm.selectedDate} alt="" />至
-                                        <input name="start_d_input" type="date" onChange={(e) => setEnddatezero(e.target.value)} /><img className={comm.selectedDate} alt="" />
+                                        <label htmlFor="start_d_input" className={comm.labeltitle}>時間</label><br />
+                                        <input name="start_d_input" type="date" onChange={(e) => setStartdatezero(e.target.value)} className={comm.inputcontent} /><img className={comm.selectedDate} alt="" />至
+                                        <input name="start_d_input" type="date" onChange={(e) => setEnddatezero(e.target.value)} className={comm.inputcontent} /><img className={comm.selectedDate} alt="" />
                                     </div>
                                     <div className={comm.datatime}>
-                                        <label htmlFor="">時段</label><br />
-                                        <select onChange={(e) => setStarttimezero(e.target.value)}>
+                                        <label htmlFor="" className={comm.labeltitle}>時段</label><br />
+                                        <select onChange={(e) => setStarttimezero(e.target.value)} className={comm.inputcontent} >
                                             {time.map((val, key) => {
                                                 return (<option key={key} value={key + 1}>{val}</option>);
                                             })}
                                         </select>
                                         至
-                                        <select onChange={(e) => setEndtimezero(e.target.value)}>
+                                        <select onChange={(e) => setEndtimezero(e.target.value)} className={comm.inputcontent} >
                                             {time.map((val, key) => {
                                                 return (<option key={key} value={key + 1}>{val}</option>);
                                             })}
                                         </select>
                                     </div>
                                     <div className={comm.fee}>
-                                        <label htmlFor="fee_input">費用上限</label><br />
-                                        <input type="number" name="fee_input" onChange={(e) => setCostzero(e.target.value)} />
+                                        <label htmlFor="fee_input" className={comm.labeltitle}>費用上限</label><br />
+                                        <input type="number" name="fee_input" onChange={(e) => setCostzero(e.target.value)} className={comm.inputcontent} />
                                     </div>
                                 </div>
                                 {/* <!-- 下層 --> */}
                                 <div className={comm.place}>
                                     <div className={comm.cityname1}>
-                                        <h5>縣市</h5>
-                                        <select style={{ width: '150px' }} onChange={(e) => setCountyzero(e.target.value)}>
+                                        <h5 className={comm.labeltitle}>縣市</h5>
+                                        <select style={{ width: '150px' }} onChange={(e) => setCountyzero(e.target.value)} className={comm.inputcontent} >
                                             <option value="台中">台中</option>
                                         </select>
                                     </div>
                                     <div className={comm.cityarea}>
-                                        <h5>地區</h5>
-                                        <select style={{ width: '150px' }} onChange={(e) => setAreazero(e.target.value)}>
+                                        <h5 className={comm.labeltitle}>地區</h5>
+                                        <select style={{ width: '150px' }} onChange={(e) => setAreazero(e.target.value)} className={comm.inputcontent} >
                                             {Taichungarea.map((val, key) => {
                                                 return (<option key={key} value={val}>{val}</option>);
                                             })}
                                         </select>
                                     </div>
                                     <div className={comm.level}>
-                                        <h5>程度</h5>
-                                        <select style={{ width: '150px' }} onChange={(e) => setZerolevel(e.target.value)} >
+                                        <h5 className={comm.labeltitle}>程度</h5>
+                                        <select style={{ width: '150px' }} onChange={(e) => setZerolevel(e.target.value)} className={comm.inputcontent} >
                                             <option value="新手">新手</option>
                                             <option value="普通">普通</option>
                                             <option value="高手">高手</option>
@@ -248,23 +291,23 @@ const Search = () => {
                         <div id="Team" className={`row ${comm.tabcontent}`}>
                             {/* <!-- 運動類別 --> */}
                             <div className={`col-3 row ${comm.type}`}>
-                                <div className={comm.type1}>類別<br /><img src={badminton} alt="" />
-                                    <div>
+                                <div className={comm.type1}>類別<br /><img src={badminton} alt=""  className={comm.teamteamimgimg}/>
+                                    <div className={comm.teamselect}>
                                         <select onChange={(e) => setBallgamesteam(e.target.value)}>
                                             <option value="羽球">羽球</option>
                                             <option value="籃球">籃球</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div className={comm.aeracity}>
-                                    <h5>縣市</h5>
-                                    <select style={{ width: '150px' }} onChange={(e) => setCountyteam(e.target.value)}>
+                                <div className={comm.areacity}>
+                                    <h5 className={comm.labeltitle}>縣市</h5>
+                                    <select style={{ width: '150px' }} onChange={(e) => setCountyteam(e.target.value)} className={comm.inputcontent}>
                                         <option value="台中">台中</option>
                                     </select>
                                 </div>
-                                <div className={comm}>
-                                    <h5>地區</h5>
-                                    <select style={{ width: '150px' }} onChange={(e) => setAreateam(e.target.value)}>
+                                <div className={comm.countyarea}>
+                                    <h5 className={comm.labeltitle}>地區</h5>
+                                    <select style={{ width: '150px' }} onChange={(e) => setAreateam(e.target.value)} className={comm.inputcontent}>
                                         {Taichungarea.map((val, key) => {
                                             return (<option key={key} value={val}>{val}</option>);
                                         })}
@@ -276,8 +319,8 @@ const Search = () => {
                                 {/* <!-- 上層 --> */}
                                 <div className={comm.time}>
                                     <div className={comm.date}>
-                                        <span>週期</span><br />
-                                        <select style={{ width: '150px' }} onChange={(e) => setWeekteam(e.target.value)}>
+                                        <span className={comm.labeltitle}>週期</span><br />
+                                        <select style={{ width: '150px' }} onChange={(e) => setWeekteam(e.target.value)} className={comm.inputcontent}>
                                             <option value="星期一">星期一</option>
                                             <option value="星期二">星期二</option>
                                             <option value="星期三">星期三</option>
@@ -288,14 +331,14 @@ const Search = () => {
                                         </select>
                                     </div>
                                     <div className={comm.datatime}>
-                                        <label htmlFor="">打球時段</label><br />
-                                        <select onChange={(e) => setStarttimeteam(e.target.value)}>
+                                        <label htmlFor="" className={comm.labeltitle}>打球時段</label><br />
+                                        <select onChange={(e) => setStarttimeteam(e.target.value)} className={comm.inputcontent}>
                                             {time.map((val, key) => {
                                                 return (<option key={key} value={key + 1}>{val}</option>);
                                             })}
                                         </select>
                                         至
-                                        <select onChange={(e) => setEndtimeteam(e.target.value)}>
+                                        <select onChange={(e) => setEndtimeteam(e.target.value)} className={comm.inputcontent}>
                                             {time.map((val, key) => {
                                                 return (<option key={key} value={key + 1}>{val}</option>);
                                             })}
@@ -304,14 +347,14 @@ const Search = () => {
                                 </div>
                                 {/* 中層 */}
                                 <div className={comm.searchtext}>
-                                    <span>關鍵字</span><br />
-                                    <input type="text" className={comm.textsearch} placeholder="請輸入關鍵字" onChange={(e) => setTnameteam(`%${e.target.value}%`)} />
+                                    <span className={comm.labeltitle}>關鍵字</span><br />
+                                    <input type="text" className={comm.textsearch} placeholder="請輸入關鍵字" onChange={(e) => setTnameteam(`%${e.target.value}%`)}/>
                                 </div>
                                 {/* 下層 */}
                                 <div className={comm.place}>
                                     <div className={comm.level}>
-                                        <h5>程度</h5>
-                                        <select style={{ width: '150px' }} onChange={(e) => setLevelteam(e.target.value)}>
+                                        <h5 className={comm.labeltitle}>程度</h5>
+                                        <select style={{ width: '150px' }} onChange={(e) => setLevelteam(e.target.value)} className={comm.inputcontent}>
                                             <option value="新手">新手</option>
                                             <option value="普通">普通</option>
                                             <option value="高手">高手</option>
@@ -319,8 +362,8 @@ const Search = () => {
                                         </select>
                                     </div>
                                     <div className={comm.fee}>
-                                        <label htmlFor="costrent_input">費用上限</label><br />
-                                        <input type="number" name="costrent_input" onChange={(e) => setCostteam(e.target.value)} />
+                                        <label htmlFor="costrent_input" className={comm.labeltitle}>費用上限</label><br />
+                                        <input type="number" name="costrent_input" onChange={(e) => setCostteam(e.target.value)}  className={comm.inputcontent}/>
                                     </div>
                                     <div className={comm.search_input}>
                                         <button className={comm.buttoninput_1} onClick={teamsearch}>搜尋</button>
@@ -334,22 +377,22 @@ const Search = () => {
                         <div id="Team" className={`row ${comm.tabcontent}`}>
                             {/* <!-- 運動類別 --> */}
                             <div className={`col-3 row ${comm.type}`}>
-                                <div className={comm.type1}>類別<br /><img src={badminton} alt="" /></div>
-                                <div>
+                                <div className={comm.type1}>類別<br /><img src={badminton} alt="" className={comm.teamteamimgimg} /></div>
+                                <div className={comm.teamselect}>
                                     <select onChange={(e) => setBallgamesrent(e.target.value)}>
                                         <option value="羽球">羽球</option>
                                         <option value="籃球">籃球</option>
                                     </select>
                                 </div>
-                                <div className={comm.aeracity}>
-                                    <h5>縣市</h5>
-                                    <select style={{ width: '150px' }} onChange={(e) => setCountyrent(e.target.value)}>
+                                <div className={comm.areacity}>
+                                    <h5 className={comm.labeltitle}>縣市</h5>
+                                    <select style={{ width: '150px' }} onChange={(e) => setCountyrent(e.target.value)} className={comm.inputcontent}>
                                         <option value="台中">台中</option>
                                     </select>
                                 </div>
-                                <div className={comm}>
-                                    <h5>地區</h5>
-                                    <select style={{ width: '150px' }} onChange={(e) => setArearent(e.target.value)}>
+                                <div className={comm.countyarea}>
+                                    <h5 className={comm.labeltitle}>地區</h5>
+                                    <select style={{ width: '150px' }} onChange={(e) => setArearent(e.target.value)} className={comm.inputcontent}>
                                         {Taichungarea.map((val, key) => {
                                             return (<option key={key} value={val}>{val}</option>);
                                         })}
@@ -361,19 +404,19 @@ const Search = () => {
                                 {/* <!-- 上層 --> */}
                                 <div className={comm.time}>
                                     <div className={comm.date}>
-                                        <label htmlFor="start_d_input">日期</label><br />
-                                        <input id="start_d_input" type="date" onChange={(e) => setStartdaterent(e.target.value)} /><img className={comm.selectedDate} src="./icon/arrowup2.svg" alt="" />至
-                                        <input id="start_d_input" type="date" onChange={(e) => setEnddaterent(e.target.value)} /><img className={comm.selectedDate} src="./icon/arrowup2.svg" alt="" />
+                                        <label htmlFor="start_d_input" className={comm.labeltitle}>日期</label><br />
+                                        <input id="start_d_input" type="date" onChange={(e) => setStartdaterent(e.target.value)} className={comm.inputcontent} /><img className={comm.selectedDate} src="./icon/arrowup2.svg" alt="" />至
+                                        <input id="start_d_input" type="date" onChange={(e) => setEnddaterent(e.target.value)} className={comm.inputcontent} /><img className={comm.selectedDate} src="./icon/arrowup2.svg" alt="" />
                                     </div>
                                     <div className={comm.datatime}>
-                                        <label htmlFor="">打球時段</label><br />
-                                        <select onChange={(e) => setStarttimerent(e.target.value)}>
+                                        <label htmlFor="" className={comm.labeltitle}>打球時段</label><br />
+                                        <select onChange={(e) => setStarttimerent(e.target.value)} className={comm.inputcontent}>
                                             {time.map((val, key) => {
                                                 return (<option key={key} value={key + 1}>{val}</option>);
                                             })}
                                         </select>
                                         至
-                                        <select onChange={(e) => setEndtimerent(e.target.value)}>
+                                        <select onChange={(e) => setEndtimerent(e.target.value)} className={comm.inputcontent}>
                                             {time.map((val, key) => {
                                                 return (<option key={key} value={key + 1}>{val}</option>);
                                             })}
@@ -382,18 +425,18 @@ const Search = () => {
                                 </div>
                                 {/* 中層 */}
                                 <div className={comm.searchtext}>
-                                    <span>關鍵字</span><br />
+                                    <span className={comm.labeltitle}>關鍵字</span><br />
                                     <input type="text" className={comm.textsearch} placeholder="請輸入關鍵字" onChange={(e) => setFieldnamerent(`%${e.target.value}%`)} />
                                 </div>
                                 {/* 下層 */}
                                 <div className={comm.place}>
                                     <div className={comm.level}>
-                                        <label htmlFor="costrent_input">費用上限</label><br />
-                                        <input type="number" name="costrent_input" onChange={(e) => setCostrent(e.target.value)} />
+                                        <label htmlFor="costrent_input" className={comm.labeltitle}>費用上限</label><br />
+                                        <input type="number" name="costrent_input" onChange={(e) => setCostrent(e.target.value)} className={comm.inputcontent} />
                                     </div>
                                     <div className={comm.fee}>
-                                        <label htmlFor="numberrent_input">數量</label><br />
-                                        <input type="number" name="numberrent_input" onChange={(e) => setNumberrent(e.target.value)} />
+                                        <label htmlFor="numberrent_input" className={comm.labeltitle}>數量</label><br />
+                                        <input type="number" name="numberrent_input" onChange={(e) => setNumberrent(e.target.value)} className={comm.inputcontent} />
                                     </div>
                                     <div className={comm.search_input}>
                                         <button className={comm.buttoninput_1} onClick={rentsearch}>搜尋</button>
@@ -423,19 +466,15 @@ const Search = () => {
                                     </select>
                                 </div>
                             </React.Fragment>
-
                         );
                     })}
-                    {/* <input type="button" value="羽球" className={comm.related} /> */}
-                    {/* <input type="button" value="台中市" className={comm.related} />
-                    <input type="button" value="后里區" className={comm.related} /> */}
                     {/* <!-- 文章列表 --> */}
                     <div className={comm.articlelist}>
                         <div className={comm.articlecontent}>
                             {zeroarticle.map((val, key) => {
                                 return (
                                     <React.Fragment>
-                                        <div className={comm.articlecontent_key}>
+                                        <div className={comm.articlecontent_key} onClick={() => { opendatazero(key) }}>
                                             <h3 className={comm.msgh} key={key}>{val.username}</h3><br />
                                             <h6 className={comm.msghh}>{val.county}｜{val.area}</h6>
                                             <div className={comm.magmm}>
@@ -450,41 +489,10 @@ const Search = () => {
                                     </React.Fragment>
                                 );
                             })}
-                            {/* <h3 className={comm.msgh}>南區金城武</h3><br /> */}
-                            {/* <h6 className={comm.msghh}>台中市｜南區</h6> */}
-                            {/* <div className={comm.magmm}>
-                            <input type="text" value="球館" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 群月羽球館</label>
-                            <input type="text" value="日期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 2022/12/25</label>
-                            <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 15:00-17:00</label>
-                            <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 400</label>
-                            <input type="text" value="程度" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 新手</label>
-                            <input type="text" value="人數" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 3</label>
-                        </div> */}
-                        </div>
-                        {/* <div className={comm.articlecontent}>
-                        <h3 className={comm.msgh}>南區金城武</h3><br />
-                        <h6 className={comm.msghh}>台中市｜南區</h6>
-                        <div className={comm.magmm}>
-                            <input type="text" value="球館" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 群月羽球館</label>
-                            <input type="text" value="日期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 2022/12/25</label>
-                            <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 15:00-17:00</label>
-                            <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 400</label>
-                            <input type="text" value="程度" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 新手</label>
-                            <input type="text" value="人數" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 3</label>
                         </div>
                     </div>
-                    <div className={comm.articlecontent}>
-                        <h3 className={comm.msgh}>南區金城武</h3><br />
-                        <h6 className={comm.msghh}>台中市｜南區</h6>
-                        <div className={comm.magmm}>
-                            <input type="text" value="球館" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 群月羽球館</label>
-                            <input type="text" value="日期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 2022/12/25</label>
-                            <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 15:00-17:00</label>
-                            <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 400</label>
-                            <input type="text" value="程度" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 新手</label>
-                            <input type="text" value="人數" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 3</label>
-                        </div>
-                    </div> */}
+                    <div className={comm.zerodiv} style={{ display: Zeroarticlediv }}>
+                        <ZeroInfo datazero={datazero} />
                     </div>
                 </div>
                 {/* 球隊 */}
@@ -508,32 +516,13 @@ const Search = () => {
 
                         );
                     })}
-                    {/* <div className={comm.addrelated}>
-                    <input type="button" value="羽球" className={comm.related} />
-                    <input type="button" value="台中市" className={comm.related} />
-                    <input type="button" value="后里區" className={comm.related} />
-                    <input type="button" value="星期一" className={comm.related} />
-                    <input type="button" value="新手" className={comm.related} />
-                    <select className={comm.searchcontent}>
-                        <option>時間近到遠</option>
-                        <option>費用多到少</option>
-                    </select>
-                </div> */}
                     {/* <!-- 文章列表 --> */}
                     <div className={comm.articlelist}>
                         <div className={comm.articlecontent}>
                             {teaminfo.map((val, key) => {
-                                // var u8Arr = new Uint8Array(val.userimg.data);
-                                // var blob = new Blob([u8Arr], "image/jpeg");
-                                // var ft = new FileReader;
-                                // ft.onload = function () {
-                                //     setu(ft.result);
-                                //     // console.log(ft.result);
-                                // };
-                                // ft.readAsDataURL(blob);
                                 return (
                                     <React.Fragment>
-                                        <div className={`row ${comm.articlecontent_key}`}>
+                                        <div className={`row ${comm.articlecontent_key}`} onClick={() => { opendatateam(key) }}>
                                             <div className={`col-3 ${comm.imgimgimg}`}> <img src={ee(key)} key={key} alt="" className={comm.imggg} /></div>
                                             <div className={`col-8 ${comm.articlecontent_mm}`}>
                                                 <h5 className={comm.msgq} key={key}>{val.tname}</h5><br />
@@ -549,34 +538,10 @@ const Search = () => {
                                     </React.Fragment>
                                 )
                             })}
-
-                        </div>
-                        {/* <div className={`row ${comm.articlecontent}`}>
-                        <div className={`col-3 ${comm.imgimgimg}`}> <img src={cc} alt="" /></div>
-                        <div className={`col-8 ${comm.articlecontent_mm}`}>
-                            <h5 className={comm.msgq}>鐵血軍團</h5><br />
-                            <h6 className={comm.msgqq}>台中市｜南區</h6>
-                            <div className={comm.magqqq}>
-                                <input type="text" value="週期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 星期五</label>
-                                <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 17:00-20:00</label>
-                                <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 200</label>
-                                <input type="text" value="程度" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 不限</label>
-                            </div>
                         </div>
                     </div>
-                    <div className={`row ${comm.articlecontent}`}>
-                        <div className={`col-3 ${comm.imgimgimg}`}> <img src={cc} alt="" /></div>
-                        <div className={`col-8 ${comm.articlecontent_mm}`}>
-                            <h5 className={comm.msgq}>鐵血軍團</h5><br />
-                            <h6 className={comm.msgqq}>台中市｜南區</h6>
-                            <div className={comm.magqqq}>
-                                <input type="text" value="週期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 星期五</label>
-                                <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 17:00-20:00</label>
-                                <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 200</label>
-                                <input type="text" value="程度" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 不限</label>
-                            </div>
-                        </div>
-                    </div> */}
+                    <div className={comm.teamteaminfo} style={{ display: Teamarticlediv }}>
+                        <TeamInfo datateam={datateam} activityinfo={activityinfo} />
                     </div>
                 </div>
                 {/* 轉租 */}
@@ -601,28 +566,19 @@ const Search = () => {
                             </React.Fragment>
                         )
                     })}
-                    {/* <div className={comm.addrelated}>
-                    <input type="button" value="羽球" className={comm.related} />
-                    <input type="button" value="台中市" className={comm.related} />
-                    <input type="button" value="后里區" className={comm.related} />
-                    <select className={comm.searchcontent}>
-                        <option>時間近到遠</option>
-                        <option>費用多到少</option>
-                    </select>
-                </div> */}
                     {/* <!-- 文章列表 --> */}
                     <div className={comm.articlelist}>
                         <div className={comm.articlecontent}>
                             {rentarticle.map((val, key) => {
                                 return (
                                     <React.Fragment>
-                                        <div className={comm.articlecontent_key}>
+                                        <div className={comm.articlecontent_key} onClick={() => { opendatarent(key) }}>
                                             <h3 className={comm.msgh} key={key}>{val.username}</h3><br />
                                             <h6 className={comm.msghh} key={key}>{val.county}｜{val.area}</h6>
                                             <div className={comm.magmm}>
                                                 <input type="text" value="球館" className={comm.msghhh} /><label htmlFor="" className={comm.msgi} key={key}> {val.fieldname}</label>
                                                 <input type="text" value="數量" className={comm.msghhh} /><label htmlFor="" className={comm.msgi} key={key}> {val.amount}</label>
-                                                <input type="text" value="日期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi} key={key}> {val.startdate}</label>
+                                                <input type="text" value="日期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi} key={key}> {val.startdate.slice(0, 10)}</label>
                                                 <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi} key={key}> {val.starttime}:00-{val.endtime}:00</label>
                                                 <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi} key={key}> {val.cost}</label>
                                             </div>
@@ -631,30 +587,10 @@ const Search = () => {
                                 )
                             }
                             )}
-
                         </div>
-                        {/* <div className={comm.articlecontent}>
-                        <h3 className={comm.msgh}>南區金城武</h3><br />
-                        <h6 className={comm.msghh}>台中市｜南區</h6>
-                        <div className={comm.magmm}>
-                            <input type="text" value="球館" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 群月羽球館</label>
-                            <input type="text" value="數量" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 1</label>
-                            <input type="text" value="日期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 2022/12/25</label>
-                            <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 15:00-17:00</label>
-                            <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 400</label>
-                        </div>
-                    </div> */}
-                        {/* <div className={comm.articlecontent}>
-                        <h3 className={comm.msgh}>南區金城武</h3><br />
-                        <h6 className={comm.msghh}>台中市｜南區</h6>
-                        <div className={comm.magmm}>
-                            <input type="text" value="球館" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 群月羽球館</label>
-                            <input type="text" value="數量" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 1</label>
-                            <input type="text" value="日期" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 2022/12/25</label>
-                            <input type="text" value="時段" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 15:00-17:00</label>
-                            <input type="text" value="費用" className={comm.msghhh} /><label htmlFor="" className={comm.msgi}> 400</label>
-                        </div>
-                    </div> */}
+                    </div>
+                    <div className={comm.rentdiv} style={{ display: Rentarticlediv }}>
+                        <RentInfo datarent={datarent}/>
                     </div>
                 </div>
             </div>
@@ -663,15 +599,3 @@ const Search = () => {
 }
 
 export default Search;
-
-
-
-
-
-
-
-
-
-
-
-
