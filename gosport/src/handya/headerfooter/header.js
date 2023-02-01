@@ -136,7 +136,7 @@ console.log(iddd)
             userid: id,
         }).then((response) => {
             // console.log('team', response.data);
-            // console.log(response.data);
+            console.log(response.data);
             setteaminfo(response.data);
             // console.log(teaminfo)
             
@@ -350,6 +350,7 @@ const notic = () =>{
 // console.log(teaminfo===[])
 // const teaminfoo=()=>{JSON.stringify(teaminfo)};
 // console.log(JSON.stringify(teaminfo)==="[]")
+console.log(teaminfo);
 
 
     if (!token3) {
@@ -518,16 +519,16 @@ const notic = () =>{
                 <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>活動歷程</Link></button>
 {JSON.stringify(teaminfo)==="[]"?
 (
-<React.Fragment><button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>新建球隊</Link></button></React.Fragment>
+<React.Fragment><button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/myteam/basic/edit'>新建球隊</Link></button></React.Fragment>
 ):
 (
-    <React.Fragment><button className={mouse==true?cc.d160:cc.d161}><Link style={{color:"black"}} to='/gosport/user/activity'>我的球隊</Link></button></React.Fragment>
+    <React.Fragment><button className={mouse==true?cc.d160:cc.d161}>我的球隊</button></React.Fragment>
     )}
                 
                 {/* <button className={mouse==true?cc.d160:cc.d161}>我的球隊</button> */}
                 {teaminfo.map((v,k)=>{                   
                     return(
-<React.Fragment> <button onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}><Link style={{color:"black"}} to='/gosport/user/activity'>{v.tname}</Link></button>   </React.Fragment>
+<React.Fragment> <button onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}><Link style={{color:"black"}} to={`/gosport/user/myteam/${v.teamid}/basic`}>{v.tname}</Link></button>   </React.Fragment>
 )
                 }
                 )}

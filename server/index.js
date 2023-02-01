@@ -1436,6 +1436,62 @@ app.post("/basicupdate2", upload.array(), (req, res) => {
     });
 });
 
+
+
+// 芝｜Basic 新增球隊資料-1 有圖
+app.post("/basicnew", upload.single('teamfile'), (req, res) => {
+  const tname = req.body.tname;
+  const sidename = req.body.sidename;
+  const week = req.body.week;
+  const starttime = req.body.starttime;
+  const endtime = req.body.endtime;
+  const type = req.body.type;
+  const level = req.body.level;
+  const fee = req.body.fee;
+  const text = req.body.text;
+  const teamfile = req.file.buffer; // img
+  const teamid = req.body.teamid; // 球隊
+  db.query(`
+      UPDATE team 
+      SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?, teamimg=?
+      where teamid=?;`,
+    [tname, sidename, week, starttime, endtime, type, level, fee, text, teamfile, teamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+// 芝｜Basic 新增球隊資料-2 無圖
+app.post("/basicnew2", upload.array(), (req, res) => {
+  const tname = req.body.tname;
+  const sidename = req.body.sidename;
+  const week = req.body.week;
+  const starttime = req.body.starttime;
+  const endtime = req.body.endtime;
+  const type = req.body.type;
+  const level = req.body.level;
+  const fee = req.body.fee;
+  const text = req.body.text;
+  const teamid = req.body.teamid; // 球隊
+  db.query(
+    `UPDATE team 
+    SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?
+    where teamid=?;`,
+    [tname, sidename, week, starttime, endtime, type, level, fee, text, teamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+
+
+
 // 芝｜Member 查找球隊隊長
 app.post('/teamleader', (req, res) => {
   const teamid = req.body.teamid;
@@ -1967,7 +2023,7 @@ app.post('/rentcreate', (req, res) => {
 app.post("/teaminfo", (req, res) => {
   const id = req.body.userid;
   // console.log(userid)
-  db.query("SELECT team.tname FROM team,user,userteam WHERE user.userid=? AND userteam.userid=user.userid AND userteam.teamid=team.teamid", [id], (err, result) => {
+  db.query("SELECT team.tname,userteam.teamid FROM team,user,userteam WHERE user.userid=? AND userteam.userid=user.userid AND userteam.teamid=team.teamid", [id], (err, result) => {
     if (err) {
       console.log(err);
     } else {
