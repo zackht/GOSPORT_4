@@ -51,8 +51,8 @@ export default function Fund(params) {
                 
                 {/* 訂單資訊 */}
                 <div className={fund.order}>
-                    <Link to={`/gosport/user/myteam/fund/edit`}>編輯</Link>
-                    <button>刪除</button>
+                    <Link to={`/gosport/user/myteam/fund/${id}/edit`} className={id? fund.show:fund.notshow} >編輯</Link>
+                    <button className={id? fund.show:fund.notshow}>刪除</button>
 
                     <div className={fund.oTitle}>日期</div>
                     <div className={fund.oText}>{result? date:''}</div>
@@ -62,7 +62,7 @@ export default function Fund(params) {
                     <div className={fund.oTitle}>金額</div>
                     <div className={fund.oText}>{result? result.fee:''}</div>
                     <div className={fund.oTitle}>描述</div>
-                    <div className={fund.oText}>{result? result.text:''}</div>
+                    <div className={fund.oTextL}>{result? result.text:''}</div>
                 </div>
 
             </div>

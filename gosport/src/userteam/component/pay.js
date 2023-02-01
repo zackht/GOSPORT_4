@@ -40,8 +40,8 @@ export default function Pay(params) {
 
                 {/* 訂單資訊 */}
                 <div className={pay.order}>
-                    <Link to={`/gosport/user/myteam/pay/edit`}>編輯</Link>
-                    <button>刪除</button>
+                    <Link to={`/gosport/user/myteam/pay/edit`} className={id? pay.show:pay.notshow}>編輯</Link>
+                    <button className={id? pay.show:pay.notshow}>刪除</button>
                     <div className={pay.oTitle}>日期</div>
                     <div className={pay.oText}>{result? date:''}</div>
                     <div className={pay.oTitle}>項目</div>
@@ -49,7 +49,7 @@ export default function Pay(params) {
                     <div className={pay.oTitle}>金額</div>
                     <div className={pay.oText}>{result? result.fee:''}</div>
                     <div className={pay.oTitle}>描述</div>
-                    <div className={pay.oText}>{result? result.text:''}</div>
+                    <div className={pay.oTextL}>{result? result.text:''}</div>
                 </div>
 
             </div>

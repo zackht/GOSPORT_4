@@ -64,15 +64,15 @@ export default function Myteam (){
                             <Route path="/gosport/user/myteam/basic/edit"    component={BasicEdit} exact/>
                             <Route path="/gosport/user/myteam/member"        component={Member} exact/>
                             <Route path="/gosport/user/myteam/member/edit"   component={MemberEdit} exact/>
+                            <Route path="/gosport/user/myteam/fund/:id/edit"     component={FundEdit} exact/>
                             <Route path="/gosport/user/myteam/fund"          component={Fund} exact/>
                             <Route path="/gosport/user/myteam/fund/:id"      component={Fund} />
-                            <Route path="/gosport/user/myteam/fund/edit"     component={FundEdit} exact/>
+                            <Route path="/gosport/user/myteam/pay/edit"      component={PayEdit} exact/>
                             <Route path="/gosport/user/myteam/pay"           component={Pay} exact/>
                             <Route path="/gosport/user/myteam/pay/:id"       component={Pay} />
-                            <Route path="/gosport/user/myteam/pay/edit"      component={PayEdit} exact/>
+                            <Route path="/gosport/user/myteam/activity/edit" component={ActivityEdit} exact/>
                             <Route path="/gosport/user/myteam/activity"      component={Activity} exact/>
                             <Route path="/gosport/user/myteam/activity/:id"  component={Activity} xact/>
-                            <Route path="/gosport/user/myteam/activity/edit" component={ActivityEdit} exact/>
                         </Switch>
                 </div>
             </div>

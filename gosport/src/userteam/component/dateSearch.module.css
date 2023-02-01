@@ -24,17 +24,20 @@
     margin-bottom: 7px;
 }
 /* 文字 */
+.sDate a:last-child{
+    margin-bottom: 0px;
+}
 .sDate div,.oText,.sDate a{
     font-family: 'Noto Sans TC';
     font-size: 1.2rem;
     font-weight: 400;
     color: rgb(56, 56, 56);
     margin-bottom: 13px;
-
 }
 .sDate a{
     display: inline-block;
 }
+
 .linkvisited{
     color: rgb(230, 70, 55) !important;
     text-decoration: none !important;

@@ -7,13 +7,13 @@
 
 .activityinfo {
     width: 1060px;
-    height: 856px;
+    height: 770px;
     display: block;
     position: absolute;
-    top: 200px;
+    top: 150px;
     left: 190px;
     background-color: white;
-    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
 }
 
 .activityInfo {
@@ -23,11 +23,11 @@
 
 .relation {
     position: absolute;
-    left: 260px;
+    left: 300px;
     top: 327px;
     border: #383838 0.5px solid;
     border-radius: 50px;
-    width: 65px;
+    width: 40px;
     height: 30px;
     color: #383838;
 }
@@ -74,26 +74,26 @@
 .fee {
     position: absolute;
     left: 20px;
-    top: 630px
+    top: 580px
 }
 
 .member {
     position: absolute;
     left: 20px;
-    top: 750px
+    top: 680px
 }
 
 .message {
     position: absolute;
-    left: 200px;
-    top: 1130px
+    left: 190px;
+    top: 940px
 }
 
 .msg {
     width: 1060px;
     height: 110px;
     background-color: white;
-    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
 }
 
 .name {
@@ -142,7 +142,7 @@
     width: 1060px;
     height: 150px;
     background-color: white;
-    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
     margin-top: 20px;
 }
 
@@ -163,4 +163,9 @@
 .msgmsgtime {
     margin-left: 880px;
     margin-top: -70px;
+}
+
+.teamteamimg {
+    width: 50px;
+    margin-left: 10px;
 }

@@ -3,7 +3,8 @@ import zzz from './zeroinfo.module.css'
 import star from './icon/star.svg';
 import leader from './icon/Ellipse.svg';
 
-const Zeroinfo = () => {
+const Zeroinfo = ({datazero}) => {
+    console.log(datazero);
     return (
         <React.Fragment>
             {/* 零打內容 */}
@@ -13,39 +14,40 @@ const Zeroinfo = () => {
                         <button className={zzz.jjoinbutton}>參加</button>
                     </div>
                     <div className={zzz.zerouser}>
-                        <h3>難屯羅至翔</h3>
+                        <h3>{datazero.username}</h3>
                     </div>
                     <div className={zzz.fieldname}>
                         <label htmlFor="place" className={zzz.title}>場館</label><br />
-                        <input type="text" name="place" value="群月羽球館" className={zzz.iiinput} />
+                        <input type="text" name="place" value={datazero.fieldname} className={zzz.iiinput} />
                     </div>
                     <div className={zzz.address}>
                         <label htmlFor="addresss" className={zzz.title}>地址</label><br />
-                        <input type="text" name="addresss" value="台中市南屯區" className={zzz.iiinput} />
+                        <input type="text" name="addresss" value={datazero.address} className={zzz.iiinput} />
                     </div>
                     <div className={zzz.date}>
                         <label htmlFor="dateee" className={zzz.title}>日期</label><br />
-                        <input type="text" name="dateee" value="2022-12-25" className={zzz.iiinput} />
+                        <input type="text" name="dateee" value={datazero.startdate} className={zzz.iiinput} />
                     </div>
                     <div className={zzz.time}>
                         <label htmlFor="timeee" className={zzz.title}>時段</label><br />
-                        <input type="text" name="timeee" value="09:00-12:00" className={zzz.iiinput} />
+                        {/* <input type="text" name="timeee" className={zzz.iiinput} /> */}
+                        <span className={zzz.iiinput}>{datazero.starttime}:00-{datazero.endtime}:00</span>
                     </div>
                     <div className={zzz.levell}>
                         <label htmlFor="levelll" className={zzz.title}>程度</label><br />
-                        <input type="text" name="levelll" value="新手" className={zzz.iiinput} />
+                        <input type="text" name="levelll" value={datazero.level} className={zzz.iiinput} />
                     </div>
                     <div className={zzz.number}>
                         <label htmlFor="numberrr" className={zzz.title}>人數</label><br />
-                        <input type="text" name="numberrr" value="2" className={zzz.iiinput} />
+                        <input type="text" name="numberrr" value={datazero.number} className={zzz.iiinput} />
                     </div>
                     <div className={zzz.cost}>
                         <label htmlFor="costtt" className={zzz.title}>費用</label><br />
-                        <input type="text" name="costtt" value="200" className={zzz.iiinput} />
+                        <input type="text" name="costtt" value={datazero.cost} className={zzz.iiinput} />
                     </div>
                     <div className={zzz.describe}>
                         <label htmlFor="describeee" className={zzz.title}>描述</label><br />
-                        <input type="text" name="describeee" value="來打球哦" className={zzz.iiinput} />
+                        <input type="text" name="describeee" value={datazero.content} className={zzz.iiinput} />
                     </div>
                 </div>
                 <div className={zzz.message}>

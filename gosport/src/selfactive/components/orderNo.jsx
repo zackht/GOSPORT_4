@@ -75,7 +75,7 @@ const OrderNo = () => {
             </div>
             {/* <!-- 訂單詳細 --> */}
             <div className='ordermenu' id="notalready" style={{ display: orderNone }}> <span>尚未選擇下單日期</span>  </div>
-            <div className="ordermenu" id='ordering' style={{ display: ordermenu }}>
+            <div className="ordermenu" id='orderno' style={{ display: ordermenu }}>
                 <div>訂單日期</div>
                 <div>{orderData.orderdate.substring(0, 10)}</div>
                 <div style={{ display: rentType? 'flex':'none' }}>
@@ -97,7 +97,7 @@ const OrderNo = () => {
                     <div style={{ flex: "2" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
                 </div>
                 <div>數量</div>
-                <div>{orderData.ordercount}</div>
+                <div style={{fontSize: '1.5rem',lineHeight: '15px',paddingTop:'0px',color:'black',fontWeight: '400'}}>{orderData.ordercount}</div>
                 <div>日/長租</div>
                 <div>{orderData.duringtype}</div>
                 <div>場地</div>

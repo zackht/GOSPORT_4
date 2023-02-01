@@ -1229,7 +1229,7 @@ app.post("/insertdelezeroda", (req, res) => {
 // 新增轉租已刪除文章
 app.post("/insertdelesublet", (req, res) => {
   const articleid = req.body.articleid_sublet;
-  db.query("INSERT INTO `delete_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `amount`) SELECT * from userarticle_sublet WHERE articleid_sublet = ? ",
+  db.query("INSERT INTO `delete_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `amount`) SELECT * from userarticle_sublet WHERE articleid_sublet = ? ",
     [articleid], (err, result) => {
       if (err) {
         console.log(err);
@@ -1285,7 +1285,7 @@ app.post("/insertzeroda", (req, res) => {
 // 重建轉租以新增文章
 app.post("/insertsub", (req, res) => {
   const articleid = req.body.articleid_sublet;
-  db.query("INSERT INTO `userarticle_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `amount`) SELECT * from delete_sublet WHERE articleid_sublet = ? ",
+  db.query("INSERT INTO `userarticle_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `amount`) SELECT * from delete_sublet WHERE articleid_sublet = ? ",
     [articleid], (err, result) => {
       if (err) {
         console.log(err);
@@ -1370,7 +1370,7 @@ app.post('/basicsearch', (req, res) => {
   const userid = req.body.userid; // 會員
   const teamid = req.body.teamid; // 球隊
   db.query(
-    `SELECT tname,sidename, week,type,level,teamimg,fee,text,starttime,endtime,county,area,teamimg
+    `SELECT team.tname,sidename, week,type,level,teamimg,fee,text,starttime,endtime,county,area,teamimg
     FROM userteam, team 
     where userteam.teamid=team.teamid and userteam.userid=? and userteam.teamid=?`,
     [userid, teamid],
@@ -1868,8 +1868,8 @@ app.post('/teamsearch', (req, res) => {
   if (tnameteam == "") {
     db.query(
       `SELECT * FROM team
-    WHERE type = ? AND county = ? AND area = ? AND week = ?
-    AND starttime >= ? AND endtime <= ? AND fee < ? AND level = ?`,
+      WHERE type = ? AND county = ? AND area = ? AND week = ?
+      AND starttime >= ? AND endtime <= ? AND fee < ? AND level = ?`,
       [ballgamesteam, countyteam, areateam, weekteam, starttimeteam, endtimeteam, costteam, levelteam],
       (err, result) => {
         if (err) {
@@ -1977,3 +1977,19 @@ app.post("/teaminfo", (req, res) => {
   });
 });
 
+//球隊活動
+app.post('/teamactivity', (req, res) => {
+  const teamactivityteamid = req.body.teamactivityteamid;
+  db.query(
+    `SELECT * FROM teamevent 
+  WHERE teamid = ?`,
+    [teamactivityteamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+})
