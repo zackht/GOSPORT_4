@@ -20,7 +20,9 @@ import rentside_more from "./side/rentside_more";
 import rentside from "./side/rentside";
 // import Backteam from "./back/backarticleteam";
 import Selfactive from "./selfactive/selfactive";
+import Selfsettings from "./selfalter/selfsettings";
 import Selfalter from "./selfalter/selfalter";
+import Selfbuild from "./selfalter/selfbuild";
 import Selfpage from "./selfpage/selfpage";
 import Myteam from "./userteam/index.js";
 import Backuser from './back/backuser';
@@ -31,7 +33,6 @@ import Backarticle from './back/backarticle2';
 import Serchdi from "./handya/serchdi.jsx";
 import Applayout from './logintry/Applayout'
 import Applayout2 from './handya/logintry/Applayout'
-
 class App extends Component {
   render() {
     return (
@@ -41,12 +42,13 @@ class App extends Component {
           <Switch>
 
             {/* 首頁 */}
-            <Route path="/gosport" 			     component={Handya} exact />
+            <Route path="/gosport/home" 			     component={Handya} exact />
 
             {/* 租場地 */}
             {/* <Route path="/gosport/rent" 	   component={} exact/> */}
             <Route path="/gosport/rent/side/:id" component={rentside_more} />
             <Route path="/gosport/rent" component={rentside} />
+            
 
             {/* 交流區 */}
             <Route path="/gosport/communicate/search" 	  component={Search} exact/>
@@ -62,7 +64,9 @@ class App extends Component {
 
             {/* 會員  */}
             <Route path="/gosport/user" 		     component={Selfpage} exact />
-            <Route path="/gosport/user/settings" component={Selfalter} />
+            <Route path="/gosport/user/settings" component={Selfsettings}/>
+            <Route path="/gosport/user/build" 	 component={Selfbuild}/> {/*settings子組件*/}
+            <Route path="/gosport/user/alter"    component={Selfalter} />{/*settings子組件*/}
             <Route path="/gosport/user/activity" component={Selfactive} />
 
             {/* 球隊 */}

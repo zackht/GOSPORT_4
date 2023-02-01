@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect,useLayoutEffect } from 'react';
 import side from './rentside.module.css';
 import cc from './sidee.module.css';
 import arr from './icon/arrowup2.svg';
@@ -9,15 +9,64 @@ import a3 from "./icon/方向 (1).png";
 import a4 from "./icon/方向 (2).png";
 import a5 from "./icon/Group 41.png";
 import a6 from './icon/Group.png';
+import fram from './icon/Frame.svg';
 import Axios from "axios";
-
+import bask from './icon/bask.svg';
+import tennis from './icon/Group 2.svg';
+import Cookies from 'js-cookie';
 const Rentside = () => {
+    // useLayoutEffect
+    useEffect(() => {
+        if(Cookies.get('ezsurch')==='true'){
+            let x ='';
+            let y ='';
+            if(Cookies.get('ball')==='0'){
+                x='羽球';
+            }else if(Cookies.get('ball')==='1'){
+                x='桌球';
+            }else if(Cookies.get('ball')==='2'){
+                x='籃球';
+            }
+            console.log(x);
+            for (let i = 0; i < Taichung.length; i++) {
+                if(Cookies.get('town')===`${i}`){
+                    y=Taichung[i];
+                }
+            }
+            Axios.post("http://localhost:3001/rentside2", {
+            type: x,
+            starttime: Cookies.get('starttime'),
+            endtime: Cookies.get('endtime'),
+            startdate: Cookies.get('startdate'),
+            enddate: Cookies.get('enddate'),
+            county: county,
+            area: y,
+            text: text,
+            park: park,
+            bath: bath,
+            baulk: baulk,
+        }).then((response) => {
+            console.log(response);
+            setsidelist(response.data);
+            for (let i = 0; i < response.data.length; i++) {
+                var u8Arr = new Uint8Array(response.data[i].sideimg.data);
+                var blob = new Blob([u8Arr], { type: "image/jpeg" });
+                var fr = new FileReader;
+                fr.readAsDataURL(blob);
+                fr.onload = function (e) {
+                    userlist1.push(e.target.result);
+                };
+            }
+        });
+        setuserlist(userlist1);
+        }
+      }, []);
     const [Taichung, setTaichung] = useState([
-        "中區", "東區", "西區", "南區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "清水區", "沙鹿區", "大甲區", "東勢區", "梧棲區", "烏日區", "神岡區", "大肚區", "大雅區", "后里區", "霧峰區", "潭子區", "龍井區", "外埔區", "和平區", "石岡區", "大安區", "新社區"
+        "不限","外埔區", "東區", "西區", "南區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "清水區", "沙鹿區", "大甲區", "東勢區", "梧棲區", "烏日區", "神岡區", "大肚區", "大雅區", "后里區", "霧峰區", "潭子區", "龍井區", "中區", "和平區", "石岡區", "大安區", "新社區"
     ]);
-    const [time, settime] = useState([
+    const time = [
         '1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '0:00'
-    ])
+    ];
     // {time.map((val, key) => {
     //     return (<option key={key} value={key+1}>{val}</option>);
     // })}
@@ -29,7 +78,7 @@ const Rentside = () => {
     const [peakstarttime,setpeakstarttime] =useState('');
     const [peakendtime,setpeakendtime] =useState('');
     const [county,setcounty] =useState('台中市');
-    const [area,setarea] =useState('');
+    const [area,setarea] =useState('不限');
     const [park,setpark] =useState(false);
     const [bath,setbath] =useState(false);
     const [baulk,setbaulk] =useState(false);
@@ -83,34 +132,12 @@ const Rentside = () => {
         setuserlist(userlist1);
     }
     const [h1,seth1]=useState(false);
+
     const ee = (key) => {
         const time = setTimeout(()=>{seth1(true)},100);
         if(h1){
             return userlist1[key];
         }
-    }
-    const [sideedit,setsideedit]=useState([]);
-    const more=(sideid)=>{
-        Axios.post("http://localhost:3001/rentsideedit", {
-            sideid: sideid,
-        }).then((response) => {
-            console.log(response);
-            setsideedit(response.data);
-            // for (let i = 0; i < response.data.length; i++) {
-            //     var u8Arr = new Uint8Array(response.data[i].sideimg.data);
-            //     var blob = new Blob([u8Arr], { type: "image/jpeg" });
-            //     var fr = new FileReader;
-            //     fr.readAsDataURL(blob);
-            //     fr.onload = function (e) {
-            //         userlist1.push(e.target.result);
-            //     };
-            // }
-        });
-    }
-    const [a,seta]=useState(false);
-    const aa =()=>{
-        console.log('1');
-        seta(!a);
     }
     return (
         <React.Fragment>
@@ -122,7 +149,7 @@ const Rentside = () => {
                             <div id="local" className={cc.d2}>
                                 <p className={cc.d3}>類別</p>
                                 <div className={cc.d4d}>
-                                    <img className={cc.d4} src={a6} alt="" /><br />
+                                    <img className={cc.d4} src={`${type=='羽球'?fram:type=='桌球'?tennis:bask}`} alt="" /><br />
                                     <select name="" id="aaa" className={cc.d4s} onChange={(e)=>{settype(e.target.value)}}>
                                         <option value="羽球">羽球</option>
                                         <option value="桌球">桌球</option>
@@ -150,13 +177,13 @@ const Rentside = () => {
                                 <p className={cc.d11}>結束時間</p>
                             </div>
 
-                            <input className={cc.d12} type="date" id="start"
+                            <input className={`${cc.d12} ${cc.date}`} type="date" id="start"
                                 name="trip-start" min="2022-12-19" max="2033-12-31" onChange={(e)=>{setstartdate(e.target.value)}}/>
                             <img className={`${cc.d13} ${cc.selectedDate}`} src={arr} />
 
                             <span className={cc.d14}>~</span>
 
-                            <input className={cc.d15} type="date" id="start"
+                            <input className={`${cc.d15} ${cc.date}`} type="date" id="start"
                                 name="trip-start" min="2022-12-19" max="2033-12-31" onChange={(e)=>{setenddate(e.target.value)}}/>
                             <img className={`${cc.d16} ${cc.selectedDate}`} src={arr} />
 
@@ -237,8 +264,7 @@ const Rentside = () => {
                                     </div>
                                 </div>
                                 <div className={`col-md-2 d-flex flex-column ${side.div9}` }>
-                                    {/* <button className={`${side.div10}`} onClick={(e)=>{more(val.sideid)}}>查看更多</button> */}
-                                    <a href={`http://localhost:3000/gosport/rent/side/${val.sideid}`} className={`${side.div10}`} onClick={(e)=>{more(val.sideid)}}>查看更多</a>
+                                    <a href={`http://localhost:3000/gosport/rent/side/${val.sideid}`} className={`${side.div10}`}>查看更多</a>
                                 </div>
                             </div>
 
@@ -247,7 +273,7 @@ const Rentside = () => {
                 })}
                 {/* 下一頁按鈕 */}
                 <div class="row">
-                    <div class="d-flex justify-content-center col-md-12">
+                    <div class={`d-flex justify-content-center col-md-12 ${side.div13}`}>
                         <div class={`d-flex ${side.div6}`}>
                             <button class={side.buttom2}><img src={a1} alt="" /></button>
                             <button class={side.buttom2}><img src={a2} alt="" /></button>

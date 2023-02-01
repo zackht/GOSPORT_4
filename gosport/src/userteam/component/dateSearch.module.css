@@ -1,46 +1,59 @@
 /* 搜索欄位 */
 .search{
     width: 15%;
-    height: 85%;
-    margin-top: 40px;
-    margin-right: 40px;
-    margin-left: 40px;
-    margin-bottom: 40px;
+    height: 80%;
+    margin: 40px;
     box-sizing: border-box;
     position: relative;
     box-sizing: border-box;
 }
+/* 訂單標題 訂單內容標題 */
 .sTitle,.oTitle{
     font-family: 'Noto Sans TC';
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: rgb(170, 170, 170);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
-.sForm{
-    height: 50vh;
+/* 搜尋日期標題 */
+.sTitledate{
+    font-family: 'Noto Sans TC';
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: rgb(170, 170, 170);
+    margin-bottom: 7px;
 }
-.sDate{
-    height: 40%;
-    overflow: scroll;
-    
-}
-.sDate div,.oText{
+/* 文字 */
+.sDate div,.oText,.sDate a{
     font-family: 'Noto Sans TC';
     font-size: 1.2rem;
     font-weight: 400;
     color: rgb(56, 56, 56);
-    margin-bottom: 10px;
+    margin-bottom: 13px;
+
 }
-.sForm>input{
+.sDate a{
+    display: inline-block;
+}
+.linkvisited{
+    color: rgb(230, 70, 55) !important;
+    text-decoration: none !important;
+}
+/* 顯示訂單日期清單框 */
+.sDate{
+    height: 45%;
+    overflow: scroll;
+}
+/* 開始日期｜結束日期 */
+.search>input{
     border: none;
     border-bottom: 1px solid rgb(56, 56, 56);
     width: 150px;
-    height: 40px;
+    height: 50px;
     font-family: 'Noto Sans TC';
     color: rgb(56, 56, 56);
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 1.2rem;
     box-sizing: border-box;
     background-image: url('../img/icon_select.svg');
     background-size: auto 50%;
@@ -48,12 +61,14 @@
     background-position: 100% 50%;
 }
 /* 日曆icon清除 */
-.sForm>input::-webkit-calendar-picker-indicator {
+.search>input::-webkit-calendar-picker-indicator {
     opacity: 0;
 }
-.sForm>input:nth-of-type(2){
-    margin-bottom: 20px;
+/* 結束日期 */
+.search>input:nth-of-type(2){
+    margin-bottom: 25px;
 }
+/* 搜尋 */
 .search button{
     background-color: rgba(230, 70, 55, 1);
     border: none;
@@ -65,6 +80,6 @@
     color: rgb(255, 255, 255);
     font-weight: 400;
     font-size: 1.2rem;
-    position: absolute;
-    bottom: 0;
+    /* position: absolute; */
+    /* bottom: 0; */
 }

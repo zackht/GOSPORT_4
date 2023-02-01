@@ -99,10 +99,11 @@ export default function BasicEdit(props) {
             Axios.post("http://localhost:3001/basicupdate", teamData,{
                 headers: { 'Content-Type': 'multipart/form-data' },
             }).then((response) => {
-                alert("有圖片更新成功");
+                console.log("有圖片更新成功");
             });
         } else { // 沒圖片
             const teamData2 = new FormData();
+            teamData2.append('teamid', teamid);
             teamData2.append('tname', tname);
             teamData2.append('sidename', sidename);
             teamData2.append('week', week);
@@ -115,7 +116,7 @@ export default function BasicEdit(props) {
             Axios.post("http://localhost:3001/basicupdate2", teamData2, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             }).then((response) => {
-                alert("沒圖片更新成功");
+                console.log("沒圖片更新成功");
             });
         }
     }
@@ -205,7 +206,8 @@ export default function BasicEdit(props) {
 
                 {/* 取消｜儲存 */}
                 <Link to={`/gosport/user/myteam/basic`}>取消</Link>
-                <button onClick={updateBasic}>儲存</button>
+                <Link to={`/gosport/user/myteam/basic`} onClick={updateBasic}>儲存</Link>
+                {/* <button >儲存</button> */}
             </div>
         </>
     )

@@ -4,10 +4,15 @@ import Axios from "axios";
 
 // import star from "./icon/star1.svg";
 import alterImgbackIcon from './icon/Vector.svg';
+import userWithOutimg from './icon/teams_m.png'
 // import notice from './icon/notice.svg'
 // import user from './icon/user.svg'
 import "./selfalter.css"
 const Selfalter = () => {
+    const userid = Cookies.get('id');
+    if(!userid){
+        window.location = '/gosport/home';
+    }
     // input的value同時設定以及渲染
     const [username, setUsername] = useState('準備中')
     function nameChange(e) {
@@ -41,7 +46,6 @@ const Selfalter = () => {
 
     // useEffect(()=>{
     // },[])
-    const userid = Cookies.get('id');
     const [selfInfo, setSelf] = useState({ userimg: { data: '' } });
     const [selfBadge, setSelfBadge] = useState([{ badgeid: '', badgeurl: '/images/yellowstar.svg' }]);
     useEffect(() => {
@@ -61,7 +65,7 @@ const Selfalter = () => {
             setTdegree(response.data[0].tabletennis)
             setVdegree(response.data[0].volleyball)
             let badge = JSON.parse(response.data[0].usebadge)
-            setSelectedImages(badge) 
+            setSelectedImages(badge)
         });
         Axios.post("http://localhost:3001/selfbadge", {
             userid: userid,
@@ -79,17 +83,19 @@ const Selfalter = () => {
 
     useEffect(() => {
         // console.log(selfInfo)
-        var u8Arr = new Uint8Array(selfInfo.userimg.data);
-        var blob = new Blob([u8Arr], { type: "image/jpeg" });
-        var fr = new FileReader;
-        fr.onload = function () {
-            setImageSrc(fr.result);
-            if (imageSrc) {
-                setBack('none')
-                setPhoto('block')
-            }
-        };
-        fr.readAsDataURL(blob);
+        if(selfInfo.userimg !== null){
+            var u8Arr = new Uint8Array(selfInfo.userimg.data);
+            var blob = new Blob([u8Arr], { type: "image/jpeg" });
+            var fr = new FileReader;
+            fr.onload = function () {
+                setImageSrc(fr.result);
+                if (imageSrc) {
+                    setBack('none')
+                    setPhoto('block')
+                }
+            };
+            fr.readAsDataURL(blob);
+        }
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selfInfo])
 
@@ -114,21 +120,21 @@ const Selfalter = () => {
 
     };
     // 上傳更新
-    let update = (e) => {
+    let update = async (e) => {
         e.preventDefault();
         if (!picSourse) {
 
-            Axios.post("http://localhost:3001/selfalterwithoutpic", {
-                usebadge:badge,
+            await Axios.post("http://localhost:3001/selfalterwithoutpic", {
+                usebadge: badge,
                 email: email,
                 password: password,
                 username: username,
                 tel: tel,
                 userdescribe: describe,
-                badminton:Bdegree,
-                volleyball:Vdegree,
-                tabletennis:Tdegree,
-                userid:userid
+                badminton: Bdegree,
+                volleyball: Vdegree,
+                tabletennis: Tdegree,
+                userid: userid
             }).then((response) => {
                 console.log(response);
                 window.location = '/gosport/user';
@@ -170,15 +176,15 @@ const Selfalter = () => {
     }
     // 徽章
     const [selectedImages, setSelectedImages] = useState([{ badgeurl: '#' }]);
-    const badge = JSON.stringify(selectedImages)
-    const [clickCount,setClickCount] = useState(0);
+    let badge = JSON.stringify(selectedImages)
+    const [clickCount, setClickCount] = useState(0);
     const chuseStar = (item) => {
         // console.log(badge)
         return () => {
-            setClickCount(pre => pre+1)
+            setClickCount(pre => pre + 1)
             setSelectedImages(prevSelected => {
-                if(clickCount === 0) {
-                    prevSelected.splice(0,prevSelected.length)
+                if (clickCount === 0) {
+                    prevSelected.splice(0, prevSelected.length)
                 }
                 // 當目前選中的圖片重選時移除
                 if (prevSelected.includes(item)) {
@@ -189,8 +195,9 @@ const Selfalter = () => {
                     return [item, ...prevSelected];
                 }
                 // 當目前選中的圖片數量等於 3 個時，移除最後一個圖片，並加入新的圖片
-                return [item, ...prevSelected.slice(0, 2)];
+                return [...prevSelected.slice(0, 2), item];
             });
+            badge = JSON.stringify(selectedImages)
         }
     }
     return (
@@ -207,11 +214,14 @@ const Selfalter = () => {
                                     </div>
                                     <input id="oploadPic" type="file" targetid="preview_img" onChange={handleOnPreview} ref={inputFile}
                                         accept="image/gif, image/jpeg, image/png" />
-                                    <img id="preview_img" src={imageSrc} alt="" style={{ display: showPhoto }} />
+                                    <figure>
+                                        <img id="preview_img" src={imageSrc} alt="" style={{ display: showPhoto }} />
+                                    </figure>
+
 
                                 </div>
-                                <div id="alter_showStar">
-                                    {selectedImages.map((item, index) => <embed src={item.badgeurl} key={index} type="" />)}
+                                <div className="alter_showStar">
+                                    {selectedImages.map((item, index) => <img src={item.badgeurl} key={index} alt="載入中"/>)}
                                     {/* <embed src={star} type="" />
                                     <embed src={star} type="" />
                                     <embed src={star} type="" /> */}
@@ -247,14 +257,14 @@ const Selfalter = () => {
                                 </div>
                                 <label className='alter_label'>我的徽章</label>
                                 <div className="alter_mark">
-                                    {selfBadge.map(item => <img key={item.badgeid} alt={item.badgeid} onClick={chuseStar(item)} src={item.badgeurl} className={selectedImages.includes(item) ? 'selectedstars' : ''}></img>)}
+                                    {selfBadge.map(item => <img key={item.badgeid} alt={item.badgeid} onClick={chuseStar(item)} src={item.badgeurl} className={selectedImages.includes(item) ? 'selectedstars' : 'alter_mark_img'}></img>)}
                                 </div>
                                 <label className='alter_label' htmlFor="account_describe">描述</label><br />
                                 <textarea className='alter_textarea' id="account_describe" value={describe} onChange={describeChange}></textarea><br />
                             </div>
                         </div>
                         <div className="alter_yesOrNot">
-                            <a href="/selfpage">
+                            <a href="/gosport/user">
                                 <span className="alter_backself">取消</span>
                             </a>
                             <input type="submit" value="儲存" />

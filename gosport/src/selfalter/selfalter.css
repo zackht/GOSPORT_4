@@ -5,14 +5,16 @@
     align-items: center;
     width: 100vw;
     position: relative;
-    top: 17vh;
+    top: 8vh;
+    height: 1600px;
 }
 /* 主體 */
 .selfalter {
-    height: 1477px;
+    height: 1350px;
     width: 1060px;
     background: #FFFFFF;
-    box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25);
+    background: linear-gradient(165deg, #ffffff, #ffffff, #ffffff, rgba(250, 230, 230, 0.37));
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,7 +23,7 @@
 
 .alter_form {
     width: 90%;
-    height: 94%;
+    height: 92%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,17 +62,21 @@
     font-size: 20px;
 }
 
-.alter_PicPla embed {
+#picFile figure{
+    filter: drop-shadow(15px 1px 3px 50px rgba(212, 212, 212, 0.5));
+}
+
+.alter_showStar img{
     width: 20px;
     height: 20px;
-    margin-top: 10px;
+    margin: 15px 3px 0px 3px;
 }
 
 /* 主要輸入內容 */
 .alter_input,
 .alter_textarea {
     border: none;
-    background-color: #F5F5F5;
+    background-color: rgb(230, 230, 230);
     border-radius: 50px;
     height: 45px;
     margin-bottom: 27px;
@@ -103,7 +109,7 @@
 }
 
 .alter_degree {
-    background-color: rgb(245, 245, 245);
+    background-color: rgb(230, 230, 230);
     border-radius: 50px;
     width: 450px;
     height: 55px;
@@ -131,7 +137,7 @@
 
 /* 徽章 */
 .alter_mark {
-    background-color: #F5F5F5;
+    background-color: rgb(230, 230, 230);
     height: 64px;
     width: 640px;
     border-radius: 50px;
@@ -141,16 +147,27 @@
     padding: 0px 30px;
 }
 
-.alter_mark img {
+.alter_mark_img {
     width: 30px;
     height: 30px;
-    padding: 0px 3px;
-    margin: 0px 5px;
+    padding: 5px;
+    margin: 0px 8px;
     border-radius: 50px;
     cursor: pointer;
+    background-color: #d2d2d2;
+    opacity: 0.7;
 }
 .selectedstars{
-    box-shadow: #eaff00 0px 0px 2px 2px;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    margin: 0px 8px;
+    border-radius: 50px;
+    cursor: pointer;
+    background-color: #b6b6b4;
+    
+    background-color: white;
+    box-shadow: #b6b6b4 0px 4px 5px 1px;
 }
 
 /* 描述 */
@@ -163,7 +180,7 @@
 /* 取消 確認 */
 .alter_yesOrNot {
     display: flex;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 .alter_yesOrNot input[type="submit"] {
@@ -172,8 +189,11 @@
     background-color: rgb(230, 70, 55);
     color: white;
     padding: 0px 0px;
-    width: 414px;
+    width: 370px;
     height: 63px;
+    transition: all ease-out 0.2s;
+    margin-left: 10px;
+    font-size: 1.5rem;
 }
 
 .alter_backself {
@@ -182,8 +202,55 @@
     padding: 0px;
     display: inline-block;
     border-radius: 50px;
-    width: 414px;
+    width: 370px;
+    margin-right: 10px;
     height: 63px;
     line-height: 63px;
     text-align: center;
+    font-size: 1.5rem;
+}
+
+.alter_backself:hover{
+    color:rgb(254, 96, 82) ;
+    border:rgb(254, 96, 82) 1px solid;
+    box-shadow: -1px 2px 2px 0px rgba(255, 138, 138, 0.7);
+}
+
+.alter_yesOrNot input:hover {
+    background-color: rgb(254, 96, 82);
+    box-shadow: 2px 2px 2px 0px rgba(141, 7, 7, 0.7);
+}
+
+/* build */
+.build_{
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    position: relative;
+    top: 8vh; */
+    height: 1300px;
+}
+.selfbuild {
+    height: 1050px;
+    /* width: 1060px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500; */
+}
+.build_form{
+    padding-top: 20px;
+    /* width: 90%;
+    height: 92%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; */
+}
+#build_showStar img{
+    width: 20px;
+    height: 20px;
+    margin: 20px 3px 0px 3px;
 }

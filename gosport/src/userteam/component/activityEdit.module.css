@@ -4,8 +4,9 @@
     font-size: 1rem;
     font-weight: 400;
     width: 100%;
+    height: 80%;
     position: relative;
-    padding: 40px 40px 0px 40px;
+    padding: 40px;
     overflow: scroll;
 }
 /* 上傳照片 */
@@ -15,7 +16,7 @@
     position: absolute;
     right: 40px;
     left: auto;
-    background-image: url("../img/upload_s.png");
+    background-image: url("../img/upload_c.png");
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: 50% 50%;
@@ -29,6 +30,7 @@
 /* 日期 */
 .aForm input[type="date"]{
     width: 200px;
+    height: 65px;
     border-radius: 0;
     border-bottom: 1px solid rgb(56,56,56);
     background-color: white;
@@ -38,10 +40,11 @@
     background-position: 100% 50%;
     display: flex;
     justify-content: center;
-    padding-left: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
     font-family: 'Noto Sans TC';
     color: rgb(56, 56, 56);
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 400;
 
 }
@@ -51,11 +54,12 @@
 .aForm input{
     margin-top: 10px;
     margin-bottom: 30px;
-    background-color: rgb(245, 245, 245);
+    /* background-color: rgb(245, 245, 245); */
     border-radius: 50px;
     border: none;
     width: 100%;
-    height: 55px;
+    height: 65px;
+    background-color: rgb(230, 230, 230);
     font-size: 1.2rem;
     padding-left: 30px;
     padding-right: 30px;
@@ -71,12 +75,12 @@
     margin-bottom: 30px;
     border: none;
     border-bottom: 1px solid rgb(56, 56, 56);
-    width: 150px;
-    height: 55px;
+    width: 200px;
+    height: 65px;
     font-family: 'Noto Sans TC';
     color: rgb(56, 56, 56);
     font-weight: 400;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     padding-left: 30px;
     padding-right: 30px;
     box-sizing: border-box;
@@ -95,9 +99,9 @@
 .aForm>div{
     font-family: 'Noto Sans TC';
     color: rgb(170, 170, 170);
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 400;
-    margin-bottom: 10px;
+    
 }
 .aForm>div:last-child{
     display: flex;
@@ -107,11 +111,12 @@
 /* 儲值成員 */
 .aForm img{
     clip-path: circle(50% at 50% 50%);
-    width: 80px;
-    height: 80px;
-    margin-bottom: 20px;
-    margin-right: 5px;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 35px;
+    margin-right: 15px;
     opacity: 30%;
+    margin-top: 10px;
 }
 .aForm input[type="radio"]{
     display: none;
@@ -128,8 +133,8 @@
     font-weight: 400;
     background-color: white;
     width: 48%;
-    height: 80px;
-    border-radius: 40px;
+    height: 90px;
+    border-radius: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -145,12 +150,13 @@
     resize: none;
     margin-top: 10px;
     margin-bottom: 30px;
-    background-color: rgb(245, 245, 245);
+    /* background-color: rgb(245, 245, 245); */
+    background-color: rgb(230, 230, 230);
     border-radius: 30px;
     border: none;
     width: 100%;
     height: 150px;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     padding: 30px;
     box-sizing: border-box;
 }

@@ -1,11 +1,12 @@
 .fForm{
     font-family: 'Noto Sans TC';
     color: rgb(170, 170, 170);
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 400;
     width: 100%;
+    height: 80%;
     position: relative;
-    padding: 40px 40px 0px 40px;
+    padding: 40px;
     overflow: scroll;
 }
 .fForm input[type="date"]{
@@ -18,22 +19,38 @@
     background-position: 100% 50%;
     display: flex;
     justify-content: center;
-    padding-left: 20px;
+    /* padding-left: 20px; */
     width: 200px;
+    height: 65px;
+    font-size: 1.5rem;
+    font-weight: 400;
+    font-family: 'Noto Sans TC';
+    color: rgb(56, 56, 56);
+    padding-left: 30px;
+    padding-right: 30px;
+    box-sizing: border-box;
 }
 .fForm input[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0;
-    
+}
+.fForm img{
+    clip-path: circle(50% at 50% 50%);
+    width: 100px;
+    height: 100px;
+    margin-bottom: 35px;
+    margin-top: 10px;
+    margin-right: 15px;
 }
 .fForm input{
     margin-top: 10px;
     margin-bottom: 30px;
-    background-color: rgb(245, 245, 245);
+    /* background-color: rgb(245, 245, 245); */
+    background-color: rgb(230, 230, 230);
     border-radius: 50px;
     border: none;
     width: 400px;
-    height: 55px;
-    font-size: 1.2rem;
+    height: 65px;
+    font-size: 1.5rem;
     padding-left: 30px;
     padding-right: 30px;
     box-sizing: border-box;
@@ -72,8 +89,8 @@
 .fForm a{
     border: 1px solid rgb(230, 70, 55);
     width: 48%;
-    height: 80px;
-    border-radius: 40px;
+    height: 90px;
+    border-radius: 50px;
     background-color: white;
     font-family: 'Noto Sans TC';
     color: rgb(230, 70, 55);
@@ -91,20 +108,24 @@
     color: white;
     margin: 0;
     width: 48%;
-    height: 80px;
+    height: 90px;
     float: right;
+    font-size: 1.2rem;
+    font-family: 'Noto Sans TC';
+    font-weight: 400;
 }
 /* 描述 */
 .fForm textarea{
     resize: none;
     margin-top: 10px;
     margin-bottom: 30px;
-    background-color: rgb(245, 245, 245);
+    /* background-color: rgb(245, 245, 245); */
+    background-color: rgb(230, 230, 230);
     border-radius: 30px;
     border: none;
     width: 100%;
     height: 150px;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     padding: 30px;
     box-sizing: border-box;
 }

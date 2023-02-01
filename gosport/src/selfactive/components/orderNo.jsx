@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState , useEffect} from 'react';
+import {  Link } from 'react-router-dom';
+
 import Axios from "axios";
 import Cookies from 'js-cookie';
 
@@ -25,7 +27,7 @@ const OrderNo = () => {
     }
     const activeTimeList = orderInfo.map((item, index) => <button key={item.orderid} onClick={() => { showdata(index) }}>{item.orderdate.substring(0, 10)}</button>)
     // 點擊活動日期顯示查詢結果
-    const [orderNone, setOderNoneOut] = useState('block')
+    const [orderNone, setOderNoneOut] = useState('flex')
     const [ordermenu, setShowOrder] = useState('none');
     const [orderData, setOrderData] = useState({
         starttime: "",
@@ -47,7 +49,7 @@ const OrderNo = () => {
         setOrderData(orderInfo[index])
     }
     useEffect(() => {
-        if (orderData.duringtype === '長租') {
+        if (orderData.duringtype === '月租' || orderData.duringtype === '季租') {
             console.log('長租')
             setRentType(true)
         }else{
@@ -61,7 +63,7 @@ const OrderNo = () => {
             {/* <!-- 訂單日期選擇 --> */}
             <div style={{ flex: "1", borderRight: "2px solid rgb(233, 233, 233)" }}>
                 <div>下單日期區間</div>
-                <div>
+                <div className='ordergettime'>
                     <input type="date" onChange={(e) => { setStartDate(e.target.value) }} /><img className="selectedDate" src={arrowup} alt='' /><br />
                     <input type="date" onChange={(e) => { setEndDate(e.target.value) }} /><img className="selectedDate" src={arrowup} alt='' /><br />
                     <span className='searchbox' onClick={getdata}>搜尋</span>
@@ -72,7 +74,7 @@ const OrderNo = () => {
                 </div>
             </div>
             {/* <!-- 訂單詳細 --> */}
-            <div className='ordermenu' style={{ display: orderNone }}> 尚未選擇下單日期 </div>
+            <div className='ordermenu' id="notalready" style={{ display: orderNone }}> <span>尚未選擇下單日期</span>  </div>
             <div className="ordermenu" id='ordering' style={{ display: ordermenu }}>
                 <div>訂單日期</div>
                 <div>{orderData.orderdate.substring(0, 10)}</div>
@@ -102,7 +104,7 @@ const OrderNo = () => {
                 <div>{orderData.sidename}</div>
                 <div>地址</div>
                 <div style={{ position: "relative" }}>{orderData.sideaddr}
-                    <button id='ing' className="chuse_order">再次預約</button>
+                <Link to="/gosport/rent"><button id='ing' className="chuse_order">再次預約</button></Link>
                 </div>
             </div>
         </React.Fragment>

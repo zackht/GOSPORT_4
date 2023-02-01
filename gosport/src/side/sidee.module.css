@@ -463,7 +463,7 @@
     border: none;
 }
 
-input[type='date'] {
+.date {
     position: relative;
     border: none;
     border-bottom: 1px black solid;
@@ -588,6 +588,7 @@ right: 25px;
     align-items: center;
     text-align: center;
     width: 145px;
+    height: 100px;
 }
 .d5{padding:12px 0 0 0px;}
 .d6{margin:-17px 0 0 0;}
@@ -616,13 +617,13 @@ right: 25px;
 .d26{float: left;}
 .d27{float:left; margin:67px 40px 0 -40px;}
 .d28{width: 20px;height: 20px; margin:0 0 0 0;}
-.d29{font-size: 20px; padding: 0 0 0 12px;}
+.d29{font-size: 20px; padding: 0 0 0 12px;color: #383838;}
 .d30{float:left; margin:67px 40px 0 0;}
 .d31{width: 20px;height: 20px; margin:0 0 0 0;}
-.d32{font-size: 20px; padding: 0 0 0 12px;}
+.d32{font-size: 20px; padding: 0 0 0 12px;color: #383838;}
 .d33{float:left; margin:67px 40px 0 0;}
 .d34{width: 20px;height: 20px; margin:0 0 0 0;}
-.d35{font-size: 20px; padding: 0 0 0 12px;}
+.d35{font-size: 20px; padding: 0 0 0 12px;color: #383838;}
 .d36{float: left;}
 .d37{padding:30px 0 0 0px;}
 .d38{padding:0 0 0 20px ;}
