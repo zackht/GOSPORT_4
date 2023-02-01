@@ -17,6 +17,8 @@ import sun1 from './icon/Vector.svg';
 import fram from './icon/Frame.svg';
 import bask from './icon/bask.svg';
 import tennis from './icon/Group 2.svg';
+import noimg from './headerfooter/img/teams_m.png';
+import a from './icon/A.svg'
 //建立連線
 const  socket = io.connect("http://localhost:3002");
 
@@ -333,19 +335,37 @@ const Handya = () =>{
             true
         )
       }
+      const [userurl, setUserurl] = useState();
       const sendmsg = () => {
+        Axios.post("http://localhost:3001/self", {
+            userid: userid
+        }).then((response) => {
+console.log(response)
+const u8Arr = new Uint8Array(response.data[0].userimg.data);
+        // u8Arr to url
+        const blob = new Blob([u8Arr], { type: "image/jpeg" });
+        // 讀取
+        const fr = new FileReader
+        fr.readAsDataURL(blob);
+        fr.onload = function () {
+            setUserurl(fr.result);
+        };
+        // console.log(u8Arr)
 
+        });
         // bottomref.current?.scrollIntoView({behavior: 'smooth'});
         // setmes([]);
         	// socket.emit(“要對 server 發送的事件名稱”,data)
-        socket.emit("send_mesg",{message,name:usern,id:userid});
+        socket.emit("send_mesg",{message,name:usern,id:userid,userimgg:userurl});
         // socket.emit("send_mesg1",{message});
         bottomref.current?.scrollIntoView({behavior: 'smooth'});
 
         // socket.emit("send_mesg1",{message});
-        console.log(mes)
+        // console.log(mes)
         setmessage('')
-      }
+      } 
+    //   console.log(userurl)
+
 useEffect(()=>{
     Axios.get('https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-073?Authorization=CWB-CD60C32C-4797-4EA9-A3B6-E5837A37F9C1')
     .then(function (response) {
@@ -378,7 +398,7 @@ useEffect(()=>{
     //     let qatext = document.getElementById('qateaxt');
     //     qatext.scrollIntoView();
     //  }        
-
+// console.log(bottomref.current.scrollTop)
         return (
         <React.Fragment>
             
@@ -389,12 +409,12 @@ useEffect(()=>{
 
                    <div className={cc.marquee}>
         {mes.map((v,k)=>{
-            if (v.message != null){
+            if (v.userimgg == null){
             return(
                 <React.Fragment>
              
             <div className={cc.marquee1}>
-                <img src={op} alt=""/>
+                <img className={cc.d162} src={noimg} alt=""/>
                 <div className={cc.d1}>
                     <span>{v.name}</span>
                     <p>&nbsp;&nbsp;南區&nbsp;&nbsp;</p>
@@ -405,7 +425,42 @@ useEffect(()=>{
             </React.Fragment>
             )
             }
+
+            else{
+                return(
+                    <React.Fragment>
+                 
+                <div className={cc.marquee1}>
+                    <img className={cc.d162} src={v.userimgg} alt=""/>
+                    <div className={cc.d1}>
+                        <span>{v.name}</span>
+                        <p>&nbsp;&nbsp;南區&nbsp;&nbsp;</p>
+                        <h4>{v.message}</h4>
+                    </div>
+                </div>
+               
+                </React.Fragment>
+                )
+            }
         })}
+        {/* {mes.map((v,k)=>{
+            if (v.message != null){
+            return(
+                <React.Fragment>
+             
+            <div className={cc.marquee1}>
+                <img className={cc.d162} src={v.userimgg} alt=""/>
+                <div className={cc.d1}>
+                    <span>{v.name}</span>
+                    <p>&nbsp;&nbsp;南區&nbsp;&nbsp;</p>
+                    <h4>{v.message}</h4>
+                </div>
+            </div>
+           
+            </React.Fragment>
+            )
+            }
+        })} */}
       </div>
         {/* <div className={cc.marquee}>
             <div className={cc.marquee1}>
@@ -791,10 +846,19 @@ useEffect(()=>{
         <div className={cc.qa1}>
             <img src={q} alt=""/>
             <h4>什麼是零打??</h4>
+            <div className={cc.d164}>
+            <img src={a} alt=""/>
+            <h4>所謂零打/臨打,是指該隊伍想找人跟他們一起打球&nbsp;&nbsp;&nbsp;(隊伍只有一人也可以收零打唷)</h4>
         </div>
+        </div>
+
         <div className={cc.qa1}>
             <img src={q} alt=""/>
             <h4>怎麼報名零打??</h4>
+            <div className={cc.d164}>
+            <img src={a} alt=""/>
+            <h4>透過快速搜尋點選找零打輸入條件點擊就可以了唷</h4>
+        </div>
         </div>
     </div>
 
