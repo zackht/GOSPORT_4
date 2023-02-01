@@ -539,7 +539,7 @@ const notic = () =>{
                         <div>GOsport</div>
                     </div>
                     <div className="nRight">
-                        <div id={splitPathname[2] === "gosport" ? "tabline" : ""}>
+                        <div id={splitPathname[2] === "home" ? "tabline" : ""}>
                             {userInfo[0].email === "root" ? <Link to='/Back/user'>會員管理</Link> : <Link to='/gosport/home'>首頁</Link>}
                             {/* <Link to='/gosport'>首頁</Link> */}
                         </div>
