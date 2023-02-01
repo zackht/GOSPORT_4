@@ -128,7 +128,7 @@ export default function BasicEdit(props) {
                 <div onClick={upLoadImg} id='uploadImg' >
                     <img src={uploadimg}/>
                     <img src={teamimg}/>
-                    <input type='file' accept=".png, .jpg, .jpeg" ref={inputFile} onChange={handleImgChange}></input>
+                    <input type='file' accept=".png, .jpg, .jpeg" ref={inputFile} onChange={ handleImgChange }></input>
                 </div>
                 
                 <div>隊名</div>

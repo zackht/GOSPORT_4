@@ -1370,7 +1370,7 @@ app.post('/basicsearch', (req, res) => {
   const userid = req.body.userid; // 會員
   const teamid = req.body.teamid; // 球隊
   db.query(
-    `SELECT tname,sidename, week,type,level,teamimg,fee,text,starttime,endtime,county,area,teamimg
+    `SELECT team.tname,sidename, week,type,level,teamimg,fee,text,starttime,endtime,county,area,teamimg
     FROM userteam, team 
     where userteam.teamid=team.teamid and userteam.userid=? and userteam.teamid=?`,
     [userid, teamid],
@@ -1868,8 +1868,8 @@ app.post('/teamsearch', (req, res) => {
   if (tnameteam == "") {
     db.query(
       `SELECT * FROM team
-    WHERE type = ? AND county = ? AND area = ? AND week = ?
-    AND starttime >= ? AND endtime <= ? AND fee < ? AND level = ?`,
+      WHERE type = ? AND county = ? AND area = ? AND week = ?
+      AND starttime >= ? AND endtime <= ? AND fee < ? AND level = ?`,
       [ballgamesteam, countyteam, areateam, weekteam, starttimeteam, endtimeteam, costteam, levelteam],
       (err, result) => {
         if (err) {
@@ -1977,3 +1977,19 @@ app.post("/teaminfo", (req, res) => {
   });
 });
 
+//球隊活動
+app.post('/teamactivity', (req, res) => {
+  const teamactivityteamid = req.body.teamactivityteamid;
+  db.query(
+    `SELECT * FROM teamevent 
+  WHERE teamid = ?`,
+    [teamactivityteamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+})
