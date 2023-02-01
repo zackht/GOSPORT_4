@@ -65,7 +65,7 @@ const Selfalter = () => {
             setTdegree(response.data[0].tabletennis)
             setVdegree(response.data[0].volleyball)
             let badge = JSON.parse(response.data[0].usebadge)
-            setSelectedImages(badge)
+            if(response.data[0].usebadge !== null)setSelectedImages(badge)
         });
         Axios.post("http://localhost:3001/selfbadge", {
             userid: userid,
@@ -177,6 +177,7 @@ const Selfalter = () => {
     // 徽章
     const [selectedImages, setSelectedImages] = useState([{ badgeurl: '#' }]);
     let badge = JSON.stringify(selectedImages)
+    console.log('aa',selectedImages)
     const [clickCount, setClickCount] = useState(0);
     const chuseStar = (item) => {
         // console.log(badge)
