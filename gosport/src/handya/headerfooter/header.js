@@ -136,7 +136,7 @@ console.log(iddd)
             userid: id,
         }).then((response) => {
             // console.log('team', response.data);
-            console.log(response.data);
+            // console.log(response.data);
             setteaminfo(response.data);
             // console.log(teaminfo)
             
@@ -159,15 +159,59 @@ const [mouse,setmouse] = useState(false)
     const [tel, settel] = useState();
     const [chack,setchack] =useState([{}]);
     const [chack1,setchack1] =useState([]);
+    // const sighsend = () => {
+    //     Axios.post("http://localhost:3001/create1", {
+    //         email: email,
+    //         password: password,
+    //     }).then(() => {
+    //         alert('註冊成功');
+    //         logsigchange('none');
+    //     });
+
+    // }
     const sighsend = () => {
         Axios.post("http://localhost:3001/create1", {
             email: email,
             password: password,
         }).then(() => {
-            alert('註冊成功')
-            console.log("success");
-        });
-
+            alert('註冊成功');
+            
+        }).then(()=>{
+            Axios.post("http://localhost:3001/userinfo", {
+                account: email,
+                password: password,
+            }).then((response) => {
+                // console.log(emaillist)
+                // console.log(realmail)
+    setiddd(response.data[0].userid);
+                setuser(response.data);
+                // console.log(response.data[0].userid)
+                settoken3(email)
+                Cookies.set(
+                    'token',//key
+                    response.data[0].email,//value
+                    {
+                        path: '/',
+                        expires: 7,//有效7天
+                        sameSite: 'strict'//只有當前url與請求目標一致才會帶上cookie
+                    }
+                )
+                Cookies.set(
+                    'id',//key
+                    response.data[0].userid,//value
+                    {
+                        path: '/',
+                        expires: 7,//有效7天
+                        sameSite: 'strict'//只有當前url與請求目標一致才會帶上cookie
+                    }
+                )
+                // token = (Cookies.get('token'))
+      
+    console.log(iddd)      
+               
+           
+            });
+        })
     }
     const setPassword2 = (e) =>{
         const text1 = e.target.value;
@@ -303,6 +347,9 @@ const notic = () =>{
 //     {theme:"outline",size:"large"}
 // )
 // },[]);
+// console.log(teaminfo===[])
+// const teaminfoo=()=>{JSON.stringify(teaminfo)};
+// console.log(JSON.stringify(teaminfo)==="[]")
 
 
     if (!token3) {
@@ -334,10 +381,10 @@ const notic = () =>{
                                 </div>
                                 <input onChange={emailcheck} className={`${emailhint === "可以註冊" ? cc.d133 : cc.d151}`} type="text" />
                                 <p className={cc.d134}>密碼</p>
-                                <input onChange={e => setPassword(e.target.value)} className={cc.d135} type="text" />
+                                <input onChange={e => setPassword(e.target.value)} className={cc.d135} type="password" />
                                 <p className={cc.d136}>至少8個字,含至少1個數字及1個英文字母</p>
                                 <p className={cc.d137}>確認密碼</p>
-                                <input onChange={setPassword2} className={cc.d138} type="text" />
+                                <input onChange={setPassword2} className={cc.d138} type="password" />
                                 <div className={cc.d139}>
                                     <img src={cancel} onClick={close} alt="" />
                                     {emailhint==="信箱已重複或格式不正確"?<img onClick={()=>{alert("信箱已重複或格式不正確")}} type="submit" src={sighno} alt="" />
@@ -469,7 +516,15 @@ const notic = () =>{
                 <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user'>個人頁面</Link></button>
                 <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/settings'>帳號設定</Link></button>
                 <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>活動歷程</Link></button>
-                <button className={mouse==true?cc.d160:cc.d161}>我的球隊</button>
+{JSON.stringify(teaminfo)==="[]"?
+(
+<React.Fragment><button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>新建球隊</Link></button></React.Fragment>
+):
+(
+    <React.Fragment><button className={mouse==true?cc.d160:cc.d161}><Link style={{color:"black"}} to='/gosport/user/activity'>我的球隊</Link></button></React.Fragment>
+    )}
+                
+                {/* <button className={mouse==true?cc.d160:cc.d161}>我的球隊</button> */}
                 {teaminfo.map((v,k)=>{                   
                     return(
 <React.Fragment> <button onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}><Link style={{color:"black"}} to='/gosport/user/activity'>{v.tname}</Link></button>   </React.Fragment>
@@ -485,21 +540,18 @@ const notic = () =>{
                     </div>
                     <div className="nRight">
                         <div id={splitPathname[2] === "gosport" ? "tabline" : ""}>
-                            {userInfo[0].email === "root" ? <Link to='/gosport'>後台首頁</Link> : <Link to='/gosport/home'>首頁</Link>}
+                            {userInfo[0].email === "root" ? <Link to='/Back/user'>會員管理</Link> : <Link to='/gosport/home'>首頁</Link>}
                             {/* <Link to='/gosport'>首頁</Link> */}
                         </div>
                         <div id={splitPathname[2] === "rent" ? "tabline" : ""}>
-                            {userInfo[0].email === "root" ? <Link to='/gosport'>後台租場地</Link> : <Link to='/gosport/rent'>租場地</Link>}
+                            {userInfo[0].email === "root" ? <Link to='/Back/side'>場地資料</Link> : <Link to='/gosport/rent'>租場地</Link>}
                             {/* <Link to='/gosport/rent'>租場地</Link> */}
                         </div>
                         <div id={splitPathname[2] === "communicate" ? "tabline" : ""}>
-                            {userInfo[0].email === "root" ? <Link to='/gosport'>後台交流區</Link> : <Link to='/gosport/communicate/search'>交流區</Link>}
+                            {userInfo[0].email === "root" ? <Link to='/Back/article'>交流區文章</Link> : <Link to='/gosport/communicate/search'>交流區</Link>}
                             {/* <Link to='/gosport/communicate'>交流區</Link> */}
                         </div>
-                        <div id={splitPathname[2] === "qa" ? "tabline" : ""}>
-                            {userInfo[0].email === "root" ? <Link to='/gosport'>後台Q&A</Link> : <Link to='/gosport/qa'>Q&A</Link>}
-                            {/* <Link to='/gosport/qa'>Q&A</Link> */}
-                        </div>
+                        
                         <img className="notice" src={notice} />
                         {/* <div className="username"><p>Hi: {token3}</p></div> */}
                         {userInfo.map((v, k) => {
