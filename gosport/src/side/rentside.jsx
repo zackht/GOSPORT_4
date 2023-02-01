@@ -96,6 +96,7 @@ const Rentside = () => {
         setbaulk(!baulk);
     }
     const search =()=>{
+        setTimeout(()=>{setuserlist1([])},500);
         console.log(type);
         console.log(starttime);
         console.log(endtime);
@@ -104,6 +105,8 @@ const Rentside = () => {
         console.log(county);
         console.log(area);
         console.log(text);
+        console.log(tt);
+        console.log(xyz);
         Axios.post("http://localhost:3001/rentside", {
             type: type,
             starttime: starttime,
@@ -116,6 +119,8 @@ const Rentside = () => {
             park: park,
             bath: bath,
             baulk: baulk,
+            tt: tt,
+            xyz: xyz,
         }).then((response) => {
             console.log(response);
             setsidelist(response.data);
@@ -134,75 +139,23 @@ const Rentside = () => {
     const [h1,seth1]=useState(false);
 
     const ee = (key) => {
-        const time = setTimeout(()=>{seth1(true)},100);
+        const time = setTimeout(()=>{seth1(true)},1000);
         if(h1){
-            return userlist1[key];
+            return userlist[key];
         }
     }
     const [tt,settt]=useState(false);
-    const change =()=>{
+    const change = ()=>{
         settt(!tt);
-        if(xyz==='離峰'){
-            console.log(tt);
-                Axios.post("http://localhost:3001/rentside2", {
-                type: type,
-                starttime: starttime,
-                endtime: endtime,
-                startdate: startdate,
-                enddate: enddate,
-                county: county,
-                area: area,
-                text: text,
-                park: park,
-                bath: bath,
-                baulk: baulk,
-                tt:tt,
-            }).then((response) => {
-                console.log(response);
-                setsidelist(response.data);
-                for (let i = 0; i < response.data.length; i++) {
-                    var u8Arr = new Uint8Array(response.data[i].sideimg.data);
-                    var blob = new Blob([u8Arr], { type: "image/jpeg" });
-                    var fr = new FileReader;
-                    fr.readAsDataURL(blob);
-                    fr.onload = function (e) {
-                        userlist1.push(e.target.result);
-                    };
-                }
-            });
-            setuserlist(userlist1);
-        }else{
-                Axios.post("http://localhost:3001/rentside3", {
-                type: type,
-                starttime: starttime,
-                endtime: endtime,
-                startdate: startdate,
-                enddate: enddate,
-                county: county,
-                area: area,
-                text: text,
-                park: park,
-                bath: bath,
-                baulk: baulk,
-                tt:tt,
-            }).then((response) => {
-                console.log(response);
-                setsidelist(response.data);
-                for (let i = 0; i < response.data.length; i++) {
-                    var u8Arr = new Uint8Array(response.data[i].sideimg.data);
-                    var blob = new Blob([u8Arr], { type: "image/jpeg" });
-                    var fr = new FileReader;
-                    fr.readAsDataURL(blob);
-                    fr.onload = function (e) {
-                        userlist1.push(e.target.result);
-                    };
-                }
-            });
-            setuserlist(userlist1);
-        }
+        search();
+        setTimeout(()=>{setuserlist1([])},500);
         
     }
-    const [xyz,setxyz]=useState('');
+    const cccc = ()=>{
+        setTimeout(()=>{setuserlist1([])},1000);
+        
+    }
+    const [xyz,setxyz]=useState('離峰');
     return (
         <React.Fragment>
             <div className={side.div7}>
@@ -211,7 +164,7 @@ const Rentside = () => {
                     <div id="London" style={{ padding: 0, paddingRight: 50, paddingLeft: 50 }} className={cc.tabcontent}>
                         <div>
                             <div id="local" className={cc.d2}>
-                                <p className={cc.d3}>類別</p>
+                                <p className={cc.d3} onClick={cccc}>類別</p>
                                 <div className={cc.d4d}>
                                     <img className={cc.d4} src={`${type=='羽球'?fram:type=='桌球'?tennis:bask}`} alt="" /><br />
                                     <select name="" id="aaa" className={cc.d4s} onChange={(e)=>{settype(e.target.value)}}>
@@ -337,9 +290,9 @@ const Rentside = () => {
                             </select>
                         </div>
                         <div onClick={change}>
-                            {tt?<div class={side.typecol}>價格由低到高
+                            {tt?<div class={side.typecol}>價格由高到低
                             <img src={arr} alt=""  className={side.typecolimg}/>
-                        </div>:<div class={side.typecol}>價格由高到低
+                        </div>:<div class={side.typecol}>價格由低到高
                             <img src={arr} alt="" className={side.typecolimg}/>
                         </div>}
                         </div>
@@ -357,7 +310,7 @@ const Rentside = () => {
                                     <div class={`${side.fontsize1} ${side.div4}`}>{val.sidename}</div>
                                     <div class={side.fontsize3}>{val.adress}</div>
                                     <div class={`d-flex ${side.div5}`}>
-                                        <div class={`${side.sidediv} ${side.fontsize4}`}>尖峰費用</div>
+                                        <div class={`${side.sidediv} ${side.fontsize4}`} >尖峰費用</div>
                                         <span class={`${side.sidespan} ${side.fontsize4}`}>{val.peakfee}元</span>
                                         <div class={`${side.sidediv} ${side.fontsize4}`}>離峰費用</div>
                                         <span class={`${side.sidespan} ${side.fontsize4}`}>{val.offpeakfee}元</span>
