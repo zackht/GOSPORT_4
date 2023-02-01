@@ -75,28 +75,50 @@ const Ordering = () => {
             {/* <!-- 訂單詳細 --> */}
             <div className='ordermenu' id="notalready" style={{ display: orderNone }}> <span>尚未選擇下單日期</span> </div>
             <div className="ordermenu" id='ordering' style={{ display: ordermenu }}>
-                <div>訂單日期</div>
-                <div>{orderData.orderdate.substring(0, 10)}</div>
-                <div style={{ display: rentType? 'flex':'none' }}>
+            <div>訂單日期</div>
+            <div>{orderData.orderdate.substring(0, 10)}</div>
+                <div style={{ display: rentType ? 'flex' : 'none' }}>
                     <div style={{ flex: "1" }}>開始時間</div>
                     <div style={{ flex: "1" }}>結束時間</div>
-                    <div style={{ flex: "1" }}>星期</div>
+                    {/* <div style={{ flex: "1" }}>場租證明</div> */}
+                    <div style={{ flex: "1" }}>時段</div>
+                    {/* <div style={{ flex: "1" }}>星期</div> */}
                 </div>
-                <div style={{ display: rentType? 'none':'flex' }}>
+                <div style={{ display: rentType ? 'none' : 'flex' }}>
                     <div style={{ flex: "1" }}>活動日期</div>
-                    <div style={{ flex: "2" }}>時段</div>
+                    <div style={{ flex: "1" }}>時段</div>
+                    {/* <div style={{ flex: "1" }}>場租證明</div> */}
+                    <div style={{ flex: "1" }}>星期</div>
+
                 </div>
-                <div style={{ display: rentType? 'flex':'none' }}>
+                <div style={{ display: rentType ? 'flex' : 'none' }}>
                     <div style={{ flex: "1" }}>{orderData.startdate.substring(0, 10)}</div>
                     <div style={{ flex: "1" }}>{orderData.enddate.substring(0, 10)}</div>
-                    <div style={{ flex: "1" }}>{orderData.week}</div>
+                    {/* <div style={{ flex: "1" }}>證明</div> */}
+                    <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
+                    {/* <div style={{ flex: "1" }}>{orderData.week}</div> */}
                 </div>
-                <div style={{ display: rentType? 'none':'flex' }}>
+                <div style={{ display: rentType ? 'none' : 'flex' }}>
                     <div style={{ flex: "1" }}>{orderData.startdate.substring(0, 10)}</div>
-                    <div style={{ flex: "2" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
+                    <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
+                    {/* <div style={{ flex: "1" }}>證明</div> */}
+                    <div style={{ flex: "1" }}>{orderData.week}</div>
+
                 </div>
-                <div>數量</div>
-                <div>{orderData.ordercount}</div>
+                <div style={{ display: rentType ? 'flex' : 'none' }}>
+                    <div style={{ flex: "1" }}>數量</div>
+                    <div style={{ flex: "2" }}>星期</div>
+                </div>
+                <div style={{ display: rentType ? 'none' : 'flex' }}>
+                    <div>數量</div>
+                </div>
+                <div style={{ display: rentType ? 'flex' : 'none' }}>
+                    <div style={{ flex: "1" }}>{orderData.ordercount}</div>
+                    <div style={{ flex: "2" }}>{orderData.week}</div>
+                </div>
+                <div style={{ display: rentType ? 'none' :'block' }}>
+                    <div >{orderData.ordercount}</div>
+                </div>
                 <div>日/長租</div>
                 <div>{orderData.duringtype}</div>
                 <div>場地</div>

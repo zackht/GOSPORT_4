@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import com from "./createzero.module.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from "axios";
+import Cookies from 'js-cookie';
 
 const Create = () => {
 
     //交流零打新增
-    const [useridczero, setUseridczero] = useState('');
+    // const [useridczero, setUseridczero] = useState('');
     const [fieldnameczero, setFieldnameczero] = useState('');
     const [ballgamesczero, setBallgamesczero] = useState('')
     const [countyczero, setCountyczero] = useState('台中')
@@ -23,7 +24,7 @@ const Create = () => {
 
     const zerocreate = () => {
         Axios.post("http://localhost:3001/zerocreate", {
-            useridczero: useridczero,
+            useridczero: Cookies.get('id'),
             fieldnameczero: fieldnameczero,
             ballgamesczero: ballgamesczero,
             countyczero: countyczero,
@@ -40,6 +41,7 @@ const Create = () => {
         }).then((response) => {
             console.log(response);
             // setZeroarticle(response.data);
+            alert("新增成功");
         })
     }
 
@@ -64,7 +66,7 @@ const Create = () => {
                     {/* 球類 */}
                     <div className={com}>
                         <label for="add-ballgames" className={com.contenttitle}>球類</label><br />
-                        <select onChange={(e) => setBallgamesczero(e.target.value)}>
+                        <select onChange={(e) => setBallgamesczero(e.target.value)} className={com.contentdescribe}>
                             <option value="羽球">羽球</option>
                             <option value="籃球">籃球</option>
                         </select>
@@ -73,7 +75,7 @@ const Create = () => {
                     <div className={com.addarea}>
                         {/* <!-- 縣市 --> */}
                         <div className={com.addcity}>
-                            <span className={com.contenttitl}>縣市</span><br />
+                            <span className={com.contenttitle}>縣市</span><br />
                             <select className={com.option} onChange={(e) => setCountyczero(e.target.value)}>
                                 <option value="台中">台中</option>
                             </select>
@@ -91,7 +93,7 @@ const Create = () => {
                     {/* <!-- 地址 --> */}
                     <div className={com.addaddress}>
                         <label for="add-address" className={com.contenttitle}>地址</label><br />
-                        <input type="text" id="add-address" className={com.contentdescribe} onChange={(e) => setAddressczero(e.target.value)} />
+                        <input type="text" id="add-address" className={com.contentdescribe1} onChange={(e) => setAddressczero(e.target.value)} />
                     </div>
                     {/* <!-- 日期 --> */}
                     <div className={com.adddate}>
@@ -102,13 +104,13 @@ const Create = () => {
                     {/* <!-- 時段 --> */}
                     <div className={com.adddatetime}>
                         <label for="add-datetime" className={com.contenttitle}>時段</label><br />
-                        <select onChange={(e) => setStarttimeczero(e.target.value)}>
+                        <select onChange={(e) => setStarttimeczero(e.target.value)} className={com.contentdescribe}>
                             {time.map((val, key) => {
                                 return (<option key={key} value={key + 1}>{val}</option>);
                             })}
                         </select>
                         至
-                        <select onChange={(e) => setEndtimeczero(e.target.value)}>
+                        <select onChange={(e) => setEndtimeczero(e.target.value)} className={com.contentdescribe}>
                             {time.map((val, key) => {
                                 return (<option key={key} value={key + 1}>{val}</option>);
                             })}
@@ -117,7 +119,7 @@ const Create = () => {
                     {/* <!-- 程度 --> */}
                     <div className={com.addlevel}>
                         <span className={com.contenttitle}>程度</span><br />
-                        <select onChange={(e) => setLevelczero(e.target.value)}>
+                        <select onChange={(e) => setLevelczero(e.target.value)} className={com.contentdescribe}>
                             <option value="新手">新手</option>
                             <option value="普通">普通</option>
                             <option value="高手">高手</option>
@@ -128,7 +130,7 @@ const Create = () => {
                     <div className={com.addperson}>
                         <span className={com.contenttitle}>人數</span>
                         <div className={com.button_container}>
-                            <input type="number" onChange={(e) => setNumberczero(e.target.value)} />
+                            <input type="number" onChange={(e) => setNumberczero(e.target.value)} className={com.contentdescribe} />
                         </div>
                     </div>
                     {/* <!-- 費用 --> */}

@@ -1275,7 +1275,7 @@ app.post("/insertdelezeroda", (req, res) => {
 // 新增轉租已刪除文章
 app.post("/insertdelesublet", (req, res) => {
   const articleid = req.body.articleid_sublet;
-  db.query("INSERT INTO `delete_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `amount`) SELECT * from userarticle_sublet WHERE articleid_sublet = ? ",
+  db.query("INSERT INTO `delete_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `amount`) SELECT * from userarticle_sublet WHERE articleid_sublet = ? ",
     [articleid], (err, result) => {
       if (err) {
         console.log(err);
@@ -1331,7 +1331,7 @@ app.post("/insertzeroda", (req, res) => {
 // 重建轉租以新增文章
 app.post("/insertsub", (req, res) => {
   const articleid = req.body.articleid_sublet;
-  db.query("INSERT INTO `userarticle_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `level`, `amount`) SELECT * from delete_sublet WHERE articleid_sublet = ? ",
+  db.query("INSERT INTO `userarticle_sublet`(`articleid_sublet`, `userid`, `content`, `ballgames`, `starttime`, `endtime`, `startdate`,`enddate`, `county`, `area`, `fieldname`, `address`, `cost`, `amount`) SELECT * from delete_sublet WHERE articleid_sublet = ? ",
     [articleid], (err, result) => {
       if (err) {
         console.log(err);

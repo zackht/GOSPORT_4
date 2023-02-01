@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import comm from "./search.module.css";
 import badminton from './icon/badminton.svg';
-// import basketball from './icon/basketball.svg';
-// import table from './icon/table.svg';
+import basketball from './icon/basketball.svg';
+import table from './icon/table.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from "axios";
 import TeamInfo from "./teaminfo";
 import RentInfo from "./rentinfo";
 import ZeroInfo from "./zeroinfo";
+import { useHistory } from 'react-router-dom';
 
 
 
 
 const Search = () => {
+
+    const aaaa = useHistory();
 
     const tabList = [
         { tabName: "零打", id: 1 },
@@ -35,7 +38,7 @@ const Search = () => {
     // var showModal = modaltoggle ? 'flex' : 'none';
 
     //零打搜尋
-    const [ballgameszero, setBallgameszero] = useState('');
+    const [ballgameszero, setBallgameszero] = useState('羽球');
     const [startdatezero, setStartdatezero] = useState('');
     const [enddatezero, setEnddatezero] = useState('');
     const [starttimezero, setStarttimezero] = useState('');
@@ -66,7 +69,7 @@ const Search = () => {
     }
 
     //轉租搜尋
-    const [ballgamesrent, setBallgamesrent] = useState('');
+    const [ballgamesrent, setBallgamesrent] = useState('羽球');
     const [countyrent, setCountyrent] = useState('台中');
     const [arearent, setArearent] = useState('');
     const [startdaterent, setStartdaterent] = useState('');
@@ -98,7 +101,7 @@ const Search = () => {
     }
 
     //球隊搜尋
-    const [ballgamesteam, setBallgamesteam] = useState('');
+    const [ballgamesteam, setBallgamesteam] = useState('羽球');
     const [countyteam, setCountyteam] = useState('台中');
     const [areateam, setAreateam] = useState('');
     const [weekteam, setWeekteam] = useState('');
@@ -216,13 +219,12 @@ const Search = () => {
                             {/* <!-- 運動類別 --> */}
                             <div className={`col-3 row ${comm.type}`}>
                                 <div className={comm.type1}>類別</div> <br />
-                                <div className={comm.img}><img src={badminton} alt=""  className={comm.ballimg}/></div> <br />
+                                <div className={comm.img}><img src={`${ballgameszero=='羽球'?badminton:ballgameszero=='籃球'?basketball:table}`} alt=""  className={comm.ballimg}/></div> <br />
                                 <div>
                                     <select onChange={(e) => setBallgameszero(e.target.value)} className={comm.ballselect}>
-                                        <option value="羽球">
-                                            羽球
-                                        </option>
+                                        <option value="羽球">羽球</option>
                                         <option value="籃球">籃球</option>
+                                        <option value="桌球">桌球</option>
                                     </select>
                                 </div>
                             </div>
@@ -291,11 +293,12 @@ const Search = () => {
                         <div id="Team" className={`row ${comm.tabcontent}`}>
                             {/* <!-- 運動類別 --> */}
                             <div className={`col-3 row ${comm.type}`}>
-                                <div className={comm.type1}>類別<br /><img src={badminton} alt=""  className={comm.teamteamimgimg}/>
+                                <div className={comm.type1}>類別<br /><img src={`${ballgamesteam=='羽球'?badminton:ballgamesteam=='籃球'?basketball:table}`} alt=""  className={comm.teamteamimgimg}/>
                                     <div className={comm.teamselect}>
                                         <select onChange={(e) => setBallgamesteam(e.target.value)}>
                                             <option value="羽球">羽球</option>
                                             <option value="籃球">籃球</option>
+                                            <option value="桌球">桌球</option>
                                         </select>
                                     </div>
                                 </div>
@@ -377,11 +380,12 @@ const Search = () => {
                         <div id="Team" className={`row ${comm.tabcontent}`}>
                             {/* <!-- 運動類別 --> */}
                             <div className={`col-3 row ${comm.type}`}>
-                                <div className={comm.type1}>類別<br /><img src={badminton} alt="" className={comm.teamteamimgimg} /></div>
+                                <div className={comm.type1}>類別<br /><img src={`${ballgamesrent=='羽球'?badminton:ballgamesrent=='籃球'?basketball:table}`} alt="" className={comm.teamteamimgimg} /></div>
                                 <div className={comm.teamselect}>
                                     <select onChange={(e) => setBallgamesrent(e.target.value)}>
                                         <option value="羽球">羽球</option>
                                         <option value="籃球">籃球</option>
+                                        <option value="桌球">桌球</option>
                                     </select>
                                 </div>
                                 <div className={comm.areacity}>
@@ -450,7 +454,7 @@ const Search = () => {
                 <div style={{ display: isZeroShow }} className={comm.zeroInfo}>
                     {/* <!-- 新增文章 --> */}
                     <div className={comm.addarticle}>
-                        <input type="button" value="新建文章" className={comm.article} />
+                        <input type="button" value="新建文章" className={comm.article} onClick={()=> {aaaa.push('/gosport/communicate/create')}}/>
                     </div>
                     {/* <!-- 標籤按鈕 --> */}
                     {zeroarticle.map((val, key) => {
@@ -548,7 +552,7 @@ const Search = () => {
                 <div style={{ display: isRentShow }} className={comm.rentInfo}>
                     {/* <!-- 新增文章 --> */}
                     <div className={comm.addarticle}>
-                        <input type="button" value="新建文章" className={comm.article} />
+                        <input type="button" value="新建文章" className={comm.article}  onClick={()=>{aaaa.push('/gosport/communicate/createrent')}}/>
                     </div>
                     {/* <!-- 標籤按鈕 --> */}
                     {rentarticle.map((val, key) => {

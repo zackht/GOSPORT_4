@@ -87,14 +87,16 @@
 .active_inner>div>div>div>:nth-child(3),
 .active_inner>div>div>div>:nth-child(5),
 .active_inner>div>div>div>:nth-child(7),
-.active_inner>div>div>div>:nth-child(9),
-.active_inner>div>div>div>:nth-child(11) {
+.active_inner>div>div>div>:nth-child(8),
+.active_inner>div>div>div>:nth-child(11),
+.active_inner>div>div>div>:nth-child(13),
+.active_inner>div>div>div>:nth-child(15) {
     font-weight: 300;
     padding-top: 7px;
     color: gray;
     font-size: 1.2rem;
     line-height: 5vh;
-    cursor: default;
+
 }
 
 /* 場地 */
@@ -225,19 +227,35 @@
     background-color: rgb(255, 87, 87);
 }
 
-/* 進行中 */
+/* 進行中 未來 已結束 */
 #ordering>:nth-child(1),
 #ordering>:nth-child(3),
 #ordering>:nth-child(4),
 #ordering>:nth-child(7),
-#ordering>:nth-child(9),
+#ordering>:nth-child(8),
 #ordering>:nth-child(11),
-#ordering>:nth-child(13) {
+#ordering>:nth-child(13),
+#ordering>:nth-child(15) {
     font-weight: 300;
     padding-top: 7px;
     color: gray;
     font-size: 1.2rem;
     line-height: 6vh;
+    cursor: default;
+}
+#orderno>:nth-child(1),
+#orderno>:nth-child(3),
+#orderno>:nth-child(4),
+#orderno>:nth-child(7),
+#orderno>:nth-child(9),
+#orderno>:nth-child(11),
+#orderno>:nth-child(13) {
+    font-weight: 300;
+    padding-top: 7px;
+    color: gray;
+    font-size: 1.2rem;
+    line-height: 6vh;
+    cursor: default;
 }
 
 @media(max-width: 1440px) {
@@ -246,9 +264,10 @@
     #ordering>:nth-child(3),
     #ordering>:nth-child(4),
     #ordering>:nth-child(7),
-    #ordering>:nth-child(9),
+    #ordering>:nth-child(8),
     #ordering>:nth-child(11),
-    #ordering>:nth-child(13) {
+    #ordering>:nth-child(13),
+    #ordering>:nth-child(15) {
         font-weight: 300;
         padding-top: 7px;
         color: gray;
@@ -259,6 +278,19 @@
     #ordering>:nth-child(1) {
         line-height: 2vh;
         margin-bottom: 10px;
+    }
+    #orderno>:nth-child(1),
+    #orderno>:nth-child(3),
+    #orderno>:nth-child(4),
+    #orderno>:nth-child(7),
+    #orderno>:nth-child(9),
+    #orderno>:nth-child(11),
+    #orderno>:nth-child(13){
+        font-weight: 300;
+        padding-top: 7px;
+        color: gray;
+        font-size: 1rem;
+        line-height: 5vh;
     }
 }
 
