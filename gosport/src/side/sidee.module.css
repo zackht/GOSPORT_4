@@ -27,7 +27,7 @@
 
 .marquee1 {
     display: flex;
-    box-shadow: 0 1px 5px 1px rgba(228, 228, 228, 0.75);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
     animation: slide 12s linear infinite;
 
     /* animation-timing-function: 5s; */
@@ -77,7 +77,7 @@
     padding: 22px 0px 0 80px;
     margin: 0 190px 0 190px;
     height: 142px;
-    box-shadow: 0 1px 5px 1px rgba(228, 228, 228, 0.75);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -116,7 +116,7 @@
     margin: 200px 190px 0 190px;
     /* border: 1px solid rgb(255, 102, 0); */
     height: 425px;
-    box-shadow: 0 1px 5px 1px rgba(228, 228, 228, 0.75);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
 
 
 }
@@ -223,37 +223,37 @@
 
 #London {
     background-color: rgb(255, 255, 255);
-    box-shadow: 0 1px 5px 1px rgba(228, 228, 228, 0.75);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
 
 }
 
 #Paris {
     background-color: rgb(255, 255, 255);
-    box-shadow: 0 1px 5px 1px rgba(228, 228, 228, 0.75);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
 
 }
 
 #Londo {
     background-color: rgb(255, 255, 255);
-    box-shadow: 0 1px 5px 1px rgba(228, 228, 228, 0.75);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
 
 }
 
 #Pari {
     background-color: rgb(255, 255, 255);
-    box-shadow: 0 1px 5px 1px rgba(228, 228, 228, 0.75);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
 
 }
 
 #Tokyo {
     background-color: rgb(255, 255, 255);
-    box-shadow: 0 1px 5px 1px rgba(228, 228, 228, 0.75);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
 
 }
 
 #Oslo {
     background-color: rgb(255, 255, 255);
-    box-shadow: 0 1px 5px 1px rgba(228, 228, 228, 0.75);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
 
 }
 
@@ -262,7 +262,7 @@
 }
 
 .event1 {
-    box-shadow: 0 1px 5px 1px rgba(228, 228, 228, 0.75);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
     height: 145px;
     margin: 0 204px 0 204px;
     /* border: 1px solid rgb(233, 19, 3); */
@@ -295,7 +295,7 @@
 }
 
 .qa1 {
-    box-shadow: 0 1px 5px 1px rgba(228, 228, 228, 0.75);
+    box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
     height: 81px;
     margin-bottom: 5px;
     display: flex;
