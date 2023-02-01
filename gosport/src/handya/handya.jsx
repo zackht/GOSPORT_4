@@ -18,6 +18,7 @@ import fram from './icon/Frame.svg';
 import bask from './icon/bask.svg';
 import tennis from './icon/Group 2.svg';
 import noimg from './headerfooter/img/teams_m.png';
+import a from './icon/A.svg'
 //建立連線
 const  socket = io.connect("http://localhost:3002");
 
@@ -845,10 +846,19 @@ useEffect(()=>{
         <div className={cc.qa1}>
             <img src={q} alt=""/>
             <h4>什麼是零打??</h4>
+            <div className={cc.d164}>
+            <img src={a} alt=""/>
+            <h4>所謂零打/臨打,是指該隊伍想找人跟他們一起打球&nbsp;&nbsp;&nbsp;(隊伍只有一人也可以收零打唷)</h4>
         </div>
+        </div>
+
         <div className={cc.qa1}>
             <img src={q} alt=""/>
             <h4>怎麼報名零打??</h4>
+            <div className={cc.d164}>
+            <img src={a} alt=""/>
+            <h4>透過快速搜尋點選找零打輸入條件點擊就可以了唷</h4>
+        </div>
         </div>
     </div>
 
