@@ -68,7 +68,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .addfee,
 .adddescribe,
 .button {
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .cancel,
@@ -110,8 +110,13 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .contenttitle {
-    font-size: 16px;
+    font-size: 1.2rem;
     color: rgba(170, 170, 170, 1);
+}
+
+.contentdescribe,
+.option {
+    font-size: 1.5rem;
 }
 
 .contentdescribe_text {
@@ -146,3 +151,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     text-align: center;
 }
 
+/* input {
+    background-color: rgb(230, 230, 230);
+} */
