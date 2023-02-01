@@ -870,13 +870,13 @@ margin: 10px 0px 0px 15px;
 }
 .d163{
     position: fixed;
-    right: 34px;
+    right: -12px;
     /* border: 1px solid red; */
-    width: 196px;
+    width: 350px;
     /* height: 666px; */
     margin-top: 135px;
     z-index: 99999999999999999999;
-    top: -8px;
+    top: -13px;
 }
 .d164{
     /* box-shadow: 0 1px 5px 1px rgba(228, 228, 228, 0.75); */

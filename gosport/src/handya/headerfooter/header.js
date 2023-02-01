@@ -18,7 +18,7 @@ import user from './img/icon_user.svg';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import sighno from '../icon/快速搜尋＿註冊 (1).svg';
-import gi from './img/會員icon＿有登入＿通知框.svg';
+import gi from './img/Group 254.svg';
 export default function Navbar(props) {
     const { pathname } = useLocation();
     const splitPathname = pathname.split("/");
@@ -552,7 +552,7 @@ const notic = () =>{
                             {/* <Link to='/gosport/communicate'>交流區</Link> */}
                         </div>
                         
-                        <img className="notice" src={notice} />
+                        <img onClick={notic} className="notice" src={notice} />
                         {/* <div className="username"><p>Hi: {token3}</p></div> */}
                         {userInfo.map((v, k) => {
 
