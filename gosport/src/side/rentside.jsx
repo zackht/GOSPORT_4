@@ -233,9 +233,37 @@ const Rentside = () => {
                 {/* <!-- 標籤欄 --> */}
                 <div class={`row d-flex ${side.div8}`}>
                     <div class="d-flex">
-                        <div class={side.buttom1}>
+                        {type==='羽球'?<div class={side.buttom1}>
                             羽球
-                        </div>
+                        </div>:''}
+                        {type==='桌球'?<div class={side.buttom1}>
+                        桌球
+                        </div>:''}
+                        {type==='籃球'?<div class={side.buttom1}>
+                        籃球
+                        </div>:''}
+                        {county==='台中市'?<div class={side.buttom1}>
+                        台中市
+                        </div>:''}
+                        {area==='南屯區'?<div class={side.buttom1}>
+                        南屯區
+                        </div>:''}
+                        {area==='西屯區'?<div class={side.buttom1}>
+                        西屯區
+                        </div>:''}
+                        {area==='北屯區'?<div class={side.buttom1}>
+                        北屯區
+                        </div>:''}
+                        {park?<div class={side.buttom1}>
+                        停車場
+                        </div>:''}
+                        {bath?<div class={side.buttom1}>
+                        淋浴間
+                        </div>:''}
+                        {baulk?<div class={side.buttom1}>
+                        無障礙環境
+                        </div>:''}
+
                     </div>
                     <div class="d-flex ml-auto">
                         <div class={side.typecol}>價格由低到高

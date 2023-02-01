@@ -20,7 +20,7 @@
     display: flex;
     justify-content: center;
     /* padding-left: 20px; */
-    width: 200px;
+    width: 230px;
     height: 65px;
     font-size: 1.5rem;
     font-weight: 400;
@@ -33,6 +33,7 @@
 .fForm input[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0;
 }
+/* 成員頭貼 */
 .fForm img{
     clip-path: circle(50% at 50% 50%);
     width: 100px;
@@ -55,6 +56,14 @@
     padding-right: 30px;
     box-sizing: border-box;
     font-family: 'Noto Sans TC';
+}
+/* 選取頭貼 */
+.fForm label img {
+    height: 100px;
+    opacity: 30%;
+}
+.fForm input[name='member']:checked+label img {
+    opacity: 100%;
 }
 
 .fForm .mContent>div{
@@ -86,7 +95,8 @@
     opacity: 100%;
 }
 /* 表單送出｜取消 */
-.fForm a{
+.fForm a,
+.fForm button{
     border: 1px solid rgb(230, 70, 55);
     width: 48%;
     height: 90px;
@@ -102,7 +112,7 @@
     margin-right: 20px;
 }
 /* 提交 */
-.fForm input[type="submit"]{
+.fForm button{
     border: none;
     background-color: rgb(230, 70, 55);
     color: white;

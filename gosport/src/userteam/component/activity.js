@@ -75,9 +75,10 @@ export default function Activity(params) {
 
                 {/* 訂單資訊 */}
                 <div className={activity.order}>
-                    <Link to={`/gosport/user/myteam/activity/show`} className={activity.orderBtn}>檢視</Link>
-                    <Link to={`/gosport/user/myteam/activity/edit`} className={activity.orderBtn}>編輯</Link>
-                    <button className={activity.orderBtn}>刪除</button>    
+                    <Link to={`/gosport/user/myteam/activity/show`} className={id? activity.orderBtn:activity.notshow}>檢視</Link>
+                    <Link to={`/gosport/user/myteam/activity/edit`} className={id? activity.orderBtn:activity.notshow}>編輯</Link>
+                    
+                    <button className={id? activity.orderBtn:activity.notshow}>刪除</button>    
                     <div className={activity.oTitle}>日期</div>
                     <div className={activity.oText}>{result? `${startdate}-${enddate}`:''}</div>
                     <div className={activity.oTitle}>時間</div>
