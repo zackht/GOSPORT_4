@@ -1344,7 +1344,7 @@ app.post('/basicsearch', (req, res) => {
   const userid = req.body.userid; // 會員
   const teamid = req.body.teamid; // 球隊
   db.query(
-    `SELECT tname,sidename, week,type,level,teamimg,fee,text,starttime,endtime,county,area,teamimg
+    `SELECT team.tname,sidename, week,type,level,teamimg,fee,text,starttime,endtime,county,area,teamimg
     FROM userteam, team 
     where userteam.teamid=team.teamid and userteam.userid=? and userteam.teamid=?`,
     [userid, teamid],

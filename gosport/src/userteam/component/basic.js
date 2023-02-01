@@ -35,6 +35,7 @@ export default function Basic(props) {
         }).then((response)=>{
             // 給input
             setBasicResult(response.data[0]); 
+            console.log(response.data[0]); 
             // 讀照片
             const u8Arr = new Uint8Array(response.data[0].teamimg.data); // 轉unit8array
             const blob = new Blob([u8Arr],{type:"image/jpeg"});     // 轉blob
