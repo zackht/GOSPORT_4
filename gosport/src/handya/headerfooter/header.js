@@ -138,7 +138,7 @@ console.log(iddd)
             userid: id,
         }).then((response) => {
             // console.log('team', response.data);
-            console.log(response.data);
+            // console.log(response.data);
             setteaminfo(response.data);
             // console.log(teaminfo)
             
