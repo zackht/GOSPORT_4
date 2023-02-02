@@ -357,12 +357,47 @@ app.post("/rentside", (req, res) => {
   const county = req.body.county;
   const area = req.body.area;
   const text = req.body.text;
+  const tt = req.body.tt;
+  const xyz = req.body.xyz;
   const park = `${req.body.park}`;
   const bath = `${req.body.bath}`;
   const baulk = `${req.body.baulk}`;
-  if (area === '不限') {
+  if (area === '不限'&& tt === true && xyz === '離峰') {
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
-    weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?)`
+    weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY offpeakfee `
+      // AND bath = ? AND park=? AND baulk=?`
+      , [startdate, enddate, type, starttime, endtime, county, area, text, text], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+  }else if(area === '不限'&& tt === false && xyz === '離峰'){
+    db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
+    weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY offpeakfee DESC`
+      // AND bath = ? AND park=? AND baulk=?`
+      , [startdate, enddate, type, starttime, endtime, county, area, text, text], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+  }else if(area === '不限'&& tt === true && xyz === '尖峰'){
+    db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
+    weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY peakfee`
+      // AND bath = ? AND park=? AND baulk=?`
+      , [startdate, enddate, type, starttime, endtime, county, area, text, text], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+  }else if(area === '不限'&& tt === false && xyz === '尖峰'){
+    db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
+    weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY peakfee DESC`
       // AND bath = ? AND park=? AND baulk=?`
       , [startdate, enddate, type, starttime, endtime, county, area, text, text], (err, result) => {
         if (err) {
@@ -394,78 +429,22 @@ app.post("/rentside2", (req, res) => {
   const county = req.body.county;
   const area = req.body.area;
   const text = req.body.text;
-  const tt = req.body.tt;
   const park = `${req.body.park}`;
   const bath = `${req.body.bath}`;
   const baulk = `${req.body.baulk}`;
-  console.log(tt);
-  if (area === '不限' && tt===true) {
+  console.log(area);
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
-    weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ? ) ORDER BY offpeakfee DESC`
+    weekstarttime BETWEEN  ? AND ? AND county =? AND area=? AND (sidename LIKE ? OR adress LIKE ? )`
       // AND bath = ? AND park=? AND baulk=?`
       , [startdate, enddate, type, starttime, endtime, county, area, text, text], (err, result) => {
         if (err) {
           console.log(err);
         } else {
           res.send(result);
-          console.log('低到高');
         }
       });
-  }else{
-    db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
-    weekstarttime BETWEEN  ? AND ? AND county =? AND  (sidename LIKE ? OR adress LIKE ?) ORDER BY offpeakfee ASC `
-      // AND bath = ? AND park=? AND baulk=?`
-      , [startdate, enddate, type, starttime, endtime, county,  text, text], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-          console.log('高到低');
-        }
-      });
-  }
 });
-// 租場地排序尖峰
-app.post("/rentside3", (req, res) => {
-  const type = req.body.type;
-  const starttime = req.body.starttime;
-  const endtime = req.body.endtime;
-  const startdate = req.body.startdate;
-  const enddate = req.body.enddate;
-  const county = req.body.county;
-  const area = req.body.area;
-  const text = req.body.text;
-  const tt = req.body.tt;
-  const park = `${req.body.park}`;
-  const bath = `${req.body.bath}`;
-  const baulk = `${req.body.baulk}`;
-  console.log(tt);
-  if (area === '不限' && tt===true) {
-    db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
-    weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ? ) ORDER BY peakfee DESC`
-      // AND bath = ? AND park=? AND baulk=?`
-      , [startdate, enddate, type, starttime, endtime, county, area, text, text], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-          console.log('低到高');
-        }
-      });
-  }else{
-    db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
-    weekstarttime BETWEEN  ? AND ? AND county =? AND  (sidename LIKE ? OR adress LIKE ?) ORDER BY peakfee ASC `
-      // AND bath = ? AND park=? AND baulk=?`
-      , [startdate, enddate, type, starttime, endtime, county,  text, text], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-          console.log('高到低');
-        }
-      });
-  }
-});
+
 // 租場地查看更多
 app.post("/rentsideedit", (req, res) => {
   const sideid = req.body.sideid;
