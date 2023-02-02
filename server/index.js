@@ -1164,7 +1164,20 @@ app.post("/followzeroda", (req, res) => {
 app.post("/delefollowzeroda", (req, res) => {
   const articleid_zeroda = req.body.articleid_zeroda;
   const userid = req.body.userid;
-  db.query(" DELETE FROM `follow_zeroda` WHERE `articleid_zeroda`= ? AND `userid`= ?",
+  db.query("UPDATE `follow_zeroda` SET `state`='拒絕' WHERE `articleid_zeroda`= ? AND `userid`= ?",
+    [articleid_zeroda, userid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+//接受零打報名人
+app.post("/acpfollowzeroda", (req, res) => {
+  const articleid_zeroda = req.body.articleid_zeroda;
+  const userid = req.body.userid;
+  db.query(" UPDATE `follow_zeroda` SET `state`='接受' WHERE `articleid_zeroda`= ? AND `userid`= ? ",
     [articleid_zeroda, userid], (err, result) => {
       if (err) {
         console.log(err);

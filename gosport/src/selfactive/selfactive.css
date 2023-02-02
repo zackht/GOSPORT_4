@@ -558,6 +558,32 @@
     color: white;
 }
 
+.clientisY,
+.clientisX{
+    text-align: center;
+    text-shadow: #9e9e9e 1px 1px 1px;
+    font-size: large;
+}
+
+.clientisY span{
+    display: inline-block;
+    border-radius: 10px;
+    width: 100px;
+    height: 35px;
+    line-height: 35px;
+    background-color: rgb(255, 255, 255);
+    border: #c65232 1px solid;
+}
+.clientisX span{
+    display: inline-block;
+    border-radius: 10px;
+    width: 100px;
+    height: 35px;
+    line-height: 35px;
+    background-color: rgb(241, 241, 241);
+    border: #8f8f8f 1px solid;
+}
+
 /* modal關閉按鈕 */
 .active_close {
     color: #aaaaaa;
