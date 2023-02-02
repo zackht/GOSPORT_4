@@ -6,6 +6,7 @@ import PageLogin from './login';
 import Home from './pages/home';
 import About from './pages/about';
 import Selfpage from '../selfpage/selfpage';
+import Selset from '../selfalter/selfsettings'
 
 // const PageHome = lazy(() => import('./pages/home'))
 // const PageAbout = lazy(() => import('./pages/about'))
@@ -68,34 +69,38 @@ const AppLayout = () => {
         return <PageLogin saveToken={saveToken} saveId={saveid} />;
     }
 
-    return (
+    return (<>
+            <div style={{zIndex:"1000"}}>1231241352</div>
         <HashRouter>
             <div style={{ position: "relative", top: '150px' }}>
 
                 <nav >
                     <Link to="/">Home</Link> |
                     <Link to="/about">Abount</Link> |
-                    <Link to="/self">Self</Link>
+                    <Link to="/self">Self</Link> |
+                    <Link to="/selfset">Selfset</Link>
                 </nav>
                 {token ? <p>Welcome, {token}。<a href="##" onClick={handleLogout}>Logout</a></p> : ''}
             </div>
             <Switch>
                 {/* <Route path="/" element={
-                        // <Suspense fallback={<div>Loading...</div>}>
-                            <Home />
-                        // </Suspense>
-                    } />
+                    // <Suspense fallback={<div>Loading...</div>}>
+                    <Home />
+                    // </Suspense>
+                } />
                 <Route path="/about" element={
-                        // <Suspense fallback={<div>Loading...</div>}>
-                            <About />
-                        // </Suspense>
-                    } /> */}
+                    // <Suspense fallback={<div>Loading...</div>}>
+                    <About />
+                    // </Suspense>
+                } /> */}
                 <Route path="/" component={Home} exact />
                 <Route path="/home" component={Home} />
                 <Route path="/about" component={About} />
                 <Route path="/self" component={Selfpage} />
+                <Route path="/selfset" component={Selset} />
             </Switch>
         </HashRouter>
+                </>
     );
 }
 
