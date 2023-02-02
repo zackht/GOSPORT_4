@@ -7,6 +7,14 @@ import Cookies from 'js-cookie';
 import arrowup from '../icon/arrowup2.svg'
 
 const Ordering = () => {
+     //時區更正
+     const getTruedate = (orderData) => {
+        if (!orderData) return null;
+        const date = new Date(orderData);
+        date.setHours(date.getHours() + 8);
+        const result = date.toISOString().substring(0, 10);
+        return result
+    }
     // 接取資料 起訖查詢時間 查詢人
     const [orderInfo, setOrderInfo] = useState([{ orderdate: '', orderid: '' }]);
     const [stratDate, setStartDate] = useState('');
@@ -24,7 +32,7 @@ const Ordering = () => {
             setOrderInfo(response.data)
         });
     }
-    const activeTimeList = orderInfo.map((item, index) => <button key={item.orderid} onClick={() => { showdata(index) }}>{item.orderdate.substring(0, 10)}</button>)
+    const activeTimeList = orderInfo.map((item, index) => <button key={item.orderid} onClick={() => { showdata(index) }}>{ getTruedate(item.orderdate)}</button>)
     // 點擊活動日期顯示查詢結果
     const [orderNone, setOderNoneOut] = useState('flex')
     const [ordermenu, setShowOrder] = useState('none');
@@ -76,7 +84,7 @@ const Ordering = () => {
             <div className='ordermenu' id="notalready" style={{ display: orderNone }}> <span>尚未選擇下單日期</span> </div>
             <div className="ordermenu" id='ordering' style={{ display: ordermenu }}>
             <div>訂單日期</div>
-            <div>{orderData.orderdate.substring(0, 10)}</div>
+            <div>{getTruedate(orderData.orderdate)}</div>
                 <div style={{ display: rentType ? 'flex' : 'none' }}>
                     <div style={{ flex: "1" }}>開始時間</div>
                     <div style={{ flex: "1" }}>結束時間</div>
@@ -92,14 +100,14 @@ const Ordering = () => {
 
                 </div>
                 <div style={{ display: rentType ? 'flex' : 'none' }}>
-                    <div style={{ flex: "1" }}>{orderData.startdate.substring(0, 10)}</div>
-                    <div style={{ flex: "1" }}>{orderData.enddate.substring(0, 10)}</div>
+                    <div style={{ flex: "1" }}>{getTruedate(orderData.startdate)}</div>
+                    <div style={{ flex: "1" }}>{getTruedate(orderData.enddate)}</div>
                     {/* <div style={{ flex: "1" }}>證明</div> */}
                     <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
                     {/* <div style={{ flex: "1" }}>{orderData.week}</div> */}
                 </div>
                 <div style={{ display: rentType ? 'none' : 'flex' }}>
-                    <div style={{ flex: "1" }}>{orderData.startdate.substring(0, 10)}</div>
+                    <div style={{ flex: "1" }}>{getTruedate(orderData.startdate)}</div>
                     <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
                     {/* <div style={{ flex: "1" }}>證明</div> */}
                     <div style={{ flex: "1" }}>{orderData.week}</div>
