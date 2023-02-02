@@ -65,7 +65,7 @@ const Selfalter = () => {
             setTdegree(response.data[0].tabletennis)
             setVdegree(response.data[0].volleyball)
             let badge = JSON.parse(response.data[0].usebadge)
-            setSelectedImages(badge)
+            if(response.data[0].usebadge !== null)setSelectedImages(badge)
         });
         Axios.post("http://localhost:3001/selfbadge", {
             userid: userid,
@@ -177,6 +177,7 @@ const Selfalter = () => {
     // 徽章
     const [selectedImages, setSelectedImages] = useState([{ badgeurl: '#' }]);
     let badge = JSON.stringify(selectedImages)
+    console.log('aa',selectedImages)
     const [clickCount, setClickCount] = useState(0);
     const chuseStar = (item) => {
         // console.log(badge)
@@ -229,11 +230,11 @@ const Selfalter = () => {
                             </div>
                             <div style={{ paddingLeft: "40px" }}>
                                 <label className='alter_label' htmlFor="alter_name">姓名</label><br />
-                                <input type="text" className='alter_input' id="alter_name" value={username} onChange={nameChange} /><br />
+                                <input type="text" className='alter_input' id="alter_name" value={username} onChange={nameChange} required='required'/><br />
                                 <label className='alter_label' htmlFor="alter_email">註冊信箱</label><br />
-                                <input type="text" className='alter_input' id="alter_email" value={email} onChange={emailChange} /><br />
+                                <input type="text" className='alter_input' id="alter_email" value={email} onChange={emailChange} required='required'/><br />
                                 <label className='alter_label' htmlFor="alter_psw">密碼</label><br />
-                                <input type="password" className='alter_input' id="alter_psw" value={password} onChange={passChange} /><br />
+                                <input type="password" className='alter_input' id="alter_psw" value={password} onChange={passChange} required='required'/><br />
                                 <label className='alter_label' htmlFor="alter_tel">電話</label><br />
                                 <input type="tel" className='alter_input' id="alter_tel" value={tel} onChange={telChange} /><br />
                                 <label className='alter_label'>我的程度</label><br />

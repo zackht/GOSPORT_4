@@ -3,7 +3,8 @@
     /* 扣除header footer高度 */
     height: 695px;
     /* header高度 */
-    top: 135px;
+    top: 82px;
+    /* margin-bottom: 135px; */
     display: flex;
     align-items: center;
     justify-content: center;

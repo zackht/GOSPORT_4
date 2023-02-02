@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Axios from "axios";
 import { Link, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -136,7 +136,7 @@ console.log(iddd)
             userid: id,
         }).then((response) => {
             // console.log('team', response.data);
-            // console.log(response.data);
+            console.log(response.data);
             setteaminfo(response.data);
             // console.log(teaminfo)
             
@@ -328,6 +328,10 @@ const [mouse,setmouse] = useState(false)
 const notic = () =>{
     loginfo2 === "none" ? setloginfo2("block") : setloginfo2("none");
 }
+const userCL = useRef();
+const closeUNav = () =>{
+    userCL.current.click();
+}
 // // //google login
 // const [googleuser,setgoogle] = useState()
 // function handleCallbackResponse(response){
@@ -350,6 +354,7 @@ const notic = () =>{
 // console.log(teaminfo===[])
 // const teaminfoo=()=>{JSON.stringify(teaminfo)};
 // console.log(JSON.stringify(teaminfo)==="[]")
+console.log(teaminfo);
 
 
     if (!token3) {
@@ -513,21 +518,21 @@ const notic = () =>{
         <React.Fragment>
 <img style={{ display: loginfo2 }} className={cc.d163} src={gi}></img>
             <div style={{ display: loginfo1 }} className={cc.d154}>
-                <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user'>個人頁面</Link></button>
-                <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/settings'>帳號設定</Link></button>
-                <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>活動歷程</Link></button>
+                <button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user'>個人頁面</Link></button>
+                <button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/settings'>帳號設定</Link></button>
+                <button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>活動歷程</Link></button>
 {JSON.stringify(teaminfo)==="[]"?
 (
-<React.Fragment><button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>新建球隊</Link></button></React.Fragment>
+<React.Fragment><button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/myteam/basic/edit'>新建球隊</Link></button></React.Fragment>
 ):
 (
-    <React.Fragment><button className={mouse==true?cc.d160:cc.d161}><Link style={{color:"black"}} to='/gosport/user/activity'>我的球隊</Link></button></React.Fragment>
+    <React.Fragment><button onClick={()=>{closeUNav()}} className={mouse==true?cc.d160:cc.d161}>我的球隊</button></React.Fragment>
     )}
                 
                 {/* <button className={mouse==true?cc.d160:cc.d161}>我的球隊</button> */}
                 {teaminfo.map((v,k)=>{                   
                     return(
-<React.Fragment> <button onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}><Link style={{color:"black"}} to='/gosport/user/activity'>{v.tname}</Link></button>   </React.Fragment>
+<React.Fragment> <button onClick={()=>{closeUNav()}} onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}><Link style={{color:"black"}} to={`/gosport/user/myteam/${v.teamid}/basic`}>{v.tname}</Link></button>   </React.Fragment>
 )
                 }
                 )}
@@ -572,7 +577,7 @@ const notic = () =>{
                                     setUserurl(fr.result);
                                 }
                                 return (
-                                    <React.Fragment><img className="userimg" onClick={loginfo} src={userurl} />
+                                    <React.Fragment><img className="userimg" ref={userCL} onClick={loginfo} src={userurl} />
                                         <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
   
                                     </React.Fragment>

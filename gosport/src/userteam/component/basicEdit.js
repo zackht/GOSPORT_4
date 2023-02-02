@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import basicEdit from './basicEdit.module.css';
 import img from '../img.module.js';
 import Axios from "axios";
+import Cookies from 'js-cookie';
+
 export default function BasicEdit(props) {
 
     // SQL參數 會員id 球隊id
-    const [userid, setUserid] = useState('1');
-    const [teamid, setTeamid] = useState('1');
+    const [userid, setUserid] = useState( Cookies.get('id') ); // 登入者id
+    const [teamid, setTeamid] = useState(null);
 
     // input值
     const [tname, setTname] = useState('');
@@ -19,6 +21,8 @@ export default function BasicEdit(props) {
     const [level, setLevel] = useState('');
     const [fee, setFee] = useState('');
     const [text, setText] = useState('');
+    const [county, setCounty] = useState('');
+    const [area, setArea] = useState('');
     const [teamimg, setTeamimg] = useState();   // 顯示
     const [teamfile, setTeamfile] = useState(); // 傳照片
     // 上傳照片...
@@ -40,6 +44,10 @@ export default function BasicEdit(props) {
         setLevel(res.data[0].level);
         setFee(res.data[0].fee);
         setText(res.data[0].text);
+        console.log(res.data[0].county);
+        console.log(res.data[0].area);
+        setCounty(res.data[0].county);
+        setArea(res.data[0].area);
         // 讀照片
         const u8Arr = new Uint8Array(res.data[0].teamimg.data); // 轉unit8array
         const blob = new Blob([u8Arr],{type:"image/jpeg"});     // 轉blob
@@ -80,46 +88,100 @@ export default function BasicEdit(props) {
         }, false);
     }
 
-    // 更新資料
+    // 更新 or 新增資料
     const updateBasic =()=>{
-        if(teamfile){ // 有圖片
-            // 打包
-            const teamData = new FormData(); 
-            teamData.append('teamid', teamid);
-            teamData.append('tname', tname);
-            teamData.append('sidename', sidename);
-            teamData.append('week', week);
-            teamData.append('starttime', starttime);
-            teamData.append('endtime', endtime);
-            teamData.append('type', type);
-            teamData.append('level', level);
-            teamData.append('fee', fee);
-            teamData.append('text', text);
-            teamData.append('teamfile', teamfile); // img
-            Axios.post("http://localhost:3001/basicupdate", teamData,{
-                headers: { 'Content-Type': 'multipart/form-data' },
-            }).then((response) => {
-                console.log("有圖片更新成功");
-            });
-        } else { // 沒圖片
-            const teamData2 = new FormData();
-            teamData2.append('teamid', teamid);
-            teamData2.append('tname', tname);
-            teamData2.append('sidename', sidename);
-            teamData2.append('week', week);
-            teamData2.append('starttime', starttime);
-            teamData2.append('endtime', endtime);
-            teamData2.append('type', type);
-            teamData2.append('level', level);
-            teamData2.append('fee', fee);
-            teamData2.append('text', text);
-            Axios.post("http://localhost:3001/basicupdate2", teamData2, {
-                headers: { 'Content-Type': 'multipart/form-data' },
-            }).then((response) => {
-                console.log("沒圖片更新成功");
-            });
+
+        // 有球隊
+        if(teamid){
+
+            if(teamfile){ // 有圖片
+                // 打包
+                const teamData = new FormData(); 
+                teamData.append('teamid', teamid);
+                teamData.append('tname', tname);
+                teamData.append('sidename', sidename);
+                teamData.append('week', week);
+                teamData.append('starttime', starttime);
+                teamData.append('endtime', endtime);
+                teamData.append('type', type);
+                teamData.append('level', level);
+                teamData.append('fee', fee);
+                teamData.append('text', text);
+                teamData.append('teamfile', teamfile); // img
+                Axios.post("http://localhost:3001/basicupdate", teamData,{
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                }).then((response) => {
+                    console.log("有圖片更新成功");
+                });
+            } else { // 沒圖片
+                const teamData2 = new FormData();
+                teamData2.append('teamid', teamid);
+                teamData2.append('tname', tname);
+                teamData2.append('sidename', sidename);
+                teamData2.append('week', week);
+                teamData2.append('starttime', starttime);
+                teamData2.append('endtime', endtime);
+                teamData2.append('type', type);
+                teamData2.append('level', level);
+                teamData2.append('fee', fee);
+                teamData2.append('text', text);
+                Axios.post("http://localhost:3001/basicupdate2", teamData2, {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                }).then((response) => {
+                    console.log("沒圖片更新成功");
+                });
+            }
+
+
+        }else{
+        // 無球隊
+            
+            if(teamfile){ // 有圖片
+                // 打包
+                const teamData = new FormData(); 
+                teamData.append('teamid', teamid);
+                teamData.append('tname', tname);
+                teamData.append('sidename', sidename);
+                teamData.append('week', week);
+                teamData.append('starttime', starttime);
+                teamData.append('endtime', endtime);
+                teamData.append('type', type);
+                teamData.append('level', level);
+                teamData.append('fee', fee);
+                teamData.append('text', text);
+                teamData.append('teamfile', teamfile); // img
+                Axios.post("http://localhost:3001/basicnew", teamData,{
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                }).then((response) => {
+                    console.log("有圖片新增球隊成功");
+                });
+            } else { // 沒圖片
+                const teamData2 = new FormData();
+                teamData2.append('teamid', teamid);
+                teamData2.append('tname', tname);
+                teamData2.append('sidename', sidename);
+                teamData2.append('week', week);
+                teamData2.append('starttime', starttime);
+                teamData2.append('endtime', endtime);
+                teamData2.append('type', type);
+                teamData2.append('level', level);
+                teamData2.append('fee', fee);
+                teamData2.append('text', text);
+                Axios.post("http://localhost:3001/basicnew2", teamData2, {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                }).then((response) => {
+                    console.log("沒圖片新增球隊成功");
+                });
+            }
+
         }
+
+        
     }
+
+    const [Taichung, setTaichung] = useState([
+        "不限","外埔區", "東區", "西區", "南區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "清水區", "沙鹿區", "大甲區", "東勢區", "梧棲區", "烏日區", "神岡區", "大肚區", "大雅區", "后里區", "霧峰區", "潭子區", "龍井區", "中區", "和平區", "石岡區", "大安區", "新社區"
+    ]);
 
     return(
         <>
@@ -134,6 +196,20 @@ export default function BasicEdit(props) {
                 <div>隊名</div>
                 <input type="text" name='tname' defaultValue={tname? tname:''} 
                        onChange={(e)=>{setTname(e.target.value)}}/>
+
+                <div>縣市</div>
+                <select name="county" onChange={(e)=>{setCounty(e.target.value)}}>
+                    <option value="台中市" selected={week? `${week==='台中市'? 'selected':''}`:''}>台中市</option>
+                </select>
+
+                <div>地區</div>
+                <select name="area" onChange={(e)=>{setArea(e.target.value)}}>
+                    {Taichung.map((val, key) => {
+                        return (<option key={key} value={val}>{val}</option>);
+                    })}
+
+                </select>
+                
 
                 <div>常打場館</div>
                 <input type="text" name='sidename' defaultValue={sidename? sidename:''}

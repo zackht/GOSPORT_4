@@ -32,7 +32,7 @@ const Selfpage = () => {
             userid: userid,
         }).then((response) => {
             let badge = JSON.parse(response.data[0].usebadge)
-            if (badge !== null) setSelfBadge(badge)
+            if (badge !== null && response.data[0].usebadge !== '[]') setSelfBadge(badge)
             setSelf(response.data)
             console.log("self", response.data);
         });
