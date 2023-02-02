@@ -136,7 +136,7 @@ console.log(iddd)
             userid: id,
         }).then((response) => {
             // console.log('team', response.data);
-            console.log(response.data);
+            // console.log(response.data);
             setteaminfo(response.data);
             // console.log(teaminfo)
             
@@ -354,7 +354,7 @@ const closeUNav = () =>{
 // console.log(teaminfo===[])
 // const teaminfoo=()=>{JSON.stringify(teaminfo)};
 // console.log(JSON.stringify(teaminfo)==="[]")
-console.log(teaminfo);
+// console.log(teaminfo);
 
 
     if (!token3) {

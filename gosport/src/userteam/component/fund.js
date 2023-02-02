@@ -20,7 +20,7 @@ export default function Fund(params) {
         Axios.post('http://localhost:3001/teamfundarticle',{
             id:id
         }).then((response)=>{
-            console.log(`基金文章:${id}`);
+            // console.log(`基金文章:${id}`);
             setResult(response.data[0]);
 
             // 讀date

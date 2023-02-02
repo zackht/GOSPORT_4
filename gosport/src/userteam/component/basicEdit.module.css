@@ -64,6 +64,16 @@
     font-size: 1.2rem;
     text-align: start;
 }
+.beRight{
+    position: absolute;
+    left: 220px;
+    
+}
+.beRight2{
+    position: absolute;
+    left: 440px;
+    
+}
 /* 下拉選單 */
 .bForm select {
     margin-top: 10px;
@@ -90,15 +100,19 @@ option{
     font-size: 1rem;
 }
 
+
 /* 至 */
 .fTimeTo {
     display: inline;
     margin: auto 20px;
+    position: absolute;
+    left: 375px;
+    top:498px;
 }
 /* 羽球程度 */
 .formDegree {
     position: relative;
-    left: 60px;
+    left: 35px;
 }
 /* 描述 */
 textarea {
