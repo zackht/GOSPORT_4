@@ -160,9 +160,9 @@ export default function DateSearch(params) {
                 <div className={dateSearch.sTitle}>日期搜尋</div>
                 <input type="date" onChange={ (e)=>{ setStartdate(e.target.value) } } />
                 <input type="date" onChange={ (e)=>{ setEnddate(e.target.value) } } />
-                {/* <button onClick={ handleDateSearch }>搜尋</button> */}
                 <div className={dateSearch.sTitle}>訂單日期</div>
                 <div className={dateSearch.sDate}>{ resultList }</div>
+                <button onClick={ handleDateSearch }>新增文章</button>
             </div>
         </>
     )

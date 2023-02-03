@@ -126,10 +126,10 @@ const Artadd = ({ control, editZeroda, editSublet, find, follow }) => {
         <React.Fragment>
             <div>
                 文章類別選擇：
-                <input type="checkbox" id='chfinds' style={{opacity:"0"}} checked={chuseS}/>
-                <label htmlFor="chfinds" onClick={()=>{setChuseS(!chuseS)}} className={chuseS?'chfind article_chusefind':'notchfind article_chusefind'}>轉租</label>
-                <input type="checkbox" id='chfindz' style={{opacity:"0"}} checked={chuseZ}/>
-                <label htmlFor="chfindz" onClick={()=>{setChuseZ(!chuseZ)}} className={chuseZ?'chfind article_chusefind':'notchfind article_chusefind'}>零打</label>
+                <input type="checkbox" id='chfinds' style={{opacity:"0"}} checked={chuseS} onChange={()=>{setChuseS(!chuseS)}}/>
+                <label htmlFor="chfinds" className={chuseS?'chfind article_chusefind':'notchfind article_chusefind'}>轉租</label>
+                <input type="checkbox" id='chfindz' style={{opacity:"0"}} checked={chuseZ} onChange={()=>{setChuseZ(!chuseZ)}}/>
+                <label htmlFor="chfindz" className={chuseZ?'chfind article_chusefind':'notchfind article_chusefind'}>零打</label>
                 <br/>
                 活動日期區間：&nbsp;&nbsp;&nbsp;  
                 {/* <br /> */}
@@ -153,7 +153,7 @@ const Artadd = ({ control, editZeroda, editSublet, find, follow }) => {
                                 <td>{getStartDate(item.startdate)}</td>
                                 <td>零打</td>
                                 <td className='articlecontent' >{item.content}</td>
-                                <td className='articlefollow'  ref={follow} onClick={() => { control(item) }}>{item.number}</td>
+                                <td className='articlefollow' ref={follow} onClick={() => { control(item) }}>{item.number}</td>
                                 <td style={{ textAlign: "center" }}>{countzero[index]}</td>
                                 <td style={{ position: "relative" }}>
                                     <button onClick={() => { editZeroda(item) }}>編輯</button>
@@ -187,46 +187,5 @@ const Artadd = ({ control, editZeroda, editSublet, find, follow }) => {
         </React.Fragment>
     );
 }
-// class Artadd extends Component {
-//     state = {
-//     }
-
-//     render() {
-//         const {controlModal}=this.props
-//         return (
-//             <React.Fragment>
-//                 <div>
-//                     日期區間<br />
-//                     <input type="date" /><img className="selectedDate" src={arrowup} alt='' />至&emsp;&thinsp;
-//                     <input type="date" /><img className="selectedDate" src={arrowup} alt='' />
-//                 </div>
-//                 <table>
-//                     <tbody>
-//                         <tr>
-//                             <td>新增日期</td>
-//                             <td>類別</td>
-//                             <td>標題</td>
-//                             <td>報名/承租</td>
-//                             <td>留言數</td>
-//                             <td></td>
-//                         </tr>
-//                         <tr>
-//                             <td>2022/12/21</td>
-//                             <td>羽球</td>
-//                             <td>一個內斂又大膽的標題</td>
-//                             <td style={{ textAlign: "center", cursor: "pointer" }} onClick={controlModal}>66</td>
-//                             <td style={{ textAlign: "center" }}>88</td>
-//                             <td style={{ position: "relative" }}>
-//                                 <button>編輯</button>
-//                                 <button>刪除</button>
-//                             </td>
-//                         </tr>
-//                     </tbody>
-//                 </table>
-
-//             </React.Fragment>
-//         );
-//     }
-// }
 
 export default Artadd;

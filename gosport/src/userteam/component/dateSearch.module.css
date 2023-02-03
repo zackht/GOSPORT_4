@@ -44,7 +44,7 @@
 }
 /* 顯示訂單日期清單框 */
 .sDate{
-    height: 45%;
+    height: 20%;
     overflow: scroll;
 }
 /* 開始日期｜結束日期 */
@@ -83,6 +83,6 @@
     color: rgb(255, 255, 255);
     font-weight: 400;
     font-size: 1.2rem;
-    /* position: absolute; */
-    /* bottom: 0; */
+    position: absolute; 
+     bottom: 0; 
 }
