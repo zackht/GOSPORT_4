@@ -112,7 +112,8 @@ export default function FundEdit(params) {
         <div className={fund.fForm}>
             <div>日期</div>
             <input type="date"
-                    value={ date } onChange={ (e)=>{setDate(e.target.value)} }/>
+                   value={ date } 
+                   onChange={ (e)=>{setDate(e.target.value)} }/>
 
             <div>儲值成員</div>
             <div>{ memberList }</div>
