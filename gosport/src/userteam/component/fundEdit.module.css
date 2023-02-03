@@ -16,10 +16,9 @@
     background-image: url(../img/icon_select.svg);
     background-size: auto 50%;
     background-repeat: no-repeat;
-    background-position: 100% 50%;
+    background-position: 95% 50%;
     display: flex;
     justify-content: center;
-    /* padding-left: 20px; */
     width: 230px;
     height: 65px;
     font-size: 1.5rem;
@@ -61,6 +60,7 @@
 .fForm label img {
     height: 100px;
     opacity: 30%;
+    background-color: rgba(170, 170, 170,.2);
 }
 .fForm input[name='member']:checked+label img {
     opacity: 100%;
@@ -112,7 +112,7 @@
     margin-right: 20px;
 }
 /* 提交 */
-.fForm button{
+.fForm a:last-child{
     border: none;
     background-color: rgb(230, 70, 55);
     color: white;

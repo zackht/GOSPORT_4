@@ -19,14 +19,15 @@ export default function Activity(params) {
     
         // 抓網址id = 文章id
         const {id} = useParams();
+        const {articleid} = useParams();
     
         // 查找指定文章
         useEffect(()=>{
             Axios.post('http://localhost:3001/teamactivityarticle',{
-                id:id
+                articleid:articleid
             }).then((response)=>{
-                console.log(`基金文章:${id}`);
                 setResult(response.data[0]);
+                console.log(response.data[0]);
                 
                 // startdate
                 const rrstartdate = response.data[0].startdate;
@@ -63,7 +64,7 @@ export default function Activity(params) {
                 // };
             });
 
-        },[id]);
+        },[articleid]);
 
     return(
         <>

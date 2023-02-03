@@ -113,12 +113,12 @@ const Orderfutrue = () => {
                     <div style={{ flex: "1" }}>{getTruedate(orderData.startdate)}</div>
                     <div style={{ flex: "1" }}>{getTruedate(orderData.enddate)}</div>
                     {/* <div style={{ flex: "1" }}>證明</div> */}
-                    <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
+                    <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime+1}:00</div>
                     {/* <div style={{ flex: "1" }}>{orderData.week}</div> */}
                 </div>
                 <div style={{ display: rentType ? 'none' : 'flex' }}>
                     <div style={{ flex: "1" }}>{getTruedate(orderData.startdate)}</div>
-                    <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
+                    <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime+1}:00</div>
                     {/* <div style={{ flex: "1" }}>證明</div> */}
                     <div style={{ flex: "1" }}>{orderData.week}</div>
 

@@ -132,6 +132,7 @@ const db = mysql.createConnection({
   database: "gosport",
   port: 3306,
   useConnectionPooling: true,
+  timezone:'utc',
 });
 
 process.on('uncaughtException', function (err) {
@@ -246,6 +247,20 @@ app.post("/userupdate", upload.single('image'), (req, res) => {
   console.log(req.file.buffer);
   db.query("UPDATE user SET userimg=? where userid =?"
     , [req.file.buffer, name], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+// 後臺會員刪除
+app.post("/backuserdelete",(req, res) => {
+  const name = req.body.name;
+  console.log(name);
+  console.log(req.file.buffer);
+  db.query("UPDATE user SET userimg=? where userid =?"
+    , [name], (err, result) => {
       if (err) {
         console.log(err);
       } else {
@@ -1695,10 +1710,10 @@ app.post('/deletemember', (req, res) => {
   app.post('/teamfundall', (req, res) => {
     const teamid = req.body.teamid;
       db.query(
-        `SELECT date,userid,fee,text,teamfundid as 'articleid'
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',userid,fee,text,teamfundid as 'articleid'
         FROM teamfund
         WHERE teamid=?
-        ORDER by date;`,
+        ORDER by addtime desc;`,
       [teamid],
       (err, result) => {
         if (err) {
@@ -1714,13 +1729,13 @@ app.post('/deletemember', (req, res) => {
   app.post('/teamfunddate', (req, res) => {
     const teamid = req.body.teamid;
     const startdate = req.body.startdate;
-    const enddate = req.body.enddate;
+    // const enddate = req.body.enddate;
       db.query(
-        `SELECT date,userid,fee,text,teamfundid as 'articleid'
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',userid,fee,text,teamfundid as 'articleid'
         FROM teamfund
-        WHERE date BETWEEN ? AND ? AND teamid=?
-        ORDER by date;`,
-      [startdate, enddate, teamid],
+        WHERE date=? AND teamid=?
+        ORDER by addtime desc;`,
+      [startdate, teamid],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -1735,10 +1750,10 @@ app.post('/deletemember', (req, res) => {
   app.post('/teampayall', (req, res) => {
     const teamid = req.body.teamid;
       db.query(
-        `SELECT date,item,fee,text,teampayid as 'articleid'
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',item,fee,text,teampayid as 'articleid'
         FROM teampay
         WHERE teamid=?
-        ORDER by date;`,
+        ORDER by addtime desc;`,
       [teamid],
       (err, result) => {
         if (err) {
@@ -1759,7 +1774,7 @@ app.post('/deletemember', (req, res) => {
         `SELECT date,item,fee,text,teampayid as 'articleid'
         FROM teampay
         WHERE date BETWEEN ? AND ? AND teamid=?
-        ORDER by date;`,
+        ORDER by addtime desc;`,
       [startdate, enddate, teamid],
       (err, result) => {
         if (err) {
@@ -1778,7 +1793,7 @@ app.post('/deletemember', (req, res) => {
         `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
         FROM teamactivity
         WHERE teamid=?
-        ORDER by date;`,
+        ORDER by startdate desc;`,
       [teamid],
       (err, result) => {
         if (err) {
@@ -1799,7 +1814,7 @@ app.post('/deletemember', (req, res) => {
         `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
         FROM teamactivity
         WHERE startdate BETWEEN ? AND ? AND teamid=?
-        ORDER by date;`,
+        ORDER by startdate desc;`,
       [startdate, enddate, teamid],
       (err, result) => {
         if (err) {
@@ -1813,12 +1828,50 @@ app.post('/deletemember', (req, res) => {
 
   // 芝｜fund 查找基金 指定文章 
   app.post('/teamfundarticle', (req, res) => {
-    const id = req.body.id;
+    const articleid = req.body.articleid;
       db.query(
-        `SELECT date,user.userid,fee,text,userimg
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',user.userid,fee,text,userimg
         FROM teamfund,user
         WHERE teamfund.userid = user.userid and teamfundid=?`,
-      [id],
+      [articleid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+
+  // 芝｜fund 新建基金文章 
+  app.post('/teamfundarticlenew', (req, res) => {
+    const date = req.body.date;
+    const teamid = req.body.teamid;
+    const userid = req.body.userid;
+    const fee = req.body.fee;
+    const text = req.body.text;
+      db.query(
+        `INSERT INTO teamfund(date,teamid,userid,fee,text)
+        VALUES(?,?,?,?,?)`,
+      [date, teamid, userid, fee, text],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+
+  // 芝｜fund 刪除基金文章 
+  app.post('/teamfundarticledelete', (req, res) => {
+    const articleid = req.body.articleid;
+      db.query(
+        `delete from teamfund 
+        where teamfundid=?`,
+      [articleid],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -1833,7 +1886,7 @@ app.post('/deletemember', (req, res) => {
   app.post('/teampayarticle', (req, res) => {
     const id = req.body.id;
       db.query(
-        `SELECT date,item,fee,text
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',item,fee,text
         FROM teampay
         WHERE teampayid=?`,
       [id],

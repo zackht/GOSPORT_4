@@ -534,7 +534,7 @@ const nono = ()=>{
                 <button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>活動歷程</Link></button>
 {JSON.stringify(teaminfo)==="[]"?
 (
-<React.Fragment><button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/myteam/basic/edit'>新建球隊</Link></button></React.Fragment>
+<React.Fragment><button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/myteam/basic/new'>新建球隊</Link></button></React.Fragment>
 ):
 (
     <React.Fragment><button onClick={()=>{closeUNav()}} className={mouse==true?cc.d160:cc.d161}>我的球隊</button></React.Fragment>

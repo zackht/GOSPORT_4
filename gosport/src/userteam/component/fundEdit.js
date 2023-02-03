@@ -1,13 +1,23 @@
 import React, { useState ,useEffect } from 'react';
-import { Link,useParams } from 'react-router-dom';
+import { Link,useParams,useLocation } from 'react-router-dom';
 import fund from './fundEdit.module.css';
 import img from '../img.module';
 import Axios from 'axios';
+import Cookies from 'js-cookie';
 
 export default function FundEdit(params) {
 
+    // 抓網址id = 文章id
+    const {id} = useParams();
+    // const {articleid} = useParams();
+    const [articleid,setArticleid]=useState(null);
+
+    // 目前網址
+    const [pathend, setPathEnd] = useState('');
+
     // SQL參數
-    const [teamid, setTeamid] = useState(1);                   // 球隊id
+    const [userid, setUserid] = useState( Cookies.get('id') );  // 登入者id
+    const [teamid, setTeamid] = useState( id );   
 
     // 資料庫抓回來的值
     const [result, setResult] = useState(null);
@@ -15,22 +25,17 @@ export default function FundEdit(params) {
 
     // input值
     const [date, setDate] = useState(null);                 // 儲值日期
-    const [fundMembeIid, setFundMembeIid] = useState();     // 儲值成員id
+    const [fundMembeIid, setFundMembeIid] = useState(null); // 儲值成員id
     const [fee,setFee]=useState(null);                      // 儲值金額
     const [text,setText]=useState(null);                    // 儲值描述 
     const [members, setmembers] = useState([]);             // 成員資料
     const [memberImgUrls, setMemberImgUrls] = useState({}); // 成員urls 已讀取
 
-    // 抓網址id = 文章id
-    const {id} = useParams();
-
     // 查找指定文章
     useEffect(()=>{
         Axios.post('http://localhost:3001/teamfundarticle',{
-            id:id
+            articleid:articleid
         }).then((response)=>{
-            // console.log(`基金文章:${id}`);
-            // console.log(response.data[0]);
             setResult(response.data[0]);
             setFundMembeIid(response.data[0].userid);
 
@@ -49,7 +54,7 @@ export default function FundEdit(params) {
                 setRuserimg(fr.result);
             };
         });
-    },[id]);
+    },[articleid]);
 
     // 畫面載入即抓 成員資料
     useEffect(()=>{
@@ -59,13 +64,12 @@ export default function FundEdit(params) {
             setmembers(response.data); // 成員資料 
             // console.log(response.data);
         })
-    },[]);
+    },[articleid]);
 
-    // 抓到成員資料後 
+    // 抓到成員資料後 讀照片
     useEffect(() => {
 
         members.forEach((val, key) => {
-            // 1. 照片轉檔
             if (val.userimg !== null) {
                 let u8Arr = new Uint8Array(val.userimg.data);
                 let blob = new Blob([u8Arr], {type: "image/jpeg"});
@@ -81,8 +85,40 @@ export default function FundEdit(params) {
 
     }, [members]);
 
+    // 畫面載入 設定最新的文章id
+    useEffect(()=>{
+
+        // 基金
+        if(pathend==='fund'){
+            Axios.post('http://localhost:3001/teamfundall',{
+                teamid:teamid
+            }).then((response)=>{
+                console.log(response.data[0].articleid);
+                setArticleid(response.data[0].articleid);
+            });
+
+        // 支出
+        }else if(pathend==='pay'){
+            Axios.post('http://localhost:3001/teampayall',{
+                teamid:teamid
+            }).then((response)=>{
+                setArticleid(response.data[0].articleid);
+            });
+
+        // 活動
+        }else if(pathend==='activity'){
+            Axios.post('http://localhost:3001/teamactivityall',{
+                teamid:teamid
+            }).then((response)=>{
+                setArticleid(response.data[0].articleid);
+            });
+        };
+
+    },[]);
+
     // 成員清單
     const memberList =members.map((val, key) => {
+        // console.log(val);
         return (
             <>
                 <input type="radio" key={key} id={`fund${key}`} name='member' value={val.userid}
@@ -95,19 +131,24 @@ export default function FundEdit(params) {
         )
     })
 
+    // 新建文章
     const handleUpdateFund=()=>{
-        console.log('update');
-        console.log(date);
-        console.log(fundMembeIid);
-        console.log(fee);
-        console.log(text);
+        // console.log(fundMembeIid);
+        Axios.post('http://localhost:3001/teamfundarticlenew',{
+            date:date,
+            teamid:teamid,
+            userid:fundMembeIid,
+            fee:fee,
+            text:text
+        })
     }
 
     return(
         <div className={fund.fForm}>
             <div>日期</div>
-            <input type="date" min="2023-01-01" max="2024-12-31" 
-                    value={ date } onChange={ (e)=>{setDate(e.target.value)} }/>
+            <input type="date"
+                   value={ date } 
+                   onChange={ (e)=>{setDate(e.target.value)} }/>
 
             <div>儲值成員</div>
             <div>{ memberList }</div>
@@ -120,8 +161,8 @@ export default function FundEdit(params) {
                       defaultValue={result? result.text:''} 
                       onChange={ (e)=>{setText(e.target.value)} } ></textarea>
             <div>
-                <Link to={`/gosport/user/myteam/fund/${id}`}>取消</Link>
-                <button onClick={ handleUpdateFund }>儲存</button>
+                <Link to={`/gosport/user/myteam/${id}/fund/${articleid}`}>取消</Link>
+                <Link to={`/gosport/user/myteam/${id}/fund/${articleid}`} onClick={ handleUpdateFund }>儲存</Link>
             </div>
         </div>
     )

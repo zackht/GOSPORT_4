@@ -135,6 +135,7 @@ width:50px ;
 object-fit: cover;
 margin-left: 30px;
     border-radius: 99px;
+    background-color: rgba(170, 170, 170,.2);
 }
 .userimg1{
     
