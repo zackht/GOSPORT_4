@@ -248,7 +248,7 @@ const Handya = () =>{
         })
 
       };
-      const [chatdiv,setchat] =useState("block")
+      const [chatdiv,setchat] =useState("none")
       const[chatimg,setchatimg] =useState("block")
       const newref = useRef(null);
       const bottomref = useRef(null);
