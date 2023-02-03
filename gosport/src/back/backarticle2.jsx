@@ -530,7 +530,7 @@ const Backarticle2 = () => {
                                     <div class={`${ba.selectimg} ${ba.font} ${ba.div10}`}>
                                         <select name="" id="" className={`${ba.div11} ${ba.select}`} onChange={(e) => setball1(e.target.value)}>
                                             <option value="羽球">羽球</option>
-                                            <option value="排球">排球</option>
+                                            <option value="排球">籃球</option>
                                             <option value="桌球">桌球</option>
                                         </select>
                                         <img class="" src={Group41} alt="" className={ba.img} />

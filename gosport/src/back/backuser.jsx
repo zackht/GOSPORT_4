@@ -18,7 +18,7 @@ const Backuser = () => {
             enddate: enddate,
             username: username,
         }).then((response) => {
-            // console.log(response);
+            console.log(response);
             setresponselist(response.data);
         });
     }
@@ -31,6 +31,16 @@ const Backuser = () => {
             seteditlist(response.data);
         });
         setdiv1(true);
+    }
+    const delete1 =()=>{
+        Axios.post("http://localhost:3001/backuserdelete", {
+            startdate: startdate,
+            enddate: enddate,
+            username: username,
+        }).then((response) => {
+            console.log(response);
+            setresponselist(response.data);
+        });
     }
     return (
         <React.Fragment>
@@ -83,7 +93,7 @@ const Backuser = () => {
                                             <div class="col-5 adiv15">{val.username}</div>
                                             <div class="col-3 d-flex justify-content-center adiv15">
                                                 <div class="button1 adiv18" onClick={()=>{edit(val.userid)}}>查看</div>
-                                                <div class="button1">刪除</div>
+                                                <div class="button1" onClick={delete1}>刪除</div>
                                             </div>
                                         </div>
                                     );

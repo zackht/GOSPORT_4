@@ -132,6 +132,7 @@ const db = mysql.createConnection({
   database: "gosport",
   port: 3306,
   useConnectionPooling: true,
+  timezone:'utc',
 });
 
 process.on('uncaughtException', function (err) {
@@ -246,6 +247,20 @@ app.post("/userupdate", upload.single('image'), (req, res) => {
   console.log(req.file.buffer);
   db.query("UPDATE user SET userimg=? where userid =?"
     , [req.file.buffer, name], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+// 後臺會員刪除
+app.post("/backuserdelete",(req, res) => {
+  const name = req.body.name;
+  console.log(name);
+  console.log(req.file.buffer);
+  db.query("UPDATE user SET userimg=? where userid =?"
+    , [name], (err, result) => {
       if (err) {
         console.log(err);
       } else {
