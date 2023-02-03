@@ -10,6 +10,7 @@ import Artadd from './components/artadd';
 import Artdel from './components/artdel'
 
 import SelectDown from './icon/Group 41.png'
+import noImg from './icon/teams_m.png'
 
 import './selfactive.css'
 
@@ -117,6 +118,7 @@ const Selfactive = () => {
     }
     const [isfollow, setisfollow] = useState({});
     const [userimglist, setuserimglist] = useState({});
+    const [useBadge,setuseBadge] = useState({0:[],1:[],2:[]});
     useEffect(() => {
         // follow人的照片
         followdata.forEach((val, key) => {
@@ -126,18 +128,24 @@ const Selfactive = () => {
                 let fr = new FileReader;
                 fr.readAsDataURL(blob);
                 fr.onload = function () {
-                    setuserimglist(e => {
-                        return { ...e, [key]: fr.result }
-                    });
+                    setuserimglist(e => {return { ...e, [key]: fr.result }});
                 }
+            }else{
+                setuserimglist(e => {return{...e,[key]:noImg}});
             }
             //follow人的拒絕接受
             let followState = val.state
             setisfollow(pre => { return { ...pre, [key]: followState } })
+            //follow人徽章        
+            let useb = JSON.parse(val.usebadge)
+            if(useb !== null)setuseBadge(pre =>{return {...pre,[key]:useb}})
+            else setuseBadge(pre =>{return{...pre,[key]:[{badgeurl:'/images/nostar.svg'}]}})  
         });
+
     }, [followdata])
+
     const closeModal = () => {
-        console.log(isfollow)
+        console.log(useBadge)
         setModalToggle(!modaltoggle)
         // clearTimeout(time);
     }
@@ -201,7 +209,6 @@ const Selfactive = () => {
     }
 
     // 父傳子搜尋按鍵識別
-    let index
     const find = useRef();
     const follow = useRef(null);
     // 零打文章更新
@@ -308,19 +315,17 @@ const Selfactive = () => {
                                         <div className="clientPic">
                                             <img src={userimglist[index]} alt="" className="clientImg" />
                                             <div className='clientBadge'>
+                                                {/* {useBadge[index].map((item, index) => {
+                                                    return <img key={index} src={item.badgeurl} alt="badge" />
+                                                })} */}
                                                 {JSON.parse(item.usebadge).map((item, index) => {
-                                                    return (
-                                                        <img key={index} src={item.badgeurl} alt="badge" />
-                                                    )
+                                                    return <img key={index} src={item.badgeurl} alt="badge" />
                                                 })}
-                                                {/* <img src={JSON.parse(item.usebadge)[0].badgeurl} alt="aa" /> */}
-                                                {/* <img src={star} alt="" /> */}
-                                                {/* <img src={star} alt="" /> */}
-                                                {/* <img src={star} alt="" /> */}
+
                                             </div>
                                         </div>
                                         <div className="clientIntro">
-                                            <div style={{textShadow: "#9e9e9e 0px 1px 1px"}}>{item.username}</div>
+                                            <div style={{ textShadow: "#9e9e9e 0px 1px 1px" }}>{item.username!==null?item.username:'新用戶'}</div>
                                             <div >
                                                 <span>程度</span>
                                                 <span style={{ display: degree === "羽球" ? "inline" : "none" }}>{item.badminton}</span>
@@ -363,14 +368,14 @@ const Selfactive = () => {
                         <div style={{ position: 'relative' }}>
                             <label >時段</label><br />
                             <select onChange={(e) => setStartTime(e.target.value)}>
-                                {[6, 7, 8, 9, 10, 11, 12].map(item => {
+                                {[6, 7, 8, 9, 10, 11, 12,13,14,15].map(item => {
                                     return <option value={item} selected={item === starttime}>{item}:00</option>
                                 })}
                             </select>
                             <img style={{ left: '63px' }} src={SelectDown} alt="" />
                             至
                             <select onChange={(e) => setEndTime(e.target.value)}>
-                                {[11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22].map(item => {
+                                {[10,11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22].map(item => {
                                     return <option value={item} selected={item === endtime}>{item}:00</option>
                                 })}
                             </select>
