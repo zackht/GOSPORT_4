@@ -144,7 +144,7 @@ const Backside = () => {
                                 <span class={side.span}>球類</span>
                                 <div class={`${side.selectimg} ${side.font} ${side.bdiv9}`}>
                                     <select name="" id="" class={`${side.bdiv10} ${side.aselect}`} onChange={(e) => { settype(e.target.value) }} >
-                                        <option value="排球">排球</option>
+                                        <option value="排球">籃球</option>
                                         <option value="羽球">羽球</option>
                                         <option value="桌球">桌球</option>
                                     </select>
@@ -243,7 +243,7 @@ const Backside = () => {
                                                     <select name="" id="" class={`${cside.font2} ${cside.div4}`} defaultValue={val.sidetype}>
                                                         <option value="羽球">羽球</option>
                                                         <option value="桌球">桌球</option>
-                                                        <option value="排球">排球</option>
+                                                        <option value="排球">籃球</option>
                                                     </select>
                                                     <img class={cside.div6} src={group41} alt="" />
                                                 </div>
@@ -309,11 +309,11 @@ const Backside = () => {
                                             <div class={cside.div24}>
                                                 <span class={cside.font}>租期</span>
                                                 <div>
-                                                    <input type="checkbox" id="check1" class={cside.div8} checked />
+                                                    <input type="checkbox" id="check1" class={cside.div8}  />
                                                     <label for="check1" class={`${cside.div7} ${cside.font2}`} >日租</label>
-                                                    <input type="checkbox" id="check2" checked />
+                                                    <input type="checkbox" id="check2" />
                                                     <label for="check2" class={`${cside.div7} ${cside.font2}`} >月租</label>
-                                                    <input type="checkbox" id="check3" checked />
+                                                    <input type="checkbox" id="check3"  />
                                                     <label for="check3" class={cside.font2} >季租</label>
                                                 </div>
                                             </div>
@@ -462,7 +462,7 @@ const Backside = () => {
                                         <select name="" id="" class={`${cside.font2} ${cside.div4}`} onChange={(e)=>{setutype(e.target.value)}}>
                                             <option value="羽球">羽球</option>
                                             <option value="桌球">桌球</option>
-                                            <option value="排球">排球</option>
+                                            <option value="籃球">排球</option>
                                         </select>
                                         <img class={cside.div6} src={group41} alt="" />
                                     </div>
@@ -528,11 +528,11 @@ const Backside = () => {
                                 <div class={cside.div24}>
                                     <span class={cside.font}>租期</span>
                                     <div>
-                                        <input type="checkbox" id="check1" class={cside.div8} checked />
+                                        <input type="checkbox" id="check1" class={cside.div8}/>
                                         <label for="check1" class={`${cside.div7} ${cside.font2}`} >日租</label>
-                                        <input type="checkbox" id="check2" checked />
+                                        <input type="checkbox" id="check2"/>
                                         <label for="check2" class={`${cside.div7} ${cside.font2}`} >月租</label>
-                                        <input type="checkbox" id="check3" checked />
+                                        <input type="checkbox" id="check3"/>
                                         <label for="check3" class={cside.font2} >季租</label>
                                     </div>
                                 </div>
