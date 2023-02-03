@@ -16,10 +16,9 @@
     background-image: url(../img/icon_select.svg);
     background-size: auto 50%;
     background-repeat: no-repeat;
-    background-position: 100% 50%;
+    background-position: 95% 50%;
     display: flex;
     justify-content: center;
-    /* padding-left: 20px; */
     width: 230px;
     height: 65px;
     font-size: 1.5rem;
