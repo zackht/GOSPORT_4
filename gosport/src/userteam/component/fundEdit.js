@@ -9,7 +9,11 @@ export default function FundEdit(params) {
 
     // 抓網址id = 文章id
     const {id} = useParams();
-    const {articleid} = useParams();
+    // const {articleid} = useParams();
+    const [articleid,setArticleid]=useState(null);
+
+    // 目前網址
+    const [pathend, setPathEnd] = useState('');
 
     // SQL參數
     const [userid, setUserid] = useState( Cookies.get('id') );  // 登入者id
@@ -81,6 +85,37 @@ export default function FundEdit(params) {
 
     }, [members]);
 
+    // 畫面載入 設定最新的文章id
+    useEffect(()=>{
+
+        // 基金
+        if(pathend==='fund'){
+            Axios.post('http://localhost:3001/teamfundall',{
+                teamid:teamid
+            }).then((response)=>{
+                console.log(response.data[0].articleid);
+                setArticleid(response.data[0].articleid);
+            });
+
+        // 支出
+        }else if(pathend==='pay'){
+            Axios.post('http://localhost:3001/teampayall',{
+                teamid:teamid
+            }).then((response)=>{
+                setArticleid(response.data[0].articleid);
+            });
+
+        // 活動
+        }else if(pathend==='activity'){
+            Axios.post('http://localhost:3001/teamactivityall',{
+                teamid:teamid
+            }).then((response)=>{
+                setArticleid(response.data[0].articleid);
+            });
+        };
+
+    },[]);
+
     // 成員清單
     const memberList =members.map((val, key) => {
         // console.log(val);
@@ -126,8 +161,8 @@ export default function FundEdit(params) {
                       defaultValue={result? result.text:''} 
                       onChange={ (e)=>{setText(e.target.value)} } ></textarea>
             <div>
-                <Link to={`/gosport/user/myteam/fund/${id}`}>取消</Link>
-                <Link to={`/gosport/user/myteam/fund/${id}`} onClick={ handleUpdateFund }>儲存</Link>
+                <Link to={`/gosport/user/myteam/${id}/fund/${articleid}`}>取消</Link>
+                <Link to={`/gosport/user/myteam/${id}/fund/${articleid}`} onClick={ handleUpdateFund }>儲存</Link>
             </div>
         </div>
     )
