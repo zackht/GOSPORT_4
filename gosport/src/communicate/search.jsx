@@ -180,7 +180,7 @@ const Search = () => {
     const [articlediv, setArticlediv] = useState(false);
     const opendatazero = (index) => {
         setDatazero(zeroarticle[index]);
-        aaaa.push('/gosport/communicate/zeroinfo');
+        // aaaa.push('/gosport/communicate/zeroinfo');
         setArticlediv(!false);
     }
     const Zeroarticlediv = articlediv === true ? 'block' : 'none';
