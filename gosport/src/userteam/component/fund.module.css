@@ -79,6 +79,7 @@
     height: 100px;
     margin-bottom: 25px;
     margin-right: 15px;
+    background-color: rgba(170, 170, 170,.2);
 }
 /* 顯示 */
 .show{

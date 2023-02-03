@@ -61,6 +61,7 @@
 .fForm label img {
     height: 100px;
     opacity: 30%;
+    background-color: rgba(170, 170, 170,.2);
 }
 .fForm input[name='member']:checked+label img {
     opacity: 100%;
@@ -112,7 +113,7 @@
     margin-right: 20px;
 }
 /* 提交 */
-.fForm button{
+.fForm a:last-child{
     border: none;
     background-color: rgb(230, 70, 55);
     color: white;
