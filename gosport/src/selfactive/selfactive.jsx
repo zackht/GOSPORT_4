@@ -171,9 +171,12 @@ const Selfactive = () => {
         setZerodaid(item.articleid_zeroda)
         setsidename(item.fieldname)
         setsideaddress(item.address)
+        //時區更正
         if (item.startdate) {
-            let playDate = item.startdate.substring(0, 10)
-            setPlayDate(playDate)
+            const date = new Date(item.startdate);
+            date.setHours(date.getHours() + 8);
+            const result = date.toISOString().substring(0, 10);
+            setPlayDate(result)
         }
         setStartTime(item.starttime)
         setEndTime(item.endtime)
@@ -192,8 +195,10 @@ const Selfactive = () => {
         setsidename(item.fieldname)
         setsideaddress(item.address)
         if (item.startdate) {
-            let playDate = item.startdate.substring(0, 10)
-            setPlayDate(playDate)
+            const date = new Date(item.startdate);
+            date.setHours(date.getHours() + 8);
+            const result = date.toISOString().substring(0, 10);
+            setPlayDate(result)
         }
         setStartTime(item.starttime)
         setEndTime(item.endtime)
@@ -248,6 +253,12 @@ const Selfactive = () => {
             setArticleToggle(!articleToggle)
             find.current.click();
         })
+    }
+    const getUseBadge =(index)=>{
+        let result = useBadge[index].map((item, index) => {
+            return <img key={index} src={item.badgeurl} alt="badge" />
+        })
+        return result
     }
     return (
         <React.Fragment>
@@ -318,9 +329,10 @@ const Selfactive = () => {
                                                 {/* {useBadge[index].map((item, index) => {
                                                     return <img key={index} src={item.badgeurl} alt="badge" />
                                                 })} */}
-                                                {JSON.parse(item.usebadge).map((item, index) => {
+                                                {getUseBadge(index)}
+                                                {/* {JSON.parse(item.usebadge).map((item, index) => {
                                                     return <img key={index} src={item.badgeurl} alt="badge" />
-                                                })}
+                                                })} */}
 
                                             </div>
                                         </div>
