@@ -1793,7 +1793,7 @@ app.post('/deletemember', (req, res) => {
         `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
         FROM teamactivity
         WHERE teamid=?
-        ORDER by addtime desc;`,
+        ORDER by startdate desc;`,
       [teamid],
       (err, result) => {
         if (err) {
@@ -1814,7 +1814,7 @@ app.post('/deletemember', (req, res) => {
         `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
         FROM teamactivity
         WHERE startdate BETWEEN ? AND ? AND teamid=?
-        ORDER by addtime desc;`,
+        ORDER by startdate desc;`,
       [startdate, enddate, teamid],
       (err, result) => {
         if (err) {
