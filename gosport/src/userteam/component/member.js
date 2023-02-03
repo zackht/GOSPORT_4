@@ -53,6 +53,7 @@ export default function Member(params) {
             teamid: teamid
         }).then((response)=>{
             setmembers(response.data); // 放入members
+            // console.log(response.data);
         })
     }
 

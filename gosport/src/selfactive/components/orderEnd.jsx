@@ -1,12 +1,20 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import {  Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Axios from "axios";
 import Cookies from 'js-cookie';
 
 import arrowup from '../icon/arrowup2.svg'
 
 const OrderEnd = () => {
+    //時區更正
+    const getTruedate = (orderData) => {
+        if (!orderData) return null;
+        const date = new Date(orderData);
+        date.setHours(date.getHours() + 8);
+        const result = date.toISOString().substring(0, 10);
+        return result
+    }
     // 接取資料 起訖查詢時間 查詢人
     const [orderInfo, setOrderInfo] = useState([{ orderdate: '', orderid: '' }]);
     const [stratDate, setStartDate] = useState('');
@@ -24,7 +32,7 @@ const OrderEnd = () => {
             setOrderInfo(response.data)
         });
     }
-    const activeTimeList = orderInfo.map((item, index) => <button key={item.orderid} onClick={() => { showdata(index) }}>{item.orderdate.substring(0, 10)}</button>)
+    const activeTimeList = orderInfo.map((item, index) => <button key={item.orderid} onClick={() => { showdata(index) }}>{ getTruedate(item.orderdate)}</button>)
     // 點擊活動日期顯示查詢結果
     const [orderNone, setOderNoneOut] = useState('flex')
     const [ordermenu, setShowOrder] = useState('none');
@@ -60,7 +68,7 @@ const OrderEnd = () => {
         <React.Fragment>
             {/* 場地訂單 */}
             {/* <!-- 訂單日期選擇 --> */}
-            <div  style={{ flex: "1", borderRight: "2px solid rgb(233, 233, 233)" }}>
+            <div style={{ flex: "1", borderRight: "2px solid rgb(233, 233, 233)" }}>
                 <div>下單日期區間</div>
                 <div className='ordergettime'>
                     <input type="date" onChange={(e) => { setStartDate(e.target.value) }} /><img className="selectedDate" src={arrowup} alt='' /><br />
@@ -75,8 +83,8 @@ const OrderEnd = () => {
             {/* <!-- 訂單詳細 --> */}
             <div className='ordermenu' id="notalready" style={{ display: orderNone }}> <span>尚未選擇下單日期</span> </div>
             <div className="ordermenu" id='ordering' style={{ display: ordermenu }}>
-            <div>訂單日期</div>
-            <div>{orderData.orderdate.substring(0, 10)}</div>
+                <div>訂單日期</div>
+                <div>{ getTruedate(orderData.orderdate)}</div>
                 <div style={{ display: rentType ? 'flex' : 'none' }}>
                     <div style={{ flex: "1" }}>開始時間</div>
                     <div style={{ flex: "1" }}>結束時間</div>
@@ -92,15 +100,15 @@ const OrderEnd = () => {
 
                 </div>
                 <div style={{ display: rentType ? 'flex' : 'none' }}>
-                    <div style={{ flex: "1" }}>{orderData.startdate.substring(0, 10)}</div>
-                    <div style={{ flex: "1" }}>{orderData.enddate.substring(0, 10)}</div>
+                    <div style={{ flex: "1" }}>{ getTruedate(orderData.startdate)}</div>
+                    <div style={{ flex: "1" }}>{ getTruedate(orderData.enddate)}</div>
                     {/* <div style={{ flex: "1" }}>證明</div> */}
-                    <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
+                    <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime+1}:00</div>
                     {/* <div style={{ flex: "1" }}>{orderData.week}</div> */}
                 </div>
                 <div style={{ display: rentType ? 'none' : 'flex' }}>
-                    <div style={{ flex: "1" }}>{orderData.startdate.substring(0, 10)}</div>
-                    <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
+                    <div style={{ flex: "1" }}>{ getTruedate(orderData.startdate)}</div>
+                    <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime+1}:00</div>
                     {/* <div style={{ flex: "1" }}>證明</div> */}
                     <div style={{ flex: "1" }}>{orderData.week}</div>
 
@@ -116,7 +124,7 @@ const OrderEnd = () => {
                     <div style={{ flex: "1" }}>{orderData.ordercount}</div>
                     <div style={{ flex: "2" }}>{orderData.week}</div>
                 </div>
-                <div style={{ display: rentType ? 'none' :'block' }}>
+                <div style={{ display: rentType ? 'none' : 'block' }}>
                     <div >{orderData.ordercount}</div>
                 </div>
                 <div>日/長租</div>
@@ -124,8 +132,8 @@ const OrderEnd = () => {
                 <div>場地</div>
                 <div>{orderData.sidename}</div>
                 <div>地址</div>
-                <div style={{ position: "relative" }}>{orderData.sideaddr}        
-                        <Link to="/gosport/rent"><button id='ing' className="chuse_order">再次預約</button></Link>      
+                <div style={{ position: "relative" }}>{orderData.sideaddr}
+                    <Link to="/gosport/rent"><button id='ing' className="chuse_order">再次預約</button></Link>
                 </div>
             </div>
         </React.Fragment>

@@ -5,13 +5,18 @@ import leader from './icon/Ellipse.svg';
 
 const Zeroinfo = ({datazero}) => {
     console.log(datazero);
+
+    const joinzero = () => {
+        alert("申請成功")
+    }
+
     return (
         <React.Fragment>
             {/* 零打內容 */}
             <div className={zzz.zeroinfocontent}>
                 <div className={zzz.zerocontent}>
                     <div className={zzz.joinbutton}>
-                        <button className={zzz.jjoinbutton}>參加</button>
+                        <button className={zzz.jjoinbutton} onClick={joinzero}>參加</button>
                     </div>
                     <div className={zzz.zerouser}>
                         <h3>{datazero.username}</h3>
@@ -26,7 +31,7 @@ const Zeroinfo = ({datazero}) => {
                     </div>
                     <div className={zzz.date}>
                         <label htmlFor="dateee" className={zzz.title}>日期</label><br />
-                        <input type="text" name="dateee" value={datazero.startdate} className={zzz.iiinput} />
+                        <input type="text" name="dateee" value={datazero.startdate} className={zzz.iiinput11} />
                     </div>
                     <div className={zzz.time}>
                         <label htmlFor="timeee" className={zzz.title}>時段</label><br />
