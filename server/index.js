@@ -290,6 +290,19 @@ app.post("/backuseredit", (req, res) => {
       }
     });
 });
+
+// 後臺會員刪除
+app.post("/backuserdelete", (req, res) => {
+  const userid = req.body.userid;
+  db.query(`DELETE FROM user WHERE userid = ?`
+    , [userid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
 //寄送email
 let transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -868,6 +881,19 @@ app.post("/backsidesearch", (req, res) => {
 app.post("/backsideedit", (req, res) => {
   const sideid = req.body.sideid;
   db.query(`SELECT * FROM side where sideid = ?`
+    , [sideid, sideid]
+    , (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+// 後臺場地刪除
+app.post("/backsidedelete", (req, res) => {
+  const sideid = req.body.sideid;
+  db.query(`Delete  FROM side where sideid = ?`
     , [sideid, sideid]
     , (err, result) => {
       if (err) {
