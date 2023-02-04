@@ -357,7 +357,7 @@ const closeUNav = () =>{
 // console.log(teaminfo===[])
 // const teaminfoo=()=>{JSON.stringify(teaminfo)};
 // console.log(JSON.stringify(teaminfo)==="[]")
-console.log(teaminfo);
+// console.log(teaminfo);
 const [turndiv,setturndiv] = useState(false);
 const turnin = ()=>{
     turndiv===false?setturndiv(true):setturndiv(false);

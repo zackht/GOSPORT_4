@@ -9,6 +9,7 @@ import Member from       './component/member';
 import MemberEdit from   './component/memberEdit';
 import Fund from         './component/fund';
 import FundEdit from     './component/fundEdit';
+import FundNew from     './component/fundnew';
 import Pay from          './component/pay';
 import PayEdit from      './component/payEdit';
 import Activity from     './component/activity';
@@ -57,6 +58,27 @@ export default function Myteam (){
         };
     },[])
 
+    // map 球隊功能列表
+    const filterListMap = filterList.map((e)=>{
+        if(e.pathEnd==='basic'||e.pathEnd==='member'){
+            return (
+                <Link to={`/gosport/user/myteam/${id}/${e.pathEnd}`}
+                        key = {e.pathEnd} 
+                        className = {handleFilterCss(e)}>
+                    {e.filterName}
+                </Link>
+            )
+        }else{
+            return (
+                <Link to={`/gosport/user/myteam/${id}/${e.pathEnd}/${articleid}`}
+                        key = {e.pathEnd} 
+                        className = {handleFilterCss(e)}>
+                    {e.filterName}
+                </Link>
+            )
+        }
+    });
+
     // 畫面載入 設定最新的文章id
     useEffect(()=>{
 
@@ -65,7 +87,6 @@ export default function Myteam (){
             Axios.post('http://localhost:3001/teamfundall',{
                 teamid:teamid
             }).then((response)=>{
-                console.log(response.data[0].articleid);
                 setArticleid(response.data[0].articleid);
             });
 
@@ -118,26 +139,7 @@ export default function Myteam (){
 
     },[pathend]);
 
-    // map 球隊功能列表
-    const filterListMap = filterList.map((e)=>{
-        if(e.pathEnd==='basic'||e.pathEnd==='member'){
-            return (
-                <Link to={`/gosport/user/myteam/${id}/${e.pathEnd}`}
-                        key = {id} 
-                        className = {handleFilterCss(e)}>
-                    {e.filterName}
-                </Link>
-            )
-        }else{
-            return (
-                <Link to={`/gosport/user/myteam/${id}/${e.pathEnd}/${articleid}`}
-                        key = {id} 
-                        className = {handleFilterCss(e)}>
-                    {e.filterName}
-                </Link>
-            )
-        }
-    });
+
 
     return(
         <React.Fragment>
@@ -158,7 +160,7 @@ export default function Myteam (){
                             <Route path="/gosport/user/myteam/:id/member"               component={Member} exact/>
                             <Route path="/gosport/user/myteam/:id/member/edit"          component={MemberEdit} exact/>
 
-                            <Route path="/gosport/user/myteam/:id/fund/new"             component={FundEdit} exact/>
+                            <Route path="/gosport/user/myteam/:id/fund/new"             component={FundNew} exact/>
                             <Route path="/gosport/user/myteam/:id/fund/:articleid/edit" component={FundEdit} exact/>
                             <Route path="/gosport/user/myteam/:id/fund/:articleid"      component={Fund} />
                             <Route path="/gosport/user/myteam/:id/fund"                 component={Fund} exact/>
