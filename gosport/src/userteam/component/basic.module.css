@@ -93,3 +93,7 @@
     position: relative;
     /* left:-50%; */
 }
+a:hover{
+    text-decoration: none;
+    color: rgb(170, 170, 170);
+}

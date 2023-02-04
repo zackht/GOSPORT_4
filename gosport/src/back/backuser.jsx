@@ -18,7 +18,7 @@ const Backuser = () => {
             enddate: enddate,
             username: username,
         }).then((response) => {
-            // console.log(response);
+            console.log(response);
             setresponselist(response.data);
         });
     }

@@ -317,11 +317,11 @@ const Backside = () => {
                                             <div class={cside.div24}>
                                                 <span class={cside.font}>租期</span>
                                                 <div>
-                                                    <input type="checkbox" id="check1" class={cside.div8} checked />
+                                                    <input type="checkbox" id="check1" class={cside.div8}  />
                                                     <label for="check1" class={`${cside.div7} ${cside.font2}`} >日租</label>
-                                                    <input type="checkbox" id="check2" checked />
+                                                    <input type="checkbox" id="check2" />
                                                     <label for="check2" class={`${cside.div7} ${cside.font2}`} >月租</label>
-                                                    <input type="checkbox" id="check3" checked />
+                                                    <input type="checkbox" id="check3"  />
                                                     <label for="check3" class={cside.font2} >季租</label>
                                                 </div>
                                             </div>
@@ -536,11 +536,11 @@ const Backside = () => {
                                 <div class={cside.div24}>
                                     <span class={cside.font}>租期</span>
                                     <div>
-                                        <input type="checkbox" id="check1" class={cside.div8} checked />
+                                        <input type="checkbox" id="check1" class={cside.div8}/>
                                         <label for="check1" class={`${cside.div7} ${cside.font2}`} >日租</label>
-                                        <input type="checkbox" id="check2" checked />
+                                        <input type="checkbox" id="check2"/>
                                         <label for="check2" class={`${cside.div7} ${cside.font2}`} >月租</label>
-                                        <input type="checkbox" id="check3" checked />
+                                        <input type="checkbox" id="check3"/>
                                         <label for="check3" class={cside.font2} >季租</label>
                                     </div>
                                 </div>

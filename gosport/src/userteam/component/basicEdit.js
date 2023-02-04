@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import basicEdit from './basicEdit.module.css';
 import img from '../img.module.js';
 import Axios from "axios";
@@ -7,9 +7,12 @@ import Cookies from 'js-cookie';
 
 export default function BasicEdit(props) {
 
+    // 抓網址id = 文章id
+    const {id} = useParams();
+
     // SQL參數 會員id 球隊id
     const [userid, setUserid] = useState( Cookies.get('id') ); // 登入者id
-    const [teamid, setTeamid] = useState(null);
+    const [teamid, setTeamid] = useState(id);
 
     // input值
     const [tname, setTname] = useState('');
@@ -29,40 +32,40 @@ export default function BasicEdit(props) {
     const [uploadimg, setUploadimg] = useState(img.upload_c);
 
     // 抓資料
-    const handleBasicResult = async () => {
-        let res = await Axios.post("http://localhost:3001/basicsearch",{
-            userid: userid,
-            teamid: teamid
-        });
-        // 給input值
-        setTname(res.data[0].tname);
-        setSidename(res.data[0].sidename);
-        setWeek(res.data[0].week);
-        setStarttime(res.data[0].starttime);
-        setEndtime(res.data[0].endtime);
-        setType(res.data[0].type);
-        setLevel(res.data[0].level);
-        setFee(res.data[0].fee);
-        setText(res.data[0].text);
-        console.log(res.data[0].county);
-        console.log(res.data[0].area);
-        setCounty(res.data[0].county);
-        setArea(res.data[0].area);
-        // 讀照片
-        const u8Arr = new Uint8Array(res.data[0].teamimg.data); // 轉unit8array
-        const blob = new Blob([u8Arr],{type:"image/jpeg"});     // 轉blob
-        const fr = new FileReader; // 異步讀取方法
-        fr.readAsDataURL(blob);    // 讀取 以base64編碼的URL
-        fr.onload = function () {  // 讀取完成時
-            // 給input
-            setTeamimg(fr.result);
-            // 隱藏uploadimg
-            setUploadimg('none');
-            };
-    };
+    
     // 畫面載入即抓資料
     useEffect(()=>{
-        handleBasicResult();
+        
+        let res = Axios.post("http://localhost:3001/basicsearch",{
+            userid: userid,
+            teamid: teamid
+        }).then((res)=>{
+            // 給input值
+            console.log(res.data[0]);
+            setTname(res.data[0].tname);
+            setSidename(res.data[0].sidename);
+            setWeek(res.data[0].week);
+            setStarttime(res.data[0].starttime);
+            setEndtime(res.data[0].endtime);
+            setType(res.data[0].type);
+            setLevel(res.data[0].level);
+            setFee(res.data[0].fee);
+            setText(res.data[0].text);
+            setCounty(res.data[0].county);
+            setArea(res.data[0].area);
+            // 讀照片
+            const u8Arr = new Uint8Array(res.data[0].teamimg.data); // 轉unit8array
+            const blob = new Blob([u8Arr],{type:"image/jpeg"});     // 轉blob
+            const fr = new FileReader; // 異步讀取方法
+            fr.readAsDataURL(blob);    // 讀取 以base64編碼的URL
+            fr.onload = function () {  // 讀取完成時
+                // 給input
+                setTeamimg(fr.result);
+                // 隱藏uploadimg
+                setUploadimg('none');
+                };
+            })
+        
     },[]);
     
     // 更新照片
@@ -193,29 +196,25 @@ export default function BasicEdit(props) {
                     <input type='file' accept=".png, .jpg, .jpeg" ref={inputFile} onChange={ handleImgChange }></input>
                 </div>
                 
-                <div>隊名</div>
+                <div>球隊名稱</div>
                 <input type="text" name='tname' defaultValue={tname? tname:''} 
                        onChange={(e)=>{setTname(e.target.value)}}/>
 
-                <div>縣市</div>
+                <div>固定打球地區</div>
                 <select name="county" onChange={(e)=>{setCounty(e.target.value)}}>
                     <option value="台中市" selected={week? `${week==='台中市'? 'selected':''}`:''}>台中市</option>
                 </select>
-
-                <div>地區</div>
-                <select name="area" onChange={(e)=>{setArea(e.target.value)}}>
+                <select name="area" onChange={(e)=>{setArea(e.target.value)}} className={basicEdit.beRight}>
                     {Taichung.map((val, key) => {
                         return (<option key={key} value={val}>{val}</option>);
                     })}
-
                 </select>
-                
 
-                <div>常打場館</div>
+                <div>場館名稱</div>
                 <input type="text" name='sidename' defaultValue={sidename? sidename:''}
                        onChange={(e)=>{setSidename(e.target.value)}}/>
 
-                <div>週期</div>
+                <div>固定打球時間</div>
                 <select name="week" onChange={(e)=>{setWeek(e.target.value)}}>
                     <option value="星期一" selected={week? `${week==='星期一'? 'selected':''}`:''}>星期一</option>
                     <option value="星期二" selected={week? `${week==='星期二'? 'selected':''}`:''}>星期二</option>
@@ -226,8 +225,8 @@ export default function BasicEdit(props) {
                     <option value="星期日" selected={week? `${week==='星期日'? 'selected':''}`:''}>星期日</option>
                 </select>
 
-                <div>時段</div>
-                <select name="starttime" onChange={(e)=>{setStarttime(e.target.value)}}>
+                {/* <div>時段</div> */}
+                <select name="starttime" onChange={(e)=>{setStarttime(e.target.value)}} className={basicEdit.beRight}>
                     <option value="9"  selected={starttime? `${starttime===9? 'selected':''}`:''}>09:00</option>
                     <option value="10" selected={starttime? `${starttime===10? 'selected':''}`:''}>10:00</option>
                     <option value="11" selected={starttime? `${starttime===11? 'selected':''}`:''}>11:00</option>
@@ -243,7 +242,7 @@ export default function BasicEdit(props) {
                     <option value="21" selected={starttime? `${starttime===21? 'selected':''}`:''}>21:00</option>
                 </select>
                 <div className={basicEdit.fTimeTo}>至</div>
-                <select name="endtime" onChange={(e)=>{setEndtime(e.target.value)}}>
+                <select name="endtime" onChange={(e)=>{setEndtime(e.target.value)}} className={basicEdit.beRight2}>
                     <option value="9"  selected={endtime? `${endtime===9? 'selected':''}`:''}>09:00</option>
                     <option value="10" selected={endtime? `${endtime===10? 'selected':''}`:''}>10:00</option>
                     <option value="11" selected={endtime? `${endtime===11? 'selected':''}`:''}>11:00</option>
@@ -259,7 +258,7 @@ export default function BasicEdit(props) {
                     <option value="21" selected={endtime? `${endtime===21? 'selected':''}`:''}>21:00</option>
                 </select>
 
-                <div>球類</div>
+                <div>球類別</div>
                 <select name="type" onChange={(e)=>{setType(e.target.value)}}>
                     <option value="羽球" selected={type? `${type==='羽球'? 'selected':''}`:''}>羽球</option>
                     <option value="桌球" selected={type? `${type==='桌球'? 'selected':''}`:''}>桌球</option>
@@ -281,8 +280,8 @@ export default function BasicEdit(props) {
                           onChange={(e)=>{setText(e.target.value)}}></textarea><br/>
 
                 {/* 取消｜儲存 */}
-                <Link to={`/gosport/user/myteam/basic`}>取消</Link>
-                <Link to={`/gosport/user/myteam/basic`} onClick={updateBasic}>儲存</Link>
+                <Link to={`/gosport/user/myteam/${id}/basic`}>取消</Link>
+                <Link to={`/gosport/user/myteam/${id}/basic`} onClick={updateBasic}>儲存</Link>
                 {/* <button >儲存</button> */}
             </div>
         </>

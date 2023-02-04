@@ -132,6 +132,7 @@ const db = mysql.createConnection({
   database: "gosport",
   port: 3306,
   useConnectionPooling: true,
+  timezone:'utc',
 });
 
 process.on('uncaughtException', function (err) {
@@ -246,6 +247,20 @@ app.post("/userupdate", upload.single('image'), (req, res) => {
   console.log(req.file.buffer);
   db.query("UPDATE user SET userimg=? where userid =?"
     , [req.file.buffer, name], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+// 後臺會員刪除
+app.post("/backuserdelete",(req, res) => {
+  const name = req.body.name;
+  console.log(name);
+  console.log(req.file.buffer);
+  db.query("UPDATE user SET userimg=? where userid =?"
+    , [name], (err, result) => {
       if (err) {
         console.log(err);
       } else {
@@ -375,7 +390,7 @@ app.post("/rentside", (req, res) => {
   const park = `${req.body.park}`;
   const bath = `${req.body.bath}`;
   const baulk = `${req.body.baulk}`;
-  if (area === '不限'&& tt === true && xyz === '離峰') {
+  if (area === '南屯區'&& tt === true && xyz === '離峰') {
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY offpeakfee `
       // AND bath = ? AND park=? AND baulk=?`
@@ -386,7 +401,7 @@ app.post("/rentside", (req, res) => {
           res.send(result);
         }
       });
-  }else if(area === '不限'&& tt === false && xyz === '離峰'){
+  }else if(area === '南屯區'&& tt === false && xyz === '離峰'){
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY offpeakfee DESC`
       // AND bath = ? AND park=? AND baulk=?`
@@ -397,7 +412,7 @@ app.post("/rentside", (req, res) => {
           res.send(result);
         }
       });
-  }else if(area === '不限'&& tt === true && xyz === '尖峰'){
+  }else if(area === '南屯區'&& tt === true && xyz === '尖峰'){
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY peakfee`
       // AND bath = ? AND park=? AND baulk=?`
@@ -408,7 +423,7 @@ app.post("/rentside", (req, res) => {
           res.send(result);
         }
       });
-  }else if(area === '不限'&& tt === false && xyz === '尖峰'){
+  }else if(area === '南屯區'&& tt === false && xyz === '尖峰'){
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY peakfee DESC`
       // AND bath = ? AND park=? AND baulk=?`
@@ -442,78 +457,22 @@ app.post("/rentside2", (req, res) => {
   const county = req.body.county;
   const area = req.body.area;
   const text = req.body.text;
-  const tt = req.body.tt;
   const park = `${req.body.park}`;
   const bath = `${req.body.bath}`;
   const baulk = `${req.body.baulk}`;
-  console.log(tt);
-  if (area === '不限' && tt===true) {
+  console.log(area);
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
-    weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ? ) ORDER BY offpeakfee DESC`
+    weekstarttime BETWEEN  ? AND ? AND county =? AND area=? AND (sidename LIKE ? OR adress LIKE ? )`
       // AND bath = ? AND park=? AND baulk=?`
       , [startdate, enddate, type, starttime, endtime, county, area, text, text], (err, result) => {
         if (err) {
           console.log(err);
         } else {
           res.send(result);
-          console.log('低到高');
         }
       });
-  }else{
-    db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
-    weekstarttime BETWEEN  ? AND ? AND county =? AND  (sidename LIKE ? OR adress LIKE ?) ORDER BY offpeakfee ASC `
-      // AND bath = ? AND park=? AND baulk=?`
-      , [startdate, enddate, type, starttime, endtime, county,  text, text], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-          console.log('高到低');
-        }
-      });
-  }
 });
-// 租場地排序尖峰
-app.post("/rentside3", (req, res) => {
-  const type = req.body.type;
-  const starttime = req.body.starttime;
-  const endtime = req.body.endtime;
-  const startdate = req.body.startdate;
-  const enddate = req.body.enddate;
-  const county = req.body.county;
-  const area = req.body.area;
-  const text = req.body.text;
-  const tt = req.body.tt;
-  const park = `${req.body.park}`;
-  const bath = `${req.body.bath}`;
-  const baulk = `${req.body.baulk}`;
-  console.log(tt);
-  if (area === '不限' && tt===true) {
-    db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
-    weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ? ) ORDER BY peakfee DESC`
-      // AND bath = ? AND park=? AND baulk=?`
-      , [startdate, enddate, type, starttime, endtime, county, area, text, text], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-          console.log('低到高');
-        }
-      });
-  }else{
-    db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
-    weekstarttime BETWEEN  ? AND ? AND county =? AND  (sidename LIKE ? OR adress LIKE ?) ORDER BY peakfee ASC `
-      // AND bath = ? AND park=? AND baulk=?`
-      , [startdate, enddate, type, starttime, endtime, county,  text, text], (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-          console.log('高到低');
-        }
-      });
-  }
-});
+
 // 租場地查看更多
 app.post("/rentsideedit", (req, res) => {
   const sideid = req.body.sideid;
@@ -1246,7 +1205,20 @@ app.post("/followzeroda", (req, res) => {
 app.post("/delefollowzeroda", (req, res) => {
   const articleid_zeroda = req.body.articleid_zeroda;
   const userid = req.body.userid;
-  db.query(" DELETE FROM `follow_zeroda` WHERE `articleid_zeroda`= ? AND `userid`= ?",
+  db.query("UPDATE `follow_zeroda` SET `state`='拒絕' WHERE `articleid_zeroda`= ? AND `userid`= ?",
+    [articleid_zeroda, userid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+//接受零打報名人
+app.post("/acpfollowzeroda", (req, res) => {
+  const articleid_zeroda = req.body.articleid_zeroda;
+  const userid = req.body.userid;
+  db.query(" UPDATE `follow_zeroda` SET `state`='接受' WHERE `articleid_zeroda`= ? AND `userid`= ? ",
     [articleid_zeroda, userid], (err, result) => {
       if (err) {
         console.log(err);
@@ -1764,10 +1736,10 @@ app.post('/deletemember', (req, res) => {
   app.post('/teamfundall', (req, res) => {
     const teamid = req.body.teamid;
       db.query(
-        `SELECT date,userid,fee,text,teamfundid as 'articleid'
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',userid,fee,text,teamfundid as 'articleid'
         FROM teamfund
         WHERE teamid=?
-        ORDER by date;`,
+        ORDER by addtime desc;`,
       [teamid],
       (err, result) => {
         if (err) {
@@ -1783,13 +1755,13 @@ app.post('/deletemember', (req, res) => {
   app.post('/teamfunddate', (req, res) => {
     const teamid = req.body.teamid;
     const startdate = req.body.startdate;
-    const enddate = req.body.enddate;
+    // const enddate = req.body.enddate;
       db.query(
-        `SELECT date,userid,fee,text,teamfundid as 'articleid'
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',userid,fee,text,teamfundid as 'articleid'
         FROM teamfund
-        WHERE date BETWEEN ? AND ? AND teamid=?
-        ORDER by date;`,
-      [startdate, enddate, teamid],
+        WHERE date=? AND teamid=?
+        ORDER by addtime desc;`,
+      [startdate, teamid],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -1804,10 +1776,10 @@ app.post('/deletemember', (req, res) => {
   app.post('/teampayall', (req, res) => {
     const teamid = req.body.teamid;
       db.query(
-        `SELECT date,item,fee,text,teampayid as 'articleid'
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',item,fee,text,teampayid as 'articleid'
         FROM teampay
         WHERE teamid=?
-        ORDER by date;`,
+        ORDER by addtime desc;`,
       [teamid],
       (err, result) => {
         if (err) {
@@ -1828,7 +1800,7 @@ app.post('/deletemember', (req, res) => {
         `SELECT date,item,fee,text,teampayid as 'articleid'
         FROM teampay
         WHERE date BETWEEN ? AND ? AND teamid=?
-        ORDER by date;`,
+        ORDER by addtime desc;`,
       [startdate, enddate, teamid],
       (err, result) => {
         if (err) {
@@ -1847,7 +1819,7 @@ app.post('/deletemember', (req, res) => {
         `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
         FROM teamactivity
         WHERE teamid=?
-        ORDER by date;`,
+        ORDER by startdate desc;`,
       [teamid],
       (err, result) => {
         if (err) {
@@ -1868,7 +1840,7 @@ app.post('/deletemember', (req, res) => {
         `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
         FROM teamactivity
         WHERE startdate BETWEEN ? AND ? AND teamid=?
-        ORDER by date;`,
+        ORDER by startdate desc;`,
       [startdate, enddate, teamid],
       (err, result) => {
         if (err) {
@@ -1882,12 +1854,50 @@ app.post('/deletemember', (req, res) => {
 
   // 芝｜fund 查找基金 指定文章 
   app.post('/teamfundarticle', (req, res) => {
-    const id = req.body.id;
+    const articleid = req.body.articleid;
       db.query(
-        `SELECT date,user.userid,fee,text,userimg
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',user.userid,fee,text,userimg
         FROM teamfund,user
         WHERE teamfund.userid = user.userid and teamfundid=?`,
-      [id],
+      [articleid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+
+  // 芝｜fund 新建基金文章 
+  app.post('/teamfundarticlenew', (req, res) => {
+    const date = req.body.date;
+    const teamid = req.body.teamid;
+    const userid = req.body.userid;
+    const fee = req.body.fee;
+    const text = req.body.text;
+      db.query(
+        `INSERT INTO teamfund(date,teamid,userid,fee,text)
+        VALUES(?,?,?,?,?)`,
+      [date, teamid, userid, fee, text],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+
+  // 芝｜fund 刪除基金文章 
+  app.post('/teamfundarticledelete', (req, res) => {
+    const articleid = req.body.articleid;
+      db.query(
+        `delete from teamfund 
+        where teamfundid=?`,
+      [articleid],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -1902,7 +1912,7 @@ app.post('/deletemember', (req, res) => {
   app.post('/teampayarticle', (req, res) => {
     const id = req.body.id;
       db.query(
-        `SELECT date,item,fee,text
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',item,fee,text
         FROM teampay
         WHERE teampayid=?`,
       [id],
@@ -2147,6 +2157,23 @@ app.post('/teamactivity', (req, res) => {
     `SELECT * FROM teamevent 
   WHERE teamid = ?`,
     [teamactivityteamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+})
+
+//報名零打
+app.post('/joinzero',(req, res) => {
+  const articleidzero = req.body.articleidzero;
+  const useridjoinzero = req.body.useridjoinzero;
+  db.query(
+    `INSERT INTO follow_zeroda(articleid_zeroda, userid, time) VALUES (?,?,now())`,
+    [articleidzero,useridjoinzero],
     (err, result) => {
       if (err) {
         console.log(err);

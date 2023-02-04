@@ -52,6 +52,12 @@
     width: 400px;
 }
 
+.iiinput11 {
+    font-size: 1.5rem;
+    border: 0px;
+    width: 135px;
+}
+
 .message {
     /* background-color: white;
     box-shadow: 0px 4px 18px rgba(180, 180, 180, 0.25); */
@@ -110,4 +116,8 @@
     color: #aaaaaa;
     border-radius: 50px;
     border: #aaaaaa;
+}
+
+.iiinput {
+    width: 500px;
 }

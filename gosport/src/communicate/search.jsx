@@ -111,7 +111,6 @@ const Search = () => {
     const [levelteam, setLevelteam] = useState('');
     const [costteam, setCostteam] = useState('');
     const [teaminfo, setTeaminfo] = useState([]);
-    // const [u, setu] = useState('');
 
     const teamsearch = () => {
         Axios.post("http://localhost:3001/teamsearch", {
@@ -214,7 +213,7 @@ const Search = () => {
                         })}
                     </div>
                     {/* <!-- 零打 --> */}
-                    <div style={{ display: isZeroShow }} className={comm.tablink}>
+                    <div style={{ display: isZeroShow }}>
                         <div id="Zero" className={`row ${comm.tabcontent}`}>
                             {/* <!-- 運動類別 --> */}
                             <div className={`col-3 row ${comm.type}`}>

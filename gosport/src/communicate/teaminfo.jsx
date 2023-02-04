@@ -19,6 +19,10 @@ const TeamInfo = ({ datateam, activityinfo }) => {
     console.log(datateam);
     console.log(activityinfo);
 
+    const jointeam = () => {
+        alert("申請成功");
+    }
+
     const [activtiydata, setActivtiydata] = useState({})
     const [activityteamdiv, setActivityteamdiv] = useState(false);
     const opendataactivity = (ind) => {
@@ -72,7 +76,8 @@ const TeamInfo = ({ datateam, activityinfo }) => {
                     </div>
                     {/* 加入按鈕 */}
                     <div className={commm.join}>
-                        <input type="text" value="        報名" className={commm.joinbutton} />
+                        <button className={commm.joinbutton} onClick={jointeam}>報名</button>
+                        {/* <input type="text" value="        報名" className={commm.joinbutton} onClick={jointeam}/> */}
                     </div>
                 </div>
                 {/* 按鈕 */}

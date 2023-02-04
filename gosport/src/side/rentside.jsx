@@ -60,6 +60,9 @@ const Rentside = () => {
         });
         setuserlist(userlist1);
         }
+        Cookies.remove('ezsurch', {
+            path: '/'
+        })
       }, []);
     const [Taichung, setTaichung] = useState([
         "不限","外埔區", "東區", "西區", "南區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "清水區", "沙鹿區", "大甲區", "東勢區", "梧棲區", "烏日區", "神岡區", "大肚區", "大雅區", "后里區", "霧峰區", "潭子區", "龍井區", "中區", "和平區", "石岡區", "大安區", "新社區"
@@ -96,7 +99,7 @@ const Rentside = () => {
         setbaulk(!baulk);
     }
     const search =()=>{
-        setTimeout(()=>{setuserlist1([])},500);
+        setTimeout(()=>{setuserlist1([])},1000);
         console.log(type);
         console.log(starttime);
         console.log(endtime);
@@ -131,6 +134,7 @@ const Rentside = () => {
                 fr.readAsDataURL(blob);
                 fr.onload = function (e) {
                     userlist1.push(e.target.result);
+                    console.log(userlist1);
                 };
             }
         });
@@ -144,16 +148,11 @@ const Rentside = () => {
             return userlist[key];
         }
     }
-    const [tt,settt]=useState(false);
+    const [tt,settt]=useState(true);
     const change = ()=>{
         settt(!tt);
         search();
-        setTimeout(()=>{setuserlist1([])},500);
-        
-    }
-    const cccc = ()=>{
-        setTimeout(()=>{setuserlist1([])},1000);
-        
+        setTimeout(()=>{setuserlist1([])},2000);
     }
     const [xyz,setxyz]=useState('離峰');
     return (
@@ -164,7 +163,7 @@ const Rentside = () => {
                     <div id="London" style={{ padding: 0, paddingRight: 50, paddingLeft: 50 }} className={cc.tabcontent}>
                         <div>
                             <div id="local" className={cc.d2}>
-                                <p className={cc.d3} onClick={cccc}>類別</p>
+                                <p className={cc.d3}>類別</p>
                                 <div className={cc.d4d}>
                                     <img className={cc.d4} src={`${type=='羽球'?fram:type=='桌球'?tennis:bask}`} alt="" /><br />
                                     <select name="" id="aaa" className={cc.d4s} onChange={(e)=>{settype(e.target.value)}}>

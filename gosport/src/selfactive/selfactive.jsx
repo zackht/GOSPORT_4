@@ -10,6 +10,7 @@ import Artadd from './components/artadd';
 import Artdel from './components/artdel'
 
 import SelectDown from './icon/Group 41.png'
+import noImg from './icon/teams_m.png'
 
 import './selfactive.css'
 
@@ -86,19 +87,38 @@ const Selfactive = () => {
         })
     }
     //拒絕follow人
-    const deleFollow = (data) =>{
+    const deleFollow = (data) => {
         console.log(data)
-        // DELETE FROM `follow_zeroda` WHERE `articleid_zeroda`="1" AND `userid`="2"
         Axios.post("http://localhost:3001/delefollowzeroda", {
             articleid_zeroda: data.articleid_zeroda,
-            userid:data.userid
+            userid: data.userid
         }).then(() => {
-            follow.current.click();
-        }).then(() => {
-            follow.current.click();
+            Axios.post("http://localhost:3001/followzeroda", {
+                articleid_zeroda: data.articleid_zeroda
+            }).then((response) => {
+                // console.log(response.data);
+                setFollowData(response.data)
+            })
         })
     }
+    //接受follow人
+    const accaptFollow = (data) => {
+        console.log(data)
+        Axios.post("http://localhost:3001/acpfollowzeroda", {
+            articleid_zeroda: data.articleid_zeroda,
+            userid: data.userid
+        }).then(() => {
+            Axios.post("http://localhost:3001/followzeroda", {
+                articleid_zeroda: data.articleid_zeroda
+            }).then((response) => {
+                // console.log(response.data);
+                setFollowData(response.data)
+            })
+        })
+    }
+    const [isfollow, setisfollow] = useState({});
     const [userimglist, setuserimglist] = useState({});
+    const [useBadge,setuseBadge] = useState({0:[],1:[],2:[]});
     useEffect(() => {
         // follow人的照片
         followdata.forEach((val, key) => {
@@ -108,15 +128,24 @@ const Selfactive = () => {
                 let fr = new FileReader;
                 fr.readAsDataURL(blob);
                 fr.onload = function () {
-                    setuserimglist(e => {
-                        return { ...e, [key]: fr.result }
-                    });
+                    setuserimglist(e => {return { ...e, [key]: fr.result }});
                 }
+            }else{
+                setuserimglist(e => {return{...e,[key]:noImg}});
             }
+            //follow人的拒絕接受
+            let followState = val.state
+            setisfollow(pre => { return { ...pre, [key]: followState } })
+            //follow人徽章        
+            let useb = JSON.parse(val.usebadge)
+            if(useb !== null)setuseBadge(pre =>{return {...pre,[key]:useb}})
+            else setuseBadge(pre =>{return{...pre,[key]:[{badgeurl:'/images/nostar.svg'}]}})  
         });
+
     }, [followdata])
+
     const closeModal = () => {
-        console.group(followdata)
+        console.log(useBadge)
         setModalToggle(!modaltoggle)
         // clearTimeout(time);
     }
@@ -142,9 +171,12 @@ const Selfactive = () => {
         setZerodaid(item.articleid_zeroda)
         setsidename(item.fieldname)
         setsideaddress(item.address)
+        //時區更正
         if (item.startdate) {
-            let playDate = item.startdate.substring(0, 10)
-            setPlayDate(playDate)
+            const date = new Date(item.startdate);
+            date.setHours(date.getHours() + 8);
+            const result = date.toISOString().substring(0, 10);
+            setPlayDate(result)
         }
         setStartTime(item.starttime)
         setEndTime(item.endtime)
@@ -163,8 +195,10 @@ const Selfactive = () => {
         setsidename(item.fieldname)
         setsideaddress(item.address)
         if (item.startdate) {
-            let playDate = item.startdate.substring(0, 10)
-            setPlayDate(playDate)
+            const date = new Date(item.startdate);
+            date.setHours(date.getHours() + 8);
+            const result = date.toISOString().substring(0, 10);
+            setPlayDate(result)
         }
         setStartTime(item.starttime)
         setEndTime(item.endtime)
@@ -181,7 +215,7 @@ const Selfactive = () => {
 
     // 父傳子搜尋按鍵識別
     const find = useRef();
-    const follow = useRef();
+    const follow = useRef(null);
     // 零打文章更新
     const updateZeroda = () => {
         Axios.post("http://localhost:3001/updatezeroda", {
@@ -219,6 +253,12 @@ const Selfactive = () => {
             setArticleToggle(!articleToggle)
             find.current.click();
         })
+    }
+    const getUseBadge =(index)=>{
+        let result = useBadge[index].map((item, index) => {
+            return <img key={index} src={item.badgeurl} alt="badge" />
+        })
+        return result
     }
     return (
         <React.Fragment>
@@ -265,7 +305,7 @@ const Selfactive = () => {
                         <div id="artclein" style={{ display: isArticleShow }}>
                             {/* <!-- 以新增 --> */}
                             <div id="tein" style={{ display: isAddShow }}>
-                                <Artadd control={controlModal} editSublet={editSublet} editZeroda={editZeroda} find={find} follow={follow}/>
+                                <Artadd control={controlModal} editSublet={editSublet} editZeroda={editZeroda} find={find} follow={follow} />
                             </div>
                             {/* <!-- 已刪除 --> */}
                             <div id="teout" style={{ display: isDelShow }}>
@@ -275,7 +315,7 @@ const Selfactive = () => {
                     </div>
                 </div>
                 {/* follow視窗 */}
-                <div className="active_modal" style={{ display: showModal , cursor:"default"}}>
+                <div className="active_modal" style={{ display: showModal, cursor: "default" }}>
                     <div className="modal-content">
                         <span className="active_close" onClick={() => { closeModal() }}>&times;</span>
                         <div>
@@ -286,19 +326,18 @@ const Selfactive = () => {
                                         <div className="clientPic">
                                             <img src={userimglist[index]} alt="" className="clientImg" />
                                             <div className='clientBadge'>
-                                                {JSON.parse(item.usebadge).map((item, index) => {
-                                                    return (
-                                                        <img key={index} src={item.badgeurl} alt="badge" />
-                                                    )
-                                                })}
-                                                {/* <img src={JSON.parse(item.usebadge)[0].badgeurl} alt="aa" /> */}
-                                                {/* <img src={star} alt="" /> */}
-                                                {/* <img src={star} alt="" /> */}
-                                                {/* <img src={star} alt="" /> */}
+                                                {/* {useBadge[index].map((item, index) => {
+                                                    return <img key={index} src={item.badgeurl} alt="badge" />
+                                                })} */}
+                                                {getUseBadge(index)}
+                                                {/* {JSON.parse(item.usebadge).map((item, index) => {
+                                                    return <img key={index} src={item.badgeurl} alt="badge" />
+                                                })} */}
+
                                             </div>
                                         </div>
                                         <div className="clientIntro">
-                                            <div>{item.username}</div>
+                                            <div style={{ textShadow: "#9e9e9e 0px 1px 1px" }}>{item.username!==null?item.username:'新用戶'}</div>
                                             <div >
                                                 <span>程度</span>
                                                 <span style={{ display: degree === "羽球" ? "inline" : "none" }}>{item.badminton}</span>
@@ -310,10 +349,12 @@ const Selfactive = () => {
                                             <div>
                                                 2022/12/22 9:05
                                             </div>
-                                            <div>
-                                                <button onClick={()=>{deleFollow(item)}}>拒絕</button>
-                                                <button>接受</button>
+                                            <div style={{ display: isfollow[index] === null ? 'block' : 'none' }}>
+                                                <button onClick={() => { deleFollow(item, index) }}>拒絕</button>
+                                                <button onClick={() => { accaptFollow(item, index) }}>接受</button>
                                             </div>
+                                            <div className='clientisY' style={{ display: isfollow[index] === "接受" ? 'block' : 'none' }}><span>已接受</span></div>
+                                            <div className='clientisX' style={{ display: isfollow[index] === "拒絕" ? 'block' : 'none' }}><span>已拒絕</span></div>
                                         </div>
                                     </div>
                                 )
@@ -339,14 +380,14 @@ const Selfactive = () => {
                         <div style={{ position: 'relative' }}>
                             <label >時段</label><br />
                             <select onChange={(e) => setStartTime(e.target.value)}>
-                                {[6, 7, 8, 9, 10, 11, 12].map(item => {
+                                {[6, 7, 8, 9, 10, 11, 12,13,14,15].map(item => {
                                     return <option value={item} selected={item === starttime}>{item}:00</option>
                                 })}
                             </select>
                             <img style={{ left: '63px' }} src={SelectDown} alt="" />
                             至
                             <select onChange={(e) => setEndTime(e.target.value)}>
-                                {[11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22].map(item => {
+                                {[10,11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22].map(item => {
                                     return <option value={item} selected={item === endtime}>{item}:00</option>
                                 })}
                             </select>
@@ -380,149 +421,7 @@ const Selfactive = () => {
         </React.Fragment>
     );
 }
-// class Selfactive extends Component {
-//     state = {
-//         tabs: [
-//             { tabName: "我的訂單", id: 1 },
-//             { tabName: "我的文章", id: 2 },
-//         ],
-//         activeCho: [
-//             { tabName: "進行活動", id: 1 },
-//             { tabName: "未來活動", id: 2 },
-//             { tabName: "結束活動", id: 3 },
-//             { tabName: "不成立", id: 4 },
-//         ],
-//         articleCho: [
-//             { tabName: "已新增", id: 1 },
-//             { tabName: "已刪除", id: 2 },
-//         ],
-//         tabIndex: 1,
-//         artInnerIndex: 1,
-//         activeInnerIndex: 1,
-//         modaltoggle: false
-//     }
-//     tabChoicedTab = (id) => {
-//         //tab切方法
-//         this.setState({
-//             tabIndex: id
-//         });
-//     }
-//     choicedArtInner = (id) => {
-//         //文章切內容
-//         this.setState({
-//             artInnerIndex: id
-//         });
-//     }
-//     choicedActiveInner = (id) => {
-//         //訂單切內容
-//         this.setState({
-//             activeInnerIndex: id
-//         });
-//     }
-//     controlModal = () => {
-//         let newState = { ...this.state }
-//         newState.modaltoggle = !newState.modaltoggle
-//         this.setState(newState)
-//     }
 
-
-//     render() {
-//         var _this = this;
-//         var isActiveShow = this.state.tabIndex === 1 ? 'flex' : 'none';
-//         var isArticleShow = this.state.tabIndex === 2 ? 'flex' : 'none';
-//         var isAddShow = this.state.artInnerIndex === 1 ? 'block' : 'none';
-//         var isDelShow = this.state.artInnerIndex === 2 ? 'block' : 'none';
-//         var showModal = this.state.modaltoggle ? 'flex' : 'none';
-
-
-//         var tabList = this.state.tabs.map(function (res, index) {
-//             let tabStyle = res.id === this.state.tabIndex ? 'active_subCtrl active_act' : 'active_subCtrl';
-//             return <div key={index}><button onClick={this.tabChoicedTab.bind(_this, res.id)} className={tabStyle}>{res.tabName}</button></div>
-//         }.bind(_this));
-
-//         var artAddDelList = this.state.articleCho.map(function (res, index) {
-//             let tabStyle = res.id === this.state.artInnerIndex ? 'active_subCtrl active_act' : 'active_subCtrl';
-//             return <div key={index}><button onClick={this.choicedArtInner.bind(_this, res.id)} className={tabStyle}>{res.tabName}</button></div>
-//         }.bind(_this));
-
-//         var artActiveList = this.state.activeCho.map(function (res, index) {
-//             let tabStyle = res.id === this.state.activeInnerIndex ? 'active_subCtrl active_act' : 'active_subCtrl';
-//             return <div key={index}><button onClick={this.choicedActiveInner.bind(_this, res.id)} className={tabStyle}>{res.tabName}</button></div>
-//         }.bind(_this));
-
-
-//         return (
-//             <React.Fragment>
-//                 <div className='active_'>
-//                     <div className="selfactive">
-//                         {/* <!-- 訂單or文章--> */}
-//                         <div className="active_type" >
-//                             {tabList}
-//                         </div>
-//                         {/* <!-- 選項：訂單--> */}
-//                         <div className="active_title" id="order" style={{ display: isActiveShow }}>
-//                             {artActiveList}
-//                         </div>
-//                         {/* <!-- 選項：文章 --> */}
-//                         <div className="active_title" id="articl" style={{ display: isArticleShow }} >
-//                             {artAddDelList}
-//                         </div>
-//                         <div className="active_inner">
-//                             {/* <!-- 訂單 --> */}
-//                             <div id="orderin" className="inte" style={{ display: isActiveShow }}>
-//                                 <Orderin />
-//                             </div>
-//                             {/* <!-- 文章 --> */}
-//                             <div id="artclein" className="inte" style={{ display: isArticleShow }}>
-//                                 {/* <!-- 以新增 --> */}
-//                                 <div id="tein" style={{ display: isAddShow }}>
-//                                     <Artadd controlModal={this.controlModal} />
-//                                 </div>
-//                                 {/* <!-- 已刪除 --> */}
-//                                 <div id="teout" style={{ display: isDelShow }}>
-//                                     <Artdel />
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                     <div className="active_modal" style={{ display: showModal }}>
-//                         <div className="modal-content">
-//                             <span className="active_close" onClick={this.controlModal}>&times;</span>
-//                             <div>
-//                                 <div>
-//                                     <div className="clientPic">
-//                                         <img className="clientImg" src={pic} alt="" />
-//                                         <div>
-//                                             <img src={star} alt="" />
-//                                             <img src={star} alt="" />
-//                                             <img src={star} alt="" />
-//                                         </div>
-//                                     </div>
-//                                     <div className="clientIntro">
-//                                         <div>南區金城武</div>
-//                                         <div><span>程度</span><span>高手</span></div>
-//                                     </div>
-//                                     <div className="clientYesNo">
-//                                         <div>
-//                                             2022/12/22 9:05
-//                                         </div>
-//                                         <div>
-//                                             <button>拒絕</button>
-//                                             <button>接受</button>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                                 <div></div>
-//                                 <div></div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </React.Fragment>
-//         );
-//     }
-
-// }
 
 export default Selfactive;
 

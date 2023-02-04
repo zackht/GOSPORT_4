@@ -67,6 +67,7 @@ const Create = () => {
                     <div className={com}>
                         <label for="add-ballgames" className={com.contenttitle}>球類</label><br />
                         <select onChange={(e) => setBallgamesczero(e.target.value)} className={com.contentdescribe}>
+                            <option value="桌球">桌球</option>
                             <option value="羽球">羽球</option>
                             <option value="籃球">籃球</option>
                         </select>
@@ -120,8 +121,8 @@ const Create = () => {
                     <div className={com.addlevel}>
                         <span className={com.contenttitle}>程度</span><br />
                         <select onChange={(e) => setLevelczero(e.target.value)} className={com.contentdescribe}>
-                            <option value="新手">新手</option>
                             <option value="普通">普通</option>
+                            <option value="新手">新手</option>
                             <option value="高手">高手</option>
                             <option value="不限">不限</option>
                         </select>

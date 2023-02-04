@@ -5,6 +5,14 @@ import Cookies from 'js-cookie';
 
 import arrowup from '../icon/arrowup2.svg'
 const Artdel = () => {
+    //時區更正
+    const getTruedate = (orderData) => {
+        if (!orderData) return null;
+        const date = new Date(orderData);
+        date.setHours(date.getHours() + 8);
+        const result = date.toISOString().substring(0, 10);
+        return result
+    }
     // 查詢date
     const [stratDate, setStartDate] = useState('');
     const [endDate, setEndtDate] = useState('');
@@ -135,7 +143,7 @@ const Artdel = () => {
                     {zerolist.map((item) => {
                         return (
                             <tr style={{ display: showzero }}>
-                                <td>{item.startdate.substring(0, 10)}</td>
+                                <td>{ getTruedate(item.startdate)}</td>
                                 <td>零打</td>
                                 <td>{item.content}</td>
                                 <td style={{ textAlign: "center" }} >{item.number}</td>
@@ -148,7 +156,7 @@ const Artdel = () => {
                     {sublist.map((item) => {
                         return (
                             <tr style={{ display: showsub }}>
-                                <td>{item.startdate.substring(0, 10)}</td>
+                                <td>{ getTruedate(item.startdate)}</td>
                                 <td>轉租</td>
                                 <td>{item.content}</td>
                                 <td style={{ textAlign: "center" }}>{item.amount}</td>

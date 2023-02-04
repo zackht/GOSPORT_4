@@ -25,6 +25,7 @@ import Selfalter from "./selfalter/selfalter";
 import Selfbuild from "./selfalter/selfbuild";
 import Selfpage from "./selfpage/selfpage";
 import Myteam from "./userteam/index.js";
+import Member from "./userteam/component/member.js";
 import Backuser from './back/backuser';
 import backside from './back/backside';
 import createside from './back/createside';
@@ -70,7 +71,7 @@ class App extends Component {
             <Route path="/gosport/user/activity" component={Selfactive} />
 
             {/* 球隊 */}
-            <Route path="/gosport/user/myteam/"  component={Myteam} />
+            <Route path="/gosport/user/myteam/:id"  component={ Myteam } />
 
             {/* QA */}
             {/* <Route path="/gosport/qa" component={} /> */}

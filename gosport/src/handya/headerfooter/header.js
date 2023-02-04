@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Axios from "axios";
 import { Link, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -19,6 +19,8 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import sighno from '../icon/快速搜尋＿註冊 (1).svg';
 import gi from './img/Group 254.svg';
+import giok from './img/Group 255ok.svg';
+import yin from './img/驗證發送.svg';
 export default function Navbar(props) {
     const { pathname } = useLocation();
     const splitPathname = pathname.split("/");
@@ -136,7 +138,7 @@ console.log(iddd)
             userid: id,
         }).then((response) => {
             // console.log('team', response.data);
-            console.log(response.data);
+            // console.log(response.data);
             setteaminfo(response.data);
             // console.log(teaminfo)
             
@@ -215,19 +217,20 @@ const [mouse,setmouse] = useState(false)
     }
     const setPassword2 = (e) =>{
         const text1 = e.target.value;
-        if(text1!=password){
+        if(text1!=password&&timehit==="ok"){
             setemailhint("確認密碼有誤");
         }
-        else if (text1=="") {
+        else if (text1==""&&timehit==="ok") {
             setemailhint("請輸入密碼");
         }
-        else if (password ==""){
+        else if (password ==""&&timehit==="ok"){
             setemailhint("請輸入密碼");
         }
-        else{
+        else if (timehit==="ok"&&text1===password){
             setemailhint("可以註冊");
         }
     }
+    const [timehit , setemailhint1] = useState('');
     const emailcheck = (Event) => {
         const text = Event.target.value;
         const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
@@ -237,10 +240,10 @@ const [mouse,setmouse] = useState(false)
             setchack(resq.data)
             console.log(chack);
             chack.map((v,k)=>{
-                text == v.email ? setemailhint("信箱已重複或格式不正確"):console.log("2")
+                text == v.email ? setemailhint("信箱已重複或格式不正確"):setemailhint1("ok")
             })
         });
-        if (text.match(reg)) {
+        if (text.match(reg)&&timehit==="ok") {
             setemailhint("請輸入密碼");
             setemail(text);
         } else {
@@ -328,6 +331,10 @@ const [mouse,setmouse] = useState(false)
 const notic = () =>{
     loginfo2 === "none" ? setloginfo2("block") : setloginfo2("none");
 }
+const userCL = useRef();
+const closeUNav = () =>{
+    userCL.current.click();
+}
 // // //google login
 // const [googleuser,setgoogle] = useState()
 // function handleCallbackResponse(response){
@@ -350,9 +357,14 @@ const notic = () =>{
 // console.log(teaminfo===[])
 // const teaminfoo=()=>{JSON.stringify(teaminfo)};
 // console.log(JSON.stringify(teaminfo)==="[]")
-console.log(teaminfo);
-
-
+// console.log(teaminfo);
+const [turndiv,setturndiv] = useState(false);
+const turnin = ()=>{
+    turndiv===false?setturndiv(true):setturndiv(false);
+}
+const nono = ()=>{
+    alert('此信箱以註冊')
+}
     if (!token3) {
         return (
             <React.Fragment>
@@ -363,7 +375,7 @@ console.log(teaminfo);
                     <div class={cc.apple}>
                         <button className={` ${sighbtn === true ? cc.focus1 : cc.tablink1}`} onClick={sigh}  >註冊</button>
                         <button className={` ${loginbtn === true ? cc.focus1 : cc.tablink1}`} onClick={login} >登入</button>
-                        <div id="Londo" style={{ display: sighdiv }} className={cc.tabcontent}>
+                        <div id="Londo" style={{ display: sighdiv }} className={cc.tabcontent3}>
                         {/* <GoogleLogin className={cc.d162}
           clientId={clientId}
           buttonText="Sign in with Google"
@@ -381,6 +393,8 @@ console.log(teaminfo);
                                     <p>{emailhint}</p>
                                 </div>
                                 <input onChange={emailcheck} className={`${emailhint === "可以註冊" ? cc.d133 : cc.d151}`} type="text" />
+                                <p className={cc.d134}>驗證碼</p> <img onClick={()=> {alert("信箱已重複")}} className={cc.d167} src={yin}></img>
+                                <input onChange={e => setPassword(e.target.value)} className={cc.d135} type="password" />
                                 <p className={cc.d134}>密碼</p>
                                 <input onChange={e => setPassword(e.target.value)} className={cc.d135} type="password" />
                                 <p className={cc.d136}>至少8個字,含至少1個數字及1個英文字母</p>
@@ -512,23 +526,24 @@ console.log(teaminfo);
 // }
     return (
         <React.Fragment>
-<img style={{ display: loginfo2 }} className={cc.d163} src={gi}></img>
+            <div style={{ display: loginfo2 }} className={cc.d163}><img onClick={turnin} className={cc.d163} src={turndiv===false? gi : giok}></img>
+</div>
             <div style={{ display: loginfo1 }} className={cc.d154}>
-                <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user'>個人頁面</Link></button>
-                <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/settings'>帳號設定</Link></button>
-                <button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>活動歷程</Link></button>
+                <button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user'>個人頁面</Link></button>
+                <button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/settings'>帳號設定</Link></button>
+                <button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>活動歷程</Link></button>
 {JSON.stringify(teaminfo)==="[]"?
 (
-<React.Fragment><button className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/myteam/basic/edit'>新建球隊</Link></button></React.Fragment>
+<React.Fragment><button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/myteam/basic/new'>新建球隊</Link></button></React.Fragment>
 ):
 (
-    <React.Fragment><button className={mouse==true?cc.d160:cc.d161}>我的球隊</button></React.Fragment>
+    <React.Fragment><button onClick={()=>{closeUNav()}} className={mouse==true?cc.d160:cc.d161}>我的球隊</button></React.Fragment>
     )}
                 
                 {/* <button className={mouse==true?cc.d160:cc.d161}>我的球隊</button> */}
                 {teaminfo.map((v,k)=>{                   
                     return(
-<React.Fragment> <button onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}><Link style={{color:"black"}} to={`/gosport/user/myteam/${v.teamid}/basic`}>{v.tname}</Link></button>   </React.Fragment>
+<React.Fragment> <button onClick={()=>{closeUNav()}} onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}><Link style={{color:"black"}} to={`/gosport/user/myteam/${v.teamid}/basic`}>{v.tname}</Link></button>   </React.Fragment>
 )
                 }
                 )}
@@ -573,7 +588,7 @@ console.log(teaminfo);
                                     setUserurl(fr.result);
                                 }
                                 return (
-                                    <React.Fragment><img className="userimg" onClick={loginfo} src={userurl} />
+                                    <React.Fragment><img className="userimg" ref={userCL} onClick={loginfo} src={userurl} />
                                         <p className={cc.d153}><a href="##" onClick={handleLogout}>登出</a></p>
   
                                     </React.Fragment>

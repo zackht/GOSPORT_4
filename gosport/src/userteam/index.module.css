@@ -1,10 +1,7 @@
 .main {
     width: 100vw;
-    /* 扣除header footer高度 */
-    height: 695px;
-    /* header高度 */
-    top: 82px;
-    /* margin-bottom: 135px; */
+    height: 700px;
+    top: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,7 +9,6 @@
 }
 /* 白底 */
 .mContent {
-    /* box-shadow: 0px 5px 25px rgba(180, 180, 180, 0.4); */
     box-shadow: 0px 0px 40px rgba(170, 170, 170, 0.7);
     width: 1010px;
     height: 560px;
