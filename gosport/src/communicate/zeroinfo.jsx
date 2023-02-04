@@ -2,12 +2,21 @@ import React from "react";
 import zzz from './zeroinfo.module.css'
 import star from './icon/star.svg';
 import leader from './icon/Ellipse.svg';
+import Axios from "axios";
+import Cookies from 'js-cookie';
 
 const Zeroinfo = ({datazero}) => {
     console.log(datazero);
 
+    
     const joinzero = () => {
-        alert("申請成功")
+        Axios.post("http://localhost:3001/joinzero", {
+            articleidzero: datazero.articleid_zeroda,
+            useridjoinzero: Cookies.get('id'),
+        }).then((response) => {
+            console.log(response);
+            alert("新增成功");
+        })
     }
 
     return (

@@ -49,23 +49,6 @@ body {
     justify-content: center;
 }
 
-/* .tablink {
-    color: black;
-    float: left;
-    outline: none;
-} */
-
-/* 
-.tablink:hover {
-    background-color: #777;
-}
-
-.tabcontent {
-    color: black;
-    padding: 50px;
-    text-align: center;
-} */
-
 .type1 {
     font-size: 1.2rem;
     color: #aaaaaa;
@@ -110,7 +93,8 @@ body {
 .type {
     width: 200px;
     left: 50px;
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
 
 .data {

@@ -391,7 +391,7 @@ const turnin = ()=>{
                                     <p>{emailhint}</p>
                                 </div>
                                 <input onChange={emailcheck} className={`${emailhint === "可以註冊" ? cc.d133 : cc.d151}`} type="text" />
-                                <p className={cc.d134}>驗證碼</p> <img className={cc.d167} src={yin}></img>
+                                <p className={cc.d134}>驗證碼</p> <img onClick={()=> {alert("信箱已重複")}} className={cc.d167} src={yin}></img>
                                 <input onChange={e => setPassword(e.target.value)} className={cc.d135} type="password" />
                                 <p className={cc.d134}>密碼</p>
                                 <input onChange={e => setPassword(e.target.value)} className={cc.d135} type="password" />
