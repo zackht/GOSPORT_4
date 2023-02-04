@@ -111,8 +111,8 @@
     justify-content: center;
     margin-right: 20px;
 }
-/* 提交 */
-.fForm a:last-child{
+/* 儲存 */
+.fForm button{
     border: none;
     background-color: rgb(230, 70, 55);
     color: white;

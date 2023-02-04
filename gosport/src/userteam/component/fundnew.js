@@ -1,5 +1,5 @@
 import React, { useState ,useEffect } from 'react';
-import { Link,useParams,useLocation } from 'react-router-dom';
+import { Link,useParams,useLocation, useHistory } from 'react-router-dom';
 import fund from './fundEdit.module.css';
 // import img from '../img.module';
 import Axios from 'axios';
@@ -9,9 +9,9 @@ export default function FundNew(params) {
 
     // 抓網址id = 文章id
     const {id} = useParams();
-    // 返回目前最新文章id值
+    // 最新文章id值
     const [articleid,setArticleid]=useState(null);
-    // 新建文章後的id值
+    // 新建文章的id值
     const [newArticleid,setNewArticleid]=useState(null);
 
     // 目前網址
@@ -26,7 +26,7 @@ export default function FundNew(params) {
     const [ruserimg, setRuserimg] = useState(null);
 
     // input值
-    const [date, setDate] = useState('');                 // 儲值日期
+    const [date, setDate] = useState('');                   // 儲值日期
     const [fundMembeIid, setFundMembeIid] = useState(null); // 儲值成員id
     const [fee,setFee]=useState(null);                      // 儲值金額
     const [text,setText]=useState(null);                    // 儲值描述 
@@ -54,7 +54,7 @@ export default function FundNew(params) {
             Axios.post('http://localhost:3001/teamfundall',{
                 teamid:teamid
             }).then((response)=>{
-                console.log(response.data[0].articleid);
+                console.log(`最新文章${response.data[0].articleid}`);
                 setArticleid(response.data[0].articleid);
             });
 
@@ -121,36 +121,10 @@ export default function FundNew(params) {
         )
     })
 
+    const goPath =useHistory(); 
+
     // 新建文章
     const handleNewFund=()=>{
-
-        // 查找最新文章id
-        // 基金
-        if(pathend==='fund'){
-            console.log('pathend');
-            Axios.post('http://localhost:3001/teamfundall',{
-                teamid:teamid
-            }).then((response)=>{
-                console.log(response.data[0].articleid);
-                setNewArticleid(response.data[0].articleid);
-            });
-
-        // 支出
-        }else if(pathend==='pay'){
-            Axios.post('http://localhost:3001/teampayall',{
-                teamid:teamid
-            }).then((response)=>{
-                setNewArticleid(response.data[0].articleid);
-            });
-
-        // 活動
-        }else if(pathend==='activity'){
-            Axios.post('http://localhost:3001/teamactivityall',{
-                teamid:teamid
-            }).then((response)=>{
-                setNewArticleid(response.data[0].articleid);
-            });
-        };
 
         // 新增文章
         Axios.post('http://localhost:3001/teamfundarticlenew',{
@@ -160,7 +134,40 @@ export default function FundNew(params) {
             fee:fee,
             text:text
         })
-        
+
+        // 查找最新文章id
+        if(pathend==='fund'){ // 基金
+
+            Axios.post('http://localhost:3001/teamfundall',{
+                teamid:teamid
+            }).then((response)=>{
+                console.log(response.data[0].articleid);
+                setNewArticleid(response.data[0].articleid);
+            });
+
+        }else if(pathend==='pay'){  // 支出
+
+            Axios.post('http://localhost:3001/teampayall',{
+                teamid:teamid
+            }).then((response)=>{
+                setNewArticleid(response.data[0].articleid);
+            });
+
+        }else if(pathend==='activity'){ // 活動
+
+            Axios.post('http://localhost:3001/teamactivityall',{
+                teamid:teamid
+            }).then((response)=>{
+                setNewArticleid(response.data[0].articleid);
+            });
+
+        };
+
+    }
+
+    // 找到新增文章id值後 返回基金頁
+    if(newArticleid){
+        goPath.push(`/gosport/user/myteam/${id}/fund/${newArticleid}`);
     }
 
     return(
@@ -182,7 +189,7 @@ export default function FundNew(params) {
                       onChange={ (e)=>{setText(e.target.value)} } ></textarea>
             <div>
                 <Link to={`/gosport/user/myteam/${id}/fund/${articleid}`}>取消</Link>
-                <Link to={`/gosport/user/myteam/${id}/fund/${newArticleid}`} onClick={ handleNewFund }>儲存</Link>
+                <button onClick={ handleNewFund } >儲存</button>
             </div>
         </div>
     )

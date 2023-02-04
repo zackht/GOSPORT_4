@@ -44,9 +44,9 @@ export default function Myteam (){
 
     // 目前網址
     const [pathend, setPathEnd] = useState('');
-
     // 文章類型 依網址判斷
     const location = useLocation();
+    const LocationPath = location.pathname;
     const splitLocaPath = location.pathname.split('/');
     useEffect(()=>{
         if(splitLocaPath[5]==='fund'){
@@ -137,7 +137,7 @@ export default function Myteam (){
             });
         };
 
-    },[pathend]);
+    },[pathend,LocationPath]);
 
 
 
@@ -162,7 +162,7 @@ export default function Myteam (){
 
                             <Route path="/gosport/user/myteam/:id/fund/new"             component={FundNew} exact/>
                             <Route path="/gosport/user/myteam/:id/fund/:articleid/edit" component={FundEdit} exact/>
-                            <Route path="/gosport/user/myteam/:id/fund/:articleid"      component={Fund} />
+                            <Route path="/gosport/user/myteam/:id/fund/:articleid"      component={Fund} exact/>
                             <Route path="/gosport/user/myteam/:id/fund"                 component={Fund} exact/>
 
                             <Route path="/gosport/user/myteam/:id/pay/new"              component={PayEdit} exact/>

@@ -7,11 +7,12 @@ import Cookies from 'js-cookie';
 
 export default function FundEdit(params) {
 
-    // 抓網址id = 文章id
+    // 文章id
     const {id} = useParams();
+    // 最新文章id
     const [articleid,setArticleid]=useState(null);
 
-    // 目前網址
+    // 
     const [pathend, setPathEnd] = useState('');
 
     // SQL參數
