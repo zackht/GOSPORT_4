@@ -9,6 +9,7 @@ import Member from       './component/member';
 import MemberEdit from   './component/memberEdit';
 import Fund from         './component/fund';
 import FundEdit from     './component/fundEdit';
+import FundNew from     './component/fundnew';
 import Pay from          './component/pay';
 import PayEdit from      './component/payEdit';
 import Activity from     './component/activity';
@@ -18,7 +19,8 @@ export default function Myteam (){
 
     // 抓網址id = 文章id
     const {id} = useParams();
-    // console.log(id);
+
+    // 最新的文章id
     const [articleid,setArticleid]=useState(null);
 
     // SQL參數
@@ -42,9 +44,9 @@ export default function Myteam (){
 
     // 目前網址
     const [pathend, setPathEnd] = useState('');
-
     // 文章類型 依網址判斷
     const location = useLocation();
+    const LocationPath = location.pathname;
     const splitLocaPath = location.pathname.split('/');
     useEffect(()=>{
         if(splitLocaPath[5]==='fund'){
@@ -56,6 +58,27 @@ export default function Myteam (){
         };
     },[])
 
+    // map 球隊功能列表
+    const filterListMap = filterList.map((e)=>{
+        if(e.pathEnd==='basic'||e.pathEnd==='member'){
+            return (
+                <Link to={`/gosport/user/myteam/${id}/${e.pathEnd}`}
+                        key = {e.pathEnd} 
+                        className = {handleFilterCss(e)}>
+                    {e.filterName}
+                </Link>
+            )
+        }else{
+            return (
+                <Link to={`/gosport/user/myteam/${id}/${e.pathEnd}/${articleid}`}
+                        key = {e.pathEnd} 
+                        className = {handleFilterCss(e)}>
+                    {e.filterName}
+                </Link>
+            )
+        }
+    });
+
     // 畫面載入 設定最新的文章id
     useEffect(()=>{
 
@@ -64,7 +87,6 @@ export default function Myteam (){
             Axios.post('http://localhost:3001/teamfundall',{
                 teamid:teamid
             }).then((response)=>{
-                console.log(response.data[0].articleid);
                 setArticleid(response.data[0].articleid);
             });
 
@@ -115,29 +137,9 @@ export default function Myteam (){
             });
         };
 
-    },[pathend]);
+    },[pathend,LocationPath]);
 
-    // map 球隊功能列表
-    
-    const filterListMap = filterList.map((e)=>{
-        if(e.pathEnd==='basic'||e.pathEnd==='member'){
-            return (
-                <Link to={`/gosport/user/myteam/${id}/${e.pathEnd}`}
-                        key = {id} 
-                        className = {handleFilterCss(e)}>
-                    {e.filterName}
-                </Link>
-            )
-        }else{
-            return (
-                <Link to={`/gosport/user/myteam/${id}/${e.pathEnd}/${articleid}`}
-                        key = {id} 
-                        className = {handleFilterCss(e)}>
-                    {e.filterName}
-                </Link>
-            )
-        }
-    });
+
 
     return(
         <React.Fragment>
@@ -158,20 +160,20 @@ export default function Myteam (){
                             <Route path="/gosport/user/myteam/:id/member"               component={Member} exact/>
                             <Route path="/gosport/user/myteam/:id/member/edit"          component={MemberEdit} exact/>
 
-                            <Route path="/gosport/user/myteam/:id/fund/new"             component={FundEdit} exact/>
+                            <Route path="/gosport/user/myteam/:id/fund/new"             component={FundNew} exact/>
                             <Route path="/gosport/user/myteam/:id/fund/:articleid/edit" component={FundEdit} exact/>
+                            <Route path="/gosport/user/myteam/:id/fund/:articleid"      component={Fund} exact/>
                             <Route path="/gosport/user/myteam/:id/fund"                 component={Fund} exact/>
-                            <Route path="/gosport/user/myteam/:id/fund/:articleid"      component={Fund} />
 
                             <Route path="/gosport/user/myteam/:id/pay/new"              component={PayEdit} exact/>
                             <Route path="/gosport/user/myteam/:id/pay/edit"             component={PayEdit} exact/>
-                            <Route path="/gosport/user/myteam/:id/pay"                  component={Pay} exact/>
                             <Route path="/gosport/user/myteam/:id/pay/:articleid"       component={Pay} />
+                            <Route path="/gosport/user/myteam/:id/pay"                  component={Pay} exact/>
 
                             <Route path="/gosport/user/myteam/:id/activity/new"         component={ActivityEdit} exact/>
                             <Route path="/gosport/user/myteam/:id/activity/edit"        component={ActivityEdit} exact/>
-                            <Route path="/gosport/user/myteam/:id/activity"             component={Activity} exact/>
                             <Route path="/gosport/user/myteam/:id/activity/:articleid"  component={Activity} exact/>
+                            <Route path="/gosport/user/myteam/:id/activity"             component={Activity} exact/>
                         </Switch>
                 </div>
             </div>

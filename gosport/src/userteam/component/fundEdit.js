@@ -7,9 +7,13 @@ import Cookies from 'js-cookie';
 
 export default function FundEdit(params) {
 
-    // 抓網址id = 文章id
+    // 文章id
     const {id} = useParams();
-    const {articleid} = useParams();
+    // 最新文章id
+    const [articleid,setArticleid]=useState(null);
+
+    // 
+    const [pathend, setPathEnd] = useState('');
 
     // SQL參數
     const [userid, setUserid] = useState( Cookies.get('id') );  // 登入者id
@@ -99,20 +103,21 @@ export default function FundEdit(params) {
     // 新建文章
     const handleUpdateFund=()=>{
         // console.log(fundMembeIid);
-        Axios.post('http://localhost:3001/teamfundarticlenew',{
-            date:date,
-            teamid:teamid,
-            userid:fundMembeIid,
-            fee:fee,
-            text:text
-        })
+        // Axios.post('http://localhost:3001/teamfundarticlenew',{
+        //     date:date,
+        //     teamid:teamid,
+        //     userid:fundMembeIid,
+        //     fee:fee,
+        //     text:text
+        // })
     }
 
     return(
         <div className={fund.fForm}>
             <div>日期</div>
             <input type="date"
-                    value={ date } onChange={ (e)=>{setDate(e.target.value)} }/>
+                   value={ date } 
+                   onChange={ (e)=>{setDate(e.target.value)} }/>
 
             <div>儲值成員</div>
             <div>{ memberList }</div>
@@ -125,8 +130,8 @@ export default function FundEdit(params) {
                       defaultValue={result? result.text:''} 
                       onChange={ (e)=>{setText(e.target.value)} } ></textarea>
             <div>
-                <Link to={`/gosport/user/myteam/fund/${id}`}>取消</Link>
-                <Link to={`/gosport/user/myteam/fund/${id}`} onClick={ handleUpdateFund }>儲存</Link>
+                <Link to={`/gosport/user/myteam/${id}/fund/${articleid}`}>取消</Link>
+                <Link to={`/gosport/user/myteam/${id}/fund/${articleid}`} onClick={ handleUpdateFund }>儲存</Link>
             </div>
         </div>
     )

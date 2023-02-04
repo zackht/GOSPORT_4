@@ -16,10 +16,9 @@
     background-image: url(../img/icon_select.svg);
     background-size: auto 50%;
     background-repeat: no-repeat;
-    background-position: 100% 50%;
+    background-position: 95% 50%;
     display: flex;
     justify-content: center;
-    /* padding-left: 20px; */
     width: 230px;
     height: 65px;
     font-size: 1.5rem;
@@ -112,8 +111,8 @@
     justify-content: center;
     margin-right: 20px;
 }
-/* 提交 */
-.fForm a:last-child{
+/* 儲存 */
+.fForm button{
     border: none;
     background-color: rgb(230, 70, 55);
     color: white;

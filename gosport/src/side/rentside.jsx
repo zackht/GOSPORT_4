@@ -148,12 +148,11 @@ const Rentside = () => {
             return userlist[key];
         }
     }
-    const [tt,settt]=useState(false);
+    const [tt,settt]=useState(true);
     const change = ()=>{
         settt(!tt);
         search();
-        setTimeout(()=>{setuserlist1([])},1000);
-        
+        setTimeout(()=>{setuserlist1([])},2000);
     }
     const [xyz,setxyz]=useState('離峰');
     return (

@@ -102,7 +102,7 @@ const OrderNo = () => {
                 </div>
                 <div style={{ display: rentType ? 'none' : 'flex' }}>
                     <div style={{ flex: "1" }}>{ getTruedate(orderData.startdate)}</div>
-                    <div style={{ flex: "2" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
+                    <div style={{ flex: "2" }}>{orderData.starttime}:00-{orderData.endtime+1}:00</div>
                 </div>
                 <div>數量</div>
                 <div style={{ fontSize: '1.5rem', lineHeight: '15px', paddingTop: '0px', color: 'black', fontWeight: '400' }}>{orderData.ordercount}</div>

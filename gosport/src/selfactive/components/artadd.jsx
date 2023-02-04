@@ -7,6 +7,14 @@ import arrowup from '../icon/arrowup2.svg'
 // import star from '../icon/star1.svg'
 // import pic from '../icon/20130917_171106.jpg'
 const Artadd = ({ control, editZeroda, editSublet, find, follow }) => {
+        //時區更正
+        const getTruedate = (orderData) => {
+            if (!orderData) return null;
+            const date = new Date(orderData);
+            date.setHours(date.getHours() + 8);
+            const result = date.toISOString().substring(0, 10);
+            return result
+        }
     // 查詢date
     const [stratDate, setStartDate] = useState('');
     const [endDate, setEndtDate] = useState('');
@@ -116,7 +124,7 @@ const Artadd = ({ control, editZeroda, editSublet, find, follow }) => {
     // 讓substring不失效
     const getStartDate = (time) => {
         if (time !== undefined)
-            return time.substring(0, 10)
+            return getTruedate(time.substring(0, 10))
     }
     //過濾搜尋
     const [chuseS,setChuseS]=useState(true);
@@ -150,7 +158,7 @@ const Artadd = ({ control, editZeroda, editSublet, find, follow }) => {
                     {zerolist.map((item, index) => {
                         return (
                             <tr key={index} style={{ display: showzero , cursor: "default"}}>
-                                <td>{getStartDate(item.startdate)}</td>
+                                <td>{getTruedate(item.startdate)}</td>
                                 <td>零打</td>
                                 <td className='articlecontent' >{item.content}</td>
                                 <td className='articlefollow' ref={follow} onClick={() => { control(item) }}>{item.number}</td>
@@ -166,7 +174,7 @@ const Artadd = ({ control, editZeroda, editSublet, find, follow }) => {
                     {sublist.map((item, index) => {
                         return (
                             <tr style={{ display: showsub ,cursor: "default"}}>
-                                <td>{getStartDate(item.startdate)}</td>
+                                <td>{getTruedate(item.startdate)}</td>
                                 {/* <td>{item.startdate}</td> */}
                                 <td>轉租</td>
                                 <td className='articlecontent'>{item.content}</td>
