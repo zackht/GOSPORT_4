@@ -73,16 +73,17 @@ export default function BasicEdit(props) {
     const upLoadImg=()=>{
         inputFile.current.click();
     }
-    // 顯示
+    
     const handleImgChange =(e)=>{
         const file = e.target.files[0];
         const reader = new FileReader();
+        // 轉換更新格式
         if (file) {
             reader.readAsDataURL(file); // 讀取 以base64編碼的URL
             // 放入儲存的值
-            // console.log(file);
             setTeamfile(file);
         }
+        // 顯示
         reader.addEventListener("load", function () {
             // 給div
             setTeamimg(reader.result);
