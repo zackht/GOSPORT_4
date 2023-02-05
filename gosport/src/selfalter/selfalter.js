@@ -1,4 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
+import {  Link , useHistory } from 'react-router-dom';
+
 import Cookies from 'js-cookie';
 import Axios from "axios";
 
@@ -120,6 +122,7 @@ const Selfalter = () => {
 
     };
     // 上傳更新
+    const history = useHistory();
     let update = async (e) => {
         e.preventDefault();
         if (!picSourse) {
@@ -137,7 +140,8 @@ const Selfalter = () => {
                 userid: userid
             }).then((response) => {
                 console.log(response);
-                window.location = '/gosport/user';
+                // window.location = '/gosport/user';
+                history.push('/gosport/user')
             })
 
         } else {
@@ -157,7 +161,8 @@ const Selfalter = () => {
                 headers: { 'Content-Type': 'multipart/form-data' },
             }).then((response) => {
                 // console.log(response.data);
-                window.location = '/gosport/user';
+                // window.location = '/gosport/user';
+                history.push('/gosport/user')
             });
         }
     }
@@ -206,7 +211,7 @@ const Selfalter = () => {
             {/* 主體 */}
             <div className='alter_'>
                 <div className="selfalter">
-                    <form className='alter_form' onSubmit={update}>
+                    <form className='alter_form' >
                         <div>
                             <div className="alter_PicPla">
                                 <div id="picFile" onClick={upLoadpic}>
@@ -265,10 +270,12 @@ const Selfalter = () => {
                             </div>
                         </div>
                         <div className="alter_yesOrNot">
-                            <a href="/gosport/user">
+                            <Link to="/gosport/user">
                                 <span className="alter_backself">取消</span>
-                            </a>
+                            </Link>
+                            <Link to="/gosport/user" onClick={update}>
                             <input type="submit" value="儲存" />
+                            </Link>
                         </div>
                     </form>
                 </div>
