@@ -124,6 +124,7 @@
     background-size: auto 50%;
     background-repeat: no-repeat;
     background-position: 100% 50%;
+    -webkit-appearance: none;
 }
 /* 至 */
 .aForm .fTimeTo {

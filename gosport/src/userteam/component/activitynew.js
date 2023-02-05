@@ -32,7 +32,7 @@ export default function ActivityNew(params) {
     const [pay, setPay] = useState(null);                   // 支出
     const [members, setmembers] = useState([]);             // 資料庫成員
     const [memberImgUrls, setMemberImgUrls] = useState({}); // 資料庫成員urls 已讀取 
-    const newActivityMembers =[];                           // 選取的成員id   
+    // const [activityMembers, setActivityMembers] = useState(null); // 選取的成員id   
     const [text,setText]=useState(null);                    // 描述 
     const [activityImg, setActivityImg] = useState();       // 顯示
     const [activityFile, setActivityFile] = useState();     // 傳照片
@@ -65,77 +65,6 @@ export default function ActivityNew(params) {
     // 前往指定網址
     const goPath =useHistory(); 
 
-    // 新建文章
-    const handleNewActivity=()=>{
-
-        console.log(`
-        日期 ${date}
-        時段 ${starttime} - ${endtime}
-        類型 ${type}
-        標題 ${title}
-        地點 ${place}
-        支出 ${pay}
-        描述 ${text}
-        `);
-
-        console.log(activityFile);
-        console.log(newActivityMembers);
-
-        // if(activityFile){ // 有圖片
-        //     // 打包
-        //     const activityData = new FormData(); 
-        //     activityData.append('teamid', teamid);
-        //     activityData.append('date', date);
-        //     activityData.append('starttime', starttime);
-        //     activityData.append('endtime', endtime);
-        //     activityData.append('type', type);
-        //     activityData.append('title', title);
-        //     activityData.append('place', place);
-        //     activityData.append('pay', pay);
-        //     activityData.append('text', text);
-        //     activityData.append('activityFile', activityFile); // img
-        //     Axios.post("http://localhost:3001/activitynew", activityData,{
-        //         headers: { 'Content-Type': 'multipart/form-data' },
-        //     }).then((response) => {
-        //         console.log("有圖片更新成功");
-        //     });
-        // } else { // 沒圖片
-        //     const activityDataNoImg = new FormData();
-        //     activityDataNoImg.append('teamid', teamid);
-        //     activityDataNoImg.append('date', date);
-        //     activityDataNoImg.append('starttime', starttime);
-        //     activityDataNoImg.append('endtime', endtime);
-        //     activityDataNoImg.append('type', type);
-        //     activityDataNoImg.append('title', title);
-        //     activityDataNoImg.append('place', place);
-        //     activityDataNoImg.append('pay', pay);
-        //     activityDataNoImg.append('text', text);
-        //     Axios.post("http://localhost:3001/activitynewnoimg", activityDataNoImg, {
-        //         headers: { 'Content-Type': 'multipart/form-data' },
-        //     }).then((response) => {
-        //         console.log("沒圖片更新成功");
-        //     });
-        // }
-
-        // 查找最新文章id
-        Axios.post('http://localhost:3001/teamactivityall',{
-            teamid:teamid
-        }).then((response)=>{
-            // 設定新建文章id
-            setNewArticleid(response.data[0].articleid);
-        });
-
-    }
-
-    // 找到新增文章id值後 返回基金頁
-    // if(newArticleid){
-    //     goPath.push(`/gosport/user/myteam/${id}/activity/${newArticleid}`);
-    // }
-
-
-
-    
-
     // 畫面載入時 查找球隊成員
     useEffect(()=>{
         handlemembers(); 
@@ -166,45 +95,47 @@ export default function ActivityNew(params) {
                 }
             }
         });
+
+        // 參加成員id 預設成員不參加  
+        // const newActivityMembers = Array(members.length).fill(false);
+        // setActivityMembers(newActivityMembers);
                          
     }, [members]);
     
-    // 成員清單
-    const memberList = members.map((val, key) => {
-
-        // 預設成員不參加
-        newActivityMembers.push(false);   
-
-        // 會員有頭像時 img.m
-        if(val.userimg !== null){
-            return (<React.Fragment key={key}>
-                <input type="checkbox" id={`${key}`} value={val.userid}
-                       onClick={ (val)=>{ newActivityMembers[val.target.id]=!newActivityMembers[val.target.id] } } />
-                <label htmlFor={`${key}`} ><img src={ memberImgUrls[key] } /></label>
-            </React.Fragment>)  
-
-        // 會員無頭像時 img.m
-        }else{
-            return (<React.Fragment key={key}> 
-                <input type="checkbox" id={`${key}`} value={val.userid}
-                       onClick={ (val)=>{ newActivityMembers[val.target.id]=!newActivityMembers[val.target.id] } } />
-                <label htmlFor={`${key}`} ><img src={img.m} /></label>
-            </React.Fragment>)
-        };
-    });
-
-    // 上傳照片
-    // const inputFile = useRef();
-    // const upLoadImg=()=>{
-    //     console.log('1');
-    //     // inputFile.current.click();
+    // 參加成員
+    // const handleClickMember=(val,key)=>{
+    //     const temp = {...activityMembers};
+    //     temp[key]=val.target.checked;
+    //     setActivityMembers(temp);
     // }
-    // 顯示
+    
+    // 成員清單
+    // const memberList = members.map((val, key) => {
+
+    //     // 會員有頭像時 img.m
+    //     if(val.userimg !== null){
+    //         return (<React.Fragment key={key}>
+    //             <input type="checkbox" id={`${key}`} value={val.userid}
+    //                    onClick={ (val,key)=>{ handleClickMember(val,key) } } />
+    //             <label htmlFor={`${key}`} ><img src={ memberImgUrls[key] } /></label>
+    //         </React.Fragment>)  
+
+    //     // 會員無頭像時 img.m
+    //     }else{
+    //         return (<React.Fragment key={key}> 
+    //             <input type="checkbox" id={`${key}`} value={val.userid}
+    //                    onClick={ (val,key)=>{ handleClickMember(val,key) } }/>
+    //             <label htmlFor={`${key}`} ><img src={img.m} /></label>
+    //         </React.Fragment>)
+    //     };
+    // });
+
+    // 顯示要上傳的圖片
     const handleImgChange =(e)=>{
         const file = e.target.files[0];
         const reader = new FileReader();
         if (file) {
-            console.log(file);
+            // console.log(file);
             reader.readAsDataURL(file); // 讀取 以base64編碼的URL
             setActivityFile(file);
         }
@@ -213,6 +144,60 @@ export default function ActivityNew(params) {
             // 隱藏uploadimg
             setUploadimg('none');
         }, false);
+    }
+
+    // 新建文章
+    const handleNewActivity=()=>{
+
+        if(activityFile){ // 有圖片
+            // 打包
+            const activityData = new FormData(); 
+            activityData.append('teamid', teamid);
+            activityData.append('date', date);
+            activityData.append('starttime', starttime);
+            activityData.append('endtime', endtime);
+            activityData.append('type', type);
+            activityData.append('title', title);
+            activityData.append('place', place);
+            activityData.append('pay', pay);
+            activityData.append('text', text);
+            activityData.append('activityFile', activityFile); // img
+            Axios.post("http://localhost:3001/activitynew", activityData,{
+                headers: { 'Content-Type': 'multipart/form-data' },
+            }).then((response) => {
+                console.log("有圖片更新成功");
+            });
+        } else { // 沒圖片
+            const activityDataNoImg = new FormData();
+            activityDataNoImg.append('teamid', teamid);
+            activityDataNoImg.append('date', date);
+            activityDataNoImg.append('starttime', starttime);
+            activityDataNoImg.append('endtime', endtime);
+            activityDataNoImg.append('type', type);
+            activityDataNoImg.append('title', title);
+            activityDataNoImg.append('place', place);
+            activityDataNoImg.append('pay', pay);
+            activityDataNoImg.append('text', text);
+            Axios.post("http://localhost:3001/activitynewnoimg", activityDataNoImg, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            }).then((response) => {
+                console.log("沒圖片更新成功");
+            });
+        }
+
+        // 查找最新文章id
+        Axios.post('http://localhost:3001/teamactivityall',{
+            teamid:teamid
+        }).then((response)=>{
+            // 設定新建文章id
+            setNewArticleid(response.data[0].articleid);
+        });
+
+    }
+
+    // 找到新增文章id值後 返回基金頁
+    if(newArticleid){
+        goPath.push(`/gosport/user/myteam/${id}/activity/${newArticleid}`);
     }
 
     return(
@@ -246,8 +231,8 @@ export default function ActivityNew(params) {
                 <input type="text" onChange={ (e)=>{setPlace(e.target.value)} }/>
                 <div>支出</div>
                 <input type="text" onChange={ (e)=>{setPay(e.target.value)} }/>
-                <div>參加成員</div>
-                <div> { memberList } </div>
+                {/* <div>參加成員</div>
+                <div> { memberList } </div> */}
                 <div>描述</div>
                 <textarea onChange={ (e)=>{setText(e.target.value)} } cols="30" rows="10"></textarea>
                 <div>

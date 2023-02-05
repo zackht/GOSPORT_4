@@ -112,6 +112,7 @@ export default function BasicEdit(props) {
                 teamData.append('fee', fee);
                 teamData.append('text', text);
                 teamData.append('teamfile', teamfile); // img
+                // console.log(teamfile);
                 Axios.post("http://localhost:3001/basicupdate", teamData,{
                     headers: { 'Content-Type': 'multipart/form-data' },
                 }).then((response) => {

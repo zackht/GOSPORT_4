@@ -1964,22 +1964,20 @@ app.post('/deletemember', (req, res) => {
 
   // 芝｜Activity 新增活動文章-1 有圖
 app.post("/activitynew", upload.single('teamfile'), (req, res) => {
-  const tname = req.body.tname;
-  const sidename = req.body.sidename;
-  const week = req.body.week;
+  const teamid = req.body.teamid;
+  const date = req.body.date;
   const starttime = req.body.starttime;
   const endtime = req.body.endtime;
   const type = req.body.type;
-  const level = req.body.level;
-  const fee = req.body.fee;
+  const title = req.body.title;
+  const place = req.body.place;
+  const pay = req.body.pay;
   const text = req.body.text;
   const teamfile = req.file.buffer; // img
-  const teamid = req.body.teamid; // 球隊
   db.query(`
-      UPDATE team 
-      SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?, teamimg=?
-      where teamid=?;`,
-    [tname, sidename, week, starttime, endtime, type, level, fee, text, teamfile, teamid],
+  INSERT INTO teamactivity(teamid,startdate,starttime,enddate,endtime,type,title,location,text,pay,teamactivityimg)
+  VALUES(?,?,?,?,?,?,?,?,?,?,?)`,
+    [teamid, date, starttime, date, endtime, type, title, place, pay, text, teamfile],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -1990,20 +1988,19 @@ app.post("/activitynew", upload.single('teamfile'), (req, res) => {
 });
 // 芝｜Activity 新增活動文章-2 無圖
 app.post("/activitynewnoimg", upload.array(), (req, res) => {
-  const tname = req.body.tname;
-  const sidename = req.body.sidename;
-  const week = req.body.week;
+  const teamid = req.body.teamid;
+  const date = req.body.date;
   const starttime = req.body.starttime;
   const endtime = req.body.endtime;
   const type = req.body.type;
-  const level = req.body.level;
-  const fee = req.body.fee;
+  const title = req.body.title;
+  const place = req.body.place;
+  const pay = req.body.pay;
   const text = req.body.text;
-  const teamid = req.body.teamid; // 球隊
   db.query(
-    `INSERT INTO teamfund(date,teamid,userid,fee,text)
-    VALUES(?,?,?,?,?)`,
-    [tname, sidename, week, starttime, endtime, type, level, fee, text, teamid],
+    `INSERT INTO teamactivity(teamid,startdate,starttime,enddate,endtime,type,title,location,text,pay)
+    VALUES(?,?,?,?,?,?,?,?,?,?)`,
+    [teamid, date, starttime, date, endtime, type, title, place, pay, text],
     (err, result) => {
       if (err) {
         console.log(err);
