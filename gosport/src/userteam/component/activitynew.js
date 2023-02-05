@@ -78,18 +78,44 @@ export default function ActivityNew(params) {
         描述 ${text}
         `);
 
+        console.log(activityFile);
         console.log(newActivityMembers);
-        
 
-
-        // 新增文章
-        // Axios.post('http://localhost:3001/teamactivityarticlenew',{
-        //     date:date,
-        //     teamid:teamid,
-        //     // userid:fundMembeIid,
-        //     fee:pay,
-        //     text:text
-        // })
+        // if(activityFile){ // 有圖片
+        //     // 打包
+        //     const activityData = new FormData(); 
+        //     activityData.append('teamid', teamid);
+        //     activityData.append('date', date);
+        //     activityData.append('starttime', starttime);
+        //     activityData.append('endtime', endtime);
+        //     activityData.append('type', type);
+        //     activityData.append('title', title);
+        //     activityData.append('place', place);
+        //     activityData.append('pay', pay);
+        //     activityData.append('text', text);
+        //     activityData.append('activityFile', activityFile); // img
+        //     Axios.post("http://localhost:3001/activitynew", activityData,{
+        //         headers: { 'Content-Type': 'multipart/form-data' },
+        //     }).then((response) => {
+        //         console.log("有圖片更新成功");
+        //     });
+        // } else { // 沒圖片
+        //     const activityDataNoImg = new FormData();
+        //     activityDataNoImg.append('teamid', teamid);
+        //     activityDataNoImg.append('date', date);
+        //     activityDataNoImg.append('starttime', starttime);
+        //     activityDataNoImg.append('endtime', endtime);
+        //     activityDataNoImg.append('type', type);
+        //     activityDataNoImg.append('title', title);
+        //     activityDataNoImg.append('place', place);
+        //     activityDataNoImg.append('pay', pay);
+        //     activityDataNoImg.append('text', text);
+        //     Axios.post("http://localhost:3001/activitynewnoimg", activityDataNoImg, {
+        //         headers: { 'Content-Type': 'multipart/form-data' },
+        //     }).then((response) => {
+        //         console.log("沒圖片更新成功");
+        //     });
+        // }
 
         // 查找最新文章id
         Axios.post('http://localhost:3001/teamactivityall',{
@@ -168,10 +194,11 @@ export default function ActivityNew(params) {
     });
 
     // 上傳照片
-    const inputFile = useRef();
-    const upLoadImg=()=>{
-        inputFile.current.click();
-    }
+    // const inputFile = useRef();
+    // const upLoadImg=()=>{
+    //     console.log('1');
+    //     // inputFile.current.click();
+    // }
     // 顯示
     const handleImgChange =(e)=>{
         const file = e.target.files[0];
@@ -191,10 +218,12 @@ export default function ActivityNew(params) {
     return(
         <>
             <div className={activityEdit.aForm}>
-                <div onClick={upLoadImg}>
+                <div >
+                {/* <div onClick={upLoadImg}> */}
                     <img src={uploadimg}/>
                     <img src={activityImg}/>
-                    <input type='file' accept=".png, .jpg, .jpeg" ref={inputFile} 
+                    <input type='file' accept=".png, .jpg, .jpeg"  
+                    // <input type='file' accept=".png, .jpg, .jpeg" ref={inputFile} 
                            onChange={ handleImgChange }></input>
                 </div>
                 <div>日期</div>

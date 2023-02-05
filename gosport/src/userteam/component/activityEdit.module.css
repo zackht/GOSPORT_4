@@ -120,8 +120,6 @@
     padding-left: 30px;
     padding-right: 30px;
     box-sizing: border-box;
-    -webkit-appearance: none;
-    -moz-appearance: none;
     background-image: url('../img/icon_select.svg');
     background-size: auto 50%;
     background-repeat: no-repeat;

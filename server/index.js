@@ -1732,7 +1732,7 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜date 查找基金文章-1 all
+  // 芝｜Fund 查找基金文章-1 all
   app.post('/teamfundall', (req, res) => {
     const teamid = req.body.teamid;
       db.query(
@@ -1751,7 +1751,7 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜date 查找基金文章-2 時間條件
+  // 芝｜Fund 查找基金文章-2 時間條件
   app.post('/teamfunddate', (req, res) => {
     const teamid = req.body.teamid;
     const startdate = req.body.startdate;
@@ -1772,7 +1772,7 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜date 查找支出文章-1 all
+  // 芝｜Pay 查找支出文章-1 all
   app.post('/teampayall', (req, res) => {
     const teamid = req.body.teamid;
       db.query(
@@ -1791,7 +1791,7 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜date 查找支出文章-2 時間條件
+  // 芝｜Pay 查找支出文章-2 時間條件
   app.post('/teampaydate', (req, res) => {
     const teamid = req.body.teamid;
     const startdate = req.body.startdate;
@@ -1812,7 +1812,7 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜date 查找活動文章-1 all
+  // 芝｜Activity 查找活動文章-1 all
   app.post('/teamactivityall', (req, res) => {
     const teamid = req.body.teamid;
       db.query(
@@ -1831,7 +1831,7 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜date 查找活動文章-2 時間條件
+  // 芝｜Activity 查找活動文章-2 時間條件
   app.post('/teamactivitydate', (req, res) => {
     const teamid = req.body.teamid;
     const startdate = req.body.startdate;
@@ -1891,27 +1891,6 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜fund 新建活動文章 
-  app.post('/teamactivityarticlenew', (req, res) => {
-    const date = req.body.date;
-    const teamid = req.body.teamid;
-    const userid = req.body.userid;
-    const fee = req.body.fee;
-    const text = req.body.text;
-      db.query(
-        `INSERT INTO teamfund(date,teamid,userid,fee,text)
-        VALUES(?,?,?,?,?)`,
-      [date, teamid, userid, fee, text],
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      }
-    );
-  });
-
   // 芝｜fund 刪除基金文章 
   app.post('/teamfundarticledelete', (req, res) => {
     const articleid = req.body.articleid;
@@ -1929,7 +1908,7 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜fund 查找支出 指定文章 
+  // 芝｜pay 查找支出 指定文章 
   app.post('/teampayarticle', (req, res) => {
     const id = req.body.id;
       db.query(
@@ -1947,7 +1926,7 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜fund 查找活動 指定文章(留言未完成)
+  // 芝｜Activity 查找活動 指定文章(留言未完成)
   app.post('/teamactivityarticle', (req, res) => {
     const articleid = req.body.articleid;
       db.query(
@@ -1965,7 +1944,7 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜fund 查找活動 參加成員
+  // 芝｜Activity 查找活動 參加成員
   app.post('/teamactivitymember', (req, res) => {
     const articleid = req.body.articleid;
       db.query(
@@ -1982,6 +1961,57 @@ app.post('/deletemember', (req, res) => {
       }
     );
   });
+
+  // 芝｜Activity 新增活動文章-1 有圖
+app.post("/activitynew", upload.single('teamfile'), (req, res) => {
+  const tname = req.body.tname;
+  const sidename = req.body.sidename;
+  const week = req.body.week;
+  const starttime = req.body.starttime;
+  const endtime = req.body.endtime;
+  const type = req.body.type;
+  const level = req.body.level;
+  const fee = req.body.fee;
+  const text = req.body.text;
+  const teamfile = req.file.buffer; // img
+  const teamid = req.body.teamid; // 球隊
+  db.query(`
+      UPDATE team 
+      SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?, teamimg=?
+      where teamid=?;`,
+    [tname, sidename, week, starttime, endtime, type, level, fee, text, teamfile, teamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+// 芝｜Activity 新增活動文章-2 無圖
+app.post("/activitynewnoimg", upload.array(), (req, res) => {
+  const tname = req.body.tname;
+  const sidename = req.body.sidename;
+  const week = req.body.week;
+  const starttime = req.body.starttime;
+  const endtime = req.body.endtime;
+  const type = req.body.type;
+  const level = req.body.level;
+  const fee = req.body.fee;
+  const text = req.body.text;
+  const teamid = req.body.teamid; // 球隊
+  db.query(
+    `INSERT INTO teamfund(date,teamid,userid,fee,text)
+    VALUES(?,?,?,?,?)`,
+    [tname, sidename, week, starttime, endtime, type, level, fee, text, teamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
     
 
 //------------------
