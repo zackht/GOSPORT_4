@@ -529,12 +529,12 @@ const nono = ()=>{
             <div style={{ display: loginfo2 }} className={cc.d163}><img onClick={turnin} className={cc.d163} src={turndiv===false? gi : giok}></img>
 </div>
             <div style={{ display: loginfo1 }} className={cc.d154}>
-                <button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user'>個人頁面</Link></button>
-                <button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/settings'>帳號設定</Link></button>
-                <button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/activity'>活動歷程</Link></button>
+            <Link style={{color:"black"}} to='/gosport/user'><button onClick={()=>{closeUNav()}} className={cc.d155}>個人頁面</button></Link>
+            <Link style={{color:"black"}} to='/gosport/user/settings'><button onClick={()=>{closeUNav()}} className={cc.d155}>帳號設定</button></Link>
+            <Link style={{color:"black"}} to='/gosport/user/activity'><button onClick={()=>{closeUNav()}} className={cc.d155}>活動歷程</button></Link>
 {JSON.stringify(teaminfo)==="[]"?
 (
-<React.Fragment><button onClick={()=>{closeUNav()}} className={cc.d155}><Link style={{color:"black"}} to='/gosport/user/myteam/basic/new'>新建球隊</Link></button></React.Fragment>
+<React.Fragment><Link style={{color:"black"}} to='/gosport/user/myteam/basic/new'><button onClick={()=>{closeUNav()}} className={cc.d155}>新建球隊</button></Link></React.Fragment>
 ):
 (
     <React.Fragment><button onClick={()=>{closeUNav()}} className={mouse==true?cc.d160:cc.d161}>我的球隊</button></React.Fragment>
@@ -543,7 +543,7 @@ const nono = ()=>{
                 {/* <button className={mouse==true?cc.d160:cc.d161}>我的球隊</button> */}
                 {teaminfo.map((v,k)=>{                   
                     return(
-<React.Fragment> <button onClick={()=>{closeUNav()}} onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}><Link style={{color:"black"}} to={`/gosport/user/myteam/${v.teamid}/basic`}>{v.tname}</Link></button>   </React.Fragment>
+<React.Fragment> <Link style={{color:"black"}} to={`/gosport/user/myteam/${v.teamid}/basic`}><button onClick={()=>{closeUNav()}} onMouseLeave={()=>{setmouse(false)}} onMouseEnter={()=>{setmouse(true)}} className={cc.d156}>{v.tname}</button></Link>   </React.Fragment>
 )
                 }
                 )}

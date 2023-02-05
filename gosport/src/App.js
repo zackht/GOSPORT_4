@@ -44,6 +44,7 @@ class App extends Component {
           <Switch>
 
             {/* 首頁 */}
+            <Route path="/" 			                 component={Handya} exact />
             <Route path="/gosport/home" 			     component={Handya} exact />
 
             {/* 租場地 */}
