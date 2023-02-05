@@ -87,6 +87,14 @@
     height: 38px;
     text-align: center;
 }
+.button11{
+    border-radius: 30px;
+    border: 1px solid #e6e6e6;
+    color: #aaaaaa;
+    width: 120px;
+    height: 38px;
+    text-align: center;
+}
 .button2{
     color: #e64637;
     border: 1px solid #e64637;

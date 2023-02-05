@@ -305,6 +305,19 @@ app.post("/backuseredit", (req, res) => {
       }
     });
 });
+
+// 後臺會員刪除
+app.post("/backuserdelete", (req, res) => {
+  const userid = req.body.userid;
+  db.query(`DELETE FROM user WHERE userid = ?`
+    , [userid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
 //寄送email
 let transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -377,7 +390,7 @@ app.post("/rentside", (req, res) => {
   const park = `${req.body.park}`;
   const bath = `${req.body.bath}`;
   const baulk = `${req.body.baulk}`;
-  if (area === '不限'&& tt === true && xyz === '離峰') {
+  if (area === '南屯區'&& tt === true && xyz === '離峰') {
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY offpeakfee `
       // AND bath = ? AND park=? AND baulk=?`
@@ -388,7 +401,7 @@ app.post("/rentside", (req, res) => {
           res.send(result);
         }
       });
-  }else if(area === '不限'&& tt === false && xyz === '離峰'){
+  }else if(area === '南屯區'&& tt === false && xyz === '離峰'){
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY offpeakfee DESC`
       // AND bath = ? AND park=? AND baulk=?`
@@ -399,7 +412,7 @@ app.post("/rentside", (req, res) => {
           res.send(result);
         }
       });
-  }else if(area === '不限'&& tt === true && xyz === '尖峰'){
+  }else if(area === '南屯區'&& tt === true && xyz === '尖峰'){
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY peakfee`
       // AND bath = ? AND park=? AND baulk=?`
@@ -410,7 +423,7 @@ app.post("/rentside", (req, res) => {
           res.send(result);
         }
       });
-  }else if(area === '不限'&& tt === false && xyz === '尖峰'){
+  }else if(area === '南屯區'&& tt === false && xyz === '尖峰'){
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY peakfee DESC`
       // AND bath = ? AND park=? AND baulk=?`
@@ -827,6 +840,19 @@ app.post("/backsidesearch", (req, res) => {
 app.post("/backsideedit", (req, res) => {
   const sideid = req.body.sideid;
   db.query(`SELECT * FROM side where sideid = ?`
+    , [sideid, sideid]
+    , (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+// 後臺場地刪除
+app.post("/backsidedelete", (req, res) => {
+  const sideid = req.body.sideid;
+  db.query(`Delete  FROM side where sideid = ?`
     , [sideid, sideid]
     , (err, result) => {
       if (err) {
@@ -2170,6 +2196,23 @@ app.post('/teamactivity', (req, res) => {
     `SELECT * FROM teamevent 
   WHERE teamid = ?`,
     [teamactivityteamid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+})
+
+//報名零打
+app.post('/joinzero',(req, res) => {
+  const articleidzero = req.body.articleidzero;
+  const useridjoinzero = req.body.useridjoinzero;
+  db.query(
+    `INSERT INTO follow_zeroda(articleid_zeroda, userid, time) VALUES (?,?,now())`,
+    [articleidzero,useridjoinzero],
     (err, result) => {
       if (err) {
         console.log(err);

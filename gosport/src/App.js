@@ -24,6 +24,7 @@ import Selfsettings from "./selfalter/selfsettings";
 import Selfalter from "./selfalter/selfalter";
 import Selfbuild from "./selfalter/selfbuild";
 import Selfpage from "./selfpage/selfpage";
+import Selfroute from "./selfpage/selfroute";
 import Myteam from "./userteam/index.js";
 import Member from "./userteam/component/member.js";
 import Backuser from './back/backuser';
@@ -65,6 +66,7 @@ class App extends Component {
 
             {/* 會員  */}
             <Route path="/gosport/user" 		     component={Selfpage} exact />
+            <Route path="/gosport/user/view/:id" 		 component={Selfroute} exact/>
             <Route path="/gosport/user/settings" component={Selfsettings}/>
             <Route path="/gosport/user/build" 	 component={Selfbuild}/> {/*settings子組件*/}
             <Route path="/gosport/user/alter"    component={Selfalter} />{/*settings子組件*/}

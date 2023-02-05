@@ -32,15 +32,17 @@ const Backuser = () => {
         });
         setdiv1(true);
     }
-    const delete1 =()=>{
+    const userdelete =(e)=>{
         Axios.post("http://localhost:3001/backuserdelete", {
-            startdate: startdate,
-            enddate: enddate,
-            username: username,
+            userid: e,
         }).then((response) => {
-            console.log(response);
-            setresponselist(response.data);
+            search();
+            alert('刪除成功');
         });
+    }
+    const [ss,setss]= useState('');
+    const udd =(e)=>{
+        userdelete(e);
     }
     return (
         <React.Fragment>
@@ -75,7 +77,7 @@ const Backuser = () => {
                         <div class="row adiv14">
                             <div class="col-2 font1 adiv15">申請日期</div>
                             <div class="col-2 font1 adiv15">會員編號</div>
-                            <div class="col-5  font1 adiv15">會員名稱</div>
+                            <div class="col-5  font1 adiv15" onClick={()=>{console.log(ss)}}>會員名稱</div>
                             <div class="col-3 font1 adiv15"></div>
                         </div>
                         <div class="row adiv16">
@@ -93,7 +95,17 @@ const Backuser = () => {
                                             <div class="col-5 adiv15">{val.username}</div>
                                             <div class="col-3 d-flex justify-content-center adiv15">
                                                 <div class="button1 adiv18" onClick={()=>{edit(val.userid)}}>查看</div>
-                                                <div class="button1" onClick={delete1}>刪除</div>
+                                                {/* <div class="button1" onClick={()=>{userdelete(val.userid)}}>刪除</div> */}
+                                                <div class="button1" onClick={()=>{setss(key);}} style={{display:ss===''?'block':'none'}}>刪除</div>
+                                                
+                                                {ss===key?
+                                                <div>
+                                                <div class="button11"onClick={()=>{udd(val.userid)}} style={{marginBottom:10}}>我要刪除</div>
+                                                <div class="button11"onClick={()=>{setss('')}}>我在想想</div>
+                                                </div>
+                                                :''}
+                                                
+
                                             </div>
                                         </div>
                                     );
