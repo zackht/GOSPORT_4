@@ -23,13 +23,26 @@
     clip-path: circle(50% at 50% 50%);
     border: none;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.aForm>div>img{
+    width: 170px;
+    height: 170px;
+    position: absolute;
+    /* right: 40px; */
+    /* left: auto; */
+    clip-path: circle(50% at 50% 50%);
+    border: none;
+    cursor: pointer;
 }
 .aForm input[type='file']{
     opacity: 0;
 }
 /* 日期 */
 .aForm input[type="date"]{
-    width: 200px;
+    width: 220px;
     height: 65px;
     border-radius: 0;
     border-bottom: 1px solid rgb(56,56,56);
@@ -50,6 +63,29 @@
 }
 .aForm input[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0;
+}
+.aForm input[type=time]{
+    width: 220px !important;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid rgb(56, 56, 56);
+    width: 150px;
+    height: 65px;
+    font-family: 'Noto Sans TC';
+    color: rgb(56, 56, 56);
+    font-weight: 400;
+    font-size: 1.5rem;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-sizing: border-box;
+    background-image: url('../img/icon_select.svg');
+    background-size: auto 50%;
+    background-repeat: no-repeat;
+    background-position: 100% 50%;
+    background-color: white;
+    /* outline: none; */
 }
 .aForm input{
     margin-top: 10px;
@@ -75,7 +111,7 @@
     margin-bottom: 30px;
     border: none;
     border-bottom: 1px solid rgb(56, 56, 56);
-    width: 200px;
+    width: 150px;
     height: 65px;
     font-family: 'Noto Sans TC';
     color: rgb(56, 56, 56);
@@ -109,7 +145,7 @@
     align-items: center;
 }
 /* 儲值成員 */
-.aForm img{
+.aForm label img{
     clip-path: circle(50% at 50% 50%);
     width: 100px;
     height: 100px;
@@ -118,14 +154,17 @@
     opacity: 30%;
     margin-top: 10px;
 }
-.aForm input[type="radio"]{
+.aForm input[type='checkbox']{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     display: none;
 }
-.aForm input[type="radio"]:checked+label img {
+.aForm input[type='checkbox']:checked+label img{
     opacity: 100%;
 }
-/* 表單送出｜取消 */
-.aForm>div>a,.aForm input[type="submit"]{
+/* 取消 */
+.aForm>div>a,.aForm button{
     border: 1px solid rgb(230, 70, 55);
     font-family: 'Noto Sans TC';
     color: rgb(230, 70, 55);
@@ -139,7 +178,8 @@
     align-items: center;
     justify-content: center;
 }
-.aForm input[type="submit"]{
+/* 儲存 */
+.aForm button{
     border: none;
     background-color: rgb(230, 70, 55);
     color: white;

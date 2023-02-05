@@ -12,22 +12,32 @@ import FundEdit from     './component/fundEdit';
 import FundNew from     './component/fundnew';
 import Pay from          './component/pay';
 import PayEdit from      './component/payEdit';
+import PayNew from      './component/paynew';
 import Activity from     './component/activity';
+import ActivityNew from './component/activitynew';
 import ActivityEdit from './component/activityEdit';
 
 export default function Myteam (){
 
-    // 抓網址id = 文章id
+    const location = useLocation();
+    // 網址
+    const LocationPath = location.pathname; 
+    const splitLocaPath = location.pathname.split('/');
+
+    // 球隊id 動態路由抓取
     const {id} = useParams();
 
-    // 最新的文章id
-    const [articleid,setArticleid]=useState(null);
+    // 最新文章id
+    const [fundId,setFundId]=useState(null);
+    const [payId,setPayId]=useState(null);
+    const [activityId,setActivityId]=useState(null);
 
-    // SQL參數
-    const [userid, setUserid] = useState( Cookies.get('id') ); // 登入者id
-    const [teamid, setTeamid] = useState( id );                // 球隊id
+    // 登入者id
+    const [userid, setUserid] = useState( Cookies.get('id') ); 
+    // 球隊id
+    const [teamid, setTeamid] = useState( id );                
 
-    // 球隊列表
+    // 球隊系統
     const [filterList, setFilterList] = useState([
         {filterName:'介紹', pathEnd:'basic'},
         {filterName:'成員', pathEnd:'member'},
@@ -36,30 +46,63 @@ export default function Myteam (){
         {filterName:'活動', pathEnd:'activity'}
     ]);
 
-    // 依網址判斷 css
+    // 畫面載入 設定最新文章id
+    useEffect(()=>{
+
+        Axios.post('http://localhost:3001/teamfundall',{
+            teamid:teamid
+        }).then((response)=>{
+            // console.log(`fund${response.data[0].articleid}`)
+            setFundId(response.data[0].articleid);
+        });
+
+        Axios.post('http://localhost:3001/teampayall',{
+            teamid:teamid
+        }).then((response)=>{
+            setPayId(response.data[0].articleid);
+        });
+
+        Axios.post('http://localhost:3001/teamactivityall',{
+            teamid:teamid
+        }).then((response)=>{ 
+            setActivityId(response.data[0].articleid); 
+        });
+        
+    },[]);
+
+    // 網址改變時 設定最新文章id
+    useEffect(()=>{
+
+        Axios.post('http://localhost:3001/teamfundall',{
+            teamid:teamid
+        }).then((response)=>{
+            setFundId(response.data[0].articleid);
+        });
+
+        Axios.post('http://localhost:3001/teampayall',{
+            teamid:teamid
+        }).then((response)=>{
+            setPayId(response.data[0].articleid);
+        });
+
+        Axios.post('http://localhost:3001/teamactivityall',{
+            teamid:teamid
+        }).then((response)=>{
+            setActivityId(response.data[0].articleid);
+        });
+
+    },[LocationPath]);
+
+    // 網址判斷功能列表 決定css
     const handleFilterCss = (e)=>{
+        // console.log(e.pathEnd);
         const ePathend = e.pathEnd.split('/');
         return ePathend[0]===splitLocaPath[5]? index.mFilteractive:index.mFilter;
     };
 
-    // 目前網址
-    const [pathend, setPathEnd] = useState('');
-    // 文章類型 依網址判斷
-    const location = useLocation();
-    const LocationPath = location.pathname;
-    const splitLocaPath = location.pathname.split('/');
-    useEffect(()=>{
-        if(splitLocaPath[5]==='fund'){
-            setPathEnd('fund');
-        }else if(splitLocaPath[5]==='pay'){
-            setPathEnd('pay');
-        }else if(splitLocaPath[5]==='activity'){
-            setPathEnd('activity');
-        };
-    },[])
-
-    // map 球隊功能列表
+    // 球隊功能列表
     const filterListMap = filterList.map((e)=>{
+
         if(e.pathEnd==='basic'||e.pathEnd==='member'){
             return (
                 <Link to={`/gosport/user/myteam/${id}/${e.pathEnd}`}
@@ -68,78 +111,36 @@ export default function Myteam (){
                     {e.filterName}
                 </Link>
             )
-        }else{
+
+        }else if(e.pathEnd==='fund'){
             return (
-                <Link to={`/gosport/user/myteam/${id}/${e.pathEnd}/${articleid}`}
+                <Link to={`/gosport/user/myteam/${id}/${e.pathEnd}/${fundId}`}
+                        key = {e.pathEnd} 
+                        className = {handleFilterCss(e)}>
+                    {e.filterName}
+                </Link>
+            )
+
+        }else if(e.pathEnd==='pay'){
+            return (
+                <Link to={`/gosport/user/myteam/${id}/${e.pathEnd}/${payId}`}
+                        key = {e.pathEnd} 
+                        className = {handleFilterCss(e)}>
+                    {e.filterName}
+                </Link>
+            )
+
+        }else if(e.pathEnd==='activity'){
+            return (
+                <Link to={`/gosport/user/myteam/${id}/${e.pathEnd}/${activityId}`}
                         key = {e.pathEnd} 
                         className = {handleFilterCss(e)}>
                     {e.filterName}
                 </Link>
             )
         }
+        
     });
-
-    // 畫面載入 設定最新的文章id
-    useEffect(()=>{
-
-        // 基金
-        if(pathend==='fund'){
-            Axios.post('http://localhost:3001/teamfundall',{
-                teamid:teamid
-            }).then((response)=>{
-                setArticleid(response.data[0].articleid);
-            });
-
-        // 支出
-        }else if(pathend==='pay'){
-            Axios.post('http://localhost:3001/teampayall',{
-                teamid:teamid
-            }).then((response)=>{
-                setArticleid(response.data[0].articleid);
-            });
-
-        // 活動
-        }else if(pathend==='activity'){
-            Axios.post('http://localhost:3001/teamactivityall',{
-                teamid:teamid
-            }).then((response)=>{
-                setArticleid(response.data[0].articleid);
-            });
-        };
-
-    },[]);
-
-    // pathend改變時 設定最新的文章id
-    useEffect(()=>{
-
-        // 基金
-        if(pathend==='fund'){
-            Axios.post('http://localhost:3001/teamfundall',{
-                teamid:teamid
-            }).then((response)=>{
-                setArticleid(response.data[0].articleid);
-            });
-
-        // 支出
-        }else if(pathend==='pay'){
-            Axios.post('http://localhost:3001/teampayall',{
-                teamid:teamid
-            }).then((response)=>{
-                setArticleid(response.data[0].articleid);
-            });
-
-        // 活動
-        }else if(pathend==='activity'){
-            Axios.post('http://localhost:3001/teamactivityall',{
-                teamid:teamid
-            }).then((response)=>{
-                setArticleid(response.data[0].articleid);
-            });
-        };
-
-    },[pathend,LocationPath]);
-
-
 
     return(
         <React.Fragment>
@@ -165,12 +166,12 @@ export default function Myteam (){
                             <Route path="/gosport/user/myteam/:id/fund/:articleid"      component={Fund} exact/>
                             <Route path="/gosport/user/myteam/:id/fund"                 component={Fund} exact/>
 
-                            <Route path="/gosport/user/myteam/:id/pay/new"              component={PayEdit} exact/>
+                            <Route path="/gosport/user/myteam/:id/pay/new"              component={PayNew} exact/>
                             <Route path="/gosport/user/myteam/:id/pay/edit"             component={PayEdit} exact/>
-                            <Route path="/gosport/user/myteam/:id/pay/:articleid"       component={Pay} />
+                            <Route path="/gosport/user/myteam/:id/pay/:articleid"       component={Pay} exact/>
                             <Route path="/gosport/user/myteam/:id/pay"                  component={Pay} exact/>
 
-                            <Route path="/gosport/user/myteam/:id/activity/new"         component={ActivityEdit} exact/>
+                            <Route path="/gosport/user/myteam/:id/activity/new"         component={ActivityNew} exact/>
                             <Route path="/gosport/user/myteam/:id/activity/edit"        component={ActivityEdit} exact/>
                             <Route path="/gosport/user/myteam/:id/activity/:articleid"  component={Activity} exact/>
                             <Route path="/gosport/user/myteam/:id/activity"             component={Activity} exact/>

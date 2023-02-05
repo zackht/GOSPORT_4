@@ -190,10 +190,11 @@ export default function BasicEdit(props) {
         <>
             <div action="" className={basicEdit.bForm}>
                 {/* 上傳照片 */}
-                <div onClick={upLoadImg} id='uploadImg' >
+                <div onClick={upLoadImg}  >
                     <img src={uploadimg}/>
                     <img src={teamimg}/>
-                    <input type='file' accept=".png, .jpg, .jpeg" ref={inputFile} onChange={ handleImgChange }></input>
+                    <input type='file' accept=".png, .jpg, .jpeg" ref={inputFile} 
+                           onChange={ handleImgChange }></input>
                 </div>
                 
                 <div>球隊名稱</div>

@@ -1865,6 +1865,27 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
+  // 芝｜fund 新建活動文章 
+  app.post('/teamactivityarticlenew', (req, res) => {
+    const date = req.body.date;
+    const teamid = req.body.teamid;
+    const userid = req.body.userid;
+    const fee = req.body.fee;
+    const text = req.body.text;
+      db.query(
+        `INSERT INTO teamfund(date,teamid,userid,fee,text)
+        VALUES(?,?,?,?,?)`,
+      [date, teamid, userid, fee, text],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+
   // 芝｜fund 刪除基金文章 
   app.post('/teamfundarticledelete', (req, res) => {
     const articleid = req.body.articleid;
@@ -1900,14 +1921,32 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜fund 查找活動 指定文章(成員、成員、留言未完成)
+  // 芝｜fund 查找活動 指定文章(留言未完成)
   app.post('/teamactivityarticle', (req, res) => {
-    const id = req.body.id;
+    const articleid = req.body.articleid;
       db.query(
         `SELECT startdate,enddate,starttime,endtime,type,title,location,pay,text
         FROM teamactivity
         WHERE teamactivityid=?`,
-      [id],
+      [articleid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+
+  // 芝｜fund 查找活動 參加成員
+  app.post('/teamactivitymember', (req, res) => {
+    const articleid = req.body.articleid;
+      db.query(
+        `SELECT user.userid, user.userimg
+        FROM teamactivityuser ,user
+        WHERE teamactivityid=? and teamactivityuser.userid=user.userid`,
+      [articleid],
       (err, result) => {
         if (err) {
           console.log(err);
