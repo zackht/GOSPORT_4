@@ -7,9 +7,8 @@ import img from '../img.module';
 
 export default function Basic(props) {
 
-    // 抓網址id = 文章id
+    // 球隊id
     const {id} = useParams();
-    // console.log(id);
     
     // SQL參數
     const [userid, setUserid] = useState( Cookies.get('id') ); // 登入者id

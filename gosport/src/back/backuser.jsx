@@ -32,15 +32,22 @@ const Backuser = () => {
         });
         setdiv1(true);
     }
-    const delete1 =()=>{
+    const userdelete =(e)=>{
         Axios.post("http://localhost:3001/backuserdelete", {
-            startdate: startdate,
-            enddate: enddate,
-            username: username,
+            userid: e,
         }).then((response) => {
-            console.log(response);
-            setresponselist(response.data);
+            search();
+            alert('刪除成功');
         });
+    }
+    const [ss,setss]= useState('');
+    const udd =(e)=>{
+        userdelete(e);
+        setss('');
+    }
+    const ccaa =()=>{
+        setdiv1(false);
+        seteditlist([]);
     }
     return (
         <React.Fragment>
@@ -75,7 +82,7 @@ const Backuser = () => {
                         <div class="row adiv14">
                             <div class="col-2 font1 adiv15">申請日期</div>
                             <div class="col-2 font1 adiv15">會員編號</div>
-                            <div class="col-5  font1 adiv15">會員名稱</div>
+                            <div class="col-5  font1 adiv15" onClick={()=>{console.log(ss)}}>會員名稱</div>
                             <div class="col-3 font1 adiv15"></div>
                         </div>
                         <div class="row adiv16">
@@ -93,7 +100,17 @@ const Backuser = () => {
                                             <div class="col-5 adiv15">{val.username}</div>
                                             <div class="col-3 d-flex justify-content-center adiv15">
                                                 <div class="button1 adiv18" onClick={()=>{edit(val.userid)}}>查看</div>
-                                                <div class="button1" onClick={delete1}>刪除</div>
+                                                {/* <div class="button1" onClick={()=>{userdelete(val.userid)}}>刪除</div> */}
+                                                <div class="button1" onClick={()=>{setss(key);}} style={{display:ss===''?'block':'none'}}>刪除</div>
+                                                
+                                                {ss===key?
+                                                <div>
+                                                <div class="button11"onClick={()=>{udd(val.userid)}} style={{marginBottom:10}}>我要刪除</div>
+                                                <div class="button11"onClick={()=>{setss('')}}>我在想想</div>
+                                                </div>
+                                                :''}
+                                                
+
                                             </div>
                                         </div>
                                     );
@@ -171,7 +188,7 @@ const Backuser = () => {
                                                 <embed src="./icon/star2.svg" type="" /> */}
                                             </div>
                                             <label for="account_describe" className={U.label}>描述</label><br />
-                                            <textarea className={U.textarea} id="account_describe" defaultValue={val.userdiscribe}></textarea><br />
+                                            <textarea className={U.textarea} id="account_describe" defaultValue={val.userdescribe}></textarea><br />
                                             <div className={`row`}>
                                                 <div className={`col-3 `}>
                                                     <label htmlFor="" className={U.label}>零打次數</label> <br />
@@ -193,7 +210,7 @@ const Backuser = () => {
                                         </div>
                                     </div>
                                     <div class={U.alter_yesOrNot}>
-                                        <span class={U.alter_backself} onClick={()=>setdiv1(false)}>取消</span>
+                                        <span class={U.alter_backself} onClick={ccaa}>取消</span>
                                         <input type="submit" className={`${U.input} ${U.input2}`} value="儲存" />
                                     </div>
                                 </div>

@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import {  Link , useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Axios from "axios";
 
@@ -112,6 +113,7 @@ const Selfbuild = () => {
 
     };
     // 上傳更新
+    const history = useHistory();
     let update = (e) => {
         e.preventDefault();
         const data = new FormData();
@@ -134,7 +136,8 @@ const Selfbuild = () => {
                 userid: userid,
             }).then((response) => {
                 console.log('baddge', response.data);
-                window.location = '/gosport/user';
+                // window.location = '/gosport/user';
+                history.push('/gosport/user')
             });
         });
 
@@ -183,7 +186,7 @@ const Selfbuild = () => {
             {/* 主體 */}
             <div className='alter_ build_'>
                 <div className="selfalter selfbuild">
-                    <form className='alter_form build_form' onSubmit={update}>
+                    <form className='alter_form build_form'>
                         <div>
                             <div className="alter_PicPla">
                                 <div id="picFile" onClick={upLoadpic}>
@@ -239,10 +242,16 @@ const Selfbuild = () => {
                             </div>
                         </div>
                         <div className="alter_yesOrNot">
-                            <a href="/gosport/user">
+                            {/* <a href="/gosport/user">
                                 <span className="alter_backself">取消</span>
                             </a>
+                            <input type="submit" value="儲存" /> */}
+                            <Link to="/gosport/user">
+                                <span className="alter_backself">取消</span>
+                            </Link>
+                            <Link to="/gosport/user" onClick={update}>
                             <input type="submit" value="儲存" />
+                            </Link>
                         </div>
                     </form>
                 </div>

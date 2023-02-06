@@ -1,5 +1,5 @@
 import React, { useState ,useEffect } from 'react';
-import { Link,useParams,useLocation, useHistory } from 'react-router-dom';
+import { Link, useParams,useLocation, useHistory } from 'react-router-dom';
 import fund from './fundEdit.module.css';
 // import img from '../img.module';
 import Axios from 'axios';
@@ -7,15 +7,14 @@ import Cookies from 'js-cookie';
 
 export default function FundNew(params) {
 
-    // 抓網址id = 文章id
+    // 球隊id
     const {id} = useParams();
     // 最新文章id值
     const [articleid,setArticleid]=useState(null);
     // 新建文章的id值
     const [newArticleid,setNewArticleid]=useState(null);
-
-    // 目前網址
-    const [pathend, setPathEnd] = useState('');
+    // 文章類型
+    const [articleType, setArticleType] = useState('');
 
     // SQL參數
     const [userid, setUserid] = useState( Cookies.get('id') );  // 登入者id
@@ -23,7 +22,7 @@ export default function FundNew(params) {
 
     // 資料庫抓回來的值
     const [result, setResult] = useState(null);
-    const [ruserimg, setRuserimg] = useState(null);
+    // const [ruserimg, setRuserimg] = useState(null);
 
     // input值
     const [date, setDate] = useState('');                   // 儲值日期
@@ -38,11 +37,11 @@ export default function FundNew(params) {
     const splitLocaPath = location.pathname.split('/');
     useEffect(()=>{
         if(splitLocaPath[5]==='fund'){
-            setPathEnd('fund');
+            setArticleType('fund');
         }else if(splitLocaPath[5]==='pay'){
-            setPathEnd('pay');
+            setArticleType('pay');
         }else if(splitLocaPath[5]==='activity'){
-            setPathEnd('activity');
+            setArticleType('activity');
         };
         
     },[])
@@ -50,7 +49,7 @@ export default function FundNew(params) {
     // 畫面載入 設定最新的文章id
     useEffect(()=>{
         // 基金
-        if(pathend==='fund'){
+        if(articleType==='fund'){
             Axios.post('http://localhost:3001/teamfundall',{
                 teamid:teamid
             }).then((response)=>{
@@ -59,23 +58,17 @@ export default function FundNew(params) {
             });
 
         // 支出
-        }else if(pathend==='pay'){
+        }else if(articleType==='pay'){
             Axios.post('http://localhost:3001/teampayall',{
                 teamid:teamid
             }).then((response)=>{
                 setArticleid(response.data[0].articleid);
             });
 
-        // 活動
-        }else if(pathend==='activity'){
-            Axios.post('http://localhost:3001/teamactivityall',{
-                teamid:teamid
-            }).then((response)=>{
-                setArticleid(response.data[0].articleid);
-            });
-        };
 
-    },[pathend]);
+        }
+
+    },[articleType]);
 
     // 畫面載入即抓 成員資料
     useEffect(()=>{
@@ -121,6 +114,7 @@ export default function FundNew(params) {
         )
     })
 
+    // 前往指定網址
     const goPath =useHistory(); 
 
     // 新建文章
@@ -136,7 +130,7 @@ export default function FundNew(params) {
         })
 
         // 查找最新文章id
-        if(pathend==='fund'){ // 基金
+        if(articleType==='fund'){ // 基金
 
             Axios.post('http://localhost:3001/teamfundall',{
                 teamid:teamid
@@ -145,7 +139,7 @@ export default function FundNew(params) {
                 setNewArticleid(response.data[0].articleid);
             });
 
-        }else if(pathend==='pay'){  // 支出
+        }else if(articleType==='pay'){  // 支出
 
             Axios.post('http://localhost:3001/teampayall',{
                 teamid:teamid
@@ -153,7 +147,7 @@ export default function FundNew(params) {
                 setNewArticleid(response.data[0].articleid);
             });
 
-        }else if(pathend==='activity'){ // 活動
+        }else if(articleType==='activity'){ // 活動
 
             Axios.post('http://localhost:3001/teamactivityall',{
                 teamid:teamid

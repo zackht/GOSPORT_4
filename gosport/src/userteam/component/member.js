@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import member from './member.module.css';
 import img from '../img.module.js';
 import Axios from "axios";
@@ -10,10 +10,13 @@ export default function Member(params) {
     // 徽章還沒做！！！！
     // 徽章還沒做！！！！
     // 徽章還沒做！！！！
+
+    // 球隊id 動態路由抓取
+    const {id} = useParams();
     
     // SQL參數
     const [userid, setUserid] = useState( Cookies.get('id') ); // 登入者id
-    const [teamid, setTeamid] = useState(1);                   // 球隊id
+    const [teamid, setTeamid] = useState(id);                  // 球隊id
 
     // 資料庫抓回來的值
     const [leaderId, setLeaderId] = useState('');              // 隊長id
@@ -181,7 +184,7 @@ export default function Member(params) {
             <div className={member.memberContent}>
                 <div>
                     {/* 判定為隊長 才顯示編輯按鈕 */}
-                    { userid===`${leaderId}`? (<Link to={"/gosport/user/myteam/member/edit"} className={member.mbtn}>編輯</Link>):'' }
+                    { userid===`${leaderId}`? (<Link to={`/gosport/user/myteam/${id}/member/edit`} className={member.mbtn}>編輯</Link>):'' }
                     {/* 隊長 */}
                     <div className={member.mTitle}>隊長</div>
                     <div className={member.mImgbox}><img className={member.mImg} src={leaderImg} alt=""/></div>
