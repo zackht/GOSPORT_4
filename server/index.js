@@ -2020,8 +2020,6 @@ app.post("/activitynewnoimg", upload.array(), (req, res) => {
 });
 // 芝｜Activity 新增活動成員
 app.post('/teamactivitmember', (req, res) => {
-  console.log(articleid);
-  console.log(userid);
   const articleid = req.body.articleid;
   const userid = req.body.userid;
   db.query(

@@ -6,7 +6,7 @@ import Axios from 'axios';
 import Cookies from 'js-cookie';
 
 export default function ActivityNew(params) {
-    console.log('new');
+    // console.log('new');
 
     // 今天日期
     const setToday = new Date();
@@ -202,9 +202,8 @@ export default function ActivityNew(params) {
             console.log(userid);
             // 新增活動成員
             Axios.post('http://localhost:3001/teamactivitmember',{
-                
                 articleid:response.data[0].articleid,
-                userid,userid
+                userid:userid
             }).then((response)=>{
                 console.log('新增成員成功');
             });
