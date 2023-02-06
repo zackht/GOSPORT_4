@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 const Zeroinfo = ({datazero}) => {
     console.log(datazero);
 
-    
+    // 報名零打
     const joinzero = () => {
         Axios.post("http://localhost:3001/joinzero", {
             articleidzero: datazero.articleid_zeroda,

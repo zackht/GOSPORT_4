@@ -65,7 +65,7 @@ const Backside = () => {
     // 新增場地到資料庫==========================
     const [img,setimg]=useState();
     const [usidename,setusidename]=useState('');
-    const [utype,setutype]=useState('');
+    const [utype,setutype]=useState('羽球');
     const [upark,setupark]=useState(false);
     const [ubath,setubath]=useState(false);
     const [ubaulk,setubaulk]=useState(false);
@@ -317,12 +317,12 @@ const Backside = () => {
                                             <div class={cside.div24}>
                                                 <span class={cside.font}>租期</span>
                                                 <div>
-                                                    <input type="checkbox" id="check1" class={cside.div8}  />
-                                                    <label for="check1" class={`${cside.div7} ${cside.font2}`} >日租</label>
-                                                    <input type="checkbox" id="check2" />
-                                                    <label for="check2" class={`${cside.div7} ${cside.font2}`} >月租</label>
-                                                    <input type="checkbox" id="check3"  />
-                                                    <label for="check3" class={cside.font2} >季租</label>
+                                                    <input type="checkbox" id="check11" class={cside.div8}  />
+                                                    <label for="check11" class={`${cside.div7} ${cside.font2}`} >日租</label>
+                                                    <input type="checkbox" id="check22" />
+                                                    <label for="check22" class={`${cside.div7} ${cside.font2}`} >月租</label>
+                                                    <input type="checkbox" id="check33"  />
+                                                    <label for="check33" class={cside.font2} >季租</label>
                                                 </div>
                                             </div>
                                             <div class={cside.div24}>
@@ -536,12 +536,12 @@ const Backside = () => {
                                 <div class={cside.div24}>
                                     <span class={cside.font}>租期</span>
                                     <div>
-                                        <input type="checkbox" id="check1" class={cside.div8}/>
-                                        <label for="check1" class={`${cside.div7} ${cside.font2}`} >日租</label>
-                                        <input type="checkbox" id="check2"/>
-                                        <label for="check2" class={`${cside.div7} ${cside.font2}`} >月租</label>
-                                        <input type="checkbox" id="check3"/>
-                                        <label for="check3" class={cside.font2} >季租</label>
+                                        <input type="checkbox" id="dcheck1" class={cside.div8}/>
+                                        <label for="dcheck1" class={`${cside.div7} ${cside.font2}`} >日租</label>
+                                        <input type="checkbox" id="dcheck2"/>
+                                        <label for="dcheck2" class={`${cside.div7} ${cside.font2}`} >月租</label>
+                                        <input type="checkbox" id="dcheck3"/>
+                                        <label for="dcheck3" class={cside.font2} >季租</label>
                                     </div>
                                 </div>
                                 <div class={cside.div24}>

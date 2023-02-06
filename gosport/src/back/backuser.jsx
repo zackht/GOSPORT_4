@@ -43,6 +43,11 @@ const Backuser = () => {
     const [ss,setss]= useState('');
     const udd =(e)=>{
         userdelete(e);
+        setss('');
+    }
+    const ccaa =()=>{
+        setdiv1(false);
+        seteditlist([]);
     }
     return (
         <React.Fragment>
@@ -183,7 +188,7 @@ const Backuser = () => {
                                                 <embed src="./icon/star2.svg" type="" /> */}
                                             </div>
                                             <label for="account_describe" className={U.label}>描述</label><br />
-                                            <textarea className={U.textarea} id="account_describe" defaultValue={val.userdiscribe}></textarea><br />
+                                            <textarea className={U.textarea} id="account_describe" defaultValue={val.userdescribe}></textarea><br />
                                             <div className={`row`}>
                                                 <div className={`col-3 `}>
                                                     <label htmlFor="" className={U.label}>零打次數</label> <br />
@@ -205,7 +210,7 @@ const Backuser = () => {
                                         </div>
                                     </div>
                                     <div class={U.alter_yesOrNot}>
-                                        <span class={U.alter_backself} onClick={()=>setdiv1(false)}>取消</span>
+                                        <span class={U.alter_backself} onClick={ccaa}>取消</span>
                                         <input type="submit" className={`${U.input} ${U.input2}`} value="儲存" />
                                     </div>
                                 </div>

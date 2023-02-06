@@ -255,12 +255,10 @@ app.post("/userupdate", upload.single('image'), (req, res) => {
     });
 });
 // 後臺會員刪除
-app.post("/backuserdelete",(req, res) => {
-  const name = req.body.name;
-  console.log(name);
-  console.log(req.file.buffer);
-  db.query("UPDATE user SET userimg=? where userid =?"
-    , [name], (err, result) => {
+app.post("/backuserdelete", (req, res) => {
+  const userid = req.body.userid;
+  db.query(`DELETE FROM user WHERE userid = ?`
+    , [userid], (err, result) => {
       if (err) {
         console.log(err);
       } else {
@@ -273,7 +271,16 @@ app.post("/backusersearch", (req, res) => {
   const startdate = req.body.startdate;
   const enddate = req.body.enddate;
   const username = req.body.username;
-  if (username === '') {
+  if (username === ''&& enddate===''&& username==='') {
+    db.query(`SELECT * FROM user`
+      , [], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+  }else if(username===''){
     db.query(`SELECT * FROM user WHERE adddate BETWEEN ? AND ?`
       , [startdate, enddate], (err, result) => {
         if (err) {
@@ -2270,3 +2277,37 @@ app.post('/joinzero',(req, res) => {
     }
   );
 })
+
+//承租轉租
+app.post('/joinrent',(req,res) => {
+  const articleidrent = req.body.articleidrent;
+  const useridjoinrent = req.body.useridjoinrent;
+  db.query(
+    `INSERT INTO follow_sublet(articleid_sublet, userid, time) VALUES (?,?,now())`,
+    [articleidrent, useridjoinrent],
+    (err,result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.log(result);
+      }
+    }
+  );
+})
+
+//留言顯示
+// app.post('/showmessage',(req, res) => {
+//   const messagezeroarticleid = req.body.messagezeroarticleid;
+//   db.query(
+//     `SELECT * FROM user, articlemessage_zeroda WHERE user.userid = articlemessage_zeroda.userid 
+//     AND articlemessage_zeroda.articleid_zeroda = ?`,
+//     [messagezeroarticleid],
+//     (err,result) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         res.log(result);
+//       }
+//     }
+//   );
+// })

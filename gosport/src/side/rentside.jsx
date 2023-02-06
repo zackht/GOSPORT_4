@@ -143,7 +143,7 @@ const Rentside = () => {
     const [h1,seth1]=useState(false);
 
     const ee = (key) => {
-        const time = setTimeout(()=>{seth1(true)},1000);
+        const time = setTimeout(()=>{seth1(true)},500);
         if(h1){
             return userlist[key];
         }
@@ -152,7 +152,7 @@ const Rentside = () => {
     const change = ()=>{
         settt(!tt);
         search();
-        setTimeout(()=>{setuserlist1([])},2000);
+        setTimeout(()=>{setuserlist1([])},500);
     }
     const [xyz,setxyz]=useState('離峰');
     return (
