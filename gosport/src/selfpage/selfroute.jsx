@@ -70,7 +70,7 @@ const Selfroute = () => {
     return (
         <React.Fragment>
             {/* 主體 */}
-            {/* <div className='self_'> */}
+            <div className='self_'>
                 <div className="self_cover">
                     <div style={{ display: 'flex', width: '90%', height: '481px' }}>
                         <div className="self_discribe">
@@ -109,7 +109,7 @@ const Selfroute = () => {
                         </div>
                     </div>
                 </div>
-            {/* </div> */}
+            </div>
         </React.Fragment>
     );
 }
