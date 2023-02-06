@@ -2013,12 +2013,14 @@ app.post("/activitynewnoimg", upload.array(), (req, res) => {
 });
 // 芝｜Activity 新增活動成員
 app.post('/teamactivitmember', (req, res) => {
-  const newArticleid = req.body.newArticleid;
+  console.log(articleid);
+  console.log(userid);
+  const articleid = req.body.articleid;
   const userid = req.body.userid;
   db.query(
     `INSERT into teamactivityuser(teamactivityid,userid)
     VALUES(?,?);`,
-    [newArticleid, userid],
+    [articleid, userid],
     (err, result) => {
       if (err) {
         console.log(err);
