@@ -27,8 +27,11 @@ export default function DateSearch(params) {
     
 
     // SQL參數
-    const [userid, setUserid] = useState( Cookies.get('id') ); // 登入者id
+    const [userId, setUserId] = useState( Cookies.get('id') ); // 登入者id
     const [teamid, setTeamid] = useState( id );                // 球隊id
+
+    // 其他判斷
+    const [leaderId, setLeaderId] = useState(''); // 隊長id
 
     // input值
     const [startdate, setStartdate] = useState(null); // 開始時間
@@ -39,6 +42,15 @@ export default function DateSearch(params) {
 
     // 文章日期清單
     const [resultList, setResultList] = useState('');
+
+    // 找隊長id
+    useEffect(()=>{
+        Axios.post("http://localhost:3001/teamleader",{
+            teamid: teamid
+        }).then((response)=>{
+            setLeaderId(response.data[0].userid);
+        })
+    },[]);
 
     // 切換基金｜支出｜活動 -> pathend改變 查找文章-1 all
     useEffect(()=>{
@@ -161,9 +173,10 @@ export default function DateSearch(params) {
                 <div className={dateSearch.sTitle}>日期搜尋</div>
                 <input type="date" onChange={ (e)=>{ setStartdate(e.target.value) } } />
                 <div className={dateSearch.sTitle}>訂單日期</div>
-                <div className={dateSearch.sDate}>{ resultList }</div>
+                <div className={userId==leaderId? `${dateSearch.sDate}`:`${dateSearch.sDateMax}`}>{ resultList }</div>
                 {/* 新增文章 */}
-                <Link to={`/gosport/user/myteam/${id}/${pathend}/new`}>新增文章</Link>
+                { userId==leaderId? <Link to={`/gosport/user/myteam/${id}/${pathend}/new`}>新增文章</Link>:'' }
+                
                 
             </div>
         </>

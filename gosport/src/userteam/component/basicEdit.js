@@ -95,6 +95,8 @@ export default function BasicEdit(props) {
     // 更新 or 新增資料
     const updateBasic =()=>{
 
+        console.log(area);
+
         // 有球隊
         if(teamid){
 
@@ -111,6 +113,7 @@ export default function BasicEdit(props) {
                 teamData.append('level', level);
                 teamData.append('fee', fee);
                 teamData.append('text', text);
+                teamData.append('area', area);
                 teamData.append('teamfile', teamfile); // img
                 // console.log(teamfile);
                 Axios.post("http://localhost:3001/basicupdate", teamData,{
@@ -130,6 +133,7 @@ export default function BasicEdit(props) {
                 teamData2.append('level', level);
                 teamData2.append('fee', fee);
                 teamData2.append('text', text);
+                teamData2.append('area', area);
                 Axios.post("http://localhost:3001/basicupdate2", teamData2, {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 }).then((response) => {
@@ -205,11 +209,11 @@ export default function BasicEdit(props) {
 
                 <div>固定打球地區</div>
                 <select name="county" onChange={(e)=>{setCounty(e.target.value)}}>
-                    <option value="台中市" selected={week? `${week==='台中市'? 'selected':''}`:''}>台中市</option>
+                    <option defaultValue="台中市" selected={week? `${week==='台中市'? 'selected':''}`:''}>台中市</option>
                 </select>
                 <select name="area" onChange={(e)=>{setArea(e.target.value)}} className={basicEdit.beRight}>
                     {Taichung.map((val, key) => {
-                        return (<option key={key} value={val}>{val}</option>);
+                        return (<option key={key} selected={area===val} value={val}>{val}</option>);
                     })}
                 </select>
 

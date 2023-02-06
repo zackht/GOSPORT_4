@@ -12,7 +12,7 @@ export default function ActivityNew(params) {
     const today = setToday.toISOString().substring(0, 10);
 
     // 使用者id
-    const [userid, setUserid]=useState();
+    const [userid, setUserid]=useState( Cookies.get('id') );
     // 球隊id
     const {id} = useParams();
     const [teamid, setTeamid]=useState(id);
@@ -32,7 +32,7 @@ export default function ActivityNew(params) {
     const [pay, setPay] = useState(null);                   // 支出
     const [members, setmembers] = useState([]);             // 資料庫成員
     const [memberImgUrls, setMemberImgUrls] = useState({}); // 資料庫成員urls 已讀取 
-    // const [activityMembers, setActivityMembers] = useState(null); // 選取的成員id   
+    const [activityMember, setActivityMember] = useState(null); // 參加成員   
     const [text,setText]=useState(null);                    // 描述 
     const [activityImg, setActivityImg] = useState();       // 顯示
     const [activityFile, setActivityFile] = useState();     // 傳照片
@@ -149,8 +149,9 @@ export default function ActivityNew(params) {
     // 新建文章
     const handleNewActivity=()=>{
 
-        if(activityFile){ // 有圖片
-            // 打包
+        // 有圖片
+        if(activityFile){ 
+            
             const activityData = new FormData(); 
             activityData.append('teamid', teamid);
             activityData.append('date', date);
@@ -167,7 +168,9 @@ export default function ActivityNew(params) {
             }).then((response) => {
                 console.log("有圖片更新成功");
             });
-        } else { // 沒圖片
+
+        // 沒圖片
+        } else { 
             const activityDataNoImg = new FormData();
             activityDataNoImg.append('teamid', teamid);
             activityDataNoImg.append('date', date);
@@ -189,15 +192,22 @@ export default function ActivityNew(params) {
         Axios.post('http://localhost:3001/teamactivityall',{
             teamid:teamid
         }).then((response)=>{
+
             // 設定新建文章id
             setNewArticleid(response.data[0].articleid);
+
+            // 新增活動成員
+            Axios.post('http://localhost:3001/teamactivitmember',{
+                newArticleid:response.data[0].articleid,
+                userid,userid
+            }).then((response)=>{
+                console.log('新增成員成功');
+                
+                // 返回基金頁
+                goPath.push(`/gosport/user/myteam/${id}/activity/${newArticleid}`);
+            });
         });
 
-    }
-
-    // 找到新增文章id值後 返回基金頁
-    if(newArticleid){
-        goPath.push(`/gosport/user/myteam/${id}/activity/${newArticleid}`);
     }
 
     return(

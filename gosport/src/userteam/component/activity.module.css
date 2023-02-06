@@ -24,7 +24,7 @@
 /* 訂單容器 */
 .order{
     width: 80%;
-    height: 80%;
+    /* height: 80%; */
     border-left: 1px solid rgb(230, 230, 230);
     margin-top: 40px;
     margin-right: 40px;

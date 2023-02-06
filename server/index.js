@@ -1474,13 +1474,14 @@ app.post("/basicupdate", upload.single('teamfile'), (req, res) => {
   const level = req.body.level;
   const fee = req.body.fee;
   const text = req.body.text;
+  const area = req.body.area;
   const teamfile = req.file.buffer; // img
   const teamid = req.body.teamid; // 球隊
   db.query(`
       UPDATE team 
-      SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?, teamimg=?
+      SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?, teamimg=?, area=?
       where teamid=?;`,
-    [tname, sidename, week, starttime, endtime, type, level, fee, text, teamfile, teamid],
+    [tname, sidename, week, starttime, endtime, type, level, fee, text, teamfile, area, teamid],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -1500,12 +1501,13 @@ app.post("/basicupdate2", upload.array(), (req, res) => {
   const level = req.body.level;
   const fee = req.body.fee;
   const text = req.body.text;
+  const area = req.body.area;
   const teamid = req.body.teamid; // 球隊
   db.query(
     `UPDATE team 
-    SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?
+    SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?, area=?
     where teamid=?;`,
-    [tname, sidename, week, starttime, endtime, type, level, fee, text, teamid],
+    [tname, sidename, week, starttime, endtime, type, level, fee, text, area, teamid],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -1819,7 +1821,7 @@ app.post('/deletemember', (req, res) => {
         `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
         FROM teamactivity
         WHERE teamid=?
-        ORDER by startdate desc;`,
+        ORDER by date desc;`,
       [teamid],
       (err, result) => {
         if (err) {
@@ -2008,6 +2010,23 @@ app.post("/activitynewnoimg", upload.array(), (req, res) => {
         res.send(result);
       }
     });
+});
+// 芝｜Activity 新增活動成員
+app.post('/teamactivitmember', (req, res) => {
+  const newArticleid = req.body.newArticleid;
+  const userid = req.body.userid;
+  db.query(
+    `INSERT into teamactivityuser(teamactivityid,userid)
+    VALUES(?,?);`,
+    [newArticleid, userid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
 });
     
 
