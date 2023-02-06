@@ -255,12 +255,10 @@ app.post("/userupdate", upload.single('image'), (req, res) => {
     });
 });
 // 後臺會員刪除
-app.post("/backuserdelete",(req, res) => {
-  const name = req.body.name;
-  console.log(name);
-  console.log(req.file.buffer);
-  db.query("UPDATE user SET userimg=? where userid =?"
-    , [name], (err, result) => {
+app.post("/backuserdelete", (req, res) => {
+  const userid = req.body.userid;
+  db.query(`DELETE FROM user WHERE userid = ?`
+    , [userid], (err, result) => {
       if (err) {
         console.log(err);
       } else {
@@ -273,7 +271,16 @@ app.post("/backusersearch", (req, res) => {
   const startdate = req.body.startdate;
   const enddate = req.body.enddate;
   const username = req.body.username;
-  if (username === '') {
+  if (username === ''&& enddate===''&& username==='') {
+    db.query(`SELECT * FROM user`
+      , [], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+  }else if(username===''){
     db.query(`SELECT * FROM user WHERE adddate BETWEEN ? AND ?`
       , [startdate, enddate], (err, result) => {
         if (err) {
