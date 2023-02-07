@@ -95,7 +95,7 @@ const Backuser = () => {
                                     let d = c.getDate();
                                     return (
                                         <div class="d-flex font2 adiv17" key={key}>
-                                            <div class="col-2 adiv15">{`${y}/${m + 1}/${d}`}</div>
+                                            <div class="col-2 adiv15">{`${y}/${m}/${d}`}</div>
                                             <div class="col-2 adiv15">{val.userid}</div>
                                             <div class="col-5 adiv15">{val.username}</div>
                                             <div class="col-3 d-flex justify-content-center adiv15">
