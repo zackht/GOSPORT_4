@@ -18,6 +18,7 @@ import backqa from "./back/backqa";
 // import Backarticle from "./back/backarticle";
 import rentside_more from "./side/rentside_more";
 import rentside from "./side/rentside";
+import sidecheck from "./side/sidecheck";
 // import Backteam from "./back/backarticleteam";
 import Selfactive from "./selfactive/selfactive";
 import Selfsettings from "./selfalter/selfsettings";
@@ -49,6 +50,7 @@ class App extends Component {
 
             {/* 租場地 */}
             {/* <Route path="/gosport/rent" 	   component={} exact/> */}
+            <Route path="/gosport/rent/side/check" component={sidecheck} exact/>
             <Route path="/gosport/rent/side/:id" component={rentside_more} />
             <Route path="/gosport/rent" component={rentside} />
             

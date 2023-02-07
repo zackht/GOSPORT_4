@@ -7,6 +7,10 @@ import Cookies from 'js-cookie';
 
 export default function FundNew(params) {
 
+    // 今天日期
+    const setToday = new Date();
+    const today = setToday.toISOString().substring(0, 10);
+
     // 球隊id
     const {id} = useParams();
     // 最新文章id值
@@ -25,7 +29,7 @@ export default function FundNew(params) {
     // const [ruserimg, setRuserimg] = useState(null);
 
     // input值
-    const [date, setDate] = useState('');                   // 儲值日期
+    const [date, setDate] = useState(today);                   // 儲值日期
     const [fundMembeIid, setFundMembeIid] = useState(null); // 儲值成員id
     const [fee,setFee]=useState(null);                      // 儲值金額
     const [text,setText]=useState(null);                    // 儲值描述 

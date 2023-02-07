@@ -490,7 +490,8 @@ const Side2 = () => {
                 <div >
                   <QRCodeSVG
                     id="qrCode"
-                    value="https://github.com/zackht/GOSPORT_4"
+                    // value="https://github.com/zackht/GOSPORT_4"
+                    value="http://localhost:3000/gosport/rent/side/check"
                     size={200}
                     bgColor='#fff'
                     level="H"

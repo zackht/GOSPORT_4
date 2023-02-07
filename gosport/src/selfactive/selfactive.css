@@ -204,21 +204,26 @@
     cursor: default;
 }
 
+.orderaddr{
+    width: 470px;
+    line-height: 1.5rem;
+}
+
 /* 再次預約 取消預約 */
 .chuse_order {
     background-color: rgb(230, 70, 55);
     color: white;
     border: none;
     border-radius: 50px;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     position: absolute;
     right: 5vh;
     bottom: 0px;
 
     /* width: 90px; */
     /* height: 30px; */
-    width: 197px;
-    height: 72px;
+    width: 147px;
+    height: 54px;
 }
 
 .selfactive .searchbox:hover,

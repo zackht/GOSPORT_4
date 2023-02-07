@@ -164,7 +164,24 @@ export default function DateSearch(params) {
         }
     },[startdate])
 
-    
+    // 新增文章按鈕css
+    const handleDateListCss=()=>{
+
+        if(pathend==='activity'){
+            return `${dateSearch.sDate}`
+        }else{
+            return userId==leaderId? `${dateSearch.sDate}`:`${dateSearch.sDateMax}`
+        }
+    }
+
+    const handleNewArticleBtn =()=>{
+        if(pathend==='activity'){
+            return <Link to={`/gosport/user/myteam/${id}/${pathend}/new`}>新增文章</Link>
+        }else{
+            return userId==leaderId? <Link to={`/gosport/user/myteam/${id}/${pathend}/new`}>新增文章</Link>:''
+        }
+        
+    }
 
     return(
         <>
@@ -173,9 +190,9 @@ export default function DateSearch(params) {
                 <div className={dateSearch.sTitle}>日期搜尋</div>
                 <input type="date" onChange={ (e)=>{ setStartdate(e.target.value) } } />
                 <div className={dateSearch.sTitle}>訂單日期</div>
-                <div className={userId==leaderId? `${dateSearch.sDate}`:`${dateSearch.sDateMax}`}>{ resultList }</div>
+                <div className={ handleDateListCss() }>{ resultList }</div>
                 {/* 新增文章 */}
-                { userId==leaderId? <Link to={`/gosport/user/myteam/${id}/${pathend}/new`}>新增文章</Link>:'' }
+                { handleNewArticleBtn() }
                 
                 
             </div>

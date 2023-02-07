@@ -4,6 +4,7 @@ import activity from './activity.module.css';
 import img from '../img.module.js';
 import DateSearch from './dateSearch';
 import Axios from 'axios';
+import Cookies from 'js-cookie';
 
 export default function Activity(params) {
 
@@ -18,12 +19,16 @@ export default function Activity(params) {
         // const [resultImg, setResultImg] = useState(null);
         const [imgUrls, setImgUrls]= useState(null);
     
-        // 抓網址id = 文章id
+        // 使用者id
+        const [userid, setUserid]=useState( Cookies.get('id') );
+        // 球隊id
         const {id} = useParams();
         const {articleid} = useParams();
+        const [teamid, setTeamid]=useState(id);
     
         // 查找指定文章
         useEffect(()=>{
+
             Axios.post('http://localhost:3001/teamactivityarticle',{
                 articleid:articleid
             }).then((response)=>{
@@ -48,8 +53,7 @@ export default function Activity(params) {
         },[articleid]);
 
         // 查找活動成員
-        useEffect(()=>{
-            
+        const SearchMembers =()=>{
             Axios.post('http://localhost:3001/teamactivitymember',{
                 articleid:articleid
             }).then((res)=>{
@@ -74,6 +78,10 @@ export default function Activity(params) {
                     }
                 })
             })
+        }
+        useEffect(()=>{
+            
+            SearchMembers();
 
         },[articleid])
 
@@ -92,6 +100,26 @@ export default function Activity(params) {
         useEffect(()=>{
             handleMemberList();
         },[imgUrls]);
+
+        const [signUpText,setSignUpText]=useState('報名');
+        const [signUpCss,setSignUpCss]=useState('報名');
+
+        // 報名
+        const handleSignUp=()=>{
+            
+            // 新增活動成員
+            Axios.post('http://localhost:3001/teamactivitmember',{
+                articleid:articleid,
+                userid,userid
+            }).then((response)=>{
+                console.log('新增成員成功');
+            });
+
+            // 查找成員
+            SearchMembers();
+            // 切換鈕
+            setSignUpText('已報名');
+        }
         
         
 
@@ -105,9 +133,10 @@ export default function Activity(params) {
 
                 {/* 訂單資訊 */}
                 <div className={activity.order}>
-                    <Link to={`/gosport/user/myteam/activity/show`} className={id? activity.orderBtn:activity.notshow}>檢視</Link>
-                    <Link to={`/gosport/user/myteam/activity/edit`} className={id? activity.orderBtn:activity.notshow}>編輯</Link>
+                    {/* <Link to={`/gosport/user/myteam/activity/show`} className={id? activity.orderBtn:activity.notshow}>檢視</Link> */}
                     
+                    <button className={id? activity.orderBtn:activity.notshow} onClick={ handleSignUp } >{ signUpText }</button>
+                    <Link to={`/gosport/user/myteam/activity/edit`} className={id? activity.orderBtn:activity.notshow}>編輯</Link>
                     <button className={id? activity.orderBtn:activity.notshow}>刪除</button>    
                     <div className={activity.oTitle}>日期</div>
                     {/* <div className={activity.oText}>{result? `${startdate}-${enddate}`:''}</div> */}
@@ -136,7 +165,7 @@ export default function Activity(params) {
                     <img src={img.m4}></img> */}
 
                     <div className={activity.oTitle}>留言</div>
-                    <Link to={`/gosport/user/myteam/activity/show`} className={activity.oText}>3</Link>
+                    <Link to={`/gosport/user/myteam/activity/show`} className={activity.oText}>0</Link>
                 </div>
 
             </div>
