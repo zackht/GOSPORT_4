@@ -46,7 +46,7 @@ const Search = () => {
     const [costzero, setCostzero] = useState('');
     const [countyzero, setCountyzero] = useState('台中');
     const [areazero, setAreazero] = useState('');
-    const [zerolevel, setZerolevel] = useState('');
+    const [zerolevel, setZerolevel] = useState('新手');
 
     const [zeroarticle, setZeroarticle] = useState([]);
     const zerosearch = () => {
@@ -151,6 +151,7 @@ const Search = () => {
         }
     }
 
+    //取得球隊資料
     const [datateam, setDateteam] = useState({});
     const [teamactivityteamid, setTeamactivityteamid] = useState();
     const [activityinfo, setActivity] = useState([])
@@ -171,23 +172,26 @@ const Search = () => {
             console.log(response.data);
         })
         setArticleteamdiv(!false);
-        // Axios.post("http://localhost:3001/showmessage", {
-        //     messagezeroarticleid:datazero.articleid_zeroda,
-        // }).then((response) => {
-        //     console.log(response); 
-        // });
     }
     const Teamarticlediv = articleteamdiv === true ? 'block' : 'none';
 
-
+    //取得零打資訊
     const [datazero, setDatazero] = useState({});
     const [articlediv, setArticlediv] = useState(false);
     const opendatazero = (index) => {
         setDatazero(zeroarticle[index]);
         setArticlediv(!false);
+        console.log(datazero);
+        Axios.post("http://localhost:3001/showmessage", {
+            messagezeroarticleid:datazero.articleid_zeroda,
+        }).then((response) => {
+            console.log(response); 
+            console.log(response.data)
+        });
     }
     const Zeroarticlediv = articlediv === true ? 'block' : 'none';
 
+    //取得轉租資訊
     const [datarent, setDatarent] = useState({});
     const [articlerentdiv, setArticlerentdiv] = useState(false);
     const opendatarent = (index) => {

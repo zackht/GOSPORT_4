@@ -2293,19 +2293,19 @@ app.post('/joinrent',(req,res) => {
   );
 })
 
-//留言顯示
-// app.post('/showmessage',(req, res) => {
-//   const messagezeroarticleid = req.body.messagezeroarticleid;
-//   db.query(
-//     `SELECT * FROM user, articlemessage_zeroda WHERE user.userid = articlemessage_zeroda.userid 
-//     AND articlemessage_zeroda.articleid_zeroda = ?`,
-//     [messagezeroarticleid],
-//     (err,result) => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         res.log(result);
-//       }
-//     }
-//   );
-// })
+// 留言顯示
+app.post('/showmessage',(req, res) => {
+  const messagezeroarticleid = req.body.messagezeroarticleid;
+  db.query(
+    `SELECT * FROM user, articlemessage_zeroda WHERE user.userid = articlemessage_zeroda.userid 
+    AND articlemessage_zeroda.articleid_zeroda = ?`,
+    [messagezeroarticleid],
+    (err,result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.log(result);
+      }
+    }
+  );
+})
