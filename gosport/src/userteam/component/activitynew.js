@@ -6,6 +6,7 @@ import Axios from 'axios';
 import Cookies from 'js-cookie';
 
 export default function ActivityNew(params) {
+    // console.log('new');
 
     // 今天日期
     const setToday = new Date();
@@ -196,19 +197,28 @@ export default function ActivityNew(params) {
             // 設定新建文章id
             setNewArticleid(response.data[0].articleid);
 
+
+            console.log(response.data[0].articleid);
+            console.log(userid);
             // 新增活動成員
             Axios.post('http://localhost:3001/teamactivitmember',{
-                newArticleid:response.data[0].articleid,
-                userid,userid
+                articleid:response.data[0].articleid,
+                userid:userid
             }).then((response)=>{
                 console.log('新增成員成功');
-                
-                // 返回基金頁
-                goPath.push(`/gosport/user/myteam/${id}/activity/${newArticleid}`);
             });
         });
 
     }
+
+    if(newArticleid){
+        // console.log(newArticleid);
+        // 返回基金頁
+        goPath.push(`/gosport/user/myteam/${id}/activity/${newArticleid}`);
+
+    }
+            
+    
 
     return(
         <>

@@ -2020,12 +2020,12 @@ app.post("/activitynewnoimg", upload.array(), (req, res) => {
 });
 // 芝｜Activity 新增活動成員
 app.post('/teamactivitmember', (req, res) => {
-  const newArticleid = req.body.newArticleid;
+  const articleid = req.body.articleid;
   const userid = req.body.userid;
   db.query(
     `INSERT into teamactivityuser(teamactivityid,userid)
     VALUES(?,?);`,
-    [newArticleid, userid],
+    [articleid, userid],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -2275,3 +2275,37 @@ app.post('/joinzero',(req, res) => {
     }
   );
 })
+
+//承租轉租
+app.post('/joinrent',(req,res) => {
+  const articleidrent = req.body.articleidrent;
+  const useridjoinrent = req.body.useridjoinrent;
+  db.query(
+    `INSERT INTO follow_sublet(articleid_sublet, userid, time) VALUES (?,?,now())`,
+    [articleidrent, useridjoinrent],
+    (err,result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.log(result);
+      }
+    }
+  );
+})
+
+//留言顯示
+// app.post('/showmessage',(req, res) => {
+//   const messagezeroarticleid = req.body.messagezeroarticleid;
+//   db.query(
+//     `SELECT * FROM user, articlemessage_zeroda WHERE user.userid = articlemessage_zeroda.userid 
+//     AND articlemessage_zeroda.articleid_zeroda = ?`,
+//     [messagezeroarticleid],
+//     (err,result) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         res.log(result);
+//       }
+//     }
+//   );
+// })

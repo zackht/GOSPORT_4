@@ -162,7 +162,8 @@ export default function Member(params) {
         return (
             <div className={member.checkMember}>
                 <img className={member.mImg} src={pendingImgUrls[key]? pendingImgUrls[key]:img.mp} alt="使用者頭貼"/>
-                <div>{val.username}</div>
+                <div><Link to={`/gosport/user/view/${val.userid}`}>{val.username}</Link></div>
+                
                 <div className={member.mSpace} ></div>
                 <div>程度</div>
                 { handleteamtype(val) }
@@ -193,8 +194,9 @@ export default function Member(params) {
                     { memberList }  
                 </div>
                 {/* 未審核清單 */}
-                { userid===`${leaderId}`? (<div className={`${member.mTitle} ${member.mPending}`}>未審核</div>):'' }
-                { userid===`${leaderId}`? pendingMemberList:'' }
+                {/* 尚未判斷是否為隊友身份 */}
+                { <div className={`${member.mTitle} ${member.mPending}`}>未審核</div> }
+                { pendingMemberList }
             </div>
         </>
     )

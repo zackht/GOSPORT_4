@@ -2,14 +2,21 @@ import React from 'react';
 import zzz from './zeroinfo.module.css'
 import star from './icon/star.svg';
 import leader from './icon/Ellipse.svg';
-// import axios from 'axios';
+import Axios from 'axios';
+import Cookies from 'js-cookie';
 // import { response } from 'express';
 
 const Rentinfo = ({datarent}) => {
     console.log(datarent);
 
     const joinrent = () => {
-        alert("申請成功")
+        Axios.post("http://localhost:3001/joinrent", {
+            articleidrent: datarent.articleid_sublet,
+            useridjoinrent: Cookies.get('id'),
+        }).then ((response) => {
+            console.log(response);
+            alert("申請成功");
+        })
     }
 
 

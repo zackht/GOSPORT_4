@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Axios from "axios";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 // css
@@ -251,6 +251,9 @@ const [mouse,setmouse] = useState(false)
         }
     }
 
+        // 前往指定網址
+        const goPath =useHistory(); 
+
     const handleLogout = (e) => {
         e.preventDefault();
         settoken3(null)
@@ -268,6 +271,8 @@ const [mouse,setmouse] = useState(false)
         Cookies.remove('id87', {
             path: '/'
         })
+
+        goPath.push(`/gosport/home`);
 
     }
 
