@@ -2,21 +2,22 @@ import React from 'react';
 import zzz from './zeroinfo.module.css'
 import star from './icon/star.svg';
 import leader from './icon/Ellipse.svg';
-// import axios from 'axios';
+import Axios from 'axios';
+import Cookies from 'js-cookie';
 // import { response } from 'express';
 
 const Rentinfo = ({datarent}) => {
     console.log(datarent);
 
-    // const [data, setData] = useState([]);
-
-    // useEffect(() => {
-    //     axios.get("http://localhost:3001/rentsearch")
-    //     .then(response => {
-    //         setData(data);
-    //         console.log(response.data)
-    //     })
-    // },[])
+    const joinrent = () => {
+        Axios.post("http://localhost:3001/joinrent", {
+            articleidrent: datarent.articleid_sublet,
+            useridjoinrent: Cookies.get('id'),
+        }).then ((response) => {
+            console.log(response);
+            alert("申請成功");
+        })
+    }
 
 
     return (
@@ -25,7 +26,7 @@ const Rentinfo = ({datarent}) => {
             <div className={zzz.zeroinfocontent}>
                 <div className={zzz.zerocontent}>
                     <div className={zzz.joinbutton}>
-                        <button className={zzz.jjoinbutton}>承租</button>
+                        <button className={zzz.jjoinbutton} onClick={joinrent}>承租</button>
                     </div>
                     <div className={zzz.zerouser}>
                         <h3>{datarent.username}</h3>
@@ -40,7 +41,7 @@ const Rentinfo = ({datarent}) => {
                     </div>
                     <div className={zzz.date}>
                         <label htmlFor="dateee" className={zzz.title}>日期</label><br />
-                        <input type="text" name="dateee" value={datarent.startdate} className={zzz.iiinput} />
+                        <input type="text" name="dateee" value={datarent.startdate} className={zzz.iiinput11} />
                     </div>
                     <div className={zzz.time}>
                         <label htmlFor="timeee" className={zzz.title}>時段</label><br />

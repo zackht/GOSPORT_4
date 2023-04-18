@@ -2,16 +2,30 @@ import React from "react";
 import zzz from './zeroinfo.module.css'
 import star from './icon/star.svg';
 import leader from './icon/Ellipse.svg';
+import Axios from "axios";
+import Cookies from 'js-cookie';
 
 const Zeroinfo = ({datazero}) => {
     console.log(datazero);
+
+    // 報名零打
+    const joinzero = () => {
+        Axios.post("http://localhost:3001/joinzero", {
+            articleidzero: datazero.articleid_zeroda,
+            useridjoinzero: Cookies.get('id'),
+        }).then((response) => {
+            console.log(response);
+            alert("新增成功");
+        })
+    }
+
     return (
         <React.Fragment>
             {/* 零打內容 */}
             <div className={zzz.zeroinfocontent}>
                 <div className={zzz.zerocontent}>
                     <div className={zzz.joinbutton}>
-                        <button className={zzz.jjoinbutton}>參加</button>
+                        <button className={zzz.jjoinbutton} onClick={joinzero}>參加</button>
                     </div>
                     <div className={zzz.zerouser}>
                         <h3>{datazero.username}</h3>
@@ -26,7 +40,7 @@ const Zeroinfo = ({datazero}) => {
                     </div>
                     <div className={zzz.date}>
                         <label htmlFor="dateee" className={zzz.title}>日期</label><br />
-                        <input type="text" name="dateee" value={datazero.startdate} className={zzz.iiinput} />
+                        <input type="text" name="dateee" value={datazero.startdate} className={zzz.iiinput11} />
                     </div>
                     <div className={zzz.time}>
                         <label htmlFor="timeee" className={zzz.title}>時段</label><br />

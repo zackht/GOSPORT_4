@@ -9,7 +9,7 @@ const Backside = () => {
     // 搜尋場地
     const [startdate, setstartdate] = useState('');
     const [enddate, setenddate] = useState('');
-    const [type, settype] = useState('排球');
+    const [type, settype] = useState('籃球');
     const [text, settext] = useState('');
     const [list, setlist] = useState([]);
     const search = () => {
@@ -65,7 +65,7 @@ const Backside = () => {
     // 新增場地到資料庫==========================
     const [img,setimg]=useState();
     const [usidename,setusidename]=useState('');
-    const [utype,setutype]=useState('');
+    const [utype,setutype]=useState('羽球');
     const [upark,setupark]=useState(false);
     const [ubath,setubath]=useState(false);
     const [ubaulk,setubaulk]=useState(false);
@@ -124,6 +124,14 @@ const Backside = () => {
             });
     }
     // =========================================
+    const sidedelete =(e)=>{
+        Axios.post("http://localhost:3001/backsidedelete", {
+            sideid: e,
+        }).then((response) => {
+            search();
+            alert('刪除成功');
+        });
+    }
     return (
         <React.Fragment>
             <div class={`container-fluid ${side.bdiv1}`}>
@@ -144,7 +152,7 @@ const Backside = () => {
                                 <span class={side.span}>球類</span>
                                 <div class={`${side.selectimg} ${side.font} ${side.bdiv9}`}>
                                     <select name="" id="" class={`${side.bdiv10} ${side.aselect}`} onChange={(e) => { settype(e.target.value) }} >
-                                        <option value="排球">排球</option>
+                                        <option value="籃球">籃球</option>
                                         <option value="羽球">羽球</option>
                                         <option value="桌球">桌球</option>
                                     </select>
@@ -185,7 +193,7 @@ const Backside = () => {
                                             <div class={`col-6 ${side.bdiv15}`}>{val.sidename}</div>
                                             <div class={`col-3 d-flex justify-content-center ${side.bdiv15}`}>
                                                 <div class={`${side.button1} ${side.bdiv18}`} onClick={(e) => { edit(val.sideid) }} >編輯</div>
-                                                <div class={side.button1}>刪除</div>
+                                                <div class={side.button1} onClick={()=>{sidedelete(val.sideid)}}>刪除</div>
                                             </div>
                                         </div>
                                     );
@@ -243,7 +251,7 @@ const Backside = () => {
                                                     <select name="" id="" class={`${cside.font2} ${cside.div4}`} defaultValue={val.sidetype}>
                                                         <option value="羽球">羽球</option>
                                                         <option value="桌球">桌球</option>
-                                                        <option value="排球">排球</option>
+                                                        <option value="籃球">籃球</option>
                                                     </select>
                                                     <img class={cside.div6} src={group41} alt="" />
                                                 </div>
@@ -309,12 +317,12 @@ const Backside = () => {
                                             <div class={cside.div24}>
                                                 <span class={cside.font}>租期</span>
                                                 <div>
-                                                    <input type="checkbox" id="check1" class={cside.div8} checked />
-                                                    <label for="check1" class={`${cside.div7} ${cside.font2}`} >日租</label>
-                                                    <input type="checkbox" id="check2" checked />
-                                                    <label for="check2" class={`${cside.div7} ${cside.font2}`} >月租</label>
-                                                    <input type="checkbox" id="check3" checked />
-                                                    <label for="check3" class={cside.font2} >季租</label>
+                                                    <input type="checkbox" id="check11" class={cside.div8}  />
+                                                    <label for="check11" class={`${cside.div7} ${cside.font2}`} >日租</label>
+                                                    <input type="checkbox" id="check22" />
+                                                    <label for="check22" class={`${cside.div7} ${cside.font2}`} >月租</label>
+                                                    <input type="checkbox" id="check33"  />
+                                                    <label for="check33" class={cside.font2} >季租</label>
                                                 </div>
                                             </div>
                                             <div class={cside.div24}>
@@ -462,7 +470,7 @@ const Backside = () => {
                                         <select name="" id="" class={`${cside.font2} ${cside.div4}`} onChange={(e)=>{setutype(e.target.value)}}>
                                             <option value="羽球">羽球</option>
                                             <option value="桌球">桌球</option>
-                                            <option value="排球">排球</option>
+                                            <option value="籃球">籃球</option>
                                         </select>
                                         <img class={cside.div6} src={group41} alt="" />
                                     </div>
@@ -528,12 +536,12 @@ const Backside = () => {
                                 <div class={cside.div24}>
                                     <span class={cside.font}>租期</span>
                                     <div>
-                                        <input type="checkbox" id="check1" class={cside.div8} checked />
-                                        <label for="check1" class={`${cside.div7} ${cside.font2}`} >日租</label>
-                                        <input type="checkbox" id="check2" checked />
-                                        <label for="check2" class={`${cside.div7} ${cside.font2}`} >月租</label>
-                                        <input type="checkbox" id="check3" checked />
-                                        <label for="check3" class={cside.font2} >季租</label>
+                                        <input type="checkbox" id="dcheck1" class={cside.div8}/>
+                                        <label for="dcheck1" class={`${cside.div7} ${cside.font2}`} >日租</label>
+                                        <input type="checkbox" id="dcheck2"/>
+                                        <label for="dcheck2" class={`${cside.div7} ${cside.font2}`} >月租</label>
+                                        <input type="checkbox" id="dcheck3"/>
+                                        <label for="dcheck3" class={cside.font2} >季租</label>
                                     </div>
                                 </div>
                                 <div class={cside.div24}>

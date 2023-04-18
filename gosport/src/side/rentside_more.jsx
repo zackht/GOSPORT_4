@@ -469,7 +469,7 @@ const Side2 = () => {
               </div>
               <div className={side2.div60}>
                 <span className={side2.div57}>時段</span>
-                <div className={side2.div58}>{`${max}:00~${min + 1}:00`}</div>
+                <div className={side2.div58}>{`${min}:00~${max + 1}:00`}</div>
               </div>
               <div className={side2.div60}>
                 <span className={side2.div57}>數量</span>
@@ -490,7 +490,8 @@ const Side2 = () => {
                 <div >
                   <QRCodeSVG
                     id="qrCode"
-                    value="https://github.com/zackht/GOSPORT_4"
+                    // value="https://github.com/zackht/GOSPORT_4"
+                    value="http://localhost:3000/gosport/rent/side/check"
                     size={200}
                     bgColor='#fff'
                     level="H"

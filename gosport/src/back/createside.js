@@ -41,7 +41,7 @@ class createside extends Component {
                                         <select name="" id="" class="font2 div4">
                                             <option value="">羽球</option>
                                             <option value="">桌球</option>
-                                            <option value="">排球</option>
+                                            <option value="">籃球</option>
                                         </select>
                                         <img class="div6" src={group41} alt="" />
                                     </div>

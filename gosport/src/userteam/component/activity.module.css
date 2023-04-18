@@ -19,12 +19,12 @@
     font-size: 1.5rem;
     font-weight: 400;
     color: rgb(56, 56, 56);
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 /* 訂單容器 */
 .order{
     width: 80%;
-    height: 80%;
+    /* height: 80%; */
     border-left: 1px solid rgb(230, 230, 230);
     margin-top: 40px;
     margin-right: 40px;
@@ -51,13 +51,13 @@
     justify-content: center;
 }
 /* 編輯 */
-.order>a:nth-of-type(2){
+.order>a:nth-of-type(1){
     border: 1px solid #AAAAAA;
     color: #AAAAAA;
     background-color: white;
 }
-/* 檢視 */
-.order>a:nth-of-type(1){
+/* 報名 */
+.order>button:nth-of-type(1){
     color: rgba(230, 70, 55, 1);
     border: 1px solid rgba(230, 70, 55, 1);
     background-color: white;

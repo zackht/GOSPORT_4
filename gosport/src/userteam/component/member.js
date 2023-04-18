@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import member from './member.module.css';
 import img from '../img.module.js';
 import Axios from "axios";
@@ -10,10 +10,13 @@ export default function Member(params) {
     // 徽章還沒做！！！！
     // 徽章還沒做！！！！
     // 徽章還沒做！！！！
+
+    // 球隊id 動態路由抓取
+    const {id} = useParams();
     
     // SQL參數
     const [userid, setUserid] = useState( Cookies.get('id') ); // 登入者id
-    const [teamid, setTeamid] = useState(1);                   // 球隊id
+    const [teamid, setTeamid] = useState(id);                  // 球隊id
 
     // 資料庫抓回來的值
     const [leaderId, setLeaderId] = useState('');              // 隊長id
@@ -53,7 +56,7 @@ export default function Member(params) {
             teamid: teamid
         }).then((response)=>{
             setmembers(response.data); // 放入members
-            console.log(response.data);
+            // console.log(response.data);
         })
     }
 
@@ -159,7 +162,8 @@ export default function Member(params) {
         return (
             <div className={member.checkMember}>
                 <img className={member.mImg} src={pendingImgUrls[key]? pendingImgUrls[key]:img.mp} alt="使用者頭貼"/>
-                <div>{val.username}</div>
+                <div><Link to={`/gosport/user/view/${val.userid}`}>{val.username}</Link></div>
+                
                 <div className={member.mSpace} ></div>
                 <div>程度</div>
                 { handleteamtype(val) }
@@ -181,7 +185,7 @@ export default function Member(params) {
             <div className={member.memberContent}>
                 <div>
                     {/* 判定為隊長 才顯示編輯按鈕 */}
-                    { userid===`${leaderId}`? (<Link to={"/gosport/user/myteam/member/edit"} className={member.mbtn}>編輯</Link>):'' }
+                    { userid===`${leaderId}`? (<Link to={`/gosport/user/myteam/${id}/member/edit`} className={member.mbtn}>編輯</Link>):'' }
                     {/* 隊長 */}
                     <div className={member.mTitle}>隊長</div>
                     <div className={member.mImgbox}><img className={member.mImg} src={leaderImg} alt=""/></div>
@@ -190,8 +194,9 @@ export default function Member(params) {
                     { memberList }  
                 </div>
                 {/* 未審核清單 */}
-                { userid===`${leaderId}`? (<div className={`${member.mTitle} ${member.mPending}`}>未審核</div>):'' }
-                { userid===`${leaderId}`? pendingMemberList:'' }
+                {/* 尚未判斷是否為隊友身份 */}
+                { <div className={`${member.mTitle} ${member.mPending}`}>未審核</div> }
+                { pendingMemberList }
             </div>
         </>
     )

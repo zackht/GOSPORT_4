@@ -1,11 +1,10 @@
 
 import React, { useEffect, useState } from 'react';
-// import React from 'react';
+import { Link } from 'react-router-dom';
+import './selfpage.css'
 import Axios from "axios";
 import Cookies from 'js-cookie';
 import user from './icon/teams_m.png'
-// import selfImg from './icon/20130917_171106.jpg'
-import './selfpage.css'
 
 
 const Selfpage = () => {
@@ -26,7 +25,7 @@ const Selfpage = () => {
     }]);
     const [selfteam, setSelfTeam] = useState([{ tname: '' }]);
     const [selfBadge, setSelfBadge] = useState([{ badgeid: '', badgeurl: '' }]);
-     useEffect(() => {
+    useEffect(() => {
 
         Axios.post("http://localhost:3001/self", {
             userid: userid,
@@ -70,14 +69,42 @@ const Selfpage = () => {
         }
     }, [selfInfo])
 
+    // 畫面位移
+    const [positionX, setPositionX] = useState({ x: 0});
+    const [positionY, setPositionY] = useState({ y: 0});
+    const screenWidth = window.innerWidth/2;
+    const screenHight = window.innerHeight/2; 
+
+    useEffect(() => {
+      const handleMouseMove = (event) => {
+        if(event.clientX > screenWidth) //left
+        setPositionX({ x: -(event.clientX-screenWidth)/50 });
+        if(event.clientY > screenHight) //top
+        setPositionY({ y: (event.clientY-screenHight)/50 });
+        if(event.clientX < screenWidth) //right
+        setPositionX({ x: (screenWidth-event.clientX)/50 });
+        if(event.clientY < screenHight) //bottom
+        setPositionY({ y: -(screenHight-event.clientY)/50 });
+      };
+      document.addEventListener('mousemove', handleMouseMove);
+  
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+      };
+    }, []);
 
     return (
         <React.Fragment>
             {/* 主體 */}
             <div className='self_'>
-                <div className="self_cover">
-                    <div style={{ display: 'flex', width: '90%', height: '481px' }}>
-                        <div className="self_discribe">
+                <div className="self_cover" >
+                    <div className="self_move">
+                        <div className="self_discribe"
+                        style={{
+                            position : 'relative',
+                            top: `${positionY.y}px`,
+                            right: `${positionX.x}px`,
+                        }}>
                             <div>姓名</div>
                             <div>{selfInfo[0].username !== null ? selfInfo[0].username : '尚無'}</div>
                             <div>程度</div>
@@ -103,15 +130,16 @@ const Selfpage = () => {
                                     <img className='self_img' src={userurl} alt="" />
                                 </span>
                                 <div className="show_star" style={{ display: selfBadge[0].badgeurl !== '' ? 'flex' : 'none' }}>
-                                    {selfBadge.map(item => <img key={item.badgeid} src={item.badgeurl} alt=''></img>)}
+                                    {selfBadge.map(item => <img key={item.badgeid} src={item.badgeurl} className='self_badge' alt=''></img>)}
                                     {/* <embed src={star}></embed> */}
                                     {/* <embed src={star}></embed> */}
                                     {/* <embed src={star}></embed> */}
                                 </div>
                             </div>
                             <div style={{ height: "50%", width: "100%", position: "relative" }}>
-                                <a href="/gosport/user/settings"><button className="self_edit"
-                                    style={{ position: "absolute", bottom: "0px", right: "0px" }}>編輯</button></a>
+                                <Link to="/gosport/user/settings">
+                                    <button className="self_edit" style={{ position: "absolute", bottom: "0px", right: "0px" }}>編輯</button>
+                                </Link>
                             </div>
                         </div>
                     </div>

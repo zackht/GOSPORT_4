@@ -132,6 +132,7 @@ const db = mysql.createConnection({
   database: "gosport",
   port: 3306,
   useConnectionPooling: true,
+  timezone:'utc',
 });
 
 process.on('uncaughtException', function (err) {
@@ -253,12 +254,33 @@ app.post("/userupdate", upload.single('image'), (req, res) => {
       }
     });
 });
+// 後臺會員刪除
+app.post("/backuserdelete", (req, res) => {
+  const userid = req.body.userid;
+  db.query(`DELETE FROM user WHERE userid = ?`
+    , [userid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
 // 後臺會員查詢
 app.post("/backusersearch", (req, res) => {
   const startdate = req.body.startdate;
   const enddate = req.body.enddate;
   const username = req.body.username;
-  if (username === '') {
+  if (username === ''&& enddate===''&& username==='') {
+    db.query(`SELECT * FROM user`
+      , [], (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+  }else if(username===''){
     db.query(`SELECT * FROM user WHERE adddate BETWEEN ? AND ?`
       , [startdate, enddate], (err, result) => {
         if (err) {
@@ -282,6 +304,19 @@ app.post("/backusersearch", (req, res) => {
 app.post("/backuseredit", (req, res) => {
   const userid = req.body.userid;
   db.query(`SELECT * FROM user WHERE userid = ?`
+    , [userid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+
+// 後臺會員刪除
+app.post("/backuserdelete", (req, res) => {
+  const userid = req.body.userid;
+  db.query(`DELETE FROM user WHERE userid = ?`
     , [userid], (err, result) => {
       if (err) {
         console.log(err);
@@ -362,7 +397,7 @@ app.post("/rentside", (req, res) => {
   const park = `${req.body.park}`;
   const bath = `${req.body.bath}`;
   const baulk = `${req.body.baulk}`;
-  if (area === '不限'&& tt === true && xyz === '離峰') {
+  if (area === '南屯區'&& tt === true && xyz === '離峰') {
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY offpeakfee `
       // AND bath = ? AND park=? AND baulk=?`
@@ -373,7 +408,7 @@ app.post("/rentside", (req, res) => {
           res.send(result);
         }
       });
-  }else if(area === '不限'&& tt === false && xyz === '離峰'){
+  }else if(area === '南屯區'&& tt === false && xyz === '離峰'){
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY offpeakfee DESC`
       // AND bath = ? AND park=? AND baulk=?`
@@ -384,7 +419,7 @@ app.post("/rentside", (req, res) => {
           res.send(result);
         }
       });
-  }else if(area === '不限'&& tt === true && xyz === '尖峰'){
+  }else if(area === '南屯區'&& tt === true && xyz === '尖峰'){
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY peakfee`
       // AND bath = ? AND park=? AND baulk=?`
@@ -395,7 +430,7 @@ app.post("/rentside", (req, res) => {
           res.send(result);
         }
       });
-  }else if(area === '不限'&& tt === false && xyz === '尖峰'){
+  }else if(area === '南屯區'&& tt === false && xyz === '尖峰'){
     db.query(`SELECT * FROM side WHERE reservedate BETWEEN ? AND ? AND sidetype = ? AND  
     weekstarttime BETWEEN  ? AND ? AND county =?  AND (sidename LIKE ? OR adress LIKE ?) ORDER BY peakfee DESC`
       // AND bath = ? AND park=? AND baulk=?`
@@ -821,6 +856,19 @@ app.post("/backsideedit", (req, res) => {
       }
     });
 });
+// 後臺場地刪除
+app.post("/backsidedelete", (req, res) => {
+  const sideid = req.body.sideid;
+  db.query(`Delete  FROM side where sideid = ?`
+    , [sideid, sideid]
+    , (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
 // 後臺新增場地
 app.post("/backnewside", upload.single('image'), (req, res) => {
   const usidename = req.body.usidename;
@@ -1164,7 +1212,20 @@ app.post("/followzeroda", (req, res) => {
 app.post("/delefollowzeroda", (req, res) => {
   const articleid_zeroda = req.body.articleid_zeroda;
   const userid = req.body.userid;
-  db.query(" DELETE FROM `follow_zeroda` WHERE `articleid_zeroda`= ? AND `userid`= ?",
+  db.query("UPDATE `follow_zeroda` SET `state`='拒絕' WHERE `articleid_zeroda`= ? AND `userid`= ?",
+    [articleid_zeroda, userid], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+//接受零打報名人
+app.post("/acpfollowzeroda", (req, res) => {
+  const articleid_zeroda = req.body.articleid_zeroda;
+  const userid = req.body.userid;
+  db.query(" UPDATE `follow_zeroda` SET `state`='接受' WHERE `articleid_zeroda`= ? AND `userid`= ? ",
     [articleid_zeroda, userid], (err, result) => {
       if (err) {
         console.log(err);
@@ -1420,13 +1481,14 @@ app.post("/basicupdate", upload.single('teamfile'), (req, res) => {
   const level = req.body.level;
   const fee = req.body.fee;
   const text = req.body.text;
+  const area = req.body.area;
   const teamfile = req.file.buffer; // img
   const teamid = req.body.teamid; // 球隊
   db.query(`
       UPDATE team 
-      SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?, teamimg=?
+      SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?, teamimg=?, area=?
       where teamid=?;`,
-    [tname, sidename, week, starttime, endtime, type, level, fee, text, teamfile, teamid],
+    [tname, sidename, week, starttime, endtime, type, level, fee, text, teamfile, area, teamid],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -1446,12 +1508,13 @@ app.post("/basicupdate2", upload.array(), (req, res) => {
   const level = req.body.level;
   const fee = req.body.fee;
   const text = req.body.text;
+  const area = req.body.area;
   const teamid = req.body.teamid; // 球隊
   db.query(
     `UPDATE team 
-    SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?
+    SET tname=?, sidename=?, week=?, starttime=?, endtime=?, type=?, level=?, fee=?, text=?, area=?
     where teamid=?;`,
-    [tname, sidename, week, starttime, endtime, type, level, fee, text, teamid],
+    [tname, sidename, week, starttime, endtime, type, level, fee, text, area, teamid],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -1678,14 +1741,14 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜date 查找基金文章-1 all
+  // 芝｜Fund 查找基金文章-1 all
   app.post('/teamfundall', (req, res) => {
     const teamid = req.body.teamid;
       db.query(
-        `SELECT date,userid,fee,text,teamfundid as 'articleid'
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',userid,fee,text,teamfundid as 'articleid'
         FROM teamfund
         WHERE teamid=?
-        ORDER by date;`,
+        ORDER by addtime desc;`,
       [teamid],
       (err, result) => {
         if (err) {
@@ -1697,17 +1760,17 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜date 查找基金文章-2 時間條件
+  // 芝｜Fund 查找基金文章-2 時間條件
   app.post('/teamfunddate', (req, res) => {
     const teamid = req.body.teamid;
     const startdate = req.body.startdate;
-    const enddate = req.body.enddate;
+    // const enddate = req.body.enddate;
       db.query(
-        `SELECT date,userid,fee,text,teamfundid as 'articleid'
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',userid,fee,text,teamfundid as 'articleid'
         FROM teamfund
-        WHERE date BETWEEN ? AND ? AND teamid=?
-        ORDER by date;`,
-      [startdate, enddate, teamid],
+        WHERE date=? AND teamid=?
+        ORDER by addtime desc;`,
+      [startdate, teamid],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -1718,14 +1781,14 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜date 查找支出文章-1 all
+  // 芝｜Pay 查找支出文章-1 all
   app.post('/teampayall', (req, res) => {
     const teamid = req.body.teamid;
       db.query(
-        `SELECT date,item,fee,text,teampayid as 'articleid'
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',item,fee,text,teampayid as 'articleid'
         FROM teampay
         WHERE teamid=?
-        ORDER by date;`,
+        ORDER by addtime desc;`,
       [teamid],
       (err, result) => {
         if (err) {
@@ -1737,7 +1800,7 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜date 查找支出文章-2 時間條件
+  // 芝｜Pay 查找支出文章-2 時間條件
   app.post('/teampaydate', (req, res) => {
     const teamid = req.body.teamid;
     const startdate = req.body.startdate;
@@ -1746,7 +1809,7 @@ app.post('/deletemember', (req, res) => {
         `SELECT date,item,fee,text,teampayid as 'articleid'
         FROM teampay
         WHERE date BETWEEN ? AND ? AND teamid=?
-        ORDER by date;`,
+        ORDER by addtime desc;`,
       [startdate, enddate, teamid],
       (err, result) => {
         if (err) {
@@ -1758,14 +1821,14 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜date 查找活動文章-1 all
+  // 芝｜Activity 查找活動文章-1 all
   app.post('/teamactivityall', (req, res) => {
     const teamid = req.body.teamid;
       db.query(
         `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
         FROM teamactivity
         WHERE teamid=?
-        ORDER by date;`,
+        ORDER by date desc;`,
       [teamid],
       (err, result) => {
         if (err) {
@@ -1777,7 +1840,7 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜date 查找活動文章-2 時間條件
+  // 芝｜Activity 查找活動文章-2 時間條件
   app.post('/teamactivitydate', (req, res) => {
     const teamid = req.body.teamid;
     const startdate = req.body.startdate;
@@ -1786,7 +1849,7 @@ app.post('/deletemember', (req, res) => {
         `SELECT startdate as 'date',starttime,endtime,type,title,location,pay,text,teamactivityid as 'articleid'
         FROM teamactivity
         WHERE startdate BETWEEN ? AND ? AND teamid=?
-        ORDER by date;`,
+        ORDER by startdate desc;`,
       [startdate, enddate, teamid],
       (err, result) => {
         if (err) {
@@ -1800,12 +1863,12 @@ app.post('/deletemember', (req, res) => {
 
   // 芝｜fund 查找基金 指定文章 
   app.post('/teamfundarticle', (req, res) => {
-    const id = req.body.id;
+    const articleid = req.body.articleid;
       db.query(
-        `SELECT date,user.userid,fee,text,userimg
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',user.userid,fee,text,userimg
         FROM teamfund,user
         WHERE teamfund.userid = user.userid and teamfundid=?`,
-      [id],
+      [articleid],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -1816,11 +1879,49 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜fund 查找支出 指定文章 
+  // 芝｜fund 新建基金文章 
+  app.post('/teamfundarticlenew', (req, res) => {
+    const date = req.body.date;
+    const teamid = req.body.teamid;
+    const userid = req.body.userid;
+    const fee = req.body.fee;
+    const text = req.body.text;
+      db.query(
+        `INSERT INTO teamfund(date,teamid,userid,fee,text)
+        VALUES(?,?,?,?,?)`,
+      [date, teamid, userid, fee, text],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+
+  // 芝｜fund 刪除基金文章 
+  app.post('/teamfundarticledelete', (req, res) => {
+    const articleid = req.body.articleid;
+      db.query(
+        `delete from teamfund 
+        where teamfundid=?`,
+      [articleid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+
+  // 芝｜pay 查找支出 指定文章 
   app.post('/teampayarticle', (req, res) => {
     const id = req.body.id;
       db.query(
-        `SELECT date,item,fee,text
+        `SELECT DATE_FORMAT(date,'%Y-%m-%d') as 'date',item,fee,text
         FROM teampay
         WHERE teampayid=?`,
       [id],
@@ -1834,14 +1935,14 @@ app.post('/deletemember', (req, res) => {
     );
   });
 
-  // 芝｜fund 查找活動 指定文章(成員、成員、留言未完成)
+  // 芝｜Activity 查找活動 指定文章(留言未完成)
   app.post('/teamactivityarticle', (req, res) => {
-    const id = req.body.id;
+    const articleid = req.body.articleid;
       db.query(
         `SELECT startdate,enddate,starttime,endtime,type,title,location,pay,text
         FROM teamactivity
         WHERE teamactivityid=?`,
-      [id],
+      [articleid],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -1851,6 +1952,89 @@ app.post('/deletemember', (req, res) => {
       }
     );
   });
+
+  // 芝｜Activity 查找活動 參加成員
+  app.post('/teamactivitymember', (req, res) => {
+    const articleid = req.body.articleid;
+      db.query(
+        `SELECT user.userid, user.userimg
+        FROM teamactivityuser ,user
+        WHERE teamactivityid=? and teamactivityuser.userid=user.userid`,
+      [articleid],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  });
+
+  // 芝｜Activity 新增活動文章-1 有圖
+app.post("/activitynew", upload.single('teamfile'), (req, res) => {
+  const teamid = req.body.teamid;
+  const date = req.body.date;
+  const starttime = req.body.starttime;
+  const endtime = req.body.endtime;
+  const type = req.body.type;
+  const title = req.body.title;
+  const place = req.body.place;
+  const pay = req.body.pay;
+  const text = req.body.text;
+  const teamfile = req.file.buffer; // img
+  db.query(`
+  INSERT INTO teamactivity(teamid,startdate,starttime,enddate,endtime,type,title,location,text,pay,teamactivityimg)
+  VALUES(?,?,?,?,?,?,?,?,?,?,?)`,
+    [teamid, date, starttime, date, endtime, type, title, place, pay, text, teamfile],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+// 芝｜Activity 新增活動文章-2 無圖
+app.post("/activitynewnoimg", upload.array(), (req, res) => {
+  const teamid = req.body.teamid;
+  const date = req.body.date;
+  const starttime = req.body.starttime;
+  const endtime = req.body.endtime;
+  const type = req.body.type;
+  const title = req.body.title;
+  const place = req.body.place;
+  const pay = req.body.pay;
+  const text = req.body.text;
+  db.query(
+    `INSERT INTO teamactivity(teamid,startdate,starttime,enddate,endtime,type,title,location,text,pay)
+    VALUES(?,?,?,?,?,?,?,?,?,?)`,
+    [teamid, date, starttime, date, endtime, type, title, place, pay, text],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+// 芝｜Activity 新增活動成員
+app.post('/teamactivitmember', (req, res) => {
+  const articleid = req.body.articleid;
+  const userid = req.body.userid;
+  db.query(
+    `INSERT into teamactivityuser(teamactivityid,userid)
+    VALUES(?,?);`,
+    [articleid, userid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
     
 
 //------------------
@@ -2070,6 +2254,57 @@ app.post('/teamactivity', (req, res) => {
         console.log(err);
       } else {
         res.send(result);
+      }
+    }
+  );
+})
+
+//報名零打
+app.post('/joinzero',(req, res) => {
+  const articleidzero = req.body.articleidzero;
+  const useridjoinzero = req.body.useridjoinzero;
+  db.query(
+    `INSERT INTO follow_zeroda(articleid_zeroda, userid, time) VALUES (?,?,now())`,
+    [articleidzero,useridjoinzero],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+})
+
+//承租轉租
+app.post('/joinrent',(req,res) => {
+  const articleidrent = req.body.articleidrent;
+  const useridjoinrent = req.body.useridjoinrent;
+  db.query(
+    `INSERT INTO follow_sublet(articleid_sublet, userid, time) VALUES (?,?,now())`,
+    [articleidrent, useridjoinrent],
+    (err,result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.log(result);
+      }
+    }
+  );
+})
+
+// 留言顯示
+app.post('/showmessage',(req, res) => {
+  const messagezeroarticleid = req.body.messagezeroarticleid;
+  db.query(
+    `SELECT * FROM user, articlemessage_zeroda WHERE user.userid = articlemessage_zeroda.userid 
+    AND articlemessage_zeroda.articleid_zeroda = ?`,
+    [messagezeroarticleid],
+    (err,result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.log(result);
       }
     }
   );

@@ -113,12 +113,12 @@ const Orderfutrue = () => {
                     <div style={{ flex: "1" }}>{getTruedate(orderData.startdate)}</div>
                     <div style={{ flex: "1" }}>{getTruedate(orderData.enddate)}</div>
                     {/* <div style={{ flex: "1" }}>證明</div> */}
-                    <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
+                    <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime+1}:00</div>
                     {/* <div style={{ flex: "1" }}>{orderData.week}</div> */}
                 </div>
                 <div style={{ display: rentType ? 'none' : 'flex' }}>
                     <div style={{ flex: "1" }}>{getTruedate(orderData.startdate)}</div>
-                    <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime}:00</div>
+                    <div style={{ flex: "1" }}>{orderData.starttime}:00-{orderData.endtime+1}:00</div>
                     {/* <div style={{ flex: "1" }}>證明</div> */}
                     <div style={{ flex: "1" }}>{orderData.week}</div>
 
@@ -142,7 +142,10 @@ const Orderfutrue = () => {
                 <div>場地</div>
                 <div>{orderData.sidename}</div> {/*14*/}
                 <div>地址</div>
-                <div style={{ position: "relative" }}>{orderData.sideaddr}
+                <div className='orderaddr'>
+                    {orderData.sideaddr}
+                </div>
+                <div style={{ position: "relative" }}>
                     <button id='ing' className="chuse_order" onClick={cancelOrder}>取消預約</button>
                 </div>
             </div>

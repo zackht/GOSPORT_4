@@ -55,6 +55,7 @@
     height: 80px;
     display: inline;
     margin-bottom: 0px;
+    clip-path: circle(50% at 50% 50%);
 }
 .checkMember>div:nth-child(2) {
     font-family: 'Noto Sans TC';

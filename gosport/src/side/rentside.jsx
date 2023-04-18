@@ -99,7 +99,7 @@ const Rentside = () => {
         setbaulk(!baulk);
     }
     const search =()=>{
-        setTimeout(()=>{setuserlist1([])},500);
+        setTimeout(()=>{setuserlist1([])},1000);
         console.log(type);
         console.log(starttime);
         console.log(endtime);
@@ -134,6 +134,7 @@ const Rentside = () => {
                 fr.readAsDataURL(blob);
                 fr.onload = function (e) {
                     userlist1.push(e.target.result);
+                    console.log(userlist1);
                 };
             }
         });
@@ -142,17 +143,16 @@ const Rentside = () => {
     const [h1,seth1]=useState(false);
 
     const ee = (key) => {
-        const time = setTimeout(()=>{seth1(true)},1000);
+        const time = setTimeout(()=>{seth1(true)},500);
         if(h1){
             return userlist[key];
         }
     }
-    const [tt,settt]=useState(false);
+    const [tt,settt]=useState(true);
     const change = ()=>{
         settt(!tt);
         search();
         setTimeout(()=>{setuserlist1([])},500);
-        
     }
     const [xyz,setxyz]=useState('離峰');
     return (
